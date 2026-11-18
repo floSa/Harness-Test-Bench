@@ -1,0 +1,13 @@
+# Consignes de mission des agents (locales)
+kit/
+CLAUDE.md
+.claude/
+# Clés et données locales
+.env
+donnees/
+# Test caché du corpus : jamais versionné, jamais visible des harnais
+banc-essai/corpus/test-cache/
+# Environnements
+.venv/
+__pycache__/
+node_modules/
