@@ -114,4 +114,4 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 
 - Modèles gratuits : 20 requêtes par minute, 1 000 par jour ; le fournisseur peut garder les requêtes, d'où un corpus entièrement fictif.
 - La gratuité d'un modèle peut disparaître : la date et l'identifiant exact sont notés.
-- Cline vit dans VS Code : sans mode sans interaction, il est piloté à la main avec la même recette, et ses résultats sont signalés comme tels.
+- Cline : sa CLI (version 2.0) a un mode sans interaction ; s'il ne peut pas viser le LiteLLM du banc, il appelle OpenRouter directement et ses traces viennent du journal OpenRouter, écart signalé dans les résultats.
