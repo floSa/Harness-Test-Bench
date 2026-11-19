@@ -32,7 +32,7 @@ Aucune autre sortie : pas de DNS, pas de route, pas d'accès aux ports de l'hôt
 
 | Script | Rôle |
 |---|---|
-| `lancer.sh <harnais> <recette>` | essai complet : espace neuf hors du dépôt (`~/banc-espaces/<essai>/`), clé du harnais, API, cage, garde-fou de durée (7 200 s), collecte dans `banc-essai/resultats/<essai>/`, relance du workflow (extraction), rapport |
+| `lancer.sh <harnais> <recette>` | essai complet : espace neuf hors du dépôt (`~/banc-espaces/<essai>/`), clé propre à l'essai (supprimée à la fin), API, cage, garde-fou de durée (7 200 s), collecte dans `banc-essai/resultats/<essai>/`, relance du workflow (extraction), rapport |
 | `cage.sh` | exécution d'une commande dans la cage (utilisé par `lancer.sh`, `relancer.py` et la notation de la tâche jouet) |
 | `interieur.sh` | démarrage dans la cage : relais intérieurs, clé du harnais, commande |
 | `relais.py` | relais socket Unix vers TCP, mandataire filtrant |
@@ -43,12 +43,12 @@ Aucune autre sortie : pas de DNS, pas de route, pas d'accès aux ports de l'hôt
 
 | Fichier | Contenu |
 |---|---|
-| `essai.json` | harnais, recette, heures, durée, code de retour, garde-fou, appels au modèle (dont échecs, 429, images), jetons, temps dans le modèle, demandes réseau |
+| `essai.json` | harnais, recette, heures, durée, code de retour, garde-fou, appels au modèle (dont échecs, 429, images), jetons (dont cache), coût (relais et OpenRouter), temps dans le modèle, demandes réseau |
 | `harnais/stdout.log`, `stderr.log` | sorties du harnais |
-| `traces/appels.jsonl` | appels au modèle de la clé du harnais pendant l'essai |
+| `traces/appels.jsonl` | appels au modèle de la clé de l'essai |
 | `traces/reseau.jsonl` | demandes au mandataire PyPI, acceptées ou refusées |
 | `evaluation/` | journaux de l'API de soumission |
-| `relance/` | relance du workflow déclaré, dans la cage, avec la clé `<harnais>-relance` |
+| `relance/` | relance du workflow déclaré, dans la cage, avec la clé `<essai>-relance` |
 | `rapport.json`, `rapport.md` | rapport d'essai |
 
 ## Preuve

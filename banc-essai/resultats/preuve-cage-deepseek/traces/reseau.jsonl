@@ -1,0 +1,6 @@
+{"heure": "2026-11-19T21:33:10+01:00", "hote": "example.com", "port": "443", "accepte": false, "requete": "CONNECT example.com:443 HTTP/1.1"}
+{"heure": "2026-11-19T21:33:10+01:00", "hote": "github.com", "port": "443", "accepte": false, "requete": "CONNECT github.com:443 HTTP/1.1"}
+{"heure": "2026-11-19T21:33:10+01:00", "hote": "openrouter.ai", "port": "443", "accepte": false, "requete": "CONNECT openrouter.ai:443 HTTP/1.1"}
+{"heure": "2026-11-19T21:33:10+01:00", "hote": null, "port": null, "accepte": false, "requete": "GET http://pypi.org/simple/pip/ HTTP/1.1"}
+{"heure": "2026-11-19T21:33:10+01:00", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1"}
+{"heure": "2026-11-19T21:33:10+01:00", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1"}

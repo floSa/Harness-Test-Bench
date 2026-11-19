@@ -117,7 +117,7 @@ def png_rouge(n=16):
 PNG = base64.b64encode(png_rouge()).decode()
 
 def appel(messages):
-    corps = {"model": os.environ.get("BANC_MODELE", "gemma-4-31b"), "messages": messages, "max_tokens": 20}
+    corps = {"model": os.environ.get("BANC_MODELE", "deepseek-v4.1-flash"), "messages": messages, "max_tokens": 300}
     req = urllib.request.Request(os.environ["BANC_MODELE_URL"] + "/v1/chat/completions",
                                  data=json.dumps(corps).encode(), method="POST",
                                  headers={"Authorization": f"Bearer {cle}", "Content-Type": "application/json"})
@@ -133,7 +133,7 @@ etat, det = tenter(lambda: appel([{"role": "user", "content": [
 noter("appel avec image au modèle", "réussi", f"{etat} ({det})", etat == "réussi")
 faux = urllib.request.Request(
     os.environ["BANC_MODELE_URL"] + "/v1/chat/completions", method="POST",
-    data=json.dumps({"model": "gemma-4-31b", "messages": [{"role": "user", "content": "x"}]}).encode(),
+    data=json.dumps({"model": "deepseek-v4.1-flash", "messages": [{"role": "user", "content": "x"}]}).encode(),
     headers={"Authorization": "Bearer sk-fausse", "Content-Type": "application/json"})
 etat, det = tenter(lambda: urllib.request.urlopen(faux, timeout=30).status)
 noter("appel au modèle avec une fausse clé", "refusé", f"{etat} ({det})", etat == "refusé")

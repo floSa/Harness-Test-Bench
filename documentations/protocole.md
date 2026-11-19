@@ -1,6 +1,6 @@
 # Protocole du banc des harnais
 
-Version 1.3, 19 novembre 2026 (cage et traces précisées au lot 3). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
+Version 1.4, 19 novembre 2026 (modèle de la campagne 1 remplacé : DeepSeek V4.1 Flash au lieu de Gemma 4 31B gratuit ; une clé par essai). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
 ## 1. Question posée
 
@@ -15,7 +15,7 @@ Un seul facteur à la fois, les autres restant fixes.
 | Facteur | Valeurs de la campagne 1 | Plus tard |
 |---|---|---|
 | Harnais | OpenCode, Pi, gptme, Goose, Cline | autres harnais open source |
-| Modèle | Gemma 4 31B (`google/gemma-4-31b-it:free`, OpenRouter) | 1 ou 2 autres modèles ; modèles locaux sur la RTX 4060 Ti 16 Go |
+| Modèle | DeepSeek V4.1 Flash, instantané du 17/10/2026 (`deepseek/deepseek-v4.1-flash-1017`, OpenRouter, fournisseur unique Pearl Research en fp8, sans repli) | 1 ou 2 autres modèles, dont Gemma 4 31B ; modèles locaux sur la RTX 4060 Ti 16 Go |
 | Recette | « sans aide » et « avec aide » (section 4) | consignes de méthode, skills, outils (documentation locale par Grounded Docs) |
 | Passes | 1, puis 2 si le budget le permet | 3 |
 
@@ -52,9 +52,9 @@ La recette est le message de départ et ce qui l'accompagne. Il est identique po
 
 1. **Copie neuve** de l'espace de travail à chaque essai (`banc-essai/recettes/<recette>/` copié dans un dossier vierge).
 2. **Cage** : le harnais tourne dans bubblewrap (`banc-essai/cage/`). Écriture seulement dans l'espace de travail ; le reste de la machine en lecture seule ou invisible ; réseau limité au proxy de modèles, à l'API de soumission et à PyPI. Le test caché n'est jamais monté dans la cage.
-3. **Modèle** : tous les appels passent par un LiteLLM propre au banc (`banc-essai/traces/`), qui relaie vers OpenRouter. Une clé par harnais. LLM-Service n'est pas utilisé ni modifié.
+3. **Modèle** : tous les appels passent par un LiteLLM propre au banc (`banc-essai/traces/`), qui relaie vers OpenRouter. Une clé virtuelle par essai (et une pour la relance du workflow), supprimée à la fin de l'essai. Le prix du fournisseur est déclaré au relais, qui calcule le coût de chaque appel ; le coût facturé par OpenRouter est journalisé à côté. LLM-Service n'est pas utilisé ni modifié.
 4. **Mode** : sans interaction (le harnais reçoit le message et travaille seul). Toute intervention humaine est comptée et notée.
-5. **Limites** : 5 soumissions ; plafond de 2 $ par clé ; garde-fou de 2 heures par essai (le temps est mesuré, pas imposé).
+5. **Limites** : 5 soumissions ; plafond de 2 $ par clé, donc par essai ; plafond global de 10 $ sur la clé OpenRouter du banc ; garde-fou de 2 heures par essai (le temps est mesuré, pas imposé).
 6. **Versions figées** : version du harnais, du modèle et du corpus notées dans le résultat de chaque essai.
 
 ## 6. Ce qu'on mesure
@@ -112,14 +112,16 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 ## 8. Plan des campagnes
 
 1. **Mise au point** : une tâche jouet (corriger un bug, tests cachés) pour valider cage, traces et lancement de chaque harnais.
-2. **Campagne 1** : 5 harnais × 2 recettes, Gemma 4 31B, 1 passe ; puis 2e passe si le budget le permet.
+2. **Campagne 1** : 5 harnais × 2 recettes, DeepSeek V4.1 Flash, 1 passe ; puis 2e passe si le budget le permet.
 3. **Campagne 2** : autres recettes (consignes de méthode, skills, outils) sur les 2 meilleurs harnais.
 4. **Campagne 3** : autres modèles, dont des modèles locaux, pour vérifier que le classement tient.
 
 ## 9. Limites connues
 
-- Modèles gratuits : 20 requêtes par minute, 1 000 par jour ; le fournisseur peut garder les requêtes, d'où un corpus entièrement fictif.
+- Modèles gratuits écartés pour la campagne 1 : le 19/11/2026, Gemma 4 31B gratuit sur OpenRouter a renvoyé 429 (« rate-limited upstream ») à 74 appels sur 74 entre 17 h 02 et 21 h 18 ; l'offre gratuite de l'API Google plafonne Gemma 4 31B à 16 000 jetons envoyés par minute, en dessous de la taille d'un appel de harnais.
+- Le fournisseur peut garder les requêtes, d'où un corpus entièrement fictif.
+- En réponse en flux, le nom du fournisseur n'est pas journalisé (fournisseur unique, sans repli).
 - `/tmp` de la cage est en mémoire : un harnais peut y écrire, rien n'en sort sur l'hôte.
 - Le harnais ne peut pas lancer ses propres bacs à sable par espace de noms utilisateur (`--disable-userns`) : un harnais qui en dépend le signalera au lot 4.
-- La gratuité d'un modèle peut disparaître : la date et l'identifiant exact sont notés.
+- Prix et disponibilité d'un modèle peuvent changer : la date, l'identifiant exact, le fournisseur et le prix sont notés.
 - Cline : sa CLI (version 2.0) a un mode sans interaction ; s'il ne peut pas viser le LiteLLM du banc, il appelle OpenRouter directement et ses traces viennent du journal OpenRouter, écart signalé dans les résultats.

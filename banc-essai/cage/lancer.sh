@@ -8,11 +8,11 @@
 # <recette> : sans-aide, avec-aide ou jouet.
 #
 # Étapes : espace de travail neuf (hors du dépôt, dans $BANC_ESPACES, ~/banc-espaces par défaut),
-# clé virtuelle du harnais, API de soumission de l'essai, cage, puis collecte dans
+# clé virtuelle propre à l'essai (alias = nom de l'essai, plafond de 2 $, supprimée à la fin), API de soumission de l'essai, cage, puis collecte dans
 # banc-essai/resultats/<essai>/ : essai.json, harnais/ (sorties), traces/appels.jsonl (appels au
-# modèle de la clé du harnais pendant l'essai), traces/reseau.jsonl (demandes au mandataire PyPI),
+# modèle de la clé de l'essai), traces/reseau.jsonl (demandes au mandataire PyPI),
 # evaluation/ (journaux de l'API). Ensuite, pour l'extraction, relance du workflow déclaré sur le
-# jeu « relance », dans la cage, sans le harnais (relance/, clé <harnais>-relance) ; enfin le
+# jeu « relance », dans la cage, sans le harnais (relance/, clé <essai>-relance) ; enfin le
 # rapport d'essai (rapport.json, rapport.md).
 set -euo pipefail
 RACINE="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -41,10 +41,11 @@ ESPACE="$ESPACES/$ESSAI/travail" MAISON="$ESPACES/$ESSAI/maison"
 [ -e "$RES" ] && { echo "$RES existe déjà" >&2; exit 1; }
 mkdir -p "$RES/harnais" "$RES/traces" "$MAISON"
 
-# Relais du modèle et clé du harnais.
+# Relais du modèle et clé de l'essai.
 curl -fs http://127.0.0.1:4100/health/liveliness >/dev/null || { echo "LiteLLM du banc arrêté : banc-essai/traces/demarrer.sh" >&2; exit 1; }
-python3 "$TRACES/cles.py" "$NOM" >/dev/null
-CLE="$TRACES/secrets/cle-$NOM.env"
+python3 "$TRACES/cles.py" "$ESSAI" >/dev/null
+CLE="$TRACES/secrets/cle-$ESSAI.env"
+trap 'python3 "$TRACES/cles.py" --supprimer "$ESSAI" "$ESSAI-relance" >/dev/null 2>&1 || true' EXIT
 
 # Espace neuf et API de l'essai.
 uv run -q --project "$EVAL" python "$EVAL/preparer.py" --recette "$RECETTE" --destination "$ESPACE" >/dev/null
@@ -52,7 +53,7 @@ if ss -ltnH | awk '{print $4}' | grep -qx '127.0.0.1:8765'; then echo "port 8765
 uv run -q --project "$EVAL" python "$EVAL/api.py" --tache "$TACHE" --jeu "$JEU" --sortie "$RES/evaluation" \
   > "$RES/evaluation-api.log" 2>&1 &
 API_PID=$!
-trap 'kill $API_PID 2>/dev/null || true' EXIT
+trap 'kill $API_PID 2>/dev/null || true; python3 "$TRACES/cles.py" --supprimer "$ESSAI" "$ESSAI-relance" >/dev/null 2>&1 || true' EXIT
 for _ in $(seq 1 100); do curl -fs http://127.0.0.1:8765/etat >/dev/null 2>&1 && break; sleep 0.1; done
 
 JOURNAL="$TRACES/journaux/appels.jsonl"
@@ -74,7 +75,7 @@ import json, sys
 nom = sys.argv[1]
 for l in sys.stdin:
     if json.loads(l).get("cle") == nom:
-        sys.stdout.write(l)' "$NOM" > "$RES/traces/appels.jsonl"
+        sys.stdout.write(l)' "$ESSAI" > "$RES/traces/appels.jsonl"
 touch "$RES/traces/reseau.jsonl"
 python3 - "$RES" "$ESSAI" "$NOM" "$RECETTE" "$TACHE" "$DEBUT" "$FIN" "$DUREE_S" "$CODE" "$ESPACE" "$DUREE" <<'EOF'
 import json, sys
@@ -89,7 +90,10 @@ e = {"essai": essai, "harnais": nom, "recette": recette, "tache": tache, "debut"
                        or "RateLimit" in ((a.get("erreur") or {}).get("type") or "") for a in appels),
      "appels_avec_image": sum(a["images"] > 0 for a in appels),
      "jetons_entree": sum(a["jetons_entree"] or 0 for a in appels),
+     "jetons_cache": sum(a.get("jetons_cache") or 0 for a in appels),
      "jetons_sortie": sum(a["jetons_sortie"] or 0 for a in appels),
+     "cout_usd": round(sum(a.get("cout") or 0 for a in appels), 6),
+     "cout_openrouter_usd": round(sum(a.get("cout_openrouter") or 0 for a in appels), 6),
      "temps_modele_s": round(sum(a["duree_s"] or 0 for a in appels), 1),
      "demandes_reseau": len(reseau), "demandes_reseau_refusees": sum(not r["accepte"] for r in reseau)}
 json.dump(e, open(f"{res}/essai.json", "w"), ensure_ascii=False, indent=2)
@@ -98,16 +102,16 @@ EOF
 kill $API_PID 2>/dev/null || true
 
 if [ "$TACHE" = extraction ] && [ -f "$RES/evaluation/fin.json" ]; then
-  python3 "$TRACES/cles.py" "$NOM-relance" >/dev/null
+  python3 "$TRACES/cles.py" "$ESSAI-relance" >/dev/null
   LIGNE1=$(wc -l < "$JOURNAL")
   uv run -q --project "$EVAL" python "$EVAL/relancer.py" --espace "$ESPACE" --essai "$RES" \
-    --cle "$TRACES/secrets/cle-$NOM-relance.env" --maison "$MAISON" || true
+    --cle "$TRACES/secrets/cle-$ESSAI-relance.env" --maison "$MAISON" || true
   sleep 2
   tail -n +"$((LIGNE1 + 1))" "$JOURNAL" | python3 -c '
 import json, sys
 for l in sys.stdin:
     if json.loads(l).get("cle") == sys.argv[1]:
-        sys.stdout.write(l)' "$NOM-relance" > "$RES/relance/appels.jsonl" || true
+        sys.stdout.write(l)' "$ESSAI-relance" > "$RES/relance/appels.jsonl" || true
 fi
 uv run -q --project "$EVAL" python "$EVAL/rapport.py" --essai "$RES" >/dev/null || true
 exit "$CODE"

@@ -6,8 +6,8 @@ Relais entre les harnais et OpenRouter, propre au banc : LLM-Service et les cont
 |---|---|
 | Conteneurs | `harness-litellm` (`ghcr.io/berriai/litellm:v1.106.4`), `harness-litellm-db` (`postgres:17.7-alpine`, exigé par les clés virtuelles) |
 | Adresse | `http://127.0.0.1:4100` (API compatible OpenAI, `/v1/chat/completions`) |
-| Modèle exposé | `gemma-4-31b` -> `openrouter/google/gemma-4-31b-it:free` |
-| Clés | `OPENROUTER_API_KEY` dans `.env` (racine, hors git) ; clé maître et mot de passe de la base dans `secrets/` (hors git), créés au premier démarrage ; une clé virtuelle par harnais (alias = nom du harnais, plafond de 2 $, modèle `gemma-4-31b` seulement) |
+| Modèle exposé | `deepseek-v4.1-flash` -> `openrouter/deepseek/deepseek-v4.1-flash-1017`, fournisseur Pearl Research seul (fp8, sans repli) ; prix déclarés au relais : 0,05 $ par million de jetons envoyés, 0,003 $ lus dans le cache, 0,30 $ produits (relevés le 19/11/2026) |
+| Clés | `OPENROUTER_API_KEY` dans `.env` (racine, hors git) ; clé maître et mot de passe de la base dans `secrets/` (hors git), créés au premier démarrage ; une clé virtuelle par essai (alias = nom de l'essai, plafond de 2 $, modèle `deepseek-v4.1-flash` seulement), supprimée à la fin de l'essai ; limite de 10 $ posée sur la clé OpenRouter |
 | Journal | `journaux/appels.jsonl` (hors git) : une ligne par appel, succès ou échec |
 | Réglages | pas de pause du déploiement après une erreur (`disable_cooldowns`), pas de nouvelle tentative par le relais (`num_retries: 0`) : le harnais reçoit les vrais 429 |
 
@@ -19,19 +19,20 @@ Depuis la racine du dépôt :
 |---|---|
 | Démarrer | `banc-essai/traces/demarrer.sh` |
 | Arrêter | `banc-essai/traces/arreter.sh` |
-| Clé d'un harnais | `python3 banc-essai/traces/cles.py <harnais>` (écrit `secrets/cle-<harnais>.env`, jamais affichée) |
+| Clé d'un essai | `python3 banc-essai/traces/cles.py <alias>` (écrit `secrets/cle-<alias>.env`, jamais affichée) ; `--supprimer <alias>` la retire |
 
-`banc-essai/cage/lancer.sh` crée la clé du harnais et extrait du journal les appels de l'essai.
+`banc-essai/cage/lancer.sh` crée la clé de l'essai, extrait du journal les appels de l'essai, puis supprime la clé.
 
 ## Champs du journal
 
 | Champ | Contenu |
 |---|---|
 | `debut`, `fin`, `duree_s` | horodatage de l'appel (UTC) et durée |
-| `cle` | alias de la clé virtuelle (nom du harnais, ou `<harnais>-relance`) |
-| `modele_demande`, `modele` | nom demandé, modèle réel chez OpenRouter |
+| `cle` | alias de la clé virtuelle (nom de l'essai, ou `<essai>-relance`) |
+| `modele_demande`, `modele`, `fournisseur` | nom demandé, modèle réel chez OpenRouter, fournisseur qui a servi l'appel (absent en réponse en flux) |
 | `statut` | `succes` ou `echec` |
-| `jetons_entree`, `jetons_sortie`, `cout` | consommation |
+| `jetons_entree`, `jetons_cache`, `jetons_sortie` | jetons envoyés (dont lus dans le cache) et produits |
+| `cout`, `cout_openrouter` | coût calculé par le relais, coût facturé par OpenRouter (dollars) |
 | `messages`, `images` | nombre de messages, nombre d'images envoyées (usage de la vision) |
 | `flux`, `outils` | réponse en flux, nombre d'outils déclarés |
 | `erreur` | type, code HTTP, message (toute chaîne qui ressemble à une clé est masquée) |

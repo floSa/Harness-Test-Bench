@@ -72,7 +72,7 @@ ARGS=(--die-with-parent --new-session --unshare-all --unshare-user --disable-use
   --setenv HTTPS_PROXY http://127.0.0.1:3128 --setenv HTTP_PROXY http://127.0.0.1:3128
   --setenv https_proxy http://127.0.0.1:3128 --setenv http_proxy http://127.0.0.1:3128
   --setenv NO_PROXY 127.0.0.1,localhost --setenv no_proxy 127.0.0.1,localhost
-  --setenv BANC_MODELE_URL http://127.0.0.1:4100 --setenv BANC_MODELE gemma-4-31b
+  --setenv BANC_MODELE_URL http://127.0.0.1:4100 --setenv BANC_MODELE deepseek-v4.1-flash
   --setenv BANC_API http://127.0.0.1:8765 --setenv BANC_API_ACTIVE "$API"
   --chdir /travail)
 [ -n "$TERM" ] && ARGS+=(--setenv TERM "$TERM")
