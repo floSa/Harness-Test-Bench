@@ -129,4 +129,5 @@ tail -n +"$((LIGNE0 + 1))" "$JOURNAL" | python3 "$CAGE/collecter.py" repartir "$
 python3 "$CAGE/collecter.py" essai "$RES" "$ESSAI" "$NOM" "$RECETTE" "$TACHE" "$DEBUT" "$FIN" "$DUREE_S" \
   "$CODE" "$ESPACE" "$DUREE" "$DEPENSE" "$DEPENSE_RELANCE" "$HARNAIS" "$MEMOIRE" "$DISQUE_MAX" "$TELECHARGEMENT_MAX"
 uv run -q --project "$EVAL" python "$EVAL/rapport.py" --essai "$RES" >/dev/null || true
+uv run -q --project "$EVAL" python "$EVAL/index_resultats.py" >/dev/null || true
 exit "$CODE"

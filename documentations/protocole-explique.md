@@ -156,7 +156,7 @@ sequenceDiagram
         H->>R: appel au modèle avec la clé de l'essai
         R->>O: appel avec la vraie clé (jamais visible du harnais)
         O-->>R: réponse
-        R-->>H: réponse ; l'appel est écrit au journal (jetons, coût, durée)
+        R-->>H: réponse, l'appel est écrit au journal (jetons, coût, durée)
     end
     L->>R: relève la dépense de la clé, puis la supprime
     L->>R: crée une clé neuve pour la relance
@@ -185,7 +185,7 @@ sequenceDiagram
     A-->>H: 15 PDF, sans réponses
     H->>A: soumet un JSON par document
     alt format incorrect (document ou clé manquante, nombre écrit en texte, date hors format)
-        A-->>H: refus avec le détail des erreurs ; la soumission ne compte pas
+        A-->>H: refus avec le détail des erreurs, la soumission ne compte pas
     else format correct et moins de 5 soumissions
         A->>N: compare chaque champ à la vérité
         N-->>A: score par champ, par piège, par mise en page...

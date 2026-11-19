@@ -21,3 +21,4 @@ banc-essai/traces/journaux/
 banc-essai/cage/outils/
 # Harnais installés (binaires, paquets), recréés par harnais/<nom>/installer.sh
 harnais/*/installe/
+harnais/_outils/
