@@ -28,7 +28,7 @@ Harness-Test-Bench/
     └── journal.md
 ```
 
-État : cadrage terminé ; corpus généré (60 rapports, vérité terrain annotée) ; évaluation prête (API de soumission, notation, recettes, tâche jouet) ; cage et traces prêtes (preuve complète, modèle DeepSeek V4.1 Flash) ; harnais à installer.
+État : cadrage terminé ; corpus généré (60 rapports, vérité terrain annotée) ; évaluation prête (API de soumission, notation, recettes, tâche jouet) ; cage et traces prêtes (preuve complète, modèle DeepSeek V4.1 Flash) ; 5 harnais installés et validés sur la tâche jouet ; manuels de prise en main à écrire.
 
 | Besoin | Page |
 |---|---|
