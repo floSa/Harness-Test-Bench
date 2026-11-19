@@ -1,0 +1,30 @@
+bash-5.2$ HOME=/tmp/manuel/home-v2 opencode models banc
+Error: Provider not found: banc
+bash-5.2$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

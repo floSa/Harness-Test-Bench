@@ -256,24 +256,43 @@ class Terminal:
     def touche(self, *touches):
         self.tmux("send-keys", "-t", self.nom, *touches)
 
-    def capturer(self, image, cibles=(), titre="Terminal"):
-        image = Path(image)
-        rel = image.relative_to(RACINE) if image.is_absolute() else image
-        base = TEXTES / Path(*rel.parts[2:]).with_suffix("") if rel.parts[:2] == ("documentations", "manuels") \
-            else TEXTES / rel.with_suffix("")
+    def capturer(self, image):
+        """Relève l'écran (couleurs comprises) sous banc-essai/resultats/captures/<harnais>/<chapitre>/<nom>.ans
+        et son texte (.txt). Les annotations se posent ensuite avec page(), sans relancer le harnais."""
+        base = base_capture(image)
         base.parent.mkdir(parents=True, exist_ok=True)
-        lignes = analyser_ansi(self.ecran(couleurs=True))
-        page = base.with_suffix(".html")
-        page.write_text(vers_html(lignes, list(cibles), titre, self.largeur))
+        base.with_suffix(".ans").write_text(CLE_RE.sub(lambda m: "•" * len(m.group(0)), self.ecran(couleurs=True)))
         base.with_suffix(".txt").write_text(CLE_RE.sub("sk-•••", self.ecran()))
-        entree = {"html": str(page.relative_to(RACINE)), "image": str(rel),
-                  "libelles": [lib for _, lib in cibles]}
-        with open(self.scenario, "a") as f:
-            f.write(json.dumps(entree, ensure_ascii=False) + "\n")
-        return entree
+        base.with_suffix(".taille").write_text(f"{self.largeur} {self.hauteur}")
+        return base
 
     def fermer(self):
         subprocess.run(["tmux", "kill-session", "-t", self.nom], capture_output=True)
+
+
+def base_capture(image):
+    image = Path(image)
+    rel = image.relative_to(RACINE) if image.is_absolute() else image
+    parts = [x for x in rel.parts[2:] if x != "img"]   # documentations/manuels/<harnais>/img/<chapitre>/<nom>
+    return (TEXTES / Path(*parts) if rel.parts[:2] == ("documentations", "manuels") else TEXTES / rel).with_suffix("")
+
+
+def page(image, cibles=(), titre="Terminal", largeur=None):
+    """Construit la page HTML annotable d'un écran relevé et l'ajoute au scénario de rendu."""
+    base = base_capture(image)
+    brut = base.with_suffix(".ans").read_text()
+    lignes = analyser_ansi(brut)
+    taille = base.with_suffix(".taille")
+    if not largeur and taille.exists():
+        largeur = int(taille.read_text().split()[0])
+    largeur = largeur or max((len(l) for l in lignes), default=80)
+    base.with_suffix(".html").write_text(vers_html(lignes, list(cibles), titre, largeur))
+    rel = Path(image).relative_to(RACINE) if Path(image).is_absolute() else Path(image)
+    entree = {"html": str(base.with_suffix(".html").relative_to(RACINE)), "image": str(rel),
+              "libelles": [lib for _, lib in cibles]}
+    with open(TEXTES / "scenario.jsonl", "a") as f:
+        f.write(json.dumps(entree, ensure_ascii=False) + "\n")
+    return entree
 
 
 def _cite(x):

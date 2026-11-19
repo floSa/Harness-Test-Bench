@@ -1,0 +1,4 @@
+{"heure": "2026-11-19T23:31:28+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:31:28+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:31:29+01:00", "evenement": "demande", "hote": "registry.npmjs.org", "port": "443", "accepte": false, "requete": "CONNECT registry.npmjs.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:31:29+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}

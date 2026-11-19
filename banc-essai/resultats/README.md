@@ -8,6 +8,8 @@ Page régénérée à la fin de chaque essai (`banc-essai/evaluation/index_resul
 |---|---|---|---|---|---|---|---|---|---|
 | [jouet-factice](jouet-factice/rapport.md) | essai factice (fausses solutions) |  |  |  | 70,0 % |  |  |  |  |
 | [essai-factice](essai-factice/rapport.md) | essai factice (fausses solutions) |  |  |  | 12,4 % | 11,3 % |  |  |  |
+| [captures](captures/rapport.md) | essai de campagne |  |  |  |  |  |  |  |  |
+| [manuel-opencode-jouet](manuel-opencode-jouet/rapport.md) | essai de campagne |  |  |  |  |  |  |  |  |
 | [preuve-cage](preuve-cage/rapport.md) | preuve de la cage (sonde) | 2026-11-19 17:02 | sonde | jouet |  |  | 3 s | 2 |  |
 | [preuve-cage-deepseek](preuve-cage-deepseek/rapport.md) | preuve de la cage (sonde) | 2026-11-19 21:33 | sonde | jouet |  |  | 5 s | 2 | 0,0000 $ |
 | [preuve-cage-correctifs](preuve-cage-correctifs/rapport.md) | preuve de la cage (sonde) | 2026-11-19 21:58 | sonde | jouet |  |  | 5 s | 2 | 0,0001 $ |

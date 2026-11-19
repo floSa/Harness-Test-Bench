@@ -1,0 +1,60 @@
+configuration écrite : /home/banc/.config/opencode/opencode.json
+timestamp=2026-11-19T22:31:28.406Z level=INFO run=c73ca7f7 message="creating instance" directory=/travail
+timestamp=2026-11-19T22:31:28.407Z level=INFO run=c73ca7f7 message=fromDirectory directory=/travail
+timestamp=2026-11-19T22:31:28.411Z level=INFO run=c73ca7f7 message=bootstrapping directory=/travail
+timestamp=2026-11-19T22:31:28.415Z level=INFO run=c73ca7f7 message=loading path=/home/banc/.config/opencode/config.json
+timestamp=2026-11-19T22:31:28.415Z level=INFO run=c73ca7f7 message=loading path=/home/banc/.config/opencode/opencode.json
+timestamp=2026-11-19T22:31:28.419Z level=INFO run=c73ca7f7 message=loading path=/home/banc/.config/opencode/opencode.jsonc
+timestamp=2026-11-19T22:31:28.539Z level=INFO run=c73ca7f7 message="all LSPs are disabled"
+timestamp=2026-11-19T22:31:28.540Z level=INFO run=c73ca7f7 message="all formatters are disabled"
+timestamp=2026-11-19T22:31:28.540Z level=INFO run=c73ca7f7 message=init
+timestamp=2026-11-19T22:31:28.615Z level=INFO run=c73ca7f7 message=created id=ses_e0a104f98ffeZh82HAFpdFzIWU slug=jolly-circuit version=1.19.6 projectID=global directory=/travail path=travail workspaceID=undefined parentID=undefined title="New session - 2026-11-19T22:31:28.615Z" agent=undefined model=undefined metadata=undefined permission="[{\"permission\":\"question\",\"pattern\":\"*\",\"action\":\"deny\"},{\"permission\":\"plan_enter\",\"pattern\":\"*\",\"action\":\"deny\"},{\"permission\":\"plan_exit\",\"pattern\":\"*\",\"action\":\"deny\"}]" cost=0 tokens.input=0 tokens.output=0 tokens.reasoning=0 tokens.cache.read=0 tokens.cache.write=0 time.created=1795127488615 time.updated=1795127488615
+timestamp=2026-11-19T22:31:28.623Z level=INFO run=c73ca7f7 message="event connected"
+timestamp=2026-11-19T22:31:28.644Z level=INFO run=c73ca7f7 message=loop session.id=ses_e0a104f98ffeZh82HAFpdFzIWU step=0
+timestamp=2026-11-19T22:31:29.104Z level=INFO run=c73ca7f7 message="shell tool using shell" shell=/usr/bin/bash
+timestamp=2026-11-19T22:31:29.109Z level=INFO run=c73ca7f7 message=init count=1
+timestamp=2026-11-19T22:31:29.113Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=true agent=title mode=primary
+timestamp=2026-11-19T22:31:29.116Z level=WARN run=c73ca7f7 message="background dependency install failed" dir=/home/banc/.config/opencode error="Cause([Fail(NpmInstallFailedError (cause: O1: 403 Forbidden - GET https://registry.npmjs.org/@opencode-ai%2fplugin))])"
+timestamp=2026-11-19T22:31:29.117Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:29.152Z level=INFO run=c73ca7f7 message="watcher backend" directory=/travail platform=linux backend=inotify
+timestamp=2026-11-19T22:31:29.158Z level=INFO run=c73ca7f7 message="project copy refresh started" projectID=global
+timestamp=2026-11-19T22:31:29.160Z level=INFO run=c73ca7f7 message="project copy refresh done" projectID=global updated=[] removed=[]
+timestamp=2026-11-19T22:31:29.179Z level=INFO run=c73ca7f7 message="booting location services" directory=/travail workspaceID=undefined
+timestamp=2026-11-19T22:31:29.376Z level=INFO run=c73ca7f7 message=process session.id=ses_e0a104f98ffeZh82HAFpdFzIWU messageID=msg_1f5efb24a001VP4Jsh14DU3owe
+timestamp=2026-11-19T22:31:29.385Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary
+timestamp=2026-11-19T22:31:29.387Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:29.456Z level=ERROR run=c73ca7f7 message="Failed to fetch models.dev" cause="Cause([Fail(HttpClientError: Transport error (GET https://models.opencode.ai/api.json) (cause: Error [ERR_PROXY_TUNNEL]: Proxy refused to open a tunnel: 403 Forbidden))])"
+timestamp=2026-11-19T22:31:31.191Z level=INFO run=c73ca7f7 message=evaluated permission=read pattern=travail/consignes.md action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T22:31:31.204Z level=INFO run=c73ca7f7 message=loop session.id=ses_e0a104f98ffeZh82HAFpdFzIWU step=1
+timestamp=2026-11-19T22:31:31.208Z level=INFO run=c73ca7f7 message="touching file" file=/travail/consignes.md
+timestamp=2026-11-19T22:31:31.214Z level=INFO run=c73ca7f7 message=process session.id=ses_e0a104f98ffeZh82HAFpdFzIWU messageID=msg_1f5efba85001M1gRS4Y7BS1Z2S
+timestamp=2026-11-19T22:31:31.214Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary
+timestamp=2026-11-19T22:31:31.216Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:31.914Z level=INFO run=c73ca7f7 message=evaluated permission=bash pattern="find /travail -maxdepth 3 -type f" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T22:31:31.914Z level=INFO run=c73ca7f7 message=evaluated permission=bash pattern=sort action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T22:31:31.919Z level=INFO run=c73ca7f7 message=evaluated permission=bash pattern="ls -la /travail" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T22:31:31.952Z level=INFO run=c73ca7f7 message=loop session.id=ses_e0a104f98ffeZh82HAFpdFzIWU step=2
+timestamp=2026-11-19T22:31:31.959Z level=INFO run=c73ca7f7 message=process session.id=ses_e0a104f98ffeZh82HAFpdFzIWU messageID=msg_1f5efbd71001vFKuRCSSobQIp2
+timestamp=2026-11-19T22:31:31.960Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary
+timestamp=2026-11-19T22:31:31.960Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:32.599Z level=INFO run=c73ca7f7 message=evaluated permission=read pattern=travail/dosage/unites.py action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T22:31:32.604Z level=INFO run=c73ca7f7 message="touching file" file=/travail/dosage/unites.py
+timestamp=2026-11-19T22:31:32.743Z level=INFO run=c73ca7f7 message=evaluated permission=read pattern=travail/dosage/__init__.py action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T22:31:32.748Z level=INFO run=c73ca7f7 message="touching file" file=/travail/dosage/__init__.py
+timestamp=2026-11-19T22:31:32.784Z level=INFO run=c73ca7f7 message=evaluated permission=read pattern=travail/tests/test_unites.py action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T22:31:32.789Z level=INFO run=c73ca7f7 message="touching file" file=/travail/tests/test_unites.py
+timestamp=2026-11-19T22:31:32.848Z level=INFO run=c73ca7f7 message=evaluated permission=read pattern=travail/soumettre.py action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T22:31:32.852Z level=INFO run=c73ca7f7 message="touching file" file=/travail/soumettre.py
+timestamp=2026-11-19T22:31:32.873Z level=INFO run=c73ca7f7 message=loop session.id=ses_e0a104f98ffeZh82HAFpdFzIWU step=3
+timestamp=2026-11-19T22:31:32.881Z level=INFO run=c73ca7f7 message=process session.id=ses_e0a104f98ffeZh82HAFpdFzIWU messageID=msg_1f5efc10a001nTd4x3fRYrmEiJ
+timestamp=2026-11-19T22:31:32.881Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary
+timestamp=2026-11-19T22:31:32.882Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:36.887Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary
+timestamp=2026-11-19T22:31:36.888Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:36.891Z level=ERROR run=c73ca7f7 message="stream error" providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary error.error="AI_APICallError: Cannot connect to API: ECONNRESET: The socket connection was closed unexpectedly. For more information, pass `verbose: true` in the second argument to fetch() (cause: TypeError: ECONNRESET: The socket connection was closed unexpectedly. For more information, pass `verbose: true` in the second argument to fetch())"
+timestamp=2026-11-19T22:31:41.194Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary
+timestamp=2026-11-19T22:31:41.195Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:41.198Z level=ERROR run=c73ca7f7 message="stream error" providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary error.error="AI_APICallError: Cannot connect to API: ECONNRESET: The socket connection was closed unexpectedly. For more information, pass `verbose: true` in the second argument to fetch() (cause: TypeError: ECONNRESET: The socket connection was closed unexpectedly. For more information, pass `verbose: true` in the second argument to fetch())"
+timestamp=2026-11-19T22:31:49.604Z level=INFO run=c73ca7f7 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary
+timestamp=2026-11-19T22:31:49.605Z level=INFO run=c73ca7f7 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T22:31:49.608Z level=ERROR run=c73ca7f7 message="stream error" providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a104f98ffeZh82HAFpdFzIWU small=false agent=build mode=primary error.error="AI_APICallError: Cannot connect to API: ECONNRESET: The socket connection was closed unexpectedly. For more information, pass `verbose: true` in the second argument to fetch() (cause: TypeError: ECONNRESET: The socket connection was closed unexpectedly. For more information, pass `verbose: true` in the second argument to fetch())"

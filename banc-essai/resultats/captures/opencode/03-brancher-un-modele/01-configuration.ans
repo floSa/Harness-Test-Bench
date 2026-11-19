@@ -1,0 +1,46 @@
+bash-5.2$ export BANC_MODELE_URL=http://127.0.0.1:4100 BANC_MODELE=deepseek-v4.1-flash
+bash-5.2$ harnais/opencode/configurer.sh
+configuration écrite : /tmp/manuel/home/.config/opencode/opencode.json
+bash-5.2$ cat ~/.config/opencode/opencode.json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "banc/deepseek-v4.1-flash",
+  "small_model": "banc/deepseek-v4.1-flash",
+  "autoupdate": false,
+  "share": "disabled",
+  "provider": {
+    "banc": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LiteLLM du banc",
+      "options": {
+        "baseURL": "http://127.0.0.1:4100/v1",
+        "apiKey": "{env:BANC_CLE_MODELE}"
+      },
+      "models": {
+        "deepseek-v4.1-flash": {
+          "name": "deepseek-v4.1-flash",
+          "attachment": true,
+          "tool_call": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 1000000,
+            "output": 32768
+          }
+        }
+      }
+    }
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "webfetch": "deny"
+  }
+}bash-5.2$

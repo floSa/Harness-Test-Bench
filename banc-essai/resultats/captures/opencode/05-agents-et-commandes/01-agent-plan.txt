@@ -1,0 +1,40 @@
+  ┃
+                                                                                                    Bug conversion µl vers ml et test
+     + Thought: 155ms                                                                               Python
+
+  ┃                                                                                                 Context
+  ┃  $ python3 -c "from dosage import vers_ml; print(vers_ml(250, 'µl')); print(vers_ml(250,        9,333 tokens
+  ┃  'ul')); print(vers_ml(250, 'μl'))"                                                             1% used
+  ┃                                                                                                 $0.00 spent
+  ┃  0.25
+  ┃  0.25                                                                                           LSP
+  ┃  0.25                                                                                           LSPs are disabled
+  ┃
+
+  ┃
+  ┃  $ python3 -m pytest -q
+  ┃
+  ┃  /usr/bin/python3: No module named pytest
+  ┃
+
+     + Thought: 463ms
+
+     Corrigé dans dosage/unites.py:8 : le facteur de µl était 1000.0 au lieu de 0.001.
+
+     Essai Python :
+
+     vers_ml(250, "µl") -> 0.25
+     vers_ml(250, "ul") -> 0.25
+     vers_ml(250, "μl") -> 0.25
+
+     Note : pytest n'est pas installé, la suite de tests n'a donc pas pu être lancée.
+
+     ▣  Build · deepseek-v4.1-flash · 8.6s
+
+  ┃
+  ┃
+  ┃
+  ┃  Plan · deepseek-v4.1-flash LiteLLM du banc                                                     /tmp/manuel/dosage
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/manuel/dosage                                                 9.3K (1%)  ctrl+p commands    • OpenCode 1.19.6
+
