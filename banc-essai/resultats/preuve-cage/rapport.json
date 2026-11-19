@@ -1,0 +1,41 @@
+{
+  "essai": "preuve-cage",
+  "tache": "extraction",
+  "versions": {
+    "corpus_empreintes_sha256": "1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0",
+    "evaluateur_commit": "9a38098"
+  },
+  "soumissions": [],
+  "soumissions_acceptees": 0,
+  "refus_format": 0,
+  "refus_limite": 0,
+  "fin": null,
+  "score_final": null,
+  "meilleur_score": null,
+  "score_validation_annonce": null,
+  "ecart_validation_test": null,
+  "note_finale": null,
+  "relance": null,
+  "construction": {
+    "essai": "preuve-cage",
+    "harnais": "sonde",
+    "recette": "jouet",
+    "tache": "jouet",
+    "debut": "2026-11-19T17:02:03+01:00",
+    "fin": "2026-11-19T17:02:06+01:00",
+    "duree_s": 3.3,
+    "code_retour": 1,
+    "garde_fou_s": 7200,
+    "garde_fou_atteint": false,
+    "espace": "/home/florian/banc-espaces/preuve-cage/travail",
+    "appels_modele": 2,
+    "appels_echoues": 2,
+    "appels_429": 2,
+    "appels_avec_image": 1,
+    "jetons_entree": 0,
+    "jetons_sortie": 0,
+    "temps_modele_s": 0.5,
+    "demandes_reseau": 6,
+    "demandes_reseau_refusees": 4
+  }
+}

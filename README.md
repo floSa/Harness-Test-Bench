@@ -27,7 +27,7 @@ Harness-Test-Bench/
     └── journal.md
 ```
 
-État : cadrage terminé ; corpus généré (60 rapports, vérité terrain annotée) ; évaluation prête (API de soumission, notation, recettes, tâche jouet) ; cage et harnais à construire.
+État : cadrage terminé ; corpus généré (60 rapports, vérité terrain annotée) ; évaluation prête (API de soumission, notation, recettes, tâche jouet) ; cage et traces construites (preuve d'isolement faite, appel réussi au modèle en attente : modèle gratuit saturé chez le fournisseur) ; harnais à installer.
 
 | Besoin | Page |
 |---|---|
