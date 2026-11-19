@@ -7,6 +7,7 @@ CLAUDE.md
 donnees/
 # Test caché du corpus : jamais versionné, jamais visible des harnais
 banc-essai/corpus/test-cache/
+banc-essai/corpus/relance/
 # Environnements
 .venv/
 __pycache__/

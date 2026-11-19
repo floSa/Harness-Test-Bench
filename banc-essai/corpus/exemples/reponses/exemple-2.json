@@ -1,0 +1,17 @@
+{
+  "machine": "Ostiovan 600",
+  "constructeur": "Doraetis",
+  "numero_serie": "DO-2023-56272",
+  "site": null,
+  "reference_rapport": "DM-RI-2025-3553",
+  "date_intervention": "2025-04-15",
+  "date_validation": "2025-04-25",
+  "volume_dose_ml": 2.47,
+  "volume_nominal_ml": 2.5,
+  "tolerance_ml": 0.075,
+  "debit_ml_min": 241.0,
+  "pression_bar": 3.1999,
+  "reference_piece": null,
+  "technicien": "Callum Redding",
+  "statut": "conforme"
+}

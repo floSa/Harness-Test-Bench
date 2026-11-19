@@ -1,131 +1,129 @@
 # Cahier des charges du corpus
 
-Version 1, 18 novembre 2026. À relire et valider avant toute génération.
+Version 2, 19 novembre 2026, **proposition à valider avec les exemples** (`banc-essai/corpus/exemples/`). Remplace la version 1 (historique git). Le générateur de la version 1 est conservé dans `banc-essai/corpus/v1/` jusqu'au portage de ses mises en page.
 
 ## 1. Principe
 
-50 rapports d'intervention fictifs sur des équipements de dosage (doseuses, pompes, remplisseuses, pipettes automatiques), en PDF de 3 à 5 pages, en français et en anglais. Tout est fictif : entreprises, machines, marques, logos, personnes. Les réponses attendues sont tirées au sort avant la génération : elles sont donc connues sans erreur.
+Rapports d'intervention fictifs sur des équipements de dosage (doseuses, pompes doseuses, remplisseuses, pipettes automatiques), en PDF de 4 à 7 pages, en français et en anglais. Tout est fictif : entreprises, marques, machines, logos, personnes. Les réponses sont tirées avant le rendu, puis recalculées à partir de ce qui est écrit (unité et arrondi affichés) : elles sont connues sans erreur.
 
-## 2. Structure d'un document
+Le corpus teste trois capacités : trouver la bonne valeur parmi des valeurs voisines, ne rien inventer quand la valeur manque, et généraliser à des noms et des mises en page jamais vus.
 
-| Page | Contenu | Ce que ça teste |
+## 2. Volumes
+
+| Jeu | Documents | Accès du harnais |
 |---|---|---|
-| Page de garde | logo du constructeur, parfois logo du prestataire ; nom de la machine, modèle, numéro de série, site, date, référence du rapport | lecture d'un formulaire ; constructeur ou prestataire |
-| Mesures (1 à 2 pages) | tableaux : plusieurs grandeurs et unités (ml, L, µl, ml/min, bar, °C), avant et après réglage, tolérances | trouver la bonne valeur parmi plusieurs |
-| Schéma | vue de la machine avec repères et cotes (capacité du réservoir, volume du circuit, volume de dose) | information dans une image : vision ou OCR |
-| Récit | constat, actions, pièces remplacées, corrections éventuelles | valeur citée seulement dans une phrase |
-| Conclusion | statut (conforme, non conforme, à revoir), technicien, signature | champ simple en fin de document |
+| Fourni | 35, avec vérité terrain | libre |
+| Test caché | 15 | API de soumission seulement |
+| Relance | 10 | jamais ; sert à relancer le workflow livré (protocole, section 6) |
 
-## 3. Gabarits
+Total : 60 documents, au-dessus du minimum de 50.
 
-4 prestataires fictifs, chacun avec sa mise en page, son vocabulaire et sa langue.
+## 3. Noms et généralisation
 
-| Gabarit | Langue | Particularité |
-|---|---|---|
-| 1 | français | tableaux classiques, clés proches des noms attendus |
-| 2 | anglais | format des nombres anglais (1,000.5), unités en abréviations |
-| 3 | français | beaucoup de texte libre, tableaux coupés entre deux pages |
-| 4 | anglais | mise en page différente ; **réservé au test** (jamais fourni) |
-
-## 4. Champs à extraire
-
-| Clé | Type | Exemple |
-|---|---|---|
-| `machine` | texte | « DosaLine 300 » |
-| `constructeur` | texte | « Hydrex » |
-| `numero_serie` | texte | « HX-2025-04417 » |
-| `site` | texte | « Usine de Cholet » |
-| `date_intervention` | date ISO | `2026-03-14` |
-| `volume_dose_ml` | nombre, ml | `49.6` |
-| `volume_nominal_ml` | nombre, ml | `50` |
-| `debit_ml_min` | nombre, ml/min | `150` |
-| `pression_bar` | nombre, bar | `2.4` |
-| `reference_piece` | texte | « JT-118 » |
-| `technicien` | texte | « Claire Morvan » |
-| `statut` | `conforme` / `non_conforme` / `a_revoir` | `conforme` |
-
-Un champ absent du document vaut `null`.
-
-## 5. Pièges
-
-Chaque valeur attendue reçoit 0, 1 ou 2 pièges, tirés au sort selon les proportions visées.
-
-| Piège | Règle de génération | Part visée |
-|---|---|---|
-| Volumes voisins | le volume de dose côtoie capacité du réservoir (L), volume du circuit, tolérance, ancienne valeur | tous les documents |
-| Unité à convertir | valeur donnée en µl ou en L | 20 % des valeurs de volume |
-| Format de nombre | virgule décimale, séparateur de milliers français ou anglais | selon le gabarit |
-| Synonyme de clé | « Contenance », « Capacité utile », « Fill volume », « Dose » | 30 % des clés |
-| Valeur seulement dans le récit | absente des tableaux | 15 % des valeurs |
-| Correction | « lire 25 ml au lieu de 20 ml » | 5 % des documents |
-| Tableau coupé | la ligne cherchée passe sur la page suivante | gabarit 3 |
-| Constructeur en logo seul | nom absent du texte, présent seulement dans le logo | 20 % des documents |
-| Constructeur ou prestataire | deux logos sur la page de garde | 30 % des documents |
-| Valeur dans le schéma seulement | cote lisible uniquement sur l'image | 10 % des valeurs |
-| Champ absent | réponse attendue `null` | 5 % des valeurs |
-| Page scannée | une page rendue en image dégradée (bruit, légère rotation) | 20 % des documents |
-
-## 6. Étiquettes de difficulté
-
-Chaque valeur attendue porte des étiquettes, utilisées pour le score par difficulté :
-
-| Étiquette | Valeurs |
+| Règle | Mise en œuvre |
 |---|---|
-| `emplacement` | `garde`, `tableau`, `recit`, `schema`, `conclusion` |
-| `cle` | `exacte`, `synonyme`, `logo` |
-| `unite` | `directe`, `conversion`, `sans_unite` |
-| `piege` | liste des pièges appliqués, vide sinon |
-| `scan` | `oui`, `non` |
+| Noms inventés | mots générés à partir de syllabes (`univers.py`), graine fixe |
+| Univers séparés | marques et prestataires du test et de la relance majoritairement absents du jeu fourni |
+| Prestataires récurrents | un prestataire du jeu fourni signe plusieurs rapports, toujours avec la même mise en page |
+| Rôles croisés | un même mot est marque dans un document, famille de machines ou nom de prestataire dans un autre (exemple : « Ostiovan » constructeur de l'exemple 1, machine « Ostiovan 600 » de l'exemple 2) |
+| Étiquette | chaque nom porte `vu` ou `inedit` selon sa présence dans le jeu fourni |
 
-## 7. L'ontologie (recette « avec aide »)
+## 4. Mises en page
 
-Un fichier `ontologie.md` donne, pour chaque clé : sa définition métier, son unité attendue et les conversions, ses synonymes, et les règles de choix entre valeurs voisines. Exemple :
-
-> `volume_dose_ml` : volume délivré à chaque cycle, mesuré après réglage, en millilitres. Synonymes : dose, volume délivré, fill volume. Convertir µl et L en ml. Ne pas confondre avec la capacité du réservoir (en litres), le volume du circuit, la tolérance (± …) ou la valeur avant réglage.
-
-## 8. Répartition
-
-| Jeu | Documents | Gabarits |
+| Style | Description | Jeu |
 |---|---|---|
-| Fourni | 35 : PDF et réponses attendues (`reponses/<id>.json`) | 1, 2, 3 |
-| Test caché | 15 : 10 des gabarits 1 à 3, 5 du gabarit 4 | réponses jamais dans l'espace du harnais |
+| Grille | page d'entrée en cases de tailles variées (référence, indice, dates, visas, révisions), tableau de mesures à entrées multiples | fourni, test |
+| Classique | formulaire à deux colonnes, tableaux simples | fourni, test |
+| Compact anglais | lignes clé-valeur, nombres anglais | fourni, test |
+| Texte abondant | récit long, tableau coupé entre deux pages | fourni, test |
+| Réservé | mise en page absente du jeu fourni (à concevoir) | test, relance |
 
-## 9. Format de réponse et notation
+Dans un style, la disposition dépend du prestataire (ordre et largeur des cases, police, format des nombres, des dates et place des unités).
 
-Réponse : un JSON par document, avec exactement les 12 clés de la section 4.
+## 5. Champs à extraire
 
-Notation, par valeur :
-- texte : égal après normalisation (casse, espaces, accents) ;
-- nombre : égal à 0,01 près, après conversion dans l'unité attendue ;
-- date : égale au format ISO ;
-- `null` attendu : juste seulement si la réponse est `null`.
+Un JSON par document, avec exactement ces 15 clés ; `null` quand la valeur est absente.
 
-Score d'un essai : pourcentage de valeurs justes sur le test caché, détaillé par clé, par étiquette et par gabarit.
+| Clé | Type | Valeur qui fait foi | Leurres présents |
+|---|---|---|---|
+| `machine` | texte | modèle de l'équipement contrôlé | type du moteur, équipement voisin, ligne du client |
+| `constructeur` | texte | fabricant de l'équipement | prestataire, marque du moteur, marque des instruments |
+| `numero_serie` | texte | n° de série de l'équipement | n° du moteur, des instruments, d'inventaire |
+| `site` | texte | site du client où l'équipement est installé | ville du siège du client, adresse du prestataire |
+| `reference_rapport` | texte | référence du rapport en vigueur | version annulée, n° de commande, n° d'affaire |
+| `date_intervention` | date ISO | jour de l'intervention | demande, incident, prochaine visite |
+| `date_validation` | date ISO | approbation finale du rapport | rédaction, vérification, révision, impression, étalonnage des instruments |
+| `volume_dose_ml` | nombre, ml | dose moyenne après réglage, toutes têtes et tous essais | essais un par un, moyenne d'une tête, avant réglage, réservoir, circuit |
+| `volume_nominal_ml` | nombre, ml | volume de consigne | gamme du modèle |
+| `tolerance_ml` | nombre, ml | tolérance admise ; en % elle se rapporte au nominal | incertitude de mesure |
+| `debit_ml_min` | nombre, ml/min | débit mesuré après réglage | avant réglage, maximal, équipement voisin, synthèse provisoire |
+| `pression_bar` | nombre, bar | pression de service mesurée après réglage | avant réglage, maximale, tarage de soupape, réseau d'air |
+| `reference_piece` | texte | pièce effectivement remplacée | pièces contrôlées, commandées, proposées au devis |
+| `technicien` | texte | intervenant responsable côté prestataire | accompagnant, rédacteur, vérificateur, demandeur et signataire client |
+| `statut` | `conforme` / `non_conforme` / `a_revoir` | décision finale | statut d'arrivée, cases non cochées |
+
+## 6. Pièges
+
+Chaque valeur reçoit 0 à 2 pièges tirés au sort ; les pièges systématiques et l'étiquette `scan` n'entrent pas dans cette limite. Parts calculées par jeu, arrondies au plus proche, tirées en nombre exact.
+
+| Famille | Piège | Règle | Part visée |
+|---|---|---|---|
+| Emplacement | `recit_seul` | valeur seulement dans une phrase | 12 % des valeurs |
+| | `schema_seul` | valeur seulement dans le schéma (image) | 8 % des valeurs numériques |
+| | `tampon_seul` | date de validation seulement dans un tampon (image) | 20 % des documents |
+| | `logo_seul` | constructeur seulement dans son logo | 20 % des documents |
+| Absence | `champ_absent` | réponse `null`, avec un voisin tentant (n° du moteur, pression maximale, pièces commandées) et des marqueurs variés (vide, « — », « illisible », « n.c. », « n.m. ») | 10 % des valeurs |
+| Doublons | `valeur_barree` | valeur imprimée barrée, valeur juste écrite à la main (image) | 5 % des documents |
+| | `erratum` | le récit rectifie une valeur du tableau | 5 % des documents |
+| | `conflit_regle` | synthèse provisoire en page d'entrée, une phrase désigne le tableau qui fait foi | 10 % des documents |
+| | `version_remplacee` | « annule et remplace » une ancienne référence | 30 % des documents |
+| Calcul | `moyenne_a_calculer` | moyenne des essais non écrite | 15 % des documents |
+| | `tolerance_en_pourcent` | tolérance en % du nominal | 30 % des documents |
+| | `unite_a_convertir` | µl, cl, L ; L/h, ml/s, L/min ; mbar, kPa, psi | 25 % des valeurs numériques |
+| Forme | `synonyme_cle` | libellé synonyme (« EMT », « Set point », « OEM ») | 30 % des valeurs |
+| | `format_nombre` | séparateurs selon le prestataire : `1 250,5`, `1250,5`, `1.250,5`, `1,250.5`, `1250.5`, `1'250.5` | selon le prestataire |
+| | dates | `14/03/2026`, `2026-03-14`, `14.03.26`, `14 mars 2026`, `March 14, 2026` (format américain réservé aux prestataires anglophones) | selon le prestataire |
+| | place de l'unité | dans la case, dans l'en-tête, dans une colonne, dans une note sous le tableau | selon le prestataire |
+| Systématique | zones ambiguës | plaque du moteur (image), instruments de mesure, équipement voisin, réseau d'air, pièces et devis | tous les documents |
+| | personnes et dates multiples | 5 personnes, 8 dates par document | tous les documents |
+| Lecture visuelle | `scan` | une page tramée, bruitée, légèrement tournée | 20 % des documents |
+| | cases à cocher | statut indiqué par une croix tracée, sans texte | style grille |
+
+Une écriture ambiguë comme « 1,250 » n'apparaît que si la langue et l'ordre de grandeur la tranchent.
+
+## 7. Vérité terrain et annotation
+
+| Fichier | Contenu |
+|---|---|
+| `verite/<id>.json` | par champ : valeur normalisée, emplacement, règle qui fait foi, pièges, écritures (texte, page, cadre, texte ou image), leurres (texte, page, cadre, raison) ; par document : prestataire, formats, unités écrites, page scannée |
+| `reponses/<id>.json` | les 15 valeurs attendues |
+| `annotations/<id>.pdf` | copie du document : cadres verts (valeur juste ; pointillés pour les essais à moyenner), orange (valeur barrée), rouges numérotés (leurres) ; page de synthèse |
+| `verite.csv` | toutes les valeurs du corpus, une ligne par document et par champ |
+
+Le cadre de chaque écriture en texte est vérifié dans le PDF (recherche de la chaîne dans la page) ; une écriture introuvable est une erreur de génération.
+
+## 8. Notation
+
+| Type | Règle |
+|---|---|
+| Texte | égal après normalisation (casse, espaces, accents) |
+| Nombre | égal à 0,01 près dans l'unité de la clé ; les valeurs voisines d'un même champ diffèrent d'au moins 0,02 |
+| Date | égale au format ISO |
+| `null` attendu | juste seulement si la réponse est `null` |
+| Taux d'invention | part des réponses non nulles là où `null` est attendu (à ajouter au protocole) |
+
+Scores détaillés par clé, par famille de pièges, par style, par prestataire et par nom vu ou inédit.
+
+## 9. Ontologie (recette « avec aide »)
+
+`banc-essai/recettes/avec-aide/ontologie.md` : pour chaque clé, définition métier, unité et conversions, synonymes, règle de choix entre valeurs voisines (colonne « valeur qui fait foi » de la section 5, détaillée).
+
+La recette « sans aide » donne au moins une définition d'une ligne par clé : sans elle, `technicien` ou `date_validation` ne sont pas décidables.
 
 ## 10. Livrables de la génération
 
-- `banc-essai/corpus/generer.py` : générateur, avec graine fixe pour reproduire le corpus à l'identique ;
-- `banc-essai/corpus/fourni/` : 35 PDF et leurs réponses ;
-- `banc-essai/corpus/test-cache/` : 15 PDF et leurs réponses (hors git) ;
-- `banc-essai/corpus/etiquettes.json` : étiquettes de chaque valeur ;
+- `banc-essai/corpus/generer.py` et ses modules, graine fixe ;
+- `banc-essai/corpus/fourni/` : 35 PDF, réponses, vérité, annotations ;
+- `banc-essai/corpus/test-cache/` et `relance/` : hors git ;
+- `banc-essai/corpus/empreintes.sha256` : empreintes de tous les fichiers générés ;
 - `banc-essai/recettes/avec-aide/ontologie.md`.
-
-## 11. Précisions de mise en œuvre (lot 1)
-
-Ajoutées le 19 novembre 2026 avec le générateur ; elles fixent la lecture de la section 5.
-
-| Point | Règle retenue |
-|---|---|
-| Calcul des parts | par jeu (fourni, test) ; nombre visé = part × effectif, arrondi au plus proche (0,5 vers le haut) ; tirage exact de ce nombre |
-| « des valeurs » | les 12 valeurs de chaque document ; tirage parmi les clés éligibles ci-dessous |
-| « des valeurs de volume » | `volume_dose_ml` et `volume_nominal_ml` |
-| « des documents » | effectif du jeu |
-| Limite de 2 pièges | porte sur les pièges tirés au sort ; les pièges systématiques (volumes voisins, format de nombre, tableau coupé) et l'étiquette `scan` n'y comptent pas |
-| Champ absent : clés éligibles | `numero_serie`, `site`, `debit_ml_min`, `pression_bar`, `reference_piece`, `technicien` |
-| Récit seul : clés éligibles | `site`, `date_intervention`, `numero_serie`, les 4 valeurs numériques, `reference_piece` |
-| Schéma seul : clés éligibles | les 4 valeurs numériques |
-| Correction | une valeur numérique du tableau ; le tableau porte la valeur fausse, le récit la rectifie ; réponse attendue : la valeur rectifiée ; emplacement `recit` |
-| Unité à convertir | µl sous 20 ml, L au-delà |
-| Écarts minimaux | dose après réglage, volume nominal et dose avant réglage diffèrent d'au moins 0,02 ml : la tolérance de notation (0,01) les sépare |
-| Étiquettes du test caché | dans `test-cache/etiquettes.json` (une étiquette `champ_absent` révèle une réponse) ; `etiquettes.json` ne couvre que le jeu fourni |
-| Fichiers de contrôle | `controle/<id>.json` : chaque écriture d'une valeur (page, texte ou image, chaîne), lu par `controler.py` ; ceux du test caché restent dans `test-cache/` |
