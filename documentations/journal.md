@@ -108,3 +108,9 @@
 - Défauts corrigés en route : boucles de relevé orphelines qui gardaient la sortie ouverte (tests bloqués 5 min) et le verrou (essai suivant refusé) ; arrêt de toute la cage au dépassement de mémoire (`OOMPolicy=continue`).
 - Vérifié : 27 tests réussis ; sonde 42 sur 42 (`preuve-cage-cadre`) ; faux harnais d'extraction (`verif-lanceur-cadre`) : relance 10 sur 10, dépense égale au journal ; OpenCode jouet 100 % avec le cadre (`opencode-jouet-3` : mémoire maximale 0,6 Go, disque 35 Mo, téléchargements 4,2 Mo).
 - Reste à faire : manuel d'OpenCode avec captures ; Goose, gptme, Pi, Cline ; document d'explication du protocole avec schémas (demandé par l'utilisateur).
+
+### 2026-11-19 — Lot 4 (Harnais) : Goose, schémas validés, index des résultats
+
+- Protocole expliqué : 2 diagrammes de séquence cassés sur GitHub (point-virgule dans les messages, lu comme fin d'instruction par Mermaid) ; corrigés et les 6 schémas validés par Mermaid 12.3.0 (Node 26.13.1 installé dans `harnais/_outils/`, empreinte vérifiée). Index des essais `banc-essai/resultats/README.md`, régénéré à la fin de chaque essai.
+- Goose 1.60.1 (`harnais/goose/`) : binaire officiel, empreinte vérifiée ; configuration entièrement par variables d'environnement (fournisseur `openai`, `OPENAI_HOST` = LiteLLM du banc, mode `auto`, trousseau désactivé) ; trace en événements JSON et session exportée. Tâche jouet dans la cage : 100 % aux cas cachés, 22 s, 8 appels, 0,0014 $ ; catalogue `models.dev` refusé sans effet.
+- Reste à faire : gptme, Pi, Cline ; manuels avec captures.

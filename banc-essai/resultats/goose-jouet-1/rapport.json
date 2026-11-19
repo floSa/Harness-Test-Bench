@@ -1,0 +1,92 @@
+{
+  "essai": "goose-jouet-1",
+  "tache": "jouet",
+  "versions": {
+    "corpus_empreintes_sha256": "1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0",
+    "evaluateur_commit": "dcabda3"
+  },
+  "soumissions": [
+    {
+      "numero": 1,
+      "heure": "2026-11-19T23:01:14+01:00",
+      "statut": "acceptee",
+      "score": 1.0
+    }
+  ],
+  "soumissions_acceptees": 1,
+  "refus_format": 0,
+  "refus_limite": 0,
+  "fin": {
+    "heure": "2026-11-19T23:01:16+01:00",
+    "soumission_finale": 1,
+    "score_validation": 1.0,
+    "commande": null,
+    "commentaire": "FACTEURS_ML['µl'] corrigé de 1000.0 à 0.001 ; tests locaux 5/5, score soumission 1.0"
+  },
+  "fin_declaree": true,
+  "soumission_finale": 1,
+  "score_final": 1.0,
+  "meilleur_score": 1.0,
+  "score_validation_annonce": 1.0,
+  "ecart_validation_test": 0.0,
+  "note_finale": {
+    "score": 1.0,
+    "tests": 10,
+    "reussis": 10,
+    "echecs": [],
+    "cage": true
+  },
+  "relance": null,
+  "construction": {
+    "essai": "goose-jouet-1",
+    "harnais": "goose",
+    "version_harnais": "goose 1.60.1",
+    "recette": "jouet",
+    "tache": "jouet",
+    "debut": "2026-11-19T23:00:57+01:00",
+    "fin": "2026-11-19T23:01:18+01:00",
+    "duree_s": 21.7,
+    "code_retour": 0,
+    "garde_fou_s": 1800,
+    "garde_fou_atteint": false,
+    "espace": "/home/florian/banc-espaces/goose-jouet-1/travail",
+    "modeles": [
+      "openrouter/deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "fournisseurs": [],
+    "appels_modele": 8,
+    "appels_echoues": 0,
+    "appels_429": 0,
+    "attente_429_s": 0.0,
+    "appels_avec_image": 0,
+    "jetons_entree": 58495,
+    "jetons_cache": 46464,
+    "jetons_sortie": 2182,
+    "cout_usd": 0.001396,
+    "cout_openrouter_usd": 0.001396,
+    "depense_cle_usd": 0.001395542,
+    "ecart_depense_journal_usd": 0.0,
+    "depense_cle_relance_usd": null,
+    "temps_modele_s": 19.7,
+    "demandes_reseau": 4,
+    "demandes_reseau_refusees": 2,
+    "hotes_refuses": [
+      "models.dev"
+    ],
+    "telechargement_octets": 1955282,
+    "telechargement_par_hote_octets": {
+      "pypi.org": 105027,
+      "files.pythonhosted.org": 1850255
+    },
+    "telechargement_max_octets": 10000000000,
+    "telechargement_plafond_atteint": false,
+    "memoire_max": "16G",
+    "memoire_pic_octets": 152584192,
+    "arrets_memoire": 0,
+    "gpu_memoire_avant_mio": 4671,
+    "gpu_memoire_pic_essai_mio": 35,
+    "disque_pic_octets": 7324,
+    "disque_max_octets": 30000000000,
+    "disque_depasse": false
+  }
+}
