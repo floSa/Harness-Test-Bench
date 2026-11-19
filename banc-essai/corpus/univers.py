@@ -64,7 +64,7 @@ def _couleur(r):
     return tuple(round(r.uniform(0.05, 0.75), 2) for _ in range(3))
 
 
-def construire(graine, n_marques=(10, 8, 6), n_prestataires=(8, 4, 4)):
+def construire(graine, n_marques=(10, 8, 6), n_prestataires=(8, 5, 4)):
     """Univers en trois parts : fourni, test, relance.
 
     Renvoie {part: {"marques": [...], "prestataires": [...]}} ; chaque marque a ses familles

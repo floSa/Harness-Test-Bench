@@ -4,7 +4,7 @@ Version 2, 19 novembre 2026, **proposition à valider avec les exemples** (`banc
 
 ## 1. Principe
 
-Rapports d'intervention fictifs sur des équipements de dosage (doseuses, pompes doseuses, remplisseuses, pipettes automatiques), en PDF de 4 à 7 pages, en français et en anglais. Tout est fictif : entreprises, marques, machines, logos, personnes. Les réponses sont tirées avant le rendu, puis recalculées à partir de ce qui est écrit (unité et arrondi affichés) : elles sont connues sans erreur.
+Rapports d'intervention fictifs sur des équipements de dosage (doseuses, pompes doseuses, remplisseuses, pipettes automatiques), en PDF de 3 à 6 pages, en français et en anglais. Tout est fictif : entreprises, marques, machines, logos, personnes. Les réponses sont tirées avant le rendu, puis recalculées à partir de ce qui est écrit (unité et arrondi affichés) : elles sont connues sans erreur.
 
 Le corpus teste trois capacités : trouver la bonne valeur parmi des valeurs voisines, ne rien inventer quand la valeur manque, et généraliser à des noms et des mises en page jamais vus.
 
@@ -64,23 +64,21 @@ Un JSON par document, avec exactement ces 15 clés ; `null` quand la valeur est 
 
 ## 6. Pièges
 
-Chaque valeur reçoit 0 à 2 pièges tirés au sort ; les pièges systématiques et l'étiquette `scan` n'entrent pas dans cette limite. Parts calculées par jeu, arrondies au plus proche, tirées en nombre exact.
+Chaque valeur reçoit au plus 2 difficultés tirées au sort (un emplacement hors défaut compte pour une) ; les pièges systématiques et l'étiquette `scan` n'entrent pas dans cette limite. Parts calculées par jeu, arrondies au plus proche, tirées en nombre exact.
 
 | Famille | Piège | Règle | Part visée |
 |---|---|---|---|
-| Emplacement | `recit_seul` | valeur seulement dans une phrase | 12 % des valeurs |
-| | `schema_seul` | valeur seulement dans le schéma (image) | 8 % des valeurs numériques |
-| | `tampon_seul` | date de validation seulement dans un tampon (image) | 20 % des documents |
-| | `logo_seul` | constructeur seulement dans son logo | 20 % des documents |
-| Absence | `champ_absent` | réponse `null`, avec un voisin tentant (n° du moteur, pression maximale, pièces commandées) et des marqueurs variés (vide, « — », « illisible », « n.c. », « n.m. ») | 10 % des valeurs |
+| Emplacement | voir section 11 | formulaire, tableau, phrase, paragraphe, schéma, logo, plaque, tampon, calcul | par champ, section 11 |
+| Absence | `absent` | réponse `null`, avec un voisin tentant (n° du moteur, pression maximale, pièces commandées) et des marqueurs variés (vide, « — », « illisible », « n.c. », « n.m. ») | environ 9 % des valeurs, par champ |
 | Doublons | `valeur_barree` | valeur imprimée barrée, valeur juste écrite à la main (image) | 5 % des documents |
 | | `erratum` | le récit rectifie une valeur du tableau | 5 % des documents |
 | | `conflit_regle` | synthèse provisoire en page d'entrée, une phrase désigne le tableau qui fait foi | 10 % des documents |
 | | `version_remplacee` | « annule et remplace » une ancienne référence | 30 % des documents |
-| Calcul | `moyenne_a_calculer` | moyenne des essais non écrite | 15 % des documents |
+| Calcul | `moyenne_a_calculer` | moyenne des essais non écrite (emplacement `calcul` de la dose) | 15 % des documents |
 | | `tolerance_en_pourcent` | tolérance en % du nominal | 30 % des documents |
-| | `unite_a_convertir` | µl, cl, L ; L/h, ml/s, L/min ; mbar, kPa, psi | 25 % des valeurs numériques |
-| Forme | `synonyme_cle` | libellé synonyme (« EMT », « Set point », « OEM ») | 30 % des valeurs |
+| | `unite_a_convertir` | µl, cl, L ; L/h, ml/s, L/min ; mbar, kPa, psi | 25 % des valeurs numériques présentes |
+| Forme | `synonyme_cle` | libellé synonyme (« EMT », « Set point », « OEM ») | 30 % des valeurs écrites avec un libellé |
+| | `redacteur_autre` | le rédacteur du rapport n'est pas le technicien responsable | 30 % des documents |
 | | `format_nombre` | séparateurs selon le prestataire : `1 250,5`, `1250,5`, `1.250,5`, `1,250.5`, `1250.5`, `1'250.5` | selon le prestataire |
 | | dates | `14/03/2026`, `2026-03-14`, `14.03.26`, `14 mars 2026`, `March 14, 2026` (format américain réservé aux prestataires anglophones) | selon le prestataire |
 | | place de l'unité | dans la case, dans l'en-tête, dans une colonne, dans une note sous le tableau | selon le prestataire |
@@ -127,3 +125,54 @@ La recette « sans aide » donne au moins une définition d'une ligne par clé :
 - `banc-essai/corpus/test-cache/` et `relance/` : hors git ;
 - `banc-essai/corpus/empreintes.sha256` : empreintes de tous les fichiers générés ;
 - `banc-essai/recettes/avec-aide/ontologie.md`.
+
+## 11. Plan du corpus
+
+Le plan est tiré avant tout rendu (`plan.py`, graine fixe) ; le générateur l'exécute sans rien tirer d'autre que les valeurs. Le rapport `banc-essai/corpus/plan-equilibre.md` en donne les agrégats (aucune valeur, aucun identifiant du test ni de la relance).
+
+| Étape | Règle |
+|---|---|
+| Composition | jeu, style, prestataire, marque, type d'équipement (à parts égales par univers), langue, nom vu ou inédit |
+| Emplacements | pour chaque champ, parts visées ci-dessous, tirées en nombre exact par jeu (plus grand reste) |
+| Équilibrage | les emplacements difficiles vont aux documents les moins chargés, et aux styles qui en ont le moins pour ce champ |
+| Pièges | pièges de document, puis de valeur, sur les documents les moins chargés, dans la limite de 2 difficultés par valeur |
+| Contrôle | `plan.py` vérifie les effectifs par jeu, la limite par valeur et l'absence de piège sur un champ absent |
+
+| Emplacement | Sens |
+|---|---|
+| `formulaire` | libellé et valeur côte à côte : page d'entrée, cartouche, bloc de conclusion |
+| `tableau` | case d'un tableau, libellé en tête de ligne ou de colonne |
+| `phrase` | phrase courte qui contient le libellé et la valeur |
+| `paragraphe` | valeur noyée dans un long paragraphe, sans libellé ; le titre de la section évoque la clé |
+| `schema` | cote du schéma (image) |
+| `logo` | constructeur seulement dans son logo (image) |
+| `plaque` | n° de série seulement sur la plaque photographiée de la machine (image) |
+| `tampon` | date de validation seulement dans le tampon (image) |
+| `calcul` | dose à calculer : moyenne des essais |
+| `absent` | réponse `null` |
+
+| Champ | formulaire | tableau | phrase | paragraphe | schema | logo | plaque | tampon | calcul | absent |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `machine` | 60 |  | 15 | 25 |  |  |  |  |  |  |
+| `constructeur` | 55 |  | 10 | 15 |  | 20 |  |  |  |  |
+| `numero_serie` | 45 |  | 10 | 15 |  |  | 10 |  |  | 20 |
+| `site` | 50 |  | 10 | 20 |  |  |  |  |  | 20 |
+| `reference_rapport` | 90 |  | 10 |  |  |  |  |  |  |  |
+| `date_intervention` | 45 | 10 | 20 | 25 |  |  |  |  |  |  |
+| `date_validation` | 40 |  | 10 | 10 |  |  |  | 25 |  | 15 |
+| `volume_dose_ml` |  | 45 | 15 | 15 | 10 |  |  |  | 15 |  |
+| `volume_nominal_ml` | 15 | 50 | 10 | 15 | 10 |  |  |  |  |  |
+| `tolerance_ml` | 5 | 55 | 10 | 15 |  |  |  |  |  | 15 |
+| `debit_ml_min` |  | 45 | 10 | 15 | 15 |  |  |  |  | 15 |
+| `pression_bar` |  | 45 | 10 | 15 | 15 |  |  |  |  | 15 |
+| `reference_piece` |  | 50 | 10 | 20 |  |  |  |  |  | 20 |
+| `technicien` | 45 |  | 15 | 25 |  |  |  |  |  | 15 |
+| `statut` | 50 |  | 25 | 25 |  |  |  |  |  |  |
+
+Parts en % des documents de chaque jeu.
+
+| Jeu | Composition |
+|---|---|
+| Fourni | 35 documents, 8 prestataires (2 par style, un francophone et un anglophone), 4 à 5 documents chacun |
+| Test | 15 documents : 4 de 2 prestataires déjà vus, 6 de 3 nouveaux prestataires dans les styles connus, 5 du style réservé ; environ un tiers de marques déjà vues |
+| Relance | 10 documents, prestataires et marques inédits, dont 3 du style réservé |

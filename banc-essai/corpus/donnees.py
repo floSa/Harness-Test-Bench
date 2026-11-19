@@ -89,7 +89,8 @@ LIBELLES = {
     },
 }
 
-# Emplacement par défaut de chaque valeur dans le style « grille ».
+# Emplacement par défaut de chaque valeur dans le style « grille » (« grille » et « visas » :
+# formulaire de la page d'entrée).
 EMPLACEMENT_DEFAUT = {
     "machine": "grille", "constructeur": "grille", "numero_serie": "grille", "site": "grille",
     "reference_rapport": "grille", "date_intervention": "grille", "date_validation": "visas",

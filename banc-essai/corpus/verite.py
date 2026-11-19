@@ -147,4 +147,4 @@ def annoter(pdf, verite):
     for k in range(0, len(lignes), par_page):
         page = doc.new_page(width=L, height=H)
         page.insert_text((36, 40), "\n".join(lignes[k:k + par_page]), fontsize=7.2, lineheight=1.35)
-    return doc.tobytes(garbage=3, deflate=True)
+    return doc.tobytes(garbage=3, deflate=True, no_new_id=True)
