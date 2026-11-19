@@ -1,0 +1,7 @@
+{
+  "heure": "2026-11-19T23:04:27+01:00",
+  "soumission_finale": 1,
+  "score_validation": 1.0,
+  "commande": null,
+  "commentaire": "FACTEURS_ML['µl'] corrigé de 1000.0 à 0.001 (250 µl = 0,25 ml); autres fonctions inchangées."
+}

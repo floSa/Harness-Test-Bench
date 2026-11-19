@@ -1,0 +1,14 @@
+configuration écrite : /home/banc/.config/gptme/config.toml
+· Skipping all confirmation prompts.                                            
+· stdin is not a TTY and prompts provided, switching to non-interactive mode    
+· Using user configuration from ~/.config/gptme/config.toml                     
+· WARNING  Parallel agent detected: gptme PID 1 (interactive, model=None)       
+· WARNING  Unknown model openai/banc/deepseek-v4.1-flash: using closest match   
+           metadata                                                             
+· Auto-generated conversation name: Consignes.md instructions                   
+· Session cost reached $0.61 (tokens: 8,180 in / 3,753 out, cache: 184,064 read 
+  / 0 created, hit rate: 95.7%) [threshold: $0.10]                              
+· WARNING  Auto-reply: Assistant message had no tools. Asking for               
+           confirmation...                                                      
+· Complete tool call detected, stopping session immediately                     
+· Hook 'complete.complete' signaled session completion                          
