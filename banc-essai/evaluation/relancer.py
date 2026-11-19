@@ -1,4 +1,4 @@
-"""Relance du workflow livré sur un lot neuf (jeu « relance » du corpus), hors cage.
+"""Relance du workflow livré sur un lot neuf (jeu « relance » du corpus), dans la cage, sans le harnais.
 
     uv run --project banc-essai/evaluation python banc-essai/evaluation/relancer.py \
         --espace DOSSIER --essai banc-essai/resultats/<essai> [--commande "..."] \
@@ -6,7 +6,9 @@
 
 La commande vient de la déclaration de fin (`<essai>/evaluation/fin.json`) sauf si elle est
 donnée. Elle est lancée depuis l'espace de travail, `{entree}` (copie des PDF seuls) et
-`{sortie}` remplacés. Résultat : `<essai>/relance/resultat.json`, sorties et journaux de la
+`{sortie}` remplacés. Dans la cage (banc-essai/cage/cage.sh, si bubblewrap est présent) :
+espace en /travail, PDF en /entree (lecture seule), sortie en /sortie, réseau limité au modèle
+(clé --cle) et à PyPI ; sinon, simple sous-processus (`"cage": false` dans le résultat). Résultat : `<essai>/relance/resultat.json`, sorties et journaux de la
 commande. Document sans JSON ou JSON illisible : tous ses champs comptent faux.
 """
 import argparse
@@ -22,11 +24,13 @@ from pathlib import Path
 import notation
 
 ICI = Path(__file__).resolve().parent
+CAGE = ICI.parent / "cage" / "cage.sh"
 DUREE_MAX = 3600
 
 
-def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX):
+def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=None, maison=None):
     essai = Path(essai)
+    cage = shutil.which("bwrap") is not None and CAGE.exists()
     jeu = Path(jeu or ICI.parent / "corpus" / "relance")
     if commande is None:
         commande = json.loads((essai / "evaluation" / "fin.json").read_text())["commande"]
@@ -42,10 +46,22 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX):
             shutil.copy2(jeu / f"{i}.pdf", entree / f"{i}.pdf")
         sortie = Path(tmp) / "sortie"
         sortie.mkdir()
-        cmd = commande.replace("{entree}", shlex.quote(str(entree))).replace("{sortie}", shlex.quote(str(sortie)))
+        if cage:
+            m = Path(maison) if maison else Path(tmp) / "maison"
+            m.mkdir(exist_ok=True)
+            interne = commande.replace("{entree}", "/entree").replace("{sortie}", "/sortie")
+            args = [str(CAGE), "--espace", str(espace), "--maison", str(m), "--entree", str(entree),
+                    "--sortie", str(sortie), "--journal-reseau", str(sortie_essai / "reseau.jsonl"),
+                    "--duree", str(duree_max)]
+            if cle:
+                args += ["--cle", str(cle)]
+            cmd, shell = args + ["--", "bash", "-c", interne], False
+        else:
+            cmd = commande.replace("{entree}", shlex.quote(str(entree))).replace("{sortie}", shlex.quote(str(sortie)))
+            shell = True
         debut = time.monotonic()
         try:
-            p = subprocess.run(cmd, shell=True, cwd=espace, capture_output=True, text=True, timeout=duree_max)
+            p = subprocess.run(cmd, shell=shell, cwd=espace, capture_output=True, text=True, timeout=duree_max + 60)
             code, out, err = p.returncode, p.stdout, p.stderr
         except subprocess.TimeoutExpired as e:
             code, out, err = "délai dépassé", e.stdout or "", e.stderr or ""
@@ -65,7 +81,7 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX):
     note = notation.noter(reponses, attendus, verites)
     note.pop("detail")
     resultat = {
-        "commande": commande, "code_retour": code, "duree_s": round(duree, 1),
+        "commande": commande, "cage": cage, "code_retour": code, "duree_s": round(duree, 1),
         "duree_par_document_s": round(duree / len(ids), 2), "documents": len(ids),
         "json_produits": len(reponses) + len(illisibles), "json_illisibles": illisibles,
         "erreurs_format": notation.valider(reponses, ids)[:50],
@@ -82,8 +98,10 @@ def main():
     a.add_argument("--commande")
     a.add_argument("--jeu")
     a.add_argument("--duree-max", type=int, default=DUREE_MAX)
+    a.add_argument("--cle", help="fichier de clé virtuelle (appels au modèle du workflow)")
+    a.add_argument("--maison", help="dossier personnel du harnais pendant l'essai")
     o = a.parse_args()
-    r = relancer(o.espace, o.essai, o.commande, o.jeu, o.duree_max)
+    r = relancer(o.espace, o.essai, o.commande, o.jeu, o.duree_max, o.cle, o.maison)
     print(f"relance : {r['json_produits']}/{r['documents']} JSON, score {r['note']['score']}, "
           f"{r['duree_par_document_s']} s par document, code {r['code_retour']}")
 

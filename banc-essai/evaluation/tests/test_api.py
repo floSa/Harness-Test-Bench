@@ -225,3 +225,33 @@ def test_jouet_refus_de_format(toy):
     assert c.appel("POST", "/soumissions", {"fichiers": {"dosage/unites.py": "x = 1"}})[0] == 400
     assert c.appel("GET", "/etat")[1]["soumissions_utilisees"] == 0
     assert c.appel("GET", "/documents")[0] == 404
+
+
+def test_jouet_dans_la_cage(toy, tmp_path):
+    """Le code soumis tourne dans la cage : ni lecture du dépôt, ni écriture sur l'hôte, ni réseau."""
+    from conftest import ICI
+    fuite = tmp_path / "fuite.txt"
+    verite = ICI.parents[1] / "corpus" / "fourni" / "reponses" / "doc-001.json"
+    espion = (
+        "import pathlib, urllib.request\n"
+        "trace = []\n"
+        f"for f in [{str(verite)!r}, '/home/florian']:\n"
+        "    try:\n"
+        "        pathlib.Path(f).read_text(); trace.append('lu ' + f)\n"
+        "    except Exception as e:\n"
+        "        trace.append(type(e).__name__)\n"
+        "try:\n"
+        "    urllib.request.urlopen('https://pypi.org', timeout=3); trace.append('réseau')\n"
+        "except Exception as e:\n"
+        "    trace.append(type(e).__name__)\n"
+        "try:\n"
+        f"    pathlib.Path({str(fuite)!r}).write_text(' '.join(trace))\n"
+        "except Exception:\n"
+        "    pass\n"
+    )
+    c, _ = toy
+    f = fichiers(ICI / "solutions" / "jouet_juste")
+    f["dosage/__init__.py"] = espion + f["dosage/__init__.py"]
+    code, r = c.appel("POST", "/soumissions", {"fichiers": f})
+    assert code == 200 and r["score"] == 1.0
+    assert not fuite.exists()

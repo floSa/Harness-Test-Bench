@@ -21,7 +21,7 @@ def test_relance_et_rapport(tmp_path):
         attendu = sum((a[k] is None) or (k == "statut" and a[k] == "conforme")
                       for a in attendus.values() for k in notation.CLES) / (len(ids) * 15)
         assert r["score"] == round(attendu, 4)
-        cmd = f"{sys.executable} faux_workflow.py {{entree}} {{sortie}}"
+        cmd = "python3 faux_workflow.py {entree} {sortie}"
         assert c.appel("POST", "/fin", {"soumission_finale": 1, "score_validation": 0.5, "commande": cmd})[0] == 200
     finally:
         s.shutdown()
