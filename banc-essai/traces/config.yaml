@@ -1,0 +1,20 @@
+# Modèle de la campagne 1 (protocole, section 2) ; le nom exposé aux harnais est « gemma-4-31b ».
+model_list:
+  - model_name: gemma-4-31b
+    litellm_params:
+      model: openrouter/google/gemma-4-31b-it:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+litellm_settings:
+  callbacks: journal_appels.journal
+  drop_params: true
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/DATABASE_URL
+
+# Un seul déploiement : pas de mise en pause après une erreur (le harnais doit recevoir le vrai 429
+# d'OpenRouter, mesuré par le protocole), pas de nouvelle tentative cachée par le relais.
+router_settings:
+  disable_cooldowns: true
+  num_retries: 0

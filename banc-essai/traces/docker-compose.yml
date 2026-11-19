@@ -1,0 +1,46 @@
+# LiteLLM du banc : relais vers OpenRouter, une clé virtuelle par harnais, journal de chaque appel.
+# Lancement : banc-essai/traces/demarrer.sh (jamais LLM-Service, jamais les conteneurs rag-* et llm-*).
+name: harness-litellm
+
+services:
+  harness-litellm-db:
+    image: postgres:17.7-alpine
+    container_name: harness-litellm-db
+    environment:
+      POSTGRES_USER: litellm
+      POSTGRES_DB: litellm
+    env_file:
+      - ./secrets/base.env
+    volumes:
+      - harness-litellm-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U litellm -d litellm"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  harness-litellm:
+    image: ghcr.io/berriai/litellm:v1.106.4
+    container_name: harness-litellm
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    env_file:
+      - path: ../../.env
+        required: false
+      - ./secrets/base.env
+      - ./secrets/maitre.env
+    environment:
+      JOURNAL_APPELS: /journaux/appels.jsonl
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ./journal_appels.py:/app/journal_appels.py:ro
+      - ./journaux:/journaux
+    ports:
+      - "127.0.0.1:4100:4000"
+    depends_on:
+      harness-litellm-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  harness-litellm-db:
