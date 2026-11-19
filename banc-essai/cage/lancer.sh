@@ -128,6 +128,10 @@ touch "$RES/traces/reseau.jsonl"
 tail -n +"$((LIGNE0 + 1))" "$JOURNAL" | python3 "$CAGE/collecter.py" repartir "$ESSAI" "$RES"
 python3 "$CAGE/collecter.py" essai "$RES" "$ESSAI" "$NOM" "$RECETTE" "$TACHE" "$DEBUT" "$FIN" "$DUREE_S" \
   "$CODE" "$ESPACE" "$DUREE" "$DEPENSE" "$DEPENSE_RELANCE" "$HARNAIS" "$MEMOIRE" "$DISQUE_MAX" "$TELECHARGEMENT_MAX"
+# Code écrit par le harnais archivé pour la relecture (ni PDF ni JSON), puis toute chaîne qui ressemble
+# à une clé masquée dans les résultats (un harnais peut afficher ses variables d'environnement).
+python3 "$CAGE/archiver_code.py" "$ESPACE" "$RES" >/dev/null || true
+python3 "$CAGE/masquer.py" "$RES" >/dev/null || true
 uv run -q --project "$EVAL" python "$EVAL/rapport.py" --essai "$RES" >/dev/null || true
 uv run -q --project "$EVAL" python "$EVAL/index_resultats.py" >/dev/null || true
 exit "$CODE"

@@ -1,0 +1,17 @@
+{
+  "machine": "Kalanbel 85",
+  "constructeur": "Ulvrix",
+  "numero_serie": "UL/19/9953",
+  "site": "Livingston Site",
+  "reference_rapport": "RC-RI-2025-5122",
+  "date_intervention": "2025-07-31",
+  "date_validation": "2025-08-10",
+  "volume_dose_ml": 25.3,
+  "volume_nominal_ml": 25.0,
+  "tolerance_ml": 0.5,
+  "debit_ml_min": 760.0,
+  "pression_bar": 3.1,
+  "reference_piece": null,
+  "technicien": "Emma Ainsley",
+  "statut": "conforme"
+}

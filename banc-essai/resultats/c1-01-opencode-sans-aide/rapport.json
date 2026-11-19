@@ -1,0 +1,826 @@
+{
+  "essai": "c1-01-opencode-sans-aide",
+  "tache": "extraction",
+  "versions": {
+    "corpus_empreintes_sha256": "1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0",
+    "evaluateur_commit": "d1b49b1"
+  },
+  "soumissions": [
+    {
+      "numero": 1,
+      "heure": "2026-11-19T23:54:26+01:00",
+      "statut": "acceptee",
+      "score": 1.0
+    }
+  ],
+  "soumissions_acceptees": 1,
+  "refus_format": 0,
+  "refus_limite": 0,
+  "fin": {
+    "heure": "2026-11-19T23:57:18+01:00",
+    "soumission_finale": 1,
+    "score_validation": 0.9981,
+    "commande": ".venv/bin/python extraire.py {entree} {sortie}",
+    "commentaire": null
+  },
+  "fin_declaree": true,
+  "soumission_finale": 1,
+  "score_final": 1.0,
+  "meilleur_score": 1.0,
+  "score_validation_annonce": 0.9981,
+  "ecart_validation_test": -0.0019,
+  "note_finale": {
+    "documents": 15,
+    "champs": 225,
+    "justes": 225,
+    "score": 1.0,
+    "invention": {
+      "null_attendus": 19,
+      "inventes": 0,
+      "taux": 0.0
+    },
+    "par": {
+      "cle": {
+        "constructeur": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "date_intervention": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "date_validation": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "debit_ml_min": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "machine": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "numero_serie": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "pression_bar": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "reference_piece": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "reference_rapport": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "site": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "statut": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "technicien": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "tolerance_ml": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "volume_dose_ml": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "volume_nominal_ml": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        }
+      },
+      "emplacement": {
+        "absent": {
+          "n": 19,
+          "justes": 19,
+          "score": 1.0
+        },
+        "calcul": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "formulaire": {
+          "n": 76,
+          "justes": 76,
+          "score": 1.0
+        },
+        "logo": {
+          "n": 3,
+          "justes": 3,
+          "score": 1.0
+        },
+        "paragraphe": {
+          "n": 37,
+          "justes": 37,
+          "score": 1.0
+        },
+        "phrase": {
+          "n": 28,
+          "justes": 28,
+          "score": 1.0
+        },
+        "plaque": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "schema": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "tableau": {
+          "n": 46,
+          "justes": 46,
+          "score": 1.0
+        },
+        "tampon": {
+          "n": 4,
+          "justes": 4,
+          "score": 1.0
+        }
+      },
+      "etiquette": {
+        "absent": {
+          "n": 19,
+          "justes": 19,
+          "score": 1.0
+        },
+        "cases_a_cocher": {
+          "n": 5,
+          "justes": 5,
+          "score": 1.0
+        },
+        "conflit_regle": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "dates_multiples": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "erratum": {
+          "n": 1,
+          "justes": 1,
+          "score": 1.0
+        },
+        "format_nombre": {
+          "n": 28,
+          "justes": 28,
+          "score": 1.0
+        },
+        "moyenne_a_calculer": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "personnes_multiples": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "redacteur_autre": {
+          "n": 5,
+          "justes": 5,
+          "score": 1.0
+        },
+        "scan": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "synonyme_cle": {
+          "n": 48,
+          "justes": 48,
+          "score": 1.0
+        },
+        "tableau_coupe": {
+          "n": 4,
+          "justes": 4,
+          "score": 1.0
+        },
+        "tableau_multi_entrees": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "tolerance_en_pourcent": {
+          "n": 5,
+          "justes": 5,
+          "score": 1.0
+        },
+        "unite_a_convertir": {
+          "n": 17,
+          "justes": 17,
+          "score": 1.0
+        },
+        "valeur_barree": {
+          "n": 1,
+          "justes": 1,
+          "score": 1.0
+        },
+        "version_remplacee": {
+          "n": 5,
+          "justes": 5,
+          "score": 1.0
+        },
+        "volumes_voisins": {
+          "n": 15,
+          "justes": 15,
+          "score": 1.0
+        },
+        "zones_ambigues": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        }
+      },
+      "famille": {
+        "absence": {
+          "n": 19,
+          "justes": 19,
+          "score": 1.0
+        },
+        "calcul": {
+          "n": 24,
+          "justes": 24,
+          "score": 1.0
+        },
+        "doublons": {
+          "n": 9,
+          "justes": 9,
+          "score": 1.0
+        },
+        "emplacement": {
+          "n": 84,
+          "justes": 84,
+          "score": 1.0
+        },
+        "forme": {
+          "n": 72,
+          "justes": 72,
+          "score": 1.0
+        },
+        "lecture_visuelle": {
+          "n": 13,
+          "justes": 13,
+          "score": 1.0
+        },
+        "systematique": {
+          "n": 93,
+          "justes": 93,
+          "score": 1.0
+        }
+      },
+      "langue": {
+        "en": {
+          "n": 105,
+          "justes": 105,
+          "score": 1.0
+        },
+        "fr": {
+          "n": 120,
+          "justes": 120,
+          "score": 1.0
+        }
+      },
+      "marque_vue": {
+        "inedite": {
+          "n": 150,
+          "justes": 150,
+          "score": 1.0
+        },
+        "vue": {
+          "n": 75,
+          "justes": 75,
+          "score": 1.0
+        }
+      },
+      "prestataire": {
+        "Fennet Technical Services": {
+          "n": 45,
+          "justes": 45,
+          "score": 1.0
+        },
+        "Mabindor Mesure et Contrôle": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "Nevevex Calibration Ltd": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "Riliovane Services": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "Sarolor Techniques": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "Verelrix Ingénierie": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "Vexitik Services Ltd": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        }
+      },
+      "prestataire_vu": {
+        "inedit": {
+          "n": 165,
+          "justes": 165,
+          "score": 1.0
+        },
+        "vu": {
+          "n": 60,
+          "justes": 60,
+          "score": 1.0
+        }
+      },
+      "style": {
+        "classique": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "compact": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "grille": {
+          "n": 60,
+          "justes": 60,
+          "score": 1.0
+        },
+        "recit": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "reserve": {
+          "n": 75,
+          "justes": 75,
+          "score": 1.0
+        }
+      }
+    }
+  },
+  "relance": {
+    "commande": ".venv/bin/python extraire.py {entree} {sortie}",
+    "cage": true,
+    "code_retour": 0,
+    "duree_s": 46.8,
+    "duree_par_document_s": 4.68,
+    "documents": 10,
+    "json_produits": 10,
+    "json_illisibles": [],
+    "fichiers_refuses": [],
+    "erreurs_format": [],
+    "note": {
+      "documents": 10,
+      "champs": 150,
+      "justes": 149,
+      "score": 0.9933,
+      "invention": {
+        "null_attendus": 11,
+        "inventes": 0,
+        "taux": 0.0
+      },
+      "par": {
+        "cle": {
+          "constructeur": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "date_intervention": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "date_validation": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "debit_ml_min": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "machine": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "numero_serie": {
+            "n": 10,
+            "justes": 9,
+            "score": 0.9
+          },
+          "pression_bar": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "reference_piece": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "reference_rapport": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "site": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "statut": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "technicien": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "tolerance_ml": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "volume_dose_ml": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "volume_nominal_ml": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          }
+        },
+        "emplacement": {
+          "absent": {
+            "n": 11,
+            "justes": 11,
+            "score": 1.0
+          },
+          "calcul": {
+            "n": 2,
+            "justes": 2,
+            "score": 1.0
+          },
+          "formulaire": {
+            "n": 53,
+            "justes": 52,
+            "score": 0.9811
+          },
+          "logo": {
+            "n": 2,
+            "justes": 2,
+            "score": 1.0
+          },
+          "paragraphe": {
+            "n": 20,
+            "justes": 20,
+            "score": 1.0
+          },
+          "phrase": {
+            "n": 20,
+            "justes": 20,
+            "score": 1.0
+          },
+          "plaque": {
+            "n": 1,
+            "justes": 1,
+            "score": 1.0
+          },
+          "schema": {
+            "n": 6,
+            "justes": 6,
+            "score": 1.0
+          },
+          "tableau": {
+            "n": 32,
+            "justes": 32,
+            "score": 1.0
+          },
+          "tampon": {
+            "n": 3,
+            "justes": 3,
+            "score": 1.0
+          }
+        },
+        "etiquette": {
+          "absent": {
+            "n": 11,
+            "justes": 11,
+            "score": 1.0
+          },
+          "cases_a_cocher": {
+            "n": 3,
+            "justes": 3,
+            "score": 1.0
+          },
+          "conflit_regle": {
+            "n": 2,
+            "justes": 2,
+            "score": 1.0
+          },
+          "dates_multiples": {
+            "n": 20,
+            "justes": 20,
+            "score": 1.0
+          },
+          "erratum": {
+            "n": 1,
+            "justes": 1,
+            "score": 1.0
+          },
+          "format_nombre": {
+            "n": 19,
+            "justes": 19,
+            "score": 1.0
+          },
+          "moyenne_a_calculer": {
+            "n": 2,
+            "justes": 2,
+            "score": 1.0
+          },
+          "personnes_multiples": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "redacteur_autre": {
+            "n": 4,
+            "justes": 4,
+            "score": 1.0
+          },
+          "scan": {
+            "n": 7,
+            "justes": 7,
+            "score": 1.0
+          },
+          "synonyme_cle": {
+            "n": 34,
+            "justes": 33,
+            "score": 0.9706
+          },
+          "tableau_coupe": {
+            "n": 6,
+            "justes": 6,
+            "score": 1.0
+          },
+          "tableau_multi_entrees": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "tolerance_en_pourcent": {
+            "n": 4,
+            "justes": 4,
+            "score": 1.0
+          },
+          "unite_a_convertir": {
+            "n": 11,
+            "justes": 11,
+            "score": 1.0
+          },
+          "valeur_barree": {
+            "n": 1,
+            "justes": 1,
+            "score": 1.0
+          },
+          "version_remplacee": {
+            "n": 4,
+            "justes": 4,
+            "score": 1.0
+          },
+          "volumes_voisins": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "zones_ambigues": {
+            "n": 20,
+            "justes": 19,
+            "score": 0.95
+          }
+        },
+        "famille": {
+          "absence": {
+            "n": 11,
+            "justes": 11,
+            "score": 1.0
+          },
+          "calcul": {
+            "n": 17,
+            "justes": 17,
+            "score": 1.0
+          },
+          "doublons": {
+            "n": 8,
+            "justes": 8,
+            "score": 1.0
+          },
+          "emplacement": {
+            "n": 54,
+            "justes": 54,
+            "score": 1.0
+          },
+          "forme": {
+            "n": 51,
+            "justes": 50,
+            "score": 0.9804
+          },
+          "lecture_visuelle": {
+            "n": 10,
+            "justes": 10,
+            "score": 1.0
+          },
+          "systematique": {
+            "n": 64,
+            "justes": 63,
+            "score": 0.9844
+          }
+        },
+        "langue": {
+          "en": {
+            "n": 75,
+            "justes": 74,
+            "score": 0.9867
+          },
+          "fr": {
+            "n": 75,
+            "justes": 75,
+            "score": 1.0
+          }
+        },
+        "marque_vue": {
+          "inedite": {
+            "n": 150,
+            "justes": 149,
+            "score": 0.9933
+          }
+        },
+        "prestataire": {
+          "Lumanrel Services Ltd": {
+            "n": 30,
+            "justes": 29,
+            "score": 0.9667
+          },
+          "Lumzor Maintenance": {
+            "n": 45,
+            "justes": 45,
+            "score": 1.0
+          },
+          "Mabaemos Ingénierie": {
+            "n": 30,
+            "justes": 30,
+            "score": 1.0
+          },
+          "Rilolor Calibration Ltd": {
+            "n": 45,
+            "justes": 45,
+            "score": 1.0
+          }
+        },
+        "prestataire_vu": {
+          "inedit": {
+            "n": 150,
+            "justes": 149,
+            "score": 0.9933
+          }
+        },
+        "style": {
+          "compact": {
+            "n": 30,
+            "justes": 29,
+            "score": 0.9667
+          },
+          "grille": {
+            "n": 45,
+            "justes": 45,
+            "score": 1.0
+          },
+          "recit": {
+            "n": 30,
+            "justes": 30,
+            "score": 1.0
+          },
+          "reserve": {
+            "n": 45,
+            "justes": 45,
+            "score": 1.0
+          }
+        }
+      }
+    },
+    "appels_modele": 10,
+    "cout_usd": 0.010458,
+    "cout_par_document_usd": 0.001046
+  },
+  "construction": {
+    "essai": "c1-01-opencode-sans-aide",
+    "harnais": "opencode",
+    "version_harnais": "opencode 1.19.6",
+    "recette": "sans-aide",
+    "tache": "extraction",
+    "debut": "2026-11-19T23:33:21+01:00",
+    "fin": "2026-11-19T23:57:27+01:00",
+    "duree_s": 1446.0,
+    "code_retour": 0,
+    "garde_fou_s": 7200,
+    "garde_fou_atteint": false,
+    "espace": "/home/florian/banc-espaces/c1-01-opencode-sans-aide/travail",
+    "modeles": [
+      "openrouter/deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "fournisseurs": [
+      "Pearl Research"
+    ],
+    "appels_modele": 286,
+    "appels_echoues": 1,
+    "appels_429": 0,
+    "attente_429_s": 0.0,
+    "appels_avec_image": 271,
+    "jetons_entree": 8716606,
+    "jetons_cache": 7158016,
+    "jetons_sortie": 702773,
+    "cout_usd": 0.310235,
+    "cout_openrouter_usd": 0.310235,
+    "depense_cle_usd": 0.3102354480000001,
+    "ecart_depense_journal_usd": 0.0,
+    "depense_cle_relance_usd": 0.01045769,
+    "temps_modele_s": 1424.7,
+    "demandes_reseau": 7,
+    "demandes_reseau_refusees": 5,
+    "hotes_refuses": [
+      "models.opencode.ai",
+      "registry.npmjs.org"
+    ],
+    "telechargement_octets": 118041248,
+    "telechargement_par_hote_octets": {
+      "pypi.org": 1598624,
+      "files.pythonhosted.org": 116442624
+    },
+    "telechargement_max_octets": 10000000000,
+    "telechargement_plafond_atteint": false,
+    "memoire_max": "16G",
+    "memoire_pic_octets": 1322311680,
+    "arrets_memoire": 0,
+    "gpu_memoire_avant_mio": 1092,
+    "gpu_memoire_pic_essai_mio": 1,
+    "disque_pic_octets": 565423188,
+    "disque_max_octets": 30000000000,
+    "disque_depasse": false
+  },
+  "taux_invention": 0.0,
+  "score_style_inedit": 1.0
+}

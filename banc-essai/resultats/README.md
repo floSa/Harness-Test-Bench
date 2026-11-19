@@ -23,5 +23,6 @@ Page régénérée à la fin de chaque essai (`banc-essai/evaluation/index_resul
 | [gptme-jouet-1](gptme-jouet-1/rapport.md) | tâche jouet (mise au point) | 2026-11-19 23:03 | gptme | jouet | 100,0 % |  | 48 s | 15 | 0,0022 $ |
 | [pi-jouet-1](pi-jouet-1/rapport.md) | tâche jouet (mise au point) | 2026-11-19 23:07 | pi | jouet | 100,0 % |  | 23 s | 11 | 0,0013 $ |
 | [cline-jouet-1](cline-jouet-1/rapport.md) | tâche jouet (mise au point) | 2026-11-19 23:09 | cline | jouet | 100,0 % |  | 29 s | 8 | 0,0016 $ |
+| [c1-01-opencode-sans-aide](c1-01-opencode-sans-aide/rapport.md) | essai de campagne | 2026-11-19 23:33 | opencode | sans-aide | 100,0 % | 99,3 % | 1446 s | 286 | 0,3102 $ |
 
 Score final : part des champs justes sur le test caché (tâche jouet : part des cas cachés réussis). Score de relance : même mesure, workflow relancé sans le harnais sur 10 documents neufs.
