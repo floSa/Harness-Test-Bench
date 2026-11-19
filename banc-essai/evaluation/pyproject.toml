@@ -1,0 +1,17 @@
+[project]
+name = "evaluation-banc"
+version = "1.0.0"
+description = "API de soumission, notation et rapports d'essai du banc des harnais"
+requires-python = "==3.12.*"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]

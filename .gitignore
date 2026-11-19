@@ -12,3 +12,5 @@ banc-essai/corpus/relance/
 .venv/
 __pycache__/
 node_modules/
+# Détail par document des soumissions au test caché (révèle la vérité)
+banc-essai/resultats/*/evaluation/detail-cache.jsonl

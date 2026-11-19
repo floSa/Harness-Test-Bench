@@ -1,0 +1,137 @@
+"""Rapport d'essai (JSON et Markdown) à partir des journaux de l'API et de la relance.
+
+    uv run --project banc-essai/evaluation python banc-essai/evaluation/rapport.py \
+        --essai banc-essai/resultats/<essai>
+
+Lit `<essai>/evaluation/soumissions.jsonl`, `fin.json` et, s'il existe, `<essai>/relance/resultat.json`.
+Écrit `<essai>/rapport.json` et `<essai>/rapport.md` (scores agrégés seulement, aucun détail par
+document du test caché).
+"""
+import argparse
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+ICI = Path(__file__).resolve().parent
+STYLE_INEDIT = "reserve"
+GROUPES = [("cle", "Clé"), ("famille", "Famille de pièges"), ("etiquette", "Étiquette"),
+           ("emplacement", "Emplacement"), ("style", "Style de mise en page"),
+           ("prestataire_vu", "Prestataire vu ou inédit"), ("marque_vue", "Marque vue ou inédite"),
+           ("langue", "Langue"), ("prestataire", "Prestataire")]
+
+
+def versions():
+    v = {}
+    emp = ICI.parent / "corpus" / "empreintes.sha256"
+    if emp.exists():
+        v["corpus_empreintes_sha256"] = hashlib.sha256(emp.read_bytes()).hexdigest()
+    try:
+        v["evaluateur_commit"] = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ICI,
+                                                capture_output=True, text=True, check=True).stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        v["evaluateur_commit"] = None
+    return v
+
+
+def construire(essai):
+    essai = Path(essai)
+    ev = essai / "evaluation"
+    lignes = [json.loads(l) for l in (ev / "soumissions.jsonl").read_text().splitlines()] \
+        if (ev / "soumissions.jsonl").exists() else []
+    acceptees = [l for l in lignes if l["statut"] == "acceptee"]
+    fin = json.loads((ev / "fin.json").read_text()) if (ev / "fin.json").exists() else None
+    relance = json.loads((essai / "relance" / "resultat.json").read_text()) \
+        if (essai / "relance" / "resultat.json").exists() else None
+    finale = next((l for l in acceptees if fin and l["numero"] == fin["soumission_finale"]), None)
+    meilleur = max((l["score"] for l in acceptees), default=None)
+    note = finale["note"] if finale else None
+    tache = "jouet" if note and "tests" in note else "extraction"
+    r = {
+        "essai": essai.name,
+        "tache": tache,
+        "versions": versions(),
+        "soumissions": [{"numero": l.get("numero"), "heure": l["heure"], "statut": l["statut"],
+                         "score": l.get("score")} for l in lignes],
+        "soumissions_acceptees": len(acceptees),
+        "refus_format": sum(l["statut"] == "refusee_format" for l in lignes),
+        "refus_limite": sum(l["statut"] == "refusee_limite" for l in lignes),
+        "fin": fin,
+        "score_final": finale["score"] if finale else None,
+        "meilleur_score": meilleur,
+        "score_validation_annonce": fin.get("score_validation") if fin else None,
+        "ecart_validation_test": round(fin["score_validation"] - finale["score"], 4)
+        if fin and finale and fin.get("score_validation") is not None else None,
+        "note_finale": note,
+        "relance": relance,
+    }
+    if tache == "extraction" and note:
+        r["taux_invention"] = note["invention"]["taux"]
+        r["score_style_inedit"] = note["par"].get("style", {}).get(STYLE_INEDIT, {}).get("score")
+    return r
+
+
+def pc(x):
+    return "" if x is None else f"{100 * x:.1f} %".replace(".", ",")
+
+
+def markdown(r):
+    L = [f"# Rapport d'essai : {r['essai']}", ""]
+    L += ["## Versions", "", "| Élément | Valeur |", "|---|---|"]
+    L += [f"| Tâche | {r['tache']} |"] + [f"| {k} | `{v}` |" for k, v in r["versions"].items()] + [""]
+    L += ["## Résultat", "", "| Mesure | Valeur |", "|---|---|"]
+    lignes = [("Score final (soumission déclarée)", pc(r["score_final"])),
+              ("Meilleur score", pc(r["meilleur_score"])),
+              ("Score de validation annoncé", pc(r["score_validation_annonce"])),
+              ("Écart annoncé moins test", pc(r["ecart_validation_test"])),
+              ("Soumissions acceptées", r["soumissions_acceptees"]),
+              ("Soumissions refusées (format)", r["refus_format"]),
+              ("Soumissions refusées (limite)", r["refus_limite"]),
+              ("Soumission déclarée finale", r["fin"]["soumission_finale"] if r["fin"] else "")]
+    if r["tache"] == "extraction":
+        lignes += [("Taux d'invention", pc(r.get("taux_invention"))),
+                   ("Score sur le style jamais vu", pc(r.get("score_style_inedit")))]
+    if r["relance"]:
+        rl = r["relance"]
+        lignes += [("Relance : score", pc(rl["note"]["score"])),
+                   ("Relance : JSON produits", f"{rl['json_produits']} sur {rl['documents']}"),
+                   ("Relance : durée par document", f"{rl['duree_par_document_s']} s"),
+                   ("Relance : code de retour", rl["code_retour"])]
+    L += [f"| {a} | {b} |" for a, b in lignes] + [""]
+    if r["soumissions"]:
+        S = r["soumissions"]
+        L += ["## Soumissions", "", "| Critère | " + " | ".join(f"Requête {k + 1}" for k in range(len(S))) + " |",
+              "|---|" + "---|" * len(S)]
+        L.append("| Heure | " + " | ".join(s["heure"] for s in S) + " |")
+        L.append("| Statut | " + " | ".join(s["statut"] for s in S) + " |")
+        L.append("| Numéro | " + " | ".join(str(s["numero"] or "") for s in S) + " |")
+        L.append("| Score | " + " | ".join(pc(s["score"]) for s in S) + " |")
+        L.append("")
+    note = r["note_finale"]
+    if r["tache"] == "extraction" and note:
+        L += ["## Scores détaillés de la soumission finale", ""]
+        for g, titre in GROUPES:
+            d = note["par"].get(g, {})
+            L += [f"### {titre}", "", f"| {titre} | Champs | Justes | Score |", "|---|---|---|---|"]
+            L += [f"| {k} | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in d.items()] + [""]
+    if r["tache"] == "jouet" and note:
+        L += ["## Tests cachés de la soumission finale", "", "| Mesure | Valeur |", "|---|---|",
+              f"| Tests | {note['tests']} |", f"| Réussis | {note['reussis']} |",
+              f"| Échoués | {', '.join(note['echecs'])} |", ""]
+    return "\n".join(L)
+
+
+def main():
+    a = argparse.ArgumentParser(description="Rapport d'essai")
+    a.add_argument("--essai", required=True)
+    o = a.parse_args()
+    r = construire(o.essai)
+    e = Path(o.essai)
+    (e / "rapport.json").write_text(json.dumps(r, ensure_ascii=False, indent=2) + "\n")
+    (e / "rapport.md").write_text(markdown(r))
+    print(f"rapport écrit : {e / 'rapport.md'}")
+
+
+if __name__ == "__main__":
+    sys.exit(main())
