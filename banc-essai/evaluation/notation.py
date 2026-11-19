@@ -38,6 +38,10 @@ PIEGES_DOC_CHAMP = {"redacteur_autre": "technicien", "version_remplacee": "refer
 EMPLACEMENTS_DIFFICILES = {"phrase", "paragraphe", "schema", "logo", "plaque", "tampon", "calcul"}
 
 
+# Valeur absolue maximale d'un nombre (au-delà : refus de format, ni infini ni entier géant).
+NOMBRE_MAX = 1e9
+
+
 # Format ------------------------------------------------------------------------------------------
 
 def erreurs_valeur(cle, v):
@@ -46,7 +50,9 @@ def erreurs_valeur(cle, v):
         return []
     if cle in NOMBRES:
         if isinstance(v, bool) or not isinstance(v, (int, float)) or v != v:
-            return [f"{cle} : nombre ou null attendu, reçu {json.dumps(v, ensure_ascii=False)}"]
+            return [f"{cle} : nombre ou null attendu, reçu {json.dumps(v, ensure_ascii=False)[:80]}"]
+        if not -NOMBRE_MAX <= v <= NOMBRE_MAX:
+            return [f"{cle} : nombre hors limites (au plus {NOMBRE_MAX:g} en valeur absolue)"]
         return []
     if not isinstance(v, str):
         return [f"{cle} : texte ou null attendu, reçu {json.dumps(v, ensure_ascii=False)}"]

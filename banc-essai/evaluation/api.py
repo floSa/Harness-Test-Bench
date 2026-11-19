@@ -15,13 +15,16 @@ Routes :
 
 Une soumission au mauvais format est refusée (400) et ne compte pas ; au-delà de 5 soumissions
 acceptées, refus (429). Chaque requête est journalisée (acces.jsonl), chaque soumission aussi
-(soumissions.jsonl : heure, contenu, score et scores agrégés). Le détail par document, qui révèle
-la vérité, va dans detail-cache.jsonl, hors git. L'état survit à un redémarrage.
+(soumissions.jsonl : heure, statut, score et scores agrégés). Le contenu soumis et le détail par
+document, qui révèlent la vérité, vont dans contenus-cache.jsonl et detail-cache.jsonl, hors git.
+Une erreur interne est journalisée (erreurs.jsonl) et renvoie 500 sans décompter la soumission.
+L'état survit à un redémarrage.
 """
 import argparse
 import datetime
 import json
 import threading
+import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -51,6 +54,8 @@ class Etat:
             jouet.config(self.jeu)
         self.f_soum = self.sortie / "soumissions.jsonl"
         self.f_detail = self.sortie / "detail-cache.jsonl"
+        self.f_contenus = self.sortie / "contenus-cache.jsonl"
+        self.f_erreurs = self.sortie / "erreurs.jsonl"
         self.f_acces = self.sortie / "acces.jsonl"
         self.f_fin = self.sortie / "fin.json"
         self.scores = {}
@@ -71,7 +76,9 @@ class Etat:
 
     def soumettre(self, corps):
         with self.verrou:
-            base = {"heure": maintenant(), "contenu": corps}
+            heure = maintenant()
+            self.ecrire(self.f_contenus, {"heure": heure, "contenu": corps})
+            base = {"heure": heure}
             if len(self.scores) >= self.limite:
                 self.ecrire(self.f_soum, base | {"statut": "refusee_limite"})
                 return 429, {"erreur": f"limite de {self.limite} soumissions atteinte"}
@@ -165,12 +172,18 @@ def gestionnaire(etat):
                 return self.repondre(400, {"erreur": "corps absent ou trop lourd"})
             try:
                 corps = json.loads(self.rfile.read(n))
-            except (json.JSONDecodeError, UnicodeDecodeError):
+            except (json.JSONDecodeError, UnicodeDecodeError, RecursionError):
                 return self.repondre(400, {"erreur": "format", "details": ["JSON illisible"]})
-            if self.path == "/soumissions":
-                return self.repondre(*etat.soumettre(corps))
-            if self.path == "/fin":
-                return self.repondre(*etat.fin(corps))
+            try:
+                if self.path == "/soumissions":
+                    return self.repondre(*etat.soumettre(corps))
+                if self.path == "/fin":
+                    return self.repondre(*etat.fin(corps))
+            except Exception as e:  # jamais de connexion coupée sans trace
+                etat.ecrire(etat.f_erreurs, {"heure": maintenant(), "chemin": self.path,
+                                             "erreur": f"{type(e).__name__}: {e}"[:500],
+                                             "pile": traceback.format_exc()[-2000:]})
+                return self.repondre(500, {"erreur": "erreur interne, soumission non décomptée"})
             return self.repondre(404, {"erreur": "introuvable"})
 
     return G

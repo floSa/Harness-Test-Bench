@@ -55,7 +55,19 @@ Une commande unique, lancée depuis ce dossier, qui prend un dossier de PDF et u
 <commande> {entree} {sortie}
 ```
 
-Elle sera relancée telle quelle, hors de cet environnement, sur des rapports neufs. Elle ne doit dépendre d'aucun fichier hors de ce dossier, à part les paquets qu'elle installe elle-même.
+Après la déclaration de fin, elle est relancée telle quelle sur des rapports neufs, sans le harnais : même dossier, mêmes paquets déjà installés, même accès au réseau (modèle et PyPI), mais avec une autre clé du modèle. Elle ne doit dépendre d'aucun fichier hors de ce dossier, à part les paquets installés. Elle écrit dans `{sortie}` des fichiers JSON ordinaires (ni lien symbolique, ni fichier spécial : ils sont ignorés).
+
+## Accès au modèle
+
+Le workflow qui appelle le modèle lit ces trois variables d'environnement à chaque lancement :
+
+| Variable | Contenu |
+|---|---|
+| `BANC_MODELE_URL` | adresse du relais du modèle ; API compatible OpenAI sous `$BANC_MODELE_URL/v1` (`/v1/chat/completions`) |
+| `BANC_MODELE` | nom du modèle à demander |
+| `BANC_CLE_MODELE` | clé, en en-tête `Authorization: Bearer` |
+
+La clé change entre la construction et la relance : elle n'est écrite ni dans un fichier ni dans le code.
 
 ## API de soumission
 

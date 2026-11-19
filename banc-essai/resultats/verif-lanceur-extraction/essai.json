@@ -1,0 +1,36 @@
+{
+  "essai": "verif-lanceur-extraction",
+  "harnais": "factice",
+  "version_harnais": null,
+  "recette": "sans-aide",
+  "tache": "extraction",
+  "debut": "2026-11-19T22:01:03+01:00",
+  "fin": "2026-11-19T22:01:08+01:00",
+  "duree_s": 5.0,
+  "code_retour": 0,
+  "garde_fou_s": 7200,
+  "garde_fou_atteint": false,
+  "espace": "/home/florian/banc-espaces/verif-lanceur-extraction/travail",
+  "modeles": [
+    "openrouter/deepseek/deepseek-v4.1-flash-1017"
+  ],
+  "fournisseurs": [
+    "Pearl Research"
+  ],
+  "appels_modele": 3,
+  "appels_echoues": 0,
+  "appels_429": 0,
+  "attente_429_s": 0.0,
+  "appels_avec_image": 0,
+  "jetons_entree": 108,
+  "jetons_cache": 0,
+  "jetons_sortie": 32,
+  "cout_usd": 1.5e-05,
+  "cout_openrouter_usd": 1.5e-05,
+  "depense_cle_usd": 1.5e-05,
+  "ecart_depense_journal_usd": 0.0,
+  "depense_cle_relance_usd": 7.8e-06,
+  "temps_modele_s": 4.4,
+  "demandes_reseau": 0,
+  "demandes_reseau_refusees": 0
+}

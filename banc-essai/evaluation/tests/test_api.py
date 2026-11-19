@@ -90,6 +90,35 @@ def test_refus_de_format_sans_decompte(extraction):
     assert all(l["statut"] == "refusee_format" for l in lignes)
 
 
+def test_nombre_immense_refuse(extraction):
+    c, tmp = extraction
+    for v in [10 ** 400, 1e10, -1e10]:
+        r = copy.deepcopy(ATTENDUS)
+        r[IDS[0]]["volume_nominal_ml"] = v
+        code, rep = soumettre(c, r)
+        assert code == 400 and rep["erreur"] == "format", v
+    assert c.appel("GET", "/etat")[1]["soumissions_utilisees"] == 0
+    assert "contenu" not in (tmp / "evaluation" / "soumissions.jsonl").read_text()
+    assert (tmp / "evaluation" / "contenus-cache.jsonl").exists()
+
+
+def test_erreur_interne_journalisee(tmp_path):
+    etat = api.Etat("extraction", FOURNI, tmp_path)
+    etat.soumettre = lambda corps: 1 / 0
+    s = api.serveur(etat, 0)
+    import threading
+    threading.Thread(target=s.serve_forever, daemon=True).start()
+    try:
+        from conftest import Client
+        code, rep = Client(s.server_port).appel("POST", "/soumissions", {"reponses": {}})
+        assert code == 500
+    finally:
+        s.shutdown()
+        s.server_close()
+    e = json.loads((tmp_path / "erreurs.jsonl").read_text().splitlines()[0])
+    assert e["erreur"].startswith("ZeroDivisionError")
+
+
 def test_json_illisible(extraction):
     c, _ = extraction
     import urllib.request
@@ -255,3 +284,29 @@ def test_jouet_dans_la_cage(toy, tmp_path):
     code, r = c.appel("POST", "/soumissions", {"fichiers": f})
     assert code == 200 and r["score"] == 1.0
     assert not fuite.exists()
+
+
+def test_jouet_resultat_non_falsifiable(toy):
+    """Le code soumis ne peut ni réécrire un fichier de résultat ni ajouter sa propre ligne de résultat."""
+    c, _ = toy
+    faussaire = (
+        "import atexit, json, pathlib, sys\n"
+        "def _faux():\n"
+        "    for f in ['/sortie/resultat.xml', '/travail/resultat.xml']:\n"
+        "        try:\n"
+        "            pathlib.Path(f).write_text('<testsuite tests=\"10\"></testsuite>')\n"
+        "        except Exception:\n"
+        "            pass\n"
+        "    try:\n"
+        "        d = json.load(open('/opt/jouet/appels.json'))\n"
+        "        vals = [0.25, 0.5, 0.001, 1.5, 30, 750, 4, None, 12345.75, 1.0]\n"
+        "        r = [{'exception': ['ValueError']} if v is None else {'valeur': v} for v in vals]\n"
+        "        sys.stdout.write(d['marque'] + ' ' + json.dumps(r) + '\\n')\n"
+        "    except Exception:\n"
+        "        pass\n"
+        "atexit.register(_faux)\n"
+    )
+    f = fichiers(JOUET.parents[2] / "recettes" / "jouet")
+    f["dosage/__init__.py"] = faussaire + f["dosage/__init__.py"]
+    code, r = c.appel("POST", "/soumissions", {"fichiers": f})
+    assert code == 200 and r["score"] == 0.0

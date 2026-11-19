@@ -1,0 +1,12 @@
+[
+  {"nom": "microlitres_250", "fonction": "vers_ml", "args": [250, "µl"], "attendu": 0.25},
+  {"nom": "microlitres_500", "fonction": "vers_ml", "args": [500, "µL"], "attendu": 0.5},
+  {"nom": "microlitres_1", "fonction": "vers_ml", "args": [1, "ul"], "attendu": 0.001},
+  {"nom": "microlitres_1500", "fonction": "vers_ml", "args": [1500, "uL"], "attendu": 1.5},
+  {"nom": "centilitres", "fonction": "vers_ml", "args": [3, "cl"], "attendu": 30},
+  {"nom": "litres", "fonction": "vers_ml", "args": [0.75, "l"], "attendu": 750},
+  {"nom": "cm3", "fonction": "vers_ml", "args": [4, "cm³"], "attendu": 4},
+  {"nom": "unite_inconnue", "fonction": "vers_ml", "args": [1, "gallon"], "exception": "ValueError"},
+  {"nom": "lire_nombre", "fonction": "lire_nombre", "args": ["12 345,75"], "attendu": 12345.75},
+  {"nom": "moyenne", "fonction": "moyenne", "args": [[0.98, 1.02, 1.0]], "attendu": 1.0}
+]

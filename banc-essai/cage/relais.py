@@ -81,7 +81,8 @@ def filtre(socket, journal, domaines):
             ligne = (await asyncio.wait_for(l.readline(), 30)).decode("latin-1").strip()
             while (await asyncio.wait_for(l.readline(), 30)) not in (b"\r\n", b"\n", b""):
                 pass
-        except (asyncio.TimeoutError, ConnectionError):
+        except (asyncio.TimeoutError, ConnectionError, ValueError, asyncio.LimitOverrunError):
+            # délai, connexion coupée ou ligne d'en-tête trop longue : refus sans réponse
             e.close()
             return
         parties = ligne.split()

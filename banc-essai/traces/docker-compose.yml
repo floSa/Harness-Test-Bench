@@ -1,4 +1,4 @@
-# LiteLLM du banc : relais vers OpenRouter, une clé virtuelle par harnais, journal de chaque appel.
+# LiteLLM du banc : relais vers OpenRouter, une clé virtuelle par essai, journal de chaque appel.
 # Lancement : banc-essai/traces/demarrer.sh (jamais LLM-Service, jamais les conteneurs rag-* et llm-*).
 name: harness-litellm
 
@@ -24,11 +24,13 @@ services:
     image: ghcr.io/berriai/litellm:v1.106.4
     container_name: harness-litellm
     command: ["--config", "/app/config.yaml", "--port", "4000"]
+    # Seule la clé OpenRouter entre dans le conteneur, sous un nom propre au banc
+    # (secrets/fournisseur.env, écrit par demarrer.sh) : les routes de transfert direct de LiteLLM
+    # (/openrouter/..., /gemini/...) ne trouvent aucune clé de fournisseur à utiliser.
     env_file:
-      - path: ../../.env
-        required: false
       - ./secrets/base.env
       - ./secrets/maitre.env
+      - ./secrets/fournisseur.env
     environment:
       JOURNAL_APPELS: /journaux/appels.jsonl
     volumes:

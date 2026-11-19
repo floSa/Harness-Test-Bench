@@ -1,6 +1,6 @@
 #!/bin/bash
-# Démarrage dans la cage : relais vers le modèle, PyPI et l'API (ceux qui existent), clé du
-# harnais, puis la commande.
+# Démarrage dans la cage : relais vers le modèle, PyPI et l'API (ceux qui existent), clé de
+# l'essai, puis la commande.
 set -u
 ports=()
 for r in modele:4100 pypi:3128 api:8765; do
@@ -18,6 +18,5 @@ for p in "${ports[@]}"; do
 done
 if [ -f /run/banc/cle.env ]; then
   set -a; . /run/banc/cle.env; set +a
-  rm -f /run/banc/cle.env
 fi
 "$@"

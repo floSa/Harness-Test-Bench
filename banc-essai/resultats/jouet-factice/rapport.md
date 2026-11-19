@@ -6,7 +6,7 @@
 |---|---|
 | Tâche | jouet |
 | corpus_empreintes_sha256 | `1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0` |
-| evaluateur_commit | `a1863e0` |
+| evaluateur_commit | `891dfdb` |
 
 ## Résultat
 
@@ -19,13 +19,14 @@
 | Soumissions acceptées | 2 |
 | Soumissions refusées (format) | 0 |
 | Soumissions refusées (limite) | 0 |
-| Soumission déclarée finale | 2 |
+| Soumission finale | 2 |
+| Fin déclarée | oui |
 
 ## Soumissions
 
 | Critère | Requête 1 | Requête 2 |
 |---|---|---|
-| Heure | 2026-11-19T14:06:29+01:00 | 2026-11-19T14:06:29+01:00 |
+| Heure | 2026-11-19T22:02:40+01:00 | 2026-11-19T22:02:40+01:00 |
 | Statut | acceptee | acceptee |
 | Numéro | 1 | 2 |
 | Score | 60,0 % | 70,0 % |
@@ -36,4 +37,4 @@
 |---|---|
 | Tests | 10 |
 | Réussis | 7 |
-| Échoués | test_microlitres[500-\xb5L-0.5], test_microlitres[1-ul-0.001], test_microlitres[1500-uL-1.5] |
+| Échoués | microlitres_500, microlitres_1, microlitres_1500 |

@@ -1,6 +1,6 @@
 # Protocole du banc des harnais
 
-Version 1.4, 19 novembre 2026 (modèle de la campagne 1 remplacé : DeepSeek V4.1 Flash au lieu de Gemma 4 31B gratuit ; une clé par essai). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
+Version 1.5, 19 novembre 2026 (corrections de la relecture indépendante : relance, routes du relais, tâche jouet, fin non déclarée, mesures). Version 1.4 : modèle de la campagne 1 remplacé par DeepSeek V4.1 Flash, une clé par essai. Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
 ## 1. Question posée
 
@@ -104,10 +104,14 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 ## 7. Anti-triche
 
 - Le test caché n'existe pas dans la cage ; seule l'API y donne accès.
-- L'API refuse au-delà de 5 soumissions et journalise chacune (heure, contenu, score). Une soumission au mauvais format est refusée avec le détail des erreurs et ne compte pas ; elle est journalisée. Chaque requête est journalisée (`acces.jsonl`).
+- L'API refuse au-delà de 5 soumissions et journalise chacune (heure, statut, score et scores agrégés dans `soumissions.jsonl` ; contenu soumis et détail par document hors git). Une soumission au mauvais format (dont un nombre au-delà de 10⁹ en valeur absolue) est refusée avec le détail des erreurs et ne compte pas ; elle est journalisée. Une erreur interne de l'API est journalisée (`erreurs.jsonl`), répond 500 et ne compte pas. Chaque requête est journalisée (`acces.jsonl`).
 - L'API ne renvoie que le score global : ni score par clé, ni détail par document.
-- Les PDF du test étant lisibles par le harnais, une réponse saisie à la main par le modèle (lecture directe des 15 documents) reste possible ; elle se repère dans les journaux LiteLLM (appels portant sur les documents du test) et l'écart avec la relance du workflow la révèle.
-- Toute tentative de lire l'évaluateur, de sortir de la cage ou de contourner la limite est relevée dans les journaux et notée.
+- Les PDF du test étant lisibles par le harnais, une réponse saisie à la main par le modèle (lecture directe des 15 documents) reste possible. Le journal des appels ne garde pas le contenu des messages et ne la repère donc pas ; elle se révèle par l'écart entre le score de test et celui de la relance du workflow, et par les transcriptions du harnais quand il en produit (lot 4).
+- La cage empêche de lire l'évaluateur, le test caché et les secrets, d'écrire hors de l'espace de travail et de sortir sur le réseau hors des trois accès prévus (preuve : sonde du lot 3, `banc-essai/resultats/preuve-cage-*`). Les demandes réseau refusées sont journalisées ; les accès aux fichiers ne le sont pas.
+- Clé de l'essai : limitée aux routes d'appel au modèle (ni transfert direct vers un fournisseur, ni gestion des clés) ; le relais ne connaît la clé OpenRouter que sous un nom propre au banc, inutilisable par ses routes de transfert direct. La clé est supprimée dès la sortie du harnais, avant la relance, qui reçoit une clé neuve.
+- Relance : seuls les fichiers ordinaires de la sortie sont lus (un lien symbolique posé par le workflow vers un fichier de l'hôte est ignoré et compté dans `fichiers_refuses`) ; une réponse mal formée compte faux. Sans bubblewrap, la relance et la notation de la tâche jouet refusent de tourner.
+- Tâche jouet : les cas cachés (appels et valeurs attendues) ne sont jamais montés dans la cage ; la cage reçoit les appels seuls et renvoie les valeurs obtenues, comparées hors de la cage ; une ligne de résultat en trop annule la soumission. Limite : le code soumis tourne dans le même processus que l'exécutant et peut écrire ses propres valeurs, mais sans connaître les valeurs attendues.
+- Sans déclaration de fin (harnais arrêté, garde-fou atteint) : la dernière soumission acceptée tient lieu de soumission finale, le rapport l'indique, et le workflow n'est pas relancé (pas de score de relance).
 
 ## 8. Plan des campagnes
 
@@ -121,7 +125,9 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 - Modèles gratuits écartés pour la campagne 1 : le 19/11/2026, Gemma 4 31B gratuit sur OpenRouter a renvoyé 429 (« rate-limited upstream ») à 74 appels sur 74 entre 17 h 02 et 21 h 18 ; l'offre gratuite de l'API Google plafonne Gemma 4 31B à 16 000 jetons envoyés par minute, en dessous de la taille d'un appel de harnais.
 - Le fournisseur peut garder les requêtes, d'où un corpus entièrement fictif.
 - En réponse en flux, le nom du fournisseur n'est pas journalisé (fournisseur unique, sans repli).
-- `/tmp` de la cage est en mémoire : un harnais peut y écrire, rien n'en sort sur l'hôte.
+- `/tmp` de la cage est en mémoire, limité à 2 Gio : un harnais peut y écrire, rien n'en sort sur l'hôte.
+- `/proc/self/mountinfo` montre dans la cage les chemins de l'hôte des dossiers montés (espace de travail, dossier du harnais, uv) ; ces chemins ne donnent accès à rien.
+- Un LiteLLM arrêté pendant un essai ne laisse aucune ligne au journal : les appels perdus ne sont pas comptés. La dépense relevée sur la clé (`depense_cle_usd`) est comparée au total du journal (`ecart_depense_journal_usd`).
 - Le harnais ne peut pas lancer ses propres bacs à sable par espace de noms utilisateur (`--disable-userns`) : un harnais qui en dépend le signalera au lot 4.
 - Prix et disponibilité d'un modèle peuvent changer : la date, l'identifiant exact, le fournisseur et le prix sont notés.
 - Cline : sa CLI (version 2.0) a un mode sans interaction ; s'il ne peut pas viser le LiteLLM du banc, il appelle OpenRouter directement et ses traces viennent du journal OpenRouter, écart signalé dans les résultats.

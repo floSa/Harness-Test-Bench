@@ -6,7 +6,7 @@
 |---|---|
 | Tâche | extraction |
 | corpus_empreintes_sha256 | `1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0` |
-| evaluateur_commit | `a1863e0` |
+| evaluateur_commit | `891dfdb` |
 
 ## Résultat
 
@@ -19,19 +19,23 @@
 | Soumissions acceptées | 5 |
 | Soumissions refusées (format) | 1 |
 | Soumissions refusées (limite) | 1 |
-| Soumission déclarée finale | 2 |
+| Soumission finale | 2 |
+| Fin déclarée | oui |
 | Taux d'invention | 0,0 % |
 | Score sur le style jamais vu | 8,0 % |
 | Relance : score | 11,3 % |
 | Relance : JSON produits | 10 sur 10 |
-| Relance : durée par document | 0.0 s |
+| Relance : durée par document | 0.03 s |
+| Relance : appels au modèle | 0 |
+| Relance : coût par document | 0.0 $ |
+| Relance : fichiers refusés (lien, fichier spécial) | 0 |
 | Relance : code de retour | 0 |
 
 ## Soumissions
 
 | Critère | Requête 1 | Requête 2 | Requête 3 | Requête 4 | Requête 5 | Requête 6 | Requête 7 |
 |---|---|---|---|---|---|---|---|
-| Heure | 2026-11-19T14:06:28+01:00 | 2026-11-19T14:06:28+01:00 | 2026-11-19T14:06:28+01:00 | 2026-11-19T14:06:28+01:00 | 2026-11-19T14:06:28+01:00 | 2026-11-19T14:06:28+01:00 | 2026-11-19T14:06:28+01:00 |
+| Heure | 2026-11-19T22:02:39+01:00 | 2026-11-19T22:02:39+01:00 | 2026-11-19T22:02:39+01:00 | 2026-11-19T22:02:39+01:00 | 2026-11-19T22:02:39+01:00 | 2026-11-19T22:02:39+01:00 | 2026-11-19T22:02:39+01:00 |
 | Statut | refusee_format | acceptee | acceptee | acceptee | acceptee | acceptee | refusee_limite |
 | Numéro |  | 1 | 2 | 3 | 4 | 5 |  |
 | Score |  | 12,4 % | 12,4 % | 12,4 % | 12,4 % | 12,4 % |  |

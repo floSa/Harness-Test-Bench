@@ -49,7 +49,8 @@ etat, det = tenter(lambda: os.listdir("/home"))
 noter("contenu de /home", "seulement banc", det, det == ["banc"])
 
 # 2. Écriture hors de l'espace de travail ----------------------------------------------------------
-for chemin in ["/usr/marque", "/etc/marque", "/opt/harnais/marque", "/home/marque", "/marque", "/run/marque"]:
+for chemin in ["/usr/marque", "/etc/marque", "/opt/harnais/marque", "/home/marque", "/marque", "/run/marque",
+               "/run/banc/marque"]:
     etat, det = tenter(lambda: open(chemin, "w").write(MARQUE))
     noter(f"écrire {chemin}", "refusé", f"{etat} ({det})", etat == "refusé")
 etat, det = tenter(lambda: open("/travail/marque-sonde.txt", "w").write(MARQUE))
@@ -137,6 +138,24 @@ faux = urllib.request.Request(
     headers={"Authorization": "Bearer sk-fausse", "Content-Type": "application/json"})
 etat, det = tenter(lambda: urllib.request.urlopen(faux, timeout=30).status)
 noter("appel au modèle avec une fausse clé", "refusé", f"{etat} ({det})", etat == "refusé")
+
+# 6. Routes du relais hors appel au modèle : transfert direct vers un fournisseur, gestion des clés.
+def route(methode, chemin, corps=None):
+    req = urllib.request.Request(os.environ["BANC_MODELE_URL"] + chemin, method=methode,
+                                 data=None if corps is None else json.dumps(corps).encode(),
+                                 headers={"Authorization": f"Bearer {cle}", "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return r.status
+
+
+for methode, chemin, corps in [
+        ("GET", "/openrouter/v1/key", None), ("GET", "/openrouter/v1/models", None),
+        ("POST", "/openrouter/v1/chat/completions", {"models": ["deepseek/deepseek-v4.1-flash"],
+                                                     "messages": [{"role": "user", "content": "x"}]}),
+        ("GET", "/gemini/v1beta/models", None), ("GET", "/key/info", None),
+        ("POST", "/key/generate", {}), ("POST", "/key/update", {}), ("GET", "/spend/logs", None)]:
+    etat, det = tenter(lambda: route(methode, chemin, corps))
+    noter(f"relais : {methode} {chemin} avec la clé de l'essai", "refusé", f"{etat} ({det})", etat == "refusé")
 
 n = sum(r["conforme"] for r in resultats)
 print(json.dumps({"bilan": f"{n}/{len(resultats)} vérifications conformes"}, ensure_ascii=False))

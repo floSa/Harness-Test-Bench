@@ -6,15 +6,19 @@
 
 La commande vient de la déclaration de fin (`<essai>/evaluation/fin.json`) sauf si elle est
 donnée. Elle est lancée depuis l'espace de travail, `{entree}` (copie des PDF seuls) et
-`{sortie}` remplacés. Dans la cage (banc-essai/cage/cage.sh, si bubblewrap est présent) :
-espace en /travail, PDF en /entree (lecture seule), sortie en /sortie, réseau limité au modèle
-(clé --cle) et à PyPI ; sinon, simple sous-processus (`"cage": false` dans le résultat). Résultat : `<essai>/relance/resultat.json`, sorties et journaux de la
-commande. Document sans JSON ou JSON illisible : tous ses champs comptent faux.
+`{sortie}` remplacés. Toujours dans la cage (banc-essai/cage/cage.sh ; sans bubblewrap, la
+relance refuse de tourner) : espace en /travail, PDF en /entree (lecture seule), sortie en
+/sortie, réseau limité au modèle (clé --cle) et à PyPI. Résultat : `<essai>/relance/resultat.json`,
+sorties et journaux de la commande. Seuls les fichiers ordinaires de /sortie sont lus (ni lien
+symbolique, ni fichier spécial, 1 Mo au plus) : un lien posé par le workflow vers un fichier de
+l'hôte est ignoré. Document sans JSON, JSON illisible ou fichier refusé : tous ses champs
+comptent faux.
 """
 import argparse
 import json
-import shlex
+import os
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -26,11 +30,31 @@ import notation
 ICI = Path(__file__).resolve().parent
 CAGE = ICI.parent / "cage" / "cage.sh"
 DUREE_MAX = 3600
+TAILLE_MAX = 1024 * 1024
+
+
+def lire_sortie(f):
+    """Contenu d'un fichier de sortie, sans suivre de lien : None s'il n'est pas un fichier ordinaire."""
+    try:
+        fd = os.open(f, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    except OSError:
+        return None
+    try:
+        st = os.fstat(fd)
+        if not stat.S_ISREG(st.st_mode) or st.st_size > TAILLE_MAX:
+            return None
+        with os.fdopen(fd, "rb") as h:
+            fd = None
+            return h.read(TAILLE_MAX + 1)[:TAILLE_MAX]
+    finally:
+        if fd is not None:
+            os.close(fd)
 
 
 def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=None, maison=None):
     essai = Path(essai)
-    cage = shutil.which("bwrap") is not None and CAGE.exists()
+    if shutil.which("bwrap") is None or not CAGE.exists():
+        raise SystemExit("relance refusée : bubblewrap ou banc-essai/cage/cage.sh absent")
     jeu = Path(jeu or ICI.parent / "corpus" / "relance")
     if commande is None:
         commande = json.loads((essai / "evaluation" / "fin.json").read_text())["commande"]
@@ -46,45 +70,54 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
             shutil.copy2(jeu / f"{i}.pdf", entree / f"{i}.pdf")
         sortie = Path(tmp) / "sortie"
         sortie.mkdir()
-        if cage:
-            m = Path(maison) if maison else Path(tmp) / "maison"
-            m.mkdir(exist_ok=True)
-            interne = commande.replace("{entree}", "/entree").replace("{sortie}", "/sortie")
-            args = [str(CAGE), "--espace", str(espace), "--maison", str(m), "--entree", str(entree),
-                    "--sortie", str(sortie), "--journal-reseau", str(sortie_essai / "reseau.jsonl"),
-                    "--duree", str(duree_max)]
-            if cle:
-                args += ["--cle", str(cle)]
-            cmd, shell = args + ["--", "bash", "-c", interne], False
-        else:
-            cmd = commande.replace("{entree}", shlex.quote(str(entree))).replace("{sortie}", shlex.quote(str(sortie)))
-            shell = True
+        m = Path(maison) if maison else Path(tmp) / "maison"
+        m.mkdir(exist_ok=True)
+        interne = commande.replace("{entree}", "/entree").replace("{sortie}", "/sortie")
+        cmd = [str(CAGE), "--espace", str(espace), "--maison", str(m), "--entree", str(entree),
+               "--sortie", str(sortie), "--journal-reseau", str(sortie_essai / "reseau.jsonl"),
+               "--duree", str(duree_max)]
+        if cle:
+            cmd += ["--cle", str(cle)]
+        cmd += ["--", "bash", "-c", interne]
         debut = time.monotonic()
         try:
-            p = subprocess.run(cmd, shell=shell, cwd=espace, capture_output=True, text=True, timeout=duree_max + 60)
+            p = subprocess.run(cmd, cwd=espace, capture_output=True, text=True, timeout=duree_max + 60)
             code, out, err = p.returncode, p.stdout, p.stderr
         except subprocess.TimeoutExpired as e:
             code, out, err = "délai dépassé", e.stdout or "", e.stderr or ""
             out, err = (x.decode() if isinstance(x, bytes) else x for x in (out, err))
         duree = time.monotonic() - debut
-        reponses, illisibles = {}, []
+        reponses, illisibles, refuses = {}, [], []
         for i in ids:
             f = sortie / f"{i}.json"
-            if f.exists():
-                shutil.copy2(f, sortie_essai / "sorties" / f.name)
-                try:
-                    reponses[i] = json.loads(f.read_text())
-                except (json.JSONDecodeError, UnicodeDecodeError):
-                    illisibles.append(i)
+            if not os.path.lexists(f):
+                continue
+            octets = lire_sortie(f)
+            if octets is None:
+                refuses.append(i)
+                continue
+            (sortie_essai / "sorties" / f.name).write_bytes(octets)
+            try:
+                reponses[i] = json.loads(octets.decode())
+            except (json.JSONDecodeError, UnicodeDecodeError, RecursionError):
+                illisibles.append(i)
     (sortie_essai / "stdout.txt").write_text(out)
     (sortie_essai / "stderr.txt").write_text(err)
+    erreurs = notation.valider(reponses, ids)
+    produits = len(reponses) + len(illisibles)
+    # Une réponse mal formée (nombre immense, type faux…) compte faux, sans faire échouer la relance.
+    for i in list(reponses):
+        r = reponses[i]
+        if not isinstance(r, dict) or any(notation.erreurs_valeur(k, r.get(k)) for k in notation.CLES if k in r):
+            reponses.pop(i)
     note = notation.noter(reponses, attendus, verites)
     note.pop("detail")
     resultat = {
-        "commande": commande, "cage": cage, "code_retour": code, "duree_s": round(duree, 1),
+        "commande": commande, "cage": True, "code_retour": code, "duree_s": round(duree, 1),
         "duree_par_document_s": round(duree / len(ids), 2), "documents": len(ids),
-        "json_produits": len(reponses) + len(illisibles), "json_illisibles": illisibles,
-        "erreurs_format": notation.valider(reponses, ids)[:50],
+        "json_produits": produits, "json_illisibles": illisibles,
+        "fichiers_refuses": refuses,
+        "erreurs_format": erreurs[:50],
         "note": note,
     }
     (sortie_essai / "resultat.json").write_text(json.dumps(resultat, ensure_ascii=False, indent=2) + "\n")

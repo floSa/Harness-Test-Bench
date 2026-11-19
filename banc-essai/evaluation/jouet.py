@@ -1,23 +1,25 @@
-"""Notation de la tâche jouet : le paquet soumis est passé aux tests cachés.
+"""Notation de la tâche jouet : le paquet soumis est passé aux cas cachés.
 
-Les tests tournent dans la cage du banc (banc-essai/cage/cage.sh, sans réseau, pytest monté en
-lecture seule depuis banc-essai/cage/outils/) ; sans bubblewrap ni outils, dans un simple
-sous-processus, et le résultat le signale (`"cage": false`).
+Les cas cachés (`tache.json` désigne le paquet ; `cas_caches.json` : appel, valeur attendue ou
+exception attendue) ne sont jamais montés dans la cage. Dans la cage (banc-essai/cage/cage.sh,
+sans réseau) ne tournent que le paquet soumis et `executant_jouet.py`, qui reçoit les appels sans
+les valeurs attendues et renvoie les valeurs obtenues ; la comparaison se fait ici, hors de la
+cage. Le code soumis ne peut donc pas réécrire son propre résultat. Sans bubblewrap, la notation
+refuse de tourner.
 
-Seuls les fichiers Python du paquet déclaré dans `tache.json` sont acceptés (pas de conftest,
-pas de configuration pytest, pas de sitecustomize) : les tests cachés ne peuvent pas être
-contournés par un fichier de configuration soumis.
+Seuls les fichiers Python du paquet déclaré sont acceptés.
 """
 import json
+import math
+import secrets
 import shutil
 import subprocess
-import sys
 import tempfile
-import xml.etree.ElementTree as ET
 from pathlib import Path, PurePosixPath
 
-CAGE = Path(__file__).resolve().parents[1] / "cage"
-PYTEST_CAGE = CAGE / "outils" / "pytest"
+ICI = Path(__file__).resolve().parent
+CAGE = ICI.parent / "cage"
+EXECUTANT = ICI / "executant_jouet.py"
 TAILLE_MAX = 256 * 1024
 DUREE_MAX = 120
 
@@ -47,50 +49,56 @@ def valider(fichiers, dossier):
     return err
 
 
+def proche(v, attendu):
+    """Égalité à la manière de pytest.approx (écart relatif 1e-6, absolu 1e-12)."""
+    return isinstance(v, float) and math.isfinite(v) and abs(v - attendu) <= max(1e-6 * abs(attendu), 1e-12)
+
+
 def noter(fichiers, dossier):
-    """Lance les tests cachés sur les fichiers soumis ; score = part des tests réussis."""
-    caches = Path(dossier) / "tests_caches"
+    """Exécute les cas cachés sur les fichiers soumis ; score = part des cas réussis."""
+    if shutil.which("bwrap") is None or not (CAGE / "cage.sh").exists():
+        raise RuntimeError("notation refusée : bubblewrap ou banc-essai/cage/cage.sh absent")
+    cas = json.loads((Path(dossier) / "cas_caches.json").read_text())
+    marque = "RESULTAT-" + secrets.token_hex(8)
     with tempfile.TemporaryDirectory(prefix="jouet-") as tmp:
         t = Path(tmp)
+        travail, outils, maison = t / "travail", t / "outils", t / "maison"
+        for d in (travail, outils, maison):
+            d.mkdir()
         for chemin, contenu in fichiers.items():
-            f = t / chemin
+            f = travail / chemin
             f.parent.mkdir(parents=True, exist_ok=True)
             f.write_text(contenu)
-        (t / "tests_caches").mkdir()
-        for f in caches.glob("test_*.py"):
-            (t / "tests_caches" / f.name).write_text(f.read_text())
-        (t / "pytest.ini").write_text("[pytest]\n")
-        sortie = Path(tempfile.mkdtemp(prefix="jouet-sortie-"))
-        maison = Path(tempfile.mkdtemp(prefix="jouet-maison-"))
+        shutil.copy2(EXECUTANT, outils / "executant.py")
+        (outils / "appels.json").write_text(json.dumps({
+            "marque": marque, "paquet": config(dossier)["paquet"],
+            "appels": [{"fonction": c["fonction"], "args": c["args"]} for c in cas]}, ensure_ascii=False))
+        cmd = [str(CAGE / "cage.sh"), "--espace", str(travail), "--maison", str(maison), "--sans-reseau",
+               "--lecture", f"{outils}:/opt/jouet", "--duree", str(DUREE_MAX), "--",
+               "python3", "-I", "-B", "/opt/jouet/executant.py"]
         try:
-            cage = shutil.which("bwrap") is not None and PYTEST_CAGE.is_dir()
-            opts = ["-q", "-p", "no:cacheprovider", "-c", "pytest.ini", "tests_caches"]
-            if cage:
-                cmd = [str(CAGE / "cage.sh"), "--espace", tmp, "--maison", str(maison), "--sortie", str(sortie),
-                       "--sans-reseau", "--lecture", f"{PYTEST_CAGE}:/opt/pytest", "--duree", str(DUREE_MAX), "--",
-                       "env", "PYTHONPATH=/opt/pytest:/travail", "PYTHONDONTWRITEBYTECODE=1", "python3", "-m",
-                       "pytest", "--rootdir", "/travail", "--junitxml=/sortie/resultat.xml", *opts]
-                env = None
-            else:
-                cmd = [sys.executable, "-m", "pytest", "--rootdir", tmp, f"--junitxml={sortie / 'resultat.xml'}", *opts]
-                env = {"PATH": "/usr/bin:/bin", "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": tmp}
-            try:
-                subprocess.run(cmd, cwd=tmp, env=env, capture_output=True, timeout=DUREE_MAX + 60)
-            except subprocess.TimeoutExpired:
-                return {"score": 0.0, "tests": None, "reussis": 0, "echecs": ["délai dépassé"], "cage": cage}
-            xml = sortie / "resultat.xml"
-            if not xml.exists():
-                return {"score": 0.0, "tests": None, "reussis": 0, "echecs": ["tests non exécutés"], "cage": cage}
-            racine = ET.parse(xml).getroot()
-        finally:
-            shutil.rmtree(sortie, ignore_errors=True)
-            shutil.rmtree(maison, ignore_errors=True)
-        echecs, reussis = [], 0
-        for c in racine.iter("testcase"):
-            if any(e.tag in ("failure", "error", "skipped") for e in c):
-                echecs.append(c.get("name"))
-            else:
-                reussis += 1
-    # Un test caché non collecté (erreur d'import, par exemple) compte comme échoué.
-    n = max(config(dossier)["tests"], reussis + len(echecs))
-    return {"score": round(reussis / n, 4), "tests": n, "reussis": reussis, "echecs": echecs, "cage": cage}
+            p = subprocess.run(cmd, cwd=travail, capture_output=True, text=True, timeout=DUREE_MAX + 60)
+            sortie = p.stdout
+        except subprocess.TimeoutExpired:
+            sortie = ""
+    # Une seule ligne de résultat est attendue : une ligne en plus (écrite par le code soumis) annule tout.
+    lignes = [l for l in sortie.splitlines() if l.startswith(marque + " ")]
+    obtenus = None
+    if len(lignes) == 1:
+        try:
+            obtenus = json.loads(lignes[0][len(marque) + 1:])
+        except json.JSONDecodeError:
+            obtenus = None
+    if not isinstance(obtenus, list) or len(obtenus) != len(cas):
+        return {"score": 0.0, "tests": len(cas), "reussis": 0, "echecs": ["cas non exécutés"], "cage": True}
+    echecs, reussis = [], 0
+    for c, o in zip(cas, obtenus):
+        ok = isinstance(o, dict) and (
+            c["exception"] in (o.get("exception") or []) if "exception" in c
+            else proche(o.get("valeur"), c["attendu"]))
+        if ok:
+            reussis += 1
+        else:
+            echecs.append(c["nom"])
+    return {"score": round(reussis / len(cas), 4), "tests": len(cas), "reussis": reussis, "echecs": echecs,
+            "cage": True}

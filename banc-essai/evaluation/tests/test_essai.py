@@ -42,3 +42,22 @@ def test_relance_et_rapport(tmp_path):
 def test_relance_sans_sortie(tmp_path):
     rl = relancer.relancer(FAUX, tmp_path, commande="true {entree} {sortie}", jeu=FOURNI)
     assert rl["json_produits"] == 0 and rl["note"]["score"] == 0.0
+
+
+def test_relance_liens_refuses(tmp_path):
+    """Un lien posé dans /sortie vers les réponses de l'hôte n'est pas suivi."""
+    cmd = ("for f in {entree}/*.pdf; do i=$(basename $f .pdf); "
+           f"ln -s {FOURNI}/reponses/$i.json {{sortie}}/$i.json; done; mkfifo {{sortie}}/doc-x.json")
+    rl = relancer.relancer(FAUX, tmp_path, commande=cmd, jeu=FOURNI)
+    ids = notation.charger_jeu(FOURNI)[0]
+    assert rl["json_produits"] == 0 and rl["note"]["score"] == 0.0
+    assert rl["fichiers_refuses"] == ids
+    assert not any((tmp_path / "relance" / "sorties").iterdir())
+
+
+def test_relance_reponse_mal_formee(tmp_path):
+    """Un nombre immense dans un JSON de la relance compte faux sans faire échouer la relance."""
+    cmd = ("for f in {entree}/*.pdf; do i=$(basename $f .pdf); "
+           "printf '{\"volume_nominal_ml\": 1e400}' > {sortie}/$i.json; done")
+    rl = relancer.relancer(FAUX, tmp_path, commande=cmd, jeu=FOURNI)
+    assert rl["note"]["score"] == 0.0 and rl["erreurs_format"]

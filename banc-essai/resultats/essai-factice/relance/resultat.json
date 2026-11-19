@@ -1,11 +1,13 @@
 {
   "commande": "python3 faux_workflow.py {entree} {sortie}",
+  "cage": true,
   "code_retour": 0,
-  "duree_s": 0.0,
-  "duree_par_document_s": 0.0,
+  "duree_s": 0.3,
+  "duree_par_document_s": 0.03,
   "documents": 10,
   "json_produits": 10,
   "json_illisibles": [],
+  "fichiers_refuses": [],
   "erreurs_format": [],
   "note": {
     "documents": 10,

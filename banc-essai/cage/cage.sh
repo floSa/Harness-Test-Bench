@@ -7,7 +7,8 @@
 #
 # Dans la cage :
 #   - écriture seulement dans l'espace de travail (/travail), le dossier personnel du harnais
-#     (/home/banc), la sortie éventuelle (/sortie) et un /tmp en mémoire ;
+#     (/home/banc), la sortie éventuelle (/sortie) et un /tmp en mémoire limité à 2 Gio ;
+#   - /run/banc (sockets des relais, clé de l'essai) en lecture seule ;
 #   - /usr et /etc en lecture seule ; le reste de la machine (dont /home, donc le dépôt et le test
 #     caché) invisible ;
 #   - aucun réseau, sauf trois relais : modèle (LiteLLM du banc) sur 127.0.0.1:4100, API de
@@ -65,8 +66,8 @@ fi
 ARGS=(--die-with-parent --new-session --unshare-all --unshare-user --disable-userns --clearenv
   --ro-bind /usr /usr --symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64
   --symlink usr/sbin /sbin --ro-bind /etc /etc
-  --proc /proc --dev /dev --tmpfs /tmp
-  --bind "$ESPACE" /travail --bind "$MAISON" /home/banc --bind "$PARTAGE" /run/banc
+  --proc /proc --dev /dev --size $((2 * 1024 * 1024 * 1024)) --tmpfs /tmp
+  --bind "$ESPACE" /travail --bind "$MAISON" /home/banc --ro-bind "$PARTAGE" /run/banc
   --setenv HOME /home/banc --setenv USER banc --setenv LANG C.UTF-8
   --setenv PATH /opt/harnais/bin:/opt/outils:/home/banc/.local/bin:/usr/local/bin:/usr/bin:/bin
   --setenv HTTPS_PROXY http://127.0.0.1:3128 --setenv HTTP_PROXY http://127.0.0.1:3128

@@ -7,9 +7,9 @@ Relais entre les harnais et OpenRouter, propre au banc : LLM-Service et les cont
 | Conteneurs | `harness-litellm` (`ghcr.io/berriai/litellm:v1.106.4`), `harness-litellm-db` (`postgres:17.7-alpine`, exigé par les clés virtuelles) |
 | Adresse | `http://127.0.0.1:4100` (API compatible OpenAI, `/v1/chat/completions`) |
 | Modèle exposé | `deepseek-v4.1-flash` -> `openrouter/deepseek/deepseek-v4.1-flash-1017`, fournisseur Pearl Research seul (fp8, sans repli) ; prix déclarés au relais : 0,05 $ par million de jetons envoyés, 0,003 $ lus dans le cache, 0,30 $ produits (relevés le 19/11/2026) |
-| Clés | `OPENROUTER_API_KEY` dans `.env` (racine, hors git) ; clé maître et mot de passe de la base dans `secrets/` (hors git), créés au premier démarrage ; une clé virtuelle par essai (alias = nom de l'essai, plafond de 2 $, modèle `deepseek-v4.1-flash` seulement), supprimée à la fin de l'essai ; limite de 10 $ posée sur la clé OpenRouter |
+| Clés | `OPENROUTER_API_KEY` dans `.env` (racine, hors git), recopiée seule par `demarrer.sh` dans `secrets/fournisseur.env` sous le nom `BANC_OPENROUTER_KEY` (le reste du `.env` n'entre pas dans le conteneur ; les routes de transfert direct de LiteLLM ne trouvent aucune clé de fournisseur) ; clé maître et mot de passe de la base dans `secrets/` (hors git), créés au premier démarrage ; une clé virtuelle par essai (alias = nom de l'essai, plafond de 2 $, modèle `deepseek-v4.1-flash` seulement, routes d'appel au modèle seulement), supprimée dès la sortie du harnais ; limite de 10 $ posée sur la clé OpenRouter |
 | Journal | `journaux/appels.jsonl` (hors git) : une ligne par appel, succès ou échec |
-| Réglages | pas de pause du déploiement après une erreur (`disable_cooldowns`), pas de nouvelle tentative par le relais (`num_retries: 0`) : le harnais reçoit les vrais 429 |
+| Réglages | pas de pause du déploiement après une erreur (`disable_cooldowns`), pas de nouvelle tentative par le relais (`num_retries: 0`) : le harnais reçoit les vrais 429 ; dépense des clés écrite en base toutes les 1 à 6 s (`proxy_batch_write_at: 1`) |
 
 ## Commandes
 
@@ -19,7 +19,7 @@ Depuis la racine du dépôt :
 |---|---|
 | Démarrer | `banc-essai/traces/demarrer.sh` |
 | Arrêter | `banc-essai/traces/arreter.sh` |
-| Clé d'un essai | `python3 banc-essai/traces/cles.py <alias>` (écrit `secrets/cle-<alias>.env`, jamais affichée) ; `--supprimer <alias>` la retire |
+| Clé d'un essai | `python3 banc-essai/traces/cles.py <alias>` (écrit `secrets/cle-<alias>.env`, jamais affichée) ; `--supprimer <alias>` la retire ; `--depense <alias>` donne sa dépense |
 
 `banc-essai/cage/lancer.sh` crée la clé de l'essai, extrait du journal les appels de l'essai, puis supprime la clé.
 

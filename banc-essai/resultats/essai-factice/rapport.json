@@ -3,48 +3,48 @@
   "tache": "extraction",
   "versions": {
     "corpus_empreintes_sha256": "1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0",
-    "evaluateur_commit": "a1863e0"
+    "evaluateur_commit": "891dfdb"
   },
   "soumissions": [
     {
       "numero": null,
-      "heure": "2026-11-19T14:06:28+01:00",
+      "heure": "2026-11-19T22:02:39+01:00",
       "statut": "refusee_format",
       "score": null
     },
     {
       "numero": 1,
-      "heure": "2026-11-19T14:06:28+01:00",
+      "heure": "2026-11-19T22:02:39+01:00",
       "statut": "acceptee",
       "score": 0.1244
     },
     {
       "numero": 2,
-      "heure": "2026-11-19T14:06:28+01:00",
+      "heure": "2026-11-19T22:02:39+01:00",
       "statut": "acceptee",
       "score": 0.1244
     },
     {
       "numero": 3,
-      "heure": "2026-11-19T14:06:28+01:00",
+      "heure": "2026-11-19T22:02:39+01:00",
       "statut": "acceptee",
       "score": 0.1244
     },
     {
       "numero": 4,
-      "heure": "2026-11-19T14:06:28+01:00",
+      "heure": "2026-11-19T22:02:39+01:00",
       "statut": "acceptee",
       "score": 0.1244
     },
     {
       "numero": 5,
-      "heure": "2026-11-19T14:06:28+01:00",
+      "heure": "2026-11-19T22:02:39+01:00",
       "statut": "acceptee",
       "score": 0.1244
     },
     {
       "numero": null,
-      "heure": "2026-11-19T14:06:28+01:00",
+      "heure": "2026-11-19T22:02:39+01:00",
       "statut": "refusee_limite",
       "score": null
     }
@@ -53,12 +53,14 @@
   "refus_format": 1,
   "refus_limite": 1,
   "fin": {
-    "heure": "2026-11-19T14:06:28+01:00",
+    "heure": "2026-11-19T22:02:39+01:00",
     "soumission_finale": 2,
     "score_validation": 0.1238,
     "commande": "python3 faux_workflow.py {entree} {sortie}",
     "commentaire": null
   },
+  "fin_declaree": true,
+  "soumission_finale": 2,
   "score_final": 0.1244,
   "meilleur_score": 0.1244,
   "score_validation_annonce": 0.1238,
@@ -441,12 +443,14 @@
   },
   "relance": {
     "commande": "python3 faux_workflow.py {entree} {sortie}",
+    "cage": true,
     "code_retour": 0,
-    "duree_s": 0.0,
-    "duree_par_document_s": 0.0,
+    "duree_s": 0.3,
+    "duree_par_document_s": 0.03,
     "documents": 10,
     "json_produits": 10,
     "json_illisibles": [],
+    "fichiers_refuses": [],
     "erreurs_format": [],
     "note": {
       "documents": 10,
@@ -793,8 +797,12 @@
           }
         }
       }
-    }
+    },
+    "appels_modele": 0,
+    "cout_usd": 0,
+    "cout_par_document_usd": 0.0
   },
+  "construction": null,
   "taux_invention": 0.0,
   "score_style_inedit": 0.08
 }

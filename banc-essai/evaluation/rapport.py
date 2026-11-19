@@ -3,9 +3,12 @@
     uv run --project banc-essai/evaluation python banc-essai/evaluation/rapport.py \
         --essai banc-essai/resultats/<essai>
 
-Lit `<essai>/evaluation/soumissions.jsonl`, `fin.json` et, s'il existe, `<essai>/relance/resultat.json`.
-Écrit `<essai>/rapport.json` et `<essai>/rapport.md` (scores agrégés seulement, aucun détail par
-document du test caché).
+Lit `<essai>/evaluation/soumissions.jsonl`, `fin.json`, `<essai>/essai.json` et, s'ils existent,
+`<essai>/relance/resultat.json` et `<essai>/relance/appels.jsonl`. Écrit `<essai>/rapport.json` et
+`<essai>/rapport.md` (scores agrégés seulement, aucun détail par document du test caché).
+
+Sans déclaration de fin (harnais arrêté, garde-fou atteint), la dernière soumission acceptée tient
+lieu de soumission finale et le rapport l'indique ; aucune relance n'a lieu (protocole, section 7).
 """
 import argparse
 import hashlib
@@ -45,10 +48,22 @@ def construire(essai):
     construction = json.loads((essai / "essai.json").read_text()) if (essai / "essai.json").exists() else None
     relance = json.loads((essai / "relance" / "resultat.json").read_text()) \
         if (essai / "relance" / "resultat.json").exists() else None
-    finale = next((l for l in acceptees if fin and l["numero"] == fin["soumission_finale"]), None)
+    if fin:
+        finale = next((l for l in acceptees if l["numero"] == fin["soumission_finale"]), None)
+    else:
+        finale = acceptees[-1] if acceptees else None
     meilleur = max((l["score"] for l in acceptees), default=None)
     note = finale["note"] if finale else None
-    tache = "jouet" if note and "tests" in note else "extraction"
+    if construction and construction.get("tache"):
+        tache = construction["tache"]
+    else:
+        tache = "jouet" if note and "tests" in note else "extraction"
+    f_ra = essai / "relance" / "appels.jsonl"
+    appels_relance = [json.loads(l) for l in f_ra.read_text().splitlines()] if f_ra.exists() else []
+    if relance is not None:
+        cout = sum(a.get("cout") or 0 for a in appels_relance)
+        relance = relance | {"appels_modele": len(appels_relance), "cout_usd": round(cout, 6),
+                             "cout_par_document_usd": round(cout / relance["documents"], 6)}
     r = {
         "essai": essai.name,
         "tache": tache,
@@ -59,6 +74,8 @@ def construire(essai):
         "refus_format": sum(l["statut"] == "refusee_format" for l in lignes),
         "refus_limite": sum(l["statut"] == "refusee_limite" for l in lignes),
         "fin": fin,
+        "fin_declaree": fin is not None,
+        "soumission_finale": finale["numero"] if finale else None,
         "score_final": finale["score"] if finale else None,
         "meilleur_score": meilleur,
         "score_validation_annonce": fin.get("score_validation") if fin else None,
@@ -83,14 +100,17 @@ def markdown(r):
     L += ["## Versions", "", "| Élément | Valeur |", "|---|---|"]
     L += [f"| Tâche | {r['tache']} |"] + [f"| {k} | `{v}` |" for k, v in r["versions"].items()] + [""]
     L += ["## Résultat", "", "| Mesure | Valeur |", "|---|---|"]
-    lignes = [("Score final (soumission déclarée)", pc(r["score_final"])),
+    titre_final = "Score final (soumission déclarée)" if r["fin_declaree"] else \
+        "Score final (fin non déclarée : dernière soumission acceptée)"
+    lignes = [(titre_final, pc(r["score_final"])),
               ("Meilleur score", pc(r["meilleur_score"])),
               ("Score de validation annoncé", pc(r["score_validation_annonce"])),
               ("Écart annoncé moins test", pc(r["ecart_validation_test"])),
               ("Soumissions acceptées", r["soumissions_acceptees"]),
               ("Soumissions refusées (format)", r["refus_format"]),
               ("Soumissions refusées (limite)", r["refus_limite"]),
-              ("Soumission déclarée finale", r["fin"]["soumission_finale"] if r["fin"] else "")]
+              ("Soumission finale", r["soumission_finale"] or ""),
+              ("Fin déclarée", "oui" if r["fin_declaree"] else "non")]
     if r["tache"] == "extraction":
         lignes += [("Taux d'invention", pc(r.get("taux_invention"))),
                    ("Score sur le style jamais vu", pc(r.get("score_style_inedit")))]
@@ -99,18 +119,29 @@ def markdown(r):
         lignes += [("Relance : score", pc(rl["note"]["score"])),
                    ("Relance : JSON produits", f"{rl['json_produits']} sur {rl['documents']}"),
                    ("Relance : durée par document", f"{rl['duree_par_document_s']} s"),
+                   ("Relance : appels au modèle", rl.get("appels_modele", "")),
+                   ("Relance : coût par document", f"{rl['cout_par_document_usd']} $" if "cout_par_document_usd" in rl else ""),
+                   ("Relance : fichiers refusés (lien, fichier spécial)", len(rl.get("fichiers_refuses", []))),
                    ("Relance : code de retour", rl["code_retour"])]
     L += [f"| {a} | {b} |" for a, b in lignes] + [""]
     c = r.get("construction")
     if c:
         L += ["## Construction", "", "| Mesure | Valeur |", "|---|---|"]
         L += [f"| {a} | {b} |" for a, b in [
-            ("Harnais", c["harnais"]), ("Recette", c["recette"]), ("Début", c["debut"]), ("Fin", c["fin"]),
+            ("Harnais", c["harnais"]), ("Version du harnais", c.get("version_harnais") or ""),
+            ("Modèle (journal)", ", ".join(c.get("modeles") or [])),
+            ("Fournisseur (journal)", ", ".join(c.get("fournisseurs") or [])),
+            ("Recette", c["recette"]), ("Début", c["debut"]), ("Fin", c["fin"]),
             ("Durée totale", f"{c['duree_s']} s"), ("Garde-fou atteint", "oui" if c["garde_fou_atteint"] else "non"),
             ("Code de retour du harnais", c["code_retour"]), ("Appels au modèle", c["appels_modele"]),
             ("Appels échoués", c["appels_echoues"]), ("Appels refusés pour quota (429)", c["appels_429"]),
+            ("Temps d'attente après un 429", f"{c.get('attente_429_s', '')} s"),
             ("Appels avec image", c["appels_avec_image"]), ("Jetons d'entrée", c["jetons_entree"]),
+            ("Dont jetons lus dans le cache", c.get("jetons_cache", "")),
             ("Jetons de sortie", c["jetons_sortie"]), ("Temps dans le modèle", f"{c['temps_modele_s']} s"),
+            ("Coût calculé par le relais", f"{c.get('cout_usd', '')} $"),
+            ("Coût facturé par OpenRouter", f"{c.get('cout_openrouter_usd', '')} $"),
+            ("Dépense de la clé (LiteLLM)", f"{c.get('depense_cle_usd', '')} $"),
             ("Demandes réseau (mandataire PyPI)", c["demandes_reseau"]),
             ("Demandes réseau refusées", c["demandes_reseau_refusees"])]] + [""]
     if r["soumissions"]:

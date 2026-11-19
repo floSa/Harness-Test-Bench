@@ -8,7 +8,8 @@ Exécution d'un harnais (ou de code qu'il a écrit) dans bubblewrap 0.9.0, sans 
 |---|---|
 | `/travail` | espace de travail de l'essai, lecture et écriture |
 | `/home/banc` | dossier personnel du harnais (`HOME`), lecture et écriture |
-| `/tmp` | en mémoire, perdu à la sortie |
+| `/tmp` | en mémoire, limité à 2 Gio, perdu à la sortie |
+| `/run/banc` | sockets des relais et clé de l'essai, lecture seule |
 | `/sortie` | sortie de la relance du workflow ou des tests cachés de la tâche jouet, si montée |
 | `/usr`, `/etc` | système, lecture seule |
 | `/opt/harnais` | dossier du harnais (`harnais/<nom>/`), lecture seule |
@@ -36,14 +37,15 @@ Aucune autre sortie : pas de DNS, pas de route, pas d'accès aux ports de l'hôt
 | `cage.sh` | exécution d'une commande dans la cage (utilisé par `lancer.sh`, `relancer.py` et la notation de la tâche jouet) |
 | `interieur.sh` | démarrage dans la cage : relais intérieurs, clé du harnais, commande |
 | `relais.py` | relais socket Unix vers TCP, mandataire filtrant |
-| `outils.sh` | installe pytest (tests cachés de la tâche jouet) dans `outils/`, hors git |
-| `sonde/` | « harnais » de preuve : tente lectures, écritures et connexions interdites, appelle le modèle |
+| `sonde/` | « harnais » de preuve : tente lectures, écritures, connexions et routes du relais interdites, appelle le modèle |
+| `factice/` | faux harnais d'extraction : vérifie le lanceur de bout en bout (soumission, fin, relance, clé gardée refusée à la relance, répartition des appels) |
+| `collecter.py` | répartition du journal entre l'essai et sa relance, écriture de `essai.json` |
 
 ## Résultats d'un essai (`banc-essai/resultats/<essai>/`)
 
 | Fichier | Contenu |
 |---|---|
-| `essai.json` | harnais, recette, heures, durée, code de retour, garde-fou, appels au modèle (dont échecs, 429, images), jetons (dont cache), coût (relais et OpenRouter), temps dans le modèle, demandes réseau |
+| `essai.json` | harnais, recette, heures, durée, code de retour, garde-fou, appels au modèle (dont échecs, 429, images), jetons (dont cache), coût (relais et OpenRouter), dépense relevée sur la clé et écart avec le journal, attente après les 429, temps dans le modèle (union des intervalles), modèles et fournisseurs du journal, version du harnais (`harnais/<nom>/version`), demandes réseau |
 | `harnais/stdout.log`, `stderr.log` | sorties du harnais |
 | `traces/appels.jsonl` | appels au modèle de la clé de l'essai |
 | `traces/reseau.jsonl` | demandes au mandataire PyPI, acceptées ou refusées |
@@ -54,7 +56,8 @@ Aucune autre sortie : pas de DNS, pas de route, pas d'accès aux ports de l'hôt
 ## Preuve
 
 ```
-banc-essai/cage/lancer.sh sonde jouet --essai preuve-cage --message "$PWD/banc-essai/corpus/test-cache"
+banc-essai/cage/lancer.sh sonde jouet --essai preuve-cage-<date> --message "$PWD/banc-essai/corpus/test-cache"
+banc-essai/cage/lancer.sh factice sans-aide --essai verif-lanceur-<date>
 ```
 
 La sonde reçoit le chemin réel du test caché et tente de le lire, d'écrire hors de l'espace de travail, de joindre des sites non autorisés, puis appelle le modèle (texte, puis image) ; chaque appel doit apparaître dans `traces/appels.jsonl`.
