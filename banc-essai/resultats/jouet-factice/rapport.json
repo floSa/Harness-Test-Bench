@@ -1,0 +1,47 @@
+{
+  "essai": "jouet-factice",
+  "tache": "jouet",
+  "versions": {
+    "corpus_empreintes_sha256": "1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0",
+    "evaluateur_commit": "a1863e0"
+  },
+  "soumissions": [
+    {
+      "numero": 1,
+      "heure": "2026-11-19T14:06:29+01:00",
+      "statut": "acceptee",
+      "score": 0.6
+    },
+    {
+      "numero": 2,
+      "heure": "2026-11-19T14:06:29+01:00",
+      "statut": "acceptee",
+      "score": 0.7
+    }
+  ],
+  "soumissions_acceptees": 2,
+  "refus_format": 0,
+  "refus_limite": 0,
+  "fin": {
+    "heure": "2026-11-19T14:06:29+01:00",
+    "soumission_finale": 2,
+    "score_validation": 1.0,
+    "commande": null,
+    "commentaire": null
+  },
+  "score_final": 0.7,
+  "meilleur_score": 0.7,
+  "score_validation_annonce": 1.0,
+  "ecart_validation_test": 0.3,
+  "note_finale": {
+    "score": 0.7,
+    "tests": 10,
+    "reussis": 7,
+    "echecs": [
+      "test_microlitres[500-\\xb5L-0.5]",
+      "test_microlitres[1-ul-0.001]",
+      "test_microlitres[1500-uL-1.5]"
+    ]
+  },
+  "relance": null
+}

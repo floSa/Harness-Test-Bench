@@ -1,6 +1,6 @@
 # Protocole du banc des harnais
 
-Version 1.1, 19 novembre 2026 (mesures ajoutées avec le corpus v2). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
+Version 1.2, 19 novembre 2026 (fonctionnement de l'API de soumission précisé au lot 2). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
 ## 1. Question posée
 
@@ -29,6 +29,8 @@ Construire un workflow qui extrait des valeurs précises de rapports d'intervent
 |---|---|---|
 | Fourni | 35, avec les réponses attendues | libre : il le découpe lui-même en entraînement et validation |
 | Test caché | 15, dont 5 d'un gabarit absent du jeu fourni | seulement par l'API de soumission, **5 soumissions au maximum** |
+
+L'API sert les PDF du test caché, jamais leurs réponses ni leur vérité terrain ; le dossier `test-cache/` n'est jamais monté dans la cage. Le harnais y soumet un JSON par document et reçoit le score global seulement (exactitude par champ).
 
 Le harnais livre :
 - un workflow relançable : une commande unique qui prend un dossier de PDF et écrit un JSON par document ;
@@ -102,7 +104,9 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 ## 7. Anti-triche
 
 - Le test caché n'existe pas dans la cage ; seule l'API y donne accès.
-- L'API refuse au-delà de 5 soumissions et journalise chacune (heure, contenu, score).
+- L'API refuse au-delà de 5 soumissions et journalise chacune (heure, contenu, score). Une soumission au mauvais format est refusée avec le détail des erreurs et ne compte pas ; elle est journalisée. Chaque requête est journalisée (`acces.jsonl`).
+- L'API ne renvoie que le score global : ni score par clé, ni détail par document.
+- Les PDF du test étant lisibles par le harnais, une réponse saisie à la main par le modèle (lecture directe des 15 documents) reste possible ; elle se repère dans les journaux LiteLLM (appels portant sur les documents du test) et l'écart avec la relance du workflow la révèle.
 - Toute tentative de lire l'évaluateur, de sortir de la cage ou de contourner la limite est relevée dans les journaux et notée.
 
 ## 8. Plan des campagnes
@@ -115,5 +119,6 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 ## 9. Limites connues
 
 - Modèles gratuits : 20 requêtes par minute, 1 000 par jour ; le fournisseur peut garder les requêtes, d'où un corpus entièrement fictif.
+- La relance du workflow livré et les tests cachés de la tâche jouet exécutent du code écrit par le harnais hors cage (sous-processus avec délai) ; à placer dans la cage au lot 3.
 - La gratuité d'un modèle peut disparaître : la date et l'identifiant exact sont notés.
 - Cline : sa CLI (version 2.0) a un mode sans interaction ; s'il ne peut pas viser le LiteLLM du banc, il appelle OpenRouter directement et ses traces viennent du journal OpenRouter, écart signalé dans les résultats.
