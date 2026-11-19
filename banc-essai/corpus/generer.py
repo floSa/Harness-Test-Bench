@@ -3,6 +3,7 @@
 Usage (depuis banc-essai/corpus/) :
     uv run python generer.py --exemples      un document par style (plan à graine séparée) dans exemples/
     uv run python generer.py                 les 60 documents : fourni/, test-cache/, relance/
+    uv run python generer.py --sortie DIR    les mêmes, ailleurs (contrôle de reproductibilité)
 """
 import argparse
 import json
@@ -65,16 +66,57 @@ def exemples(graine, styles):
             print("   introuvable :", m["cle"], repr(m["texte"]), "page", m["page"] + 1)
 
 
+DOSSIERS = {"fourni": "fourni", "test": "test-cache", "relance": "relance"}
+
+
+def corpus(graine, racine):
+    """Les 60 documents du plan, chacun dans le dossier de son jeu ; verite.csv par jeu."""
+    plan, u = planifier(graine)
+    bilan = {}
+    for pdoc in plan:
+        doc = document(pdoc, u, graine)
+        sortie = racine / DOSSIERS[pdoc["jeu"]]
+        v, manquants = produire(doc, graine, sortie)
+        bilan[pdoc["id"]] = (pdoc["jeu"], pdoc["style"], v["pages"], len(manquants))
+    for jeu, dossier in DOSSIERS.items():
+        ecrire_csv(racine / dossier)
+    return bilan
+
+
+def ecrire_csv(dossier):
+    import csv
+    lignes = []
+    for f in sorted((dossier / "verite").glob("*.json")):
+        v = json.loads(f.read_text())
+        for cle, ch in v["champs"].items():
+            lignes.append({"id": v["id"], "jeu": v["jeu"], "style": v["style"], "langue": v["langue"],
+                           "prestataire": v["prestataire"], "prestataire_vu": v["prestataire_vu"],
+                           "marque_vue": v["marque_vue"], "champ": cle,
+                           "valeur": "" if ch["valeur"] is None else ch["valeur"],
+                           "nulle": ch["valeur"] is None, "emplacement": ch["emplacement"],
+                           "pieges": " ".join(ch["pieges"]), "scan": ch["scan"],
+                           "leurres": len(ch["leurres"])})
+    with open(dossier / "verite.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(lignes[0]))
+        w.writeheader()
+        w.writerows(lignes)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--exemples", action="store_true")
     ap.add_argument("--styles", nargs="*", default=list(STYLES))
     ap.add_argument("--graine", type=int, default=GRAINE)
+    ap.add_argument("--sortie", help="racine de sortie (contrôle des empreintes)")
     a = ap.parse_args()
     if a.exemples:
         exemples(a.graine, a.styles)
         return
-    raise SystemExit("Génération des 60 documents : après validation des exemples de chaque style.")
+    racine = Path(a.sortie) if a.sortie else ICI
+    bilan = corpus(a.graine, racine)
+    from collections import Counter
+    print(len(bilan), "documents ;", dict(Counter(j for j, *_ in bilan.values())),
+          "; écritures introuvables :", sum(m for *_, m in bilan.values()))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,17 @@
+{
+  "machine": "Pyrabel 600",
+  "constructeur": "Nerorrix",
+  "numero_serie": "NE/24/9895",
+  "site": "Site de Péronne",
+  "reference_rapport": "OT-RI-2025-5457",
+  "date_intervention": "2025-10-19",
+  "date_validation": "2025-10-30",
+  "volume_dose_ml": 244.7,
+  "volume_nominal_ml": 250.0,
+  "tolerance_ml": 7.5,
+  "debit_ml_min": 2630.0,
+  "pression_bar": 3.4,
+  "reference_piece": null,
+  "technicien": "Mathieu Lemaire",
+  "statut": "a_revoir"
+}

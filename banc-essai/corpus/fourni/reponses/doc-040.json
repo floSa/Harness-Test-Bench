@@ -1,0 +1,17 @@
+{
+  "machine": "Saronis 300",
+  "constructeur": "Riliovane",
+  "numero_serie": null,
+  "site": "Site de Tulle",
+  "reference_rapport": "OT-RI-2025-6896",
+  "date_intervention": "2025-05-01",
+  "date_validation": "2025-05-08",
+  "volume_dose_ml": 199.3,
+  "volume_nominal_ml": 200.0,
+  "tolerance_ml": 1.0,
+  "debit_ml_min": 22350.0,
+  "pression_bar": 2.5,
+  "reference_piece": "RI-427-C",
+  "technicien": null,
+  "statut": "a_revoir"
+}

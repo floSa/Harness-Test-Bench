@@ -1,0 +1,17 @@
+{
+  "machine": "Calzor 250",
+  "constructeur": "Riliovane",
+  "numero_serie": "RI528101",
+  "site": null,
+  "reference_rapport": "DM-RI-2026-5071",
+  "date_intervention": "2026-04-10",
+  "date_validation": "2026-04-18",
+  "volume_dose_ml": 327.6,
+  "volume_nominal_ml": 330.0,
+  "tolerance_ml": 3.3,
+  "debit_ml_min": 16100.0,
+  "pression_bar": 1.0,
+  "reference_piece": "RI-812-B",
+  "technicien": "Rhys Fenwick",
+  "statut": "a_revoir"
+}

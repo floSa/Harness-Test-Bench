@@ -1,0 +1,17 @@
+{
+  "machine": "Ulvanlix 300",
+  "constructeur": "Varinnet",
+  "numero_serie": "VA-2021-53616",
+  "site": "Site de Oyonnax",
+  "reference_rapport": "OT-RI-2025-1259",
+  "date_intervention": "2025-07-17",
+  "date_validation": "2025-07-25",
+  "volume_dose_ml": 5.05,
+  "volume_nominal_ml": 5.0,
+  "tolerance_ml": null,
+  "debit_ml_min": 58.2,
+  "pression_bar": 1.3,
+  "reference_piece": "VA-391-R",
+  "technicien": "Manon Vasseur",
+  "statut": "conforme"
+}

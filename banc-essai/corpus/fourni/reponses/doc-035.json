@@ -1,0 +1,17 @@
+{
+  "machine": "Pyrabel 250",
+  "constructeur": "Nerorrix",
+  "numero_serie": "NE/23/9504",
+  "site": "Usine de Mazamet",
+  "reference_rapport": "OT-RI-2025-3008",
+  "date_intervention": "2025-07-12",
+  "date_validation": "2025-07-21",
+  "volume_dose_ml": 25.3,
+  "volume_nominal_ml": 25.0,
+  "tolerance_ml": 0.375,
+  "debit_ml_min": 2689.8,
+  "pression_bar": null,
+  "reference_piece": "NE-520-E",
+  "technicien": null,
+  "statut": "conforme"
+}

@@ -64,6 +64,8 @@ def affiner(pdf, placements, page_scan):
             manquants.append(p)
             continue
         r = trouves[0]
+        for autre in trouves[1:]:   # chaîne coupée en fin de ligne : union des morceaux
+            r |= autre
         p["cadre"] = [round(r.x0, 1), round(r.y0, 1), round(r.x1, 1), round(r.y1, 1)]
     return manquants
 

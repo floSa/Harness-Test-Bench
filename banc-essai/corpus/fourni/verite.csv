@@ -1,0 +1,526 @@
+id,jeu,style,langue,prestataire,prestataire_vu,marque_vue,champ,valeur,nulle,emplacement,pieges,scan,leurres
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,machine,Juvelpax 120,False,formulaire,,False,3
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,constructeur,Ostiovan,False,formulaire,zones_ambigues,False,4
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,numero_serie,OS/20/2068,False,paragraphe,zones_ambigues,False,4
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,site,Dundee Plant,False,formulaire,,False,2
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_rapport,NC-RI-2025-9067,False,formulaire,synonyme_cle,False,3
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_intervention,2025-05-25,False,paragraphe,dates_multiples,False,3
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_validation,2025-05-31,False,tampon,dates_multiples,False,7
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_dose_ml,1.05,False,tableau,synonyme_cle volumes_voisins tableau_multi_entrees,False,3
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_nominal_ml,1.0,False,formulaire,,False,1
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,tolerance_ml,,True,absent,,False,1
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,debit_ml_min,20.0,False,phrase,,False,3
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,pression_bar,0.6,False,schema,,False,5
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_piece,OS-568-D,False,tableau,synonyme_cle,False,4
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,technicien,James Redding,False,phrase,synonyme_cle personnes_multiples,False,3
+doc-001,fourni,compact,en,Nevevex Calibration Ltd,True,True,statut,conforme,False,formulaire,,False,1
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,machine,Ulvinnis 40,False,formulaire,synonyme_cle,False,3
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,constructeur,Doraetis,False,paragraphe,zones_ambigues,False,4
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,numero_serie,,True,absent,zones_ambigues,False,4
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,site,Usine de Vierzon,False,formulaire,synonyme_cle,False,2
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,reference_rapport,US-RI-2026-6857,False,formulaire,,False,2
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,date_intervention,2026-08-20,False,formulaire,synonyme_cle dates_multiples,False,3
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,date_validation,2026-08-30,False,tampon,dates_multiples,False,7
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,volume_dose_ml,9.9,False,tableau,conflit_regle volumes_voisins tableau_multi_entrees format_nombre,False,5
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,volume_nominal_ml,10.0,False,schema,,False,1
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,tolerance_ml,0.25,False,tableau,synonyme_cle format_nombre,False,1
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,debit_ml_min,441.0,False,paragraphe,,False,4
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,pression_bar,5.1,False,tableau,format_nombre,False,5
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,reference_piece,,True,absent,,False,5
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,technicien,,True,absent,personnes_multiples,False,3
+doc-002,fourni,classique,fr,Ulvorvan Services,True,True,statut,a_revoir,False,formulaire,,False,1
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,machine,Ulvintis 120,False,formulaire,synonyme_cle,False,3
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,constructeur,Dorvan,False,formulaire,synonyme_cle zones_ambigues,False,4
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,numero_serie,DO-2019-79036,False,plaque,zones_ambigues,False,4
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,site,Ipswich Works,False,formulaire,synonyme_cle,False,2
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,reference_rapport,DM-RI-2025-7643,False,formulaire,synonyme_cle,False,2
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,date_intervention,2025-05-25,False,formulaire,synonyme_cle dates_multiples,False,3
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,date_validation,,True,absent,dates_multiples,False,11
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,volume_dose_ml,1016.0,False,calcul,moyenne_a_calculer volumes_voisins tableau_multi_entrees format_nombre,False,3
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,volume_nominal_ml,1000.0,False,tableau,format_nombre,False,1
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,tolerance_ml,25.0,False,paragraphe,tolerance_en_pourcent,False,1
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,debit_ml_min,8600.0,False,tableau,format_nombre,False,3
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,pression_bar,2.9,False,paragraphe,,False,6
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,reference_piece,DO-935-A,False,phrase,synonyme_cle,False,4
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,technicien,,True,absent,personnes_multiples,False,8
+doc-007,fourni,grille,en,Dorionis Metrology,True,True,statut,conforme,False,formulaire,synonyme_cle cases_a_cocher,False,1
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,machine,Zentis 600,False,formulaire,,False,3
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,constructeur,Nevvex,False,logo,zones_ambigues,False,4
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,numero_serie,NE/20/7298,False,formulaire,synonyme_cle zones_ambigues,False,4
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,site,Établissement de Châteaubriant,False,paragraphe,,False,2
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,reference_rapport,US-RI-2025-5873,False,formulaire,,False,2
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,date_intervention,2025-04-25,False,paragraphe,dates_multiples,False,3
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,date_validation,2025-05-06,False,paragraphe,dates_multiples,False,7
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,volume_dose_ml,50.4,False,schema,synonyme_cle volumes_voisins tableau_multi_entrees format_nombre,False,4
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,volume_nominal_ml,50.0,False,paragraphe,,False,1
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,tolerance_ml,0.75,False,tableau,tolerance_en_pourcent synonyme_cle format_nombre,False,1
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,debit_ml_min,3640.0,False,tableau,synonyme_cle,False,3
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,pression_bar,2.4,False,tableau,format_nombre,False,5
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,reference_piece,NE-391-K,False,tableau,synonyme_cle,False,4
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,technicien,Yann Lacombe,False,formulaire,synonyme_cle personnes_multiples,False,3
+doc-009,fourni,classique,fr,Ulvorvan Services,True,True,statut,conforme,False,formulaire,,False,1
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,machine,Belorvan 40,False,formulaire,,False,3
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,constructeur,Calanquin,False,logo,zones_ambigues,False,4
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,numero_serie,,True,absent,zones_ambigues,False,4
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,site,Usine de Sablé-sur-Sarthe,False,formulaire,,False,2
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,reference_rapport,ST-RI-2025-1555,False,formulaire,,False,3
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,date_intervention,2025-05-08,False,tableau,dates_multiples,False,5
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,date_validation,2025-05-15,False,formulaire,dates_multiples,False,12
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,volume_dose_ml,24.6,False,tableau,conflit_regle synonyme_cle volumes_voisins tableau_multi_entrees format_nombre,False,4
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,volume_nominal_ml,25.0,False,phrase,,False,1
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,tolerance_ml,0.25,False,tableau,format_nombre,False,1
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,debit_ml_min,2780.0,False,paragraphe,,False,4
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,pression_bar,2.0,False,tableau,unite_a_convertir,False,5
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,reference_piece,CA-937-B,False,paragraphe,,False,4
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,technicien,Nicolas Joly,False,phrase,personnes_multiples,False,8
+doc-012,fourni,grille,fr,Sarolor Techniques,True,True,statut,non_conforme,False,phrase,,False,1
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,machine,Ulvanlix 300,False,phrase,,False,3
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,constructeur,Varinnet,False,formulaire,zones_ambigues,False,4
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,numero_serie,VA-2021-53616,False,formulaire,zones_ambigues,False,4
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,site,Site de Oyonnax,False,paragraphe,,False,2
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,reference_rapport,OT-RI-2025-1259,False,formulaire,,False,3
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,date_intervention,2025-07-17,False,paragraphe,dates_multiples,False,3
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,date_validation,2025-07-25,False,formulaire,dates_multiples,False,7
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,volume_dose_ml,5.05,False,calcul,moyenne_a_calculer volumes_voisins tableau_multi_entrees format_nombre,False,3
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,volume_nominal_ml,5.0,False,tableau,unite_a_convertir,False,1
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,tolerance_ml,,True,absent,,False,1
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,debit_ml_min,58.2,False,tableau,unite_a_convertir format_nombre,False,3
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,pression_bar,1.3,False,phrase,format_nombre,False,5
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,reference_piece,VA-391-R,False,tableau,synonyme_cle,False,4
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,technicien,Manon Vasseur,False,formulaire,personnes_multiples,False,3
+doc-015,fourni,compact,fr,Oryenis Techniques,True,True,statut,conforme,False,phrase,,False,1
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,machine,Pyrabel 600,False,formulaire,synonyme_cle,False,3
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,constructeur,Nerorrix,False,phrase,zones_ambigues,False,4
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,numero_serie,NE/24/9895,False,paragraphe,zones_ambigues,False,4
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,site,Site de Péronne,False,formulaire,synonyme_cle,False,2
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,reference_rapport,OT-RI-2025-5457,False,phrase,,False,2
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,date_intervention,2025-10-19,False,formulaire,synonyme_cle dates_multiples,False,3
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,date_validation,2025-10-30,False,tampon,dates_multiples,False,7
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,volume_dose_ml,244.7,False,tableau,volumes_voisins tableau_multi_entrees format_nombre,False,3
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,volume_nominal_ml,250.0,False,formulaire,,False,1
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,tolerance_ml,7.5,False,tableau,tolerance_en_pourcent synonyme_cle,False,1
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,debit_ml_min,2630.0,False,paragraphe,,False,4
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,pression_bar,3.4,False,paragraphe,format_nombre,False,6
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,reference_piece,,True,absent,,False,5
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,technicien,Mathieu Lemaire,False,formulaire,personnes_multiples,False,3
+doc-016,fourni,compact,fr,Oryenis Techniques,True,True,statut,a_revoir,False,formulaire,synonyme_cle,False,1
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,machine,Ulvinnis 120,False,paragraphe,,False,3
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,constructeur,Doraetis,False,formulaire,zones_ambigues,False,4
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,numero_serie,DO702625,False,formulaire,zones_ambigues,False,4
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,site,Site de Redon,False,phrase,,False,2
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,reference_rapport,US-RI-2025-7865,False,formulaire,,False,3
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,date_intervention,2025-11-13,False,paragraphe,dates_multiples,False,3
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,date_validation,2025-11-26,False,phrase,dates_multiples,False,7
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,volume_dose_ml,9.8,False,paragraphe,volumes_voisins tableau_multi_entrees format_nombre,False,4
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,volume_nominal_ml,10.0,False,tableau,,False,1
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,tolerance_ml,0.25,False,phrase,synonyme_cle format_nombre,False,1
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,debit_ml_min,394.0,False,tableau,,False,3
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,pression_bar,4.9,False,phrase,format_nombre,False,5
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,reference_piece,DO-906-B,False,tableau,,False,4
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,technicien,Nicolas Le Bihan,False,formulaire,synonyme_cle personnes_multiples,False,3
+doc-018,fourni,classique,fr,Ulvorvan Services,True,True,statut,conforme,False,formulaire,,False,1
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,machine,Zenasol 300,False,paragraphe,,False,3
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,constructeur,Ulvrel,False,formulaire,synonyme_cle zones_ambigues,False,4
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,numero_serie,UL886283,False,formulaire,zones_ambigues,False,4
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,site,,True,absent,,False,2
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,reference_rapport,ST-RI-2025-8975,False,formulaire,,False,2
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,date_intervention,2025-08-24,False,phrase,synonyme_cle dates_multiples,True,3
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,date_validation,2025-09-01,False,formulaire,dates_multiples,False,11
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,volume_dose_ml,1.03,False,phrase,synonyme_cle volumes_voisins tableau_multi_entrees format_nombre,True,3
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,volume_nominal_ml,1.0,False,tableau,synonyme_cle,False,1
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,tolerance_ml,0.08,False,formulaire,tolerance_en_pourcent,False,1
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,debit_ml_min,,True,absent,,False,3
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,pression_bar,,True,absent,,False,5
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,reference_piece,UL-753-C,False,tableau,synonyme_cle,True,4
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,technicien,Claire Tanguy,False,formulaire,personnes_multiples,False,7
+doc-020,fourni,grille,fr,Sarolor Techniques,True,True,statut,conforme,False,paragraphe,,False,1
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,machine,Ulvinnis 250,False,formulaire,synonyme_cle,False,3
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,constructeur,Doraetis,False,formulaire,zones_ambigues,False,4
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,numero_serie,DO-2018-27062,False,plaque,zones_ambigues,False,4
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,site,Wrexham Facility,False,formulaire,,False,2
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,reference_rapport,ZS-RI-2025-5883,False,formulaire,,False,2
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,date_intervention,2025-09-19,False,phrase,dates_multiples,True,3
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,date_validation,2025-09-23,False,formulaire,dates_multiples,True,7
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,volume_dose_ml,0.9,False,phrase,synonyme_cle volumes_voisins tableau_multi_entrees,True,4
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,volume_nominal_ml,1.0,False,paragraphe,,False,1
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,tolerance_ml,0.08,False,paragraphe,tolerance_en_pourcent,False,1
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,debit_ml_min,119.0,False,tableau,,False,3
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,pression_bar,8.5,False,tableau,synonyme_cle,False,5
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,reference_piece,DO-311-D,False,tableau,synonyme_cle,True,4
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,technicien,Declan Marsh,False,paragraphe,personnes_multiples,False,3
+doc-021,fourni,classique,en,Zenornis Services Ltd,True,True,statut,non_conforme,False,formulaire,,True,1
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,machine,Belorvan 250,False,formulaire,,False,3
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,constructeur,Calanquin,False,paragraphe,zones_ambigues,False,4
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,numero_serie,CA-2022-73829,False,plaque,zones_ambigues,False,4
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,site,Swindon Works,False,formulaire,,False,2
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_rapport,NC-RI-2026-4699,False,formulaire,,False,2
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_intervention,2026-06-27,False,formulaire,dates_multiples,False,3
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_validation,2026-07-01,False,formulaire,dates_multiples,True,7
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_dose_ml,25.7,False,tableau,unite_a_convertir volumes_voisins tableau_multi_entrees,False,3
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_nominal_ml,25.0,False,phrase,unite_a_convertir,False,1
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,tolerance_ml,0.5,False,tableau,tolerance_en_pourcent,False,1
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,debit_ml_min,,True,absent,,False,3
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,pression_bar,4.1003,False,tableau,unite_a_convertir,False,5
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_piece,,True,absent,,False,5
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,technicien,Sarah Stroud,False,paragraphe,personnes_multiples,False,3
+doc-022,fourni,compact,en,Nevevex Calibration Ltd,True,True,statut,non_conforme,False,phrase,,False,1
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,machine,Ulvanlix 40,False,paragraphe,,False,3
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,constructeur,Varinnet,False,paragraphe,zones_ambigues,False,4
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,numero_serie,VA/23/2029,False,formulaire,zones_ambigues,False,4
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,site,Établissement de Mazamet,False,paragraphe,,False,2
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_rapport,BA-RI-2025-5069,False,formulaire,,False,2
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_intervention,2025-08-14,False,phrase,dates_multiples,False,3
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_validation,2025-08-22,False,tampon,dates_multiples,False,8
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_dose_ml,2.04,False,phrase,synonyme_cle volumes_voisins tableau_multi_entrees tableau_coupe format_nombre,False,5
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_nominal_ml,2.0,False,tableau,synonyme_cle,False,1
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,tolerance_ml,0.06,False,tableau,tolerance_en_pourcent synonyme_cle,False,1
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,debit_ml_min,,True,absent,tableau_coupe,False,3
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,pression_bar,1.0,False,tableau,synonyme_cle tableau_coupe format_nombre,False,5
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_piece,VA-131-C,False,tableau,synonyme_cle,False,4
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,technicien,Loïc Garnier,False,formulaire,personnes_multiples,False,3
+doc-023,fourni,recit,fr,Braultis Assistance Industrielle,True,True,statut,conforme,False,formulaire,synonyme_cle,False,1
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,machine,Juvbel 120,False,paragraphe,,False,3
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,constructeur,Doraetis,False,logo,zones_ambigues,False,4
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,numero_serie,DO/18/2217,False,formulaire,synonyme_cle zones_ambigues,False,4
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,site,,True,absent,,False,2
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,reference_rapport,US-RI-2025-8870,False,formulaire,,False,2
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,date_intervention,2025-10-13,False,paragraphe,dates_multiples,False,3
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,date_validation,,True,absent,dates_multiples,False,7
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,volume_dose_ml,4.78,False,tableau,synonyme_cle volumes_voisins tableau_multi_entrees format_nombre,False,4
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,volume_nominal_ml,5.0,False,tableau,,False,1
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,tolerance_ml,0.125,False,tableau,tolerance_en_pourcent format_nombre,False,1
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,debit_ml_min,222.0,False,schema,synonyme_cle,False,3
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,pression_bar,7.6,False,tableau,format_nombre,False,5
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,reference_piece,DO-796-C,False,tableau,,False,4
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,technicien,Loïc Le Bihan,False,formulaire,synonyme_cle personnes_multiples,False,3
+doc-025,fourni,classique,fr,Ulvorvan Services,True,True,statut,non_conforme,False,phrase,synonyme_cle,False,1
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,machine,Ostaton 250,False,formulaire,,False,3
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,constructeur,Dorvan,False,formulaire,zones_ambigues,False,4
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,numero_serie,,True,absent,zones_ambigues,False,4
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,site,Shannon Site,False,phrase,,False,2
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,reference_rapport,DM-RI-2026-8136,False,formulaire,,False,2
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,date_intervention,2026-02-02,False,paragraphe,dates_multiples,False,3
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,date_validation,2026-02-07,False,tampon,dates_multiples,False,11
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,volume_dose_ml,329.2,False,tableau,synonyme_cle volumes_voisins tableau_multi_entrees,False,6
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,volume_nominal_ml,330.0,False,tableau,,False,1
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,tolerance_ml,,True,absent,,False,1
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,debit_ml_min,14000.0,False,schema,format_nombre,False,3
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,pression_bar,3.0,False,paragraphe,,False,6
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,reference_piece,DO-658-K,False,tableau,,False,4
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,technicien,Daniel Redding,False,formulaire,synonyme_cle personnes_multiples,False,8
+doc-026,fourni,grille,en,Dorionis Metrology,True,True,statut,conforme,False,formulaire,cases_a_cocher,False,1
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,machine,Ostaton 40,False,formulaire,,False,3
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,constructeur,Dorvan,False,paragraphe,zones_ambigues,False,4
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,numero_serie,DO954728,False,formulaire,synonyme_cle zones_ambigues,False,4
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,site,Plateforme de Tulle,False,paragraphe,,False,2
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,reference_rapport,ST-RI-2026-4158,False,formulaire,synonyme_cle,False,2
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,date_intervention,2026-09-02,False,paragraphe,dates_multiples,False,3
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,date_validation,2026-09-10,False,tampon,dates_multiples,False,11
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,volume_dose_ml,100.6,False,calcul,moyenne_a_calculer volumes_voisins tableau_multi_entrees format_nombre,False,3
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,volume_nominal_ml,100.0,False,schema,synonyme_cle,False,1
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,tolerance_ml,2.0,False,tableau,tolerance_en_pourcent synonyme_cle,False,1
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,debit_ml_min,18250.0,False,tableau,synonyme_cle,False,3
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,pression_bar,1.2,False,tableau,synonyme_cle format_nombre,False,5
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,reference_piece,DO-812-R,False,tableau,,False,4
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,technicien,Céline Le Goff,False,formulaire,synonyme_cle personnes_multiples,False,7
+doc-028,fourni,grille,fr,Sarolor Techniques,True,True,statut,conforme,False,formulaire,cases_a_cocher,False,1
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,machine,Corvex 160,False,paragraphe,,False,3
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,constructeur,Nevvex,False,formulaire,zones_ambigues,False,4
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,numero_serie,NE/18/7935,False,formulaire,zones_ambigues,False,4
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,site,Usine de Cholet,False,formulaire,,False,2
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,reference_rapport,ST-RI-2025-9245,False,formulaire,,False,3
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,date_intervention,2025-08-23,False,phrase,dates_multiples,False,3
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,date_validation,2025-09-01,False,tampon,dates_multiples,False,11
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,volume_dose_ml,4.95,False,schema,synonyme_cle volumes_voisins tableau_multi_entrees format_nombre,False,3
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,volume_nominal_ml,5.0,False,tableau,synonyme_cle,False,1
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,tolerance_ml,0.1,False,phrase,format_nombre,False,1
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,debit_ml_min,2520.0,False,tableau,synonyme_cle,False,3
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,pression_bar,,True,absent,,False,5
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,reference_piece,NE-561-K,False,paragraphe,,False,4
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,technicien,Damien Garnier,False,formulaire,synonyme_cle personnes_multiples,False,7
+doc-030,fourni,grille,fr,Sarolor Techniques,True,True,statut,conforme,False,formulaire,cases_a_cocher,False,1
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,machine,Zenasol 40,False,paragraphe,,False,3
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,constructeur,Ulvrel,False,formulaire,zones_ambigues,False,4
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,numero_serie,UL/17/7009,False,formulaire,zones_ambigues,False,4
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,site,,True,absent,,False,2
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,reference_rapport,OS-RI-2025-2737,False,formulaire,,False,2
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,date_intervention,2025-03-19,False,paragraphe,dates_multiples,False,3
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,date_validation,2025-03-29,False,formulaire,synonyme_cle dates_multiples,True,8
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,volume_dose_ml,5.05,False,tableau,volumes_voisins tableau_multi_entrees tableau_coupe,False,5
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,volume_nominal_ml,5.0,False,tableau,,False,1
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,tolerance_ml,0.1,False,phrase,unite_a_convertir,False,1
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,debit_ml_min,103.0,False,paragraphe,unite_a_convertir tableau_coupe,False,4
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,pression_bar,10.0,False,phrase,unite_a_convertir tableau_coupe format_nombre,False,5
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,reference_piece,UL-963-R,False,tableau,,False,4
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,technicien,Sarah Whitfield,False,formulaire,personnes_multiples,True,3
+doc-032,fourni,recit,en,Oryequin Services Ltd,True,True,statut,a_revoir,False,phrase,,False,1
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,machine,Zentis 85,False,phrase,,False,3
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,constructeur,Nevvex,False,logo,zones_ambigues,False,4
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,numero_serie,NE/17/2680,False,formulaire,zones_ambigues,False,4
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,site,,True,absent,,False,2
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_rapport,NC-RI-2025-5626,False,formulaire,,False,3
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_intervention,2025-08-30,False,phrase,dates_multiples,False,3
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_validation,2025-09-07,False,formulaire,dates_multiples,False,7
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_dose_ml,5.1,False,paragraphe,unite_a_convertir volumes_voisins tableau_multi_entrees format_nombre,False,3
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_nominal_ml,5.0,False,tableau,unite_a_convertir format_nombre,False,1
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,tolerance_ml,0.075,False,tableau,unite_a_convertir,False,1
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,debit_ml_min,2490.0,False,tableau,unite_a_convertir,False,3
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,pression_bar,3.7,False,tableau,unite_a_convertir,False,5
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_piece,NE-454-R,False,tableau,,False,4
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,technicien,Hannah Kerrigan,False,phrase,personnes_multiples,False,3
+doc-034,fourni,compact,en,Nevevex Calibration Ltd,True,True,statut,non_conforme,False,paragraphe,,False,1
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,machine,Pyrabel 250,False,paragraphe,,False,3
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,constructeur,Nerorrix,False,formulaire,zones_ambigues,False,4
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,numero_serie,NE/23/9504,False,formulaire,zones_ambigues,False,4
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,site,Usine de Mazamet,False,formulaire,,False,2
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,reference_rapport,OT-RI-2025-3008,False,formulaire,,False,2
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,date_intervention,2025-07-12,False,tableau,dates_multiples,False,5
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,date_validation,2025-07-21,False,paragraphe,dates_multiples,False,8
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,volume_dose_ml,25.3,False,tableau,valeur_barree unite_a_convertir volumes_voisins tableau_multi_entrees format_nombre,False,4
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,volume_nominal_ml,25.0,False,tableau,unite_a_convertir format_nombre,False,1
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,tolerance_ml,0.375,False,paragraphe,unite_a_convertir,False,1
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,debit_ml_min,2689.8,False,schema,unite_a_convertir format_nombre,False,3
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,pression_bar,,True,absent,,False,5
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,reference_piece,NE-520-E,False,paragraphe,,False,4
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,technicien,,True,absent,personnes_multiples,False,3
+doc-035,fourni,compact,fr,Oryenis Techniques,True,True,statut,conforme,False,formulaire,,False,1
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,machine,Vervane 85,False,formulaire,,False,3
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,constructeur,Nerorrix,False,formulaire,zones_ambigues,False,4
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,numero_serie,NE164735,False,phrase,zones_ambigues,False,4
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,site,,True,absent,,False,2
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_rapport,NC-RI-2025-2643,False,formulaire,synonyme_cle,False,2
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_intervention,2025-04-19,False,phrase,dates_multiples,False,3
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,date_validation,2025-04-27,False,phrase,dates_multiples,False,7
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_dose_ml,247.3,False,phrase,synonyme_cle volumes_voisins tableau_multi_entrees,False,3
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,volume_nominal_ml,250.0,False,schema,synonyme_cle,False,1
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,tolerance_ml,6.25,False,paragraphe,tolerance_en_pourcent,False,1
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,debit_ml_min,,True,absent,,False,3
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,pression_bar,3.2,False,tableau,synonyme_cle,False,5
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,reference_piece,NE-547-R,False,tableau,synonyme_cle,False,4
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,technicien,Daniel Gallagher,False,formulaire,personnes_multiples,False,3
+doc-037,fourni,compact,en,Nevevex Calibration Ltd,True,True,statut,conforme,False,formulaire,,False,1
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,machine,Neveltik 600,False,formulaire,synonyme_cle,False,3
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,constructeur,Lumulvan,False,phrase,zones_ambigues,False,4
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,numero_serie,,True,absent,zones_ambigues,False,4
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,site,Tralee Site,False,paragraphe,,False,2
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,reference_rapport,ZS-RI-2026-9144,False,phrase,synonyme_cle,False,2
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,date_intervention,2026-06-23,False,formulaire,dates_multiples,False,3
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,date_validation,2026-07-01,False,tampon,dates_multiples,False,7
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,volume_dose_ml,4.91,False,calcul,moyenne_a_calculer volumes_voisins tableau_multi_entrees,False,4
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,volume_nominal_ml,5.0,False,formulaire,,False,1
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,tolerance_ml,0.125,False,tableau,synonyme_cle format_nombre,False,1
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,debit_ml_min,296.0,False,tableau,synonyme_cle,False,3
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,pression_bar,5.7,False,schema,synonyme_cle,False,5
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,reference_piece,LU-934-A,False,tableau,synonyme_cle,False,4
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,technicien,Ethan Kerrigan,False,formulaire,personnes_multiples,False,3
+doc-038,fourni,classique,en,Zenornis Services Ltd,True,True,statut,conforme,False,formulaire,synonyme_cle,False,1
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,machine,Saronis 300,False,formulaire,,False,3
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,constructeur,Riliovane,False,formulaire,zones_ambigues,False,4
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,numero_serie,,True,absent,zones_ambigues,False,4
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,site,Site de Tulle,False,paragraphe,,False,2
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,reference_rapport,OT-RI-2025-6896,False,formulaire,synonyme_cle,False,2
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,date_intervention,2025-05-01,False,formulaire,dates_multiples,False,3
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,date_validation,2025-05-08,False,formulaire,dates_multiples,True,7
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,volume_dose_ml,199.3,False,schema,volumes_voisins tableau_multi_entrees format_nombre,False,7
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,volume_nominal_ml,200.0,False,paragraphe,,False,1
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,tolerance_ml,1.0,False,phrase,,False,1
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,debit_ml_min,22350.0,False,tableau,erratum,True,4
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,pression_bar,2.5,False,tableau,format_nombre,False,5
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,reference_piece,RI-427-C,False,tableau,,False,4
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,technicien,,True,absent,personnes_multiples,False,3
+doc-040,fourni,compact,fr,Oryenis Techniques,True,True,statut,a_revoir,False,phrase,,True,1
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,machine,Saronis 160,False,paragraphe,,False,3
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,constructeur,Riliovane,False,formulaire,zones_ambigues,False,4
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,numero_serie,RI472949,False,formulaire,zones_ambigues,False,4
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,site,Doncaster Works,False,formulaire,,False,2
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,reference_rapport,ZS-RI-2026-2885,False,formulaire,,False,2
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,date_intervention,2026-03-06,False,formulaire,dates_multiples,False,3
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,date_validation,,True,absent,dates_multiples,False,7
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,volume_dose_ml,311.6,False,tableau,volumes_voisins tableau_multi_entrees,False,9
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,volume_nominal_ml,330.0,False,tableau,synonyme_cle,False,1
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,tolerance_ml,9.9,False,formulaire,unite_a_convertir,False,1
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,debit_ml_min,,True,absent,,False,3
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,pression_bar,,True,absent,,False,4
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,reference_piece,RI-587-A,False,paragraphe,,False,4
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,technicien,Rhys Gallagher,False,paragraphe,personnes_multiples,False,3
+doc-041,fourni,classique,en,Zenornis Services Ltd,True,True,statut,non_conforme,False,paragraphe,,False,1
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,machine,Ulvanlix 40,False,phrase,,True,3
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,constructeur,Varinnet,False,formulaire,zones_ambigues,False,4
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,numero_serie,VA-2018-72612,False,phrase,zones_ambigues,True,4
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,site,Usine de Oyonnax,False,formulaire,,False,2
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,reference_rapport,US-RI-2026-4930,False,formulaire,,False,2
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,date_intervention,2026-08-11,False,formulaire,dates_multiples,False,3
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,date_validation,2026-08-18,False,formulaire,dates_multiples,True,7
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,volume_dose_ml,1.06,False,tableau,unite_a_convertir volumes_voisins tableau_multi_entrees,False,4
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,volume_nominal_ml,1.0,False,tableau,erratum unite_a_convertir,False,1
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,tolerance_ml,0.08,False,tableau,unite_a_convertir,False,1
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,debit_ml_min,49.2,False,paragraphe,unite_a_convertir format_nombre,False,4
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,pression_bar,0.9,False,paragraphe,unite_a_convertir,False,6
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,reference_piece,,True,absent,,False,5
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,technicien,Hugo Le Bihan,False,phrase,personnes_multiples,True,3
+doc-042,fourni,classique,fr,Ulvorvan Services,True,True,statut,a_revoir,False,paragraphe,,False,1
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,machine,Calzor 300,False,formulaire,,False,3
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,constructeur,Riliovane,False,phrase,zones_ambigues,False,4
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,numero_serie,,True,absent,zones_ambigues,False,4
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,site,Telford Site,False,formulaire,synonyme_cle,False,2
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,reference_rapport,OS-RI-2025-4658,False,formulaire,synonyme_cle,False,3
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,date_intervention,2025-11-28,False,formulaire,dates_multiples,False,3
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,date_validation,2025-12-09,False,paragraphe,dates_multiples,False,8
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,volume_dose_ml,761.9,False,calcul,moyenne_a_calculer volumes_voisins tableau_multi_entrees,False,5
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,volume_nominal_ml,750.0,False,formulaire,synonyme_cle,False,1
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,tolerance_ml,18.75,False,tableau,synonyme_cle,False,1
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,debit_ml_min,19500.0,False,tableau,format_nombre,False,3
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,pression_bar,0.9,False,schema,,False,5
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,reference_piece,RI-424-D,False,paragraphe,,False,4
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,technicien,,True,absent,personnes_multiples,False,3
+doc-044,fourni,recit,en,Oryequin Services Ltd,True,True,statut,conforme,False,formulaire,,False,1
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,machine,Juvelpax 250,False,formulaire,,False,3
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,constructeur,Ostiovan,False,formulaire,zones_ambigues,False,4
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,numero_serie,OS/21/3095,False,paragraphe,zones_ambigues,False,4
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,site,Doncaster Facility,False,formulaire,synonyme_cle,False,2
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,reference_rapport,ZS-RI-2026-8084,False,formulaire,,False,3
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,date_intervention,2026-02-15,False,tableau,dates_multiples,False,5
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,date_validation,2026-02-20,False,formulaire,dates_multiples,False,8
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,volume_dose_ml,0.97,False,tableau,valeur_barree synonyme_cle volumes_voisins tableau_multi_entrees,False,5
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,volume_nominal_ml,1.0,False,tableau,,False,1
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,tolerance_ml,,True,absent,,False,1
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,debit_ml_min,28.0,False,phrase,,False,3
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,pression_bar,0.6,False,schema,,False,5
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,reference_piece,OS-369-D,False,phrase,,False,4
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,technicien,Ethan Gallagher,False,paragraphe,personnes_multiples,False,3
+doc-045,fourni,classique,en,Zenornis Services Ltd,True,True,statut,conforme,False,phrase,,False,1
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,machine,Neveltik 85,False,formulaire,,False,3
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,constructeur,Lumulvan,False,logo,zones_ambigues,False,4
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,numero_serie,,True,absent,zones_ambigues,False,4
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,site,Carlow Plant,False,formulaire,,False,2
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,reference_rapport,OS-RI-2025-6201,False,formulaire,,False,3
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,date_intervention,2025-11-20,False,formulaire,dates_multiples,False,3
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,date_validation,2025-11-29,False,tampon,dates_multiples,False,8
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,volume_dose_ml,1.11,False,phrase,unite_a_convertir volumes_voisins tableau_multi_entrees format_nombre,False,5
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,volume_nominal_ml,1.0,False,phrase,,False,1
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,tolerance_ml,0.08,False,tableau,unite_a_convertir,False,1
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,debit_ml_min,203.0,False,tableau,unite_a_convertir,False,3
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,pression_bar,11.4,False,tableau,conflit_regle,False,6
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,reference_piece,LU-262-R,False,paragraphe,,False,4
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,technicien,Erin Brennan,False,paragraphe,personnes_multiples,False,3
+doc-047,fourni,recit,en,Oryequin Services Ltd,True,True,statut,non_conforme,False,formulaire,,False,1
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,machine,Calanquin 250,False,phrase,synonyme_cle,False,3
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,constructeur,Lumulvan,False,formulaire,synonyme_cle zones_ambigues,False,4
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,numero_serie,LU-2023-64906,False,formulaire,synonyme_cle zones_ambigues,False,4
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,site,Ipswich Works,False,paragraphe,,False,2
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,reference_rapport,OS-RI-2025-6200,False,formulaire,synonyme_cle,False,2
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,date_intervention,2025-05-06,False,formulaire,dates_multiples,False,3
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,date_validation,2025-05-13,False,phrase,synonyme_cle dates_multiples,False,8
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,volume_dose_ml,9.8,False,tableau,synonyme_cle volumes_voisins tableau_multi_entrees,False,5
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,volume_nominal_ml,10.0,False,tableau,,False,1
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,tolerance_ml,0.1,False,paragraphe,tolerance_en_pourcent,False,1
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,debit_ml_min,262.0,False,schema,synonyme_cle,False,3
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,pression_bar,,True,absent,,False,5
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,reference_piece,LU-208-D,False,tableau,synonyme_cle,False,4
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,technicien,Callum Ainsley,False,paragraphe,personnes_multiples,False,3
+doc-048,fourni,recit,en,Oryequin Services Ltd,True,True,statut,non_conforme,False,formulaire,,False,1
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,machine,Juvelpax 250,False,paragraphe,,False,3
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,constructeur,Ostiovan,False,logo,zones_ambigues,False,4
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,numero_serie,OS/18/3407,False,formulaire,zones_ambigues,False,4
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,site,Plateforme de Mazamet,False,formulaire,,False,2
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,reference_rapport,OT-RI-2026-1215,False,formulaire,,False,2
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,date_intervention,2026-08-16,False,formulaire,synonyme_cle dates_multiples,False,3
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,date_validation,,True,absent,dates_multiples,False,7
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,volume_dose_ml,0.468,False,tableau,conflit_regle volumes_voisins tableau_multi_entrees format_nombre,False,4
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,volume_nominal_ml,0.5,False,tableau,format_nombre,False,1
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,tolerance_ml,0.075,False,tableau,format_nombre,False,1
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,debit_ml_min,46.8,False,phrase,unite_a_convertir format_nombre,False,3
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,pression_bar,1.3,False,tableau,unite_a_convertir,False,5
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,reference_piece,OS-656-E,False,paragraphe,,False,4
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,technicien,Noémie Guérin,False,paragraphe,personnes_multiples,False,3
+doc-051,fourni,compact,fr,Oryenis Techniques,True,True,statut,conforme,False,paragraphe,,False,1
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,machine,Corvex 40,False,formulaire,synonyme_cle,False,3
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,constructeur,Nevvex,False,logo,zones_ambigues,False,4
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,numero_serie,NE-2019-40938,False,formulaire,zones_ambigues,False,4
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,site,,True,absent,,False,2
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_rapport,BA-RI-2026-3103,False,formulaire,,False,3
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_intervention,2026-05-29,False,phrase,dates_multiples,False,3
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_validation,2026-06-08,False,formulaire,synonyme_cle dates_multiples,False,8
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_dose_ml,250.5,False,paragraphe,volumes_voisins tableau_multi_entrees tableau_coupe format_nombre,False,5
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_nominal_ml,250.0,False,schema,synonyme_cle,False,1
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,tolerance_ml,1.25,False,tableau,format_nombre,False,1
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,debit_ml_min,2710.0,False,tableau,tableau_coupe format_nombre,False,3
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,pression_bar,3.3,False,tableau,tableau_coupe format_nombre,False,5
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_piece,NE-931-A,False,phrase,,False,4
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,technicien,Claire Mercier,False,formulaire,personnes_multiples,False,3
+doc-053,fourni,recit,fr,Braultis Assistance Industrielle,True,True,statut,conforme,False,paragraphe,,False,1
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,machine,Coronis 250,False,formulaire,,False,3
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,constructeur,Calanquin,False,formulaire,zones_ambigues,False,4
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,numero_serie,CA126012,False,plaque,zones_ambigues,False,4
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,site,Établissement de Tulle,False,formulaire,,False,2
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_rapport,BA-RI-2025-1227,False,formulaire,,False,2
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_intervention,2025-04-01,False,formulaire,dates_multiples,False,3
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_validation,2025-04-11,False,formulaire,dates_multiples,True,8
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_dose_ml,25.1,False,tableau,unite_a_convertir volumes_voisins tableau_multi_entrees format_nombre,False,5
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_nominal_ml,25.0,False,paragraphe,unite_a_convertir format_nombre,False,1
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,tolerance_ml,,True,absent,,False,1
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,debit_ml_min,2730.0,False,schema,unite_a_convertir format_nombre,False,3
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,pression_bar,3.4,False,tableau,unite_a_convertir format_nombre,False,5
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_piece,,True,absent,,False,5
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,technicien,Sophie Vasseur,False,phrase,personnes_multiples,False,3
+doc-054,fourni,recit,fr,Braultis Assistance Industrielle,True,True,statut,a_revoir,False,phrase,,False,1
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,machine,Kaltis 300,False,formulaire,synonyme_cle,False,3
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,constructeur,Ostiovan,False,paragraphe,zones_ambigues,False,4
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,numero_serie,OS-2018-60491,False,paragraphe,zones_ambigues,False,4
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,site,Site de Tulle,False,formulaire,synonyme_cle,False,2
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,reference_rapport,ST-RI-2026-7334,False,phrase,synonyme_cle,False,3
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,date_intervention,2026-01-03,False,formulaire,dates_multiples,False,3
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,date_validation,2026-01-13,False,formulaire,synonyme_cle dates_multiples,False,11
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,volume_dose_ml,1.05,False,paragraphe,volumes_voisins tableau_multi_entrees format_nombre,False,3
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,volume_nominal_ml,1.0,False,formulaire,synonyme_cle,False,1
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,tolerance_ml,0.08,False,tableau,synonyme_cle format_nombre,False,1
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,debit_ml_min,21.0,False,tableau,synonyme_cle,False,3
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,pression_bar,0.6,False,phrase,synonyme_cle format_nombre,False,5
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,reference_piece,,True,absent,,False,5
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,technicien,Nicolas Perrin,False,formulaire,personnes_multiples,False,7
+doc-055,fourni,grille,fr,Sarolor Techniques,True,True,statut,conforme,False,phrase,synonyme_cle,False,1
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,machine,Torelbel 160,False,formulaire,synonyme_cle,False,3
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,constructeur,Ulvrel,False,formulaire,zones_ambigues,False,4
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,numero_serie,UL-2023-40385,False,paragraphe,zones_ambigues,False,4
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,site,Site de Lisieux,False,phrase,,False,2
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_rapport,BA-RI-2025-4656,False,formulaire,,False,2
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_intervention,2025-12-03,False,paragraphe,dates_multiples,False,3
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,date_validation,,True,absent,dates_multiples,False,8
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_dose_ml,0.95,False,schema,volumes_voisins tableau_multi_entrees tableau_coupe format_nombre,False,5
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,volume_nominal_ml,1.0,False,tableau,,False,1
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,tolerance_ml,0.08,False,tableau,synonyme_cle format_nombre,False,1
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,debit_ml_min,294.0,False,tableau,tableau_coupe,False,3
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,pression_bar,8.5,False,paragraphe,tableau_coupe format_nombre,False,6
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,reference_piece,UL-904-A,False,tableau,,False,4
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,technicien,Nicolas Joly,False,formulaire,personnes_multiples,False,3
+doc-057,fourni,recit,fr,Braultis Assistance Industrielle,True,True,statut,a_revoir,False,paragraphe,,False,1
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,machine,Zenasol 120,False,formulaire,,False,3
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,constructeur,Ulvrel,False,phrase,zones_ambigues,False,4
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,numero_serie,UL/20/7426,False,phrase,zones_ambigues,False,4
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,site,Swindon Site,False,formulaire,,False,2
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,reference_rapport,DM-RI-2025-5774,False,formulaire,,False,2
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,date_intervention,2025-07-06,False,formulaire,dates_multiples,False,3
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,date_validation,2025-07-19,False,formulaire,dates_multiples,False,11
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,volume_dose_ml,0.95,False,tableau,unite_a_convertir volumes_voisins tableau_multi_entrees,False,3
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,volume_nominal_ml,1.0,False,paragraphe,unite_a_convertir format_nombre,True,1
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,tolerance_ml,0.08,False,tableau,unite_a_convertir,False,1
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,debit_ml_min,177.0,False,phrase,unite_a_convertir format_nombre,False,3
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,pression_bar,5.0001,False,tableau,unite_a_convertir,False,5
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,reference_piece,,True,absent,,False,5
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,technicien,Owen Mahon,False,paragraphe,personnes_multiples,False,8
+doc-058,fourni,grille,en,Dorionis Metrology,True,True,statut,conforme,False,paragraphe,,False,1
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,machine,Calzor 250,False,phrase,,False,3
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,constructeur,Riliovane,False,formulaire,zones_ambigues,False,4
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,numero_serie,RI528101,False,formulaire,zones_ambigues,False,4
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,site,,True,absent,,False,2
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,reference_rapport,DM-RI-2026-5071,False,formulaire,synonyme_cle,False,2
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,date_intervention,2026-04-10,False,formulaire,dates_multiples,False,3
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,date_validation,2026-04-18,False,phrase,synonyme_cle dates_multiples,False,11
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,volume_dose_ml,327.6,False,paragraphe,volumes_voisins tableau_multi_entrees,False,7
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,volume_nominal_ml,330.0,False,tableau,,False,1
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,tolerance_ml,3.3,False,tableau,synonyme_cle,False,1
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,debit_ml_min,16100.0,False,tableau,format_nombre,False,3
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,pression_bar,1.0,False,schema,,False,5
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,reference_piece,RI-812-B,False,tableau,,False,4
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,technicien,Rhys Fenwick,False,paragraphe,personnes_multiples,False,8
+doc-059,fourni,grille,en,Dorionis Metrology,True,True,statut,a_revoir,False,paragraphe,,False,1
