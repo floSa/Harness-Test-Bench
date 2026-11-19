@@ -60,10 +60,32 @@ def attente_429(appels):
     return total
 
 
+def lire_json(f):
+    try:
+        return json.load(open(f))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def lignes(f):
+    try:
+        return [l.strip() for l in open(f) if l.strip()]
+    except OSError:
+        return []
+
+
 def essai(res, essai, nom, recette, tache, debut, fin, duree, code, espace, garde, depense, depense_relance,
-          harnais):
+          harnais, memoire_max="", disque_max="0", telechargement_max="0"):
     appels = [json.loads(l) for l in open(f"{res}/traces/appels.jsonl")]
-    reseau = [json.loads(l) for l in open(f"{res}/traces/reseau.jsonl")]
+    reseau_tout = [json.loads(l) for l in open(f"{res}/traces/reseau.jsonl")]
+    reseau = [r for r in reseau_tout if r.get("evenement", "demande") == "demande"]
+    tunnels = [r for r in reseau_tout if r.get("evenement") == "fin"]
+    par_hote = {}
+    for t in tunnels:
+        par_hote[t["hote"]] = par_hote.get(t["hote"], 0) + (t.get("octets_recus") or 0)
+    memoire = lire_json(f"{res}/traces/memoire.json") or {}
+    gpu = [int(x) for x in lignes(f"{res}/traces/gpu.txt") if x.isdigit()]
+    disque = lignes(f"{res}/traces/disque.txt")
     version = None
     if os.path.isfile(f"{harnais}/version"):
         version = open(f"{harnais}/version").read().strip()[:200]
@@ -86,7 +108,17 @@ def essai(res, essai, nom, recette, tache, debut, fin, duree, code, espace, gard
          "ecart_depense_journal_usd": round(dep - cout, 6) if isinstance(dep, (int, float)) else None,
          "depense_cle_relance_usd": json.loads(depense_relance or "null"),
          "temps_modele_s": round(temps_union(appels), 1),
-         "demandes_reseau": len(reseau), "demandes_reseau_refusees": sum(not r["accepte"] for r in reseau)}
+         "demandes_reseau": len(reseau), "demandes_reseau_refusees": sum(not r["accepte"] for r in reseau),
+         "hotes_refuses": sorted({r["hote"] or "?" for r in reseau if not r["accepte"]}),
+         "telechargement_octets": sum(par_hote.values()), "telechargement_par_hote_octets": par_hote,
+         "telechargement_max_octets": int(telechargement_max),
+         "telechargement_plafond_atteint": any(r.get("evenement") == "quota_atteint" for r in reseau_tout),
+         "memoire_max": memoire_max, "memoire_pic_octets": memoire.get("memoire_pic_octets"),
+         "arrets_memoire": memoire.get("arrets_memoire"),
+         "gpu_memoire_avant_mio": gpu[0] if gpu else None,
+         "gpu_memoire_pic_essai_mio": (max(gpu) - gpu[0]) if gpu else None,
+         "disque_pic_octets": int(disque[0]) if disque and disque[0].isdigit() else None,
+         "disque_max_octets": int(disque_max), "disque_depasse": "depasse" in disque}
     with open(f"{res}/essai.json", "w") as f:
         json.dump(e, f, ensure_ascii=False, indent=2)
     print(json.dumps(e, ensure_ascii=False))

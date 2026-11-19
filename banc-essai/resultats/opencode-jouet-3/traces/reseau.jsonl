@@ -1,0 +1,13 @@
+{"heure": "2026-11-19T22:42:53+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:42:53+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:42:54+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:42:54+01:00", "evenement": "demande", "hote": "registry.npmjs.org", "port": "443", "accepte": false, "requete": "CONNECT registry.npmjs.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:42:56+01:00", "evenement": "demande", "hote": "github.com", "port": "443", "accepte": true, "requete": "CONNECT github.com:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:42:56+01:00", "evenement": "fin", "hote": "github.com", "octets_recus": 9079, "octets_envoyes": 1966}
+{"heure": "2026-11-19T22:42:56+01:00", "evenement": "demande", "hote": "release-assets.githubusercontent.com", "port": "443", "accepte": true, "requete": "CONNECT release-assets.githubusercontent.com:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:43:13+01:00", "evenement": "demande", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:43:13+01:00", "evenement": "demande", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T22:43:13+01:00", "evenement": "fin", "hote": "pypi.org", "octets_recus": 104765, "octets_envoyes": 2350}
+{"heure": "2026-11-19T22:43:13+01:00", "evenement": "fin", "hote": "files.pythonhosted.org", "octets_recus": 1850846, "octets_envoyes": 3311}
+{"heure": "2026-11-19T22:43:21+01:00", "evenement": "fin", "hote": "release-assets.githubusercontent.com", "octets_recus": 2273293, "octets_envoyes": 2853}
+{"heure": "2026-11-19T22:43:22+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}

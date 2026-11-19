@@ -1,0 +1,94 @@
+configuration écrite : /home/banc/.config/opencode/opencode.json
+timestamp=2026-11-19T21:32:12.745Z level=INFO run=a9e03356 message="creating instance" directory=/travail
+timestamp=2026-11-19T21:32:12.746Z level=INFO run=a9e03356 message=fromDirectory directory=/travail
+timestamp=2026-11-19T21:32:12.751Z level=INFO run=a9e03356 message=bootstrapping directory=/travail
+timestamp=2026-11-19T21:32:12.755Z level=INFO run=a9e03356 message=loading path=/home/banc/.config/opencode/config.json
+timestamp=2026-11-19T21:32:12.755Z level=INFO run=a9e03356 message=loading path=/home/banc/.config/opencode/opencode.json
+timestamp=2026-11-19T21:32:12.760Z level=INFO run=a9e03356 message=loading path=/home/banc/.config/opencode/opencode.jsonc
+timestamp=2026-11-19T21:32:12.904Z level=INFO run=a9e03356 message="all LSPs are disabled"
+timestamp=2026-11-19T21:32:12.904Z level=INFO run=a9e03356 message="all formatters are disabled"
+timestamp=2026-11-19T21:32:12.904Z level=INFO run=a9e03356 message=init
+timestamp=2026-11-19T21:32:13.004Z level=INFO run=a9e03356 message=created id=ses_e0a4690b3ffeUGDB2X4CflCFgO slug=hidden-mountain version=1.19.6 projectID=global directory=/travail path=travail workspaceID=undefined parentID=undefined title="New session - 2026-11-19T21:32:13.004Z" agent=undefined model=undefined metadata=undefined permission="[{\"permission\":\"question\",\"pattern\":\"*\",\"action\":\"deny\"},{\"permission\":\"plan_enter\",\"pattern\":\"*\",\"action\":\"deny\"},{\"permission\":\"plan_exit\",\"pattern\":\"*\",\"action\":\"deny\"}]" cost=0 tokens.input=0 tokens.output=0 tokens.reasoning=0 tokens.cache.read=0 tokens.cache.write=0 time.created=1795123933004 time.updated=1795123933004
+timestamp=2026-11-19T21:32:13.015Z level=INFO run=a9e03356 message="event connected"
+timestamp=2026-11-19T21:32:13.048Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=0
+timestamp=2026-11-19T21:32:13.683Z level=ERROR run=a9e03356 message="Failed to fetch models.dev" cause="Cause([Fail(HttpClientError: Transport error (GET https://models.opencode.ai/api.json) (cause: Error [ERR_PROXY_TUNNEL]: Proxy refused to open a tunnel: 403 Forbidden))])"
+timestamp=2026-11-19T21:32:13.716Z level=WARN run=a9e03356 message="background dependency install failed" dir=/home/banc/.config/opencode error="Cause([Fail(NpmInstallFailedError (cause: O1: 403 Forbidden - GET https://registry.npmjs.org/@opencode-ai%2fplugin))])"
+timestamp=2026-11-19T21:32:13.724Z level=INFO run=a9e03356 message="shell tool using shell" shell=/usr/bin/bash
+timestamp=2026-11-19T21:32:13.731Z level=INFO run=a9e03356 message=init count=1
+timestamp=2026-11-19T21:32:13.737Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=true agent=title mode=primary
+timestamp=2026-11-19T21:32:13.742Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:13.803Z level=INFO run=a9e03356 message="watcher backend" directory=/travail platform=linux backend=inotify
+timestamp=2026-11-19T21:32:13.809Z level=INFO run=a9e03356 message="project copy refresh started" projectID=global
+timestamp=2026-11-19T21:32:13.810Z level=INFO run=a9e03356 message="project copy refresh done" projectID=global updated=[] removed=[]
+timestamp=2026-11-19T21:32:13.821Z level=INFO run=a9e03356 message="booting location services" directory=/travail workspaceID=undefined
+timestamp=2026-11-19T21:32:14.045Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b972150014QetqEDEUFr1HN
+timestamp=2026-11-19T21:32:14.055Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:14.057Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:14.947Z level=INFO run=a9e03356 message=evaluated permission=read pattern=travail/consignes.md action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T21:32:14.960Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=1
+timestamp=2026-11-19T21:32:14.965Z level=INFO run=a9e03356 message="touching file" file=/travail/consignes.md
+timestamp=2026-11-19T21:32:14.971Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b976f2001VaacbJ4Z6Le8dL
+timestamp=2026-11-19T21:32:14.972Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:14.973Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:16.201Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="ls -la /travail" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:16.202Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="find /travail/dosage /travail/tests -type f" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:16.220Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=2
+timestamp=2026-11-19T21:32:16.229Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b97bdd001M3KqkxBphLLOOD
+timestamp=2026-11-19T21:32:16.229Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:16.230Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:16.987Z level=INFO run=a9e03356 message=evaluated permission=read pattern=travail/dosage/unites.py action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T21:32:16.993Z level=INFO run=a9e03356 message="touching file" file=/travail/dosage/unites.py
+timestamp=2026-11-19T21:32:17.073Z level=INFO run=a9e03356 message=evaluated permission=read pattern=travail/tests/test_unites.py action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T21:32:17.079Z level=INFO run=a9e03356 message="touching file" file=/travail/tests/test_unites.py
+timestamp=2026-11-19T21:32:17.135Z level=INFO run=a9e03356 message=evaluated permission=read pattern=travail/dosage/__init__.py action.permission=read action.pattern=* action.action=allow
+timestamp=2026-11-19T21:32:17.146Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=3
+timestamp=2026-11-19T21:32:17.150Z level=INFO run=a9e03356 message="touching file" file=/travail/dosage/__init__.py
+timestamp=2026-11-19T21:32:17.156Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b97f7c001dLXO25yvzES0PO
+timestamp=2026-11-19T21:32:17.156Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:17.157Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:19.857Z level=INFO run=a9e03356 message=evaluated permission=edit pattern=travail/dosage/unites.py action.permission=edit action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:19.858Z level=INFO run=a9e03356 message=formatting file=/travail/dosage/unites.py
+timestamp=2026-11-19T21:32:19.860Z level=INFO run=a9e03356 message="touching file" file=/travail/dosage/unites.py
+timestamp=2026-11-19T21:32:19.866Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=4
+timestamp=2026-11-19T21:32:19.874Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b98a1b001WM02MdXEP5h2k4
+timestamp=2026-11-19T21:32:19.875Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:19.876Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:21.028Z level=INFO run=a9e03356 message="resolved path" arg=/travail resolved=/travail
+timestamp=2026-11-19T21:32:21.029Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="command -v uv" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:21.029Z level=INFO run=a9e03356 message=evaluated permission=bash pattern=true action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:21.029Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="python3 -c \"import pytest\"" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:21.029Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="tail -1" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:21.061Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=5
+timestamp=2026-11-19T21:32:21.068Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b98ec6001c7YFTh9V8Gbb4m
+timestamp=2026-11-19T21:32:21.068Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:21.069Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:22.640Z level=INFO run=a9e03356 message="resolved path" arg=/travail resolved=/travail
+timestamp=2026-11-19T21:32:22.641Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="uv venv -q" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:22.641Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="uv pip install -q pytest" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:22.641Z level=INFO run=a9e03356 message=evaluated permission=bash pattern=".venv/bin/python -m pytest tests -q" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:23.489Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=6
+timestamp=2026-11-19T21:32:23.497Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b99842001kUVeU0ohtEyCpn
+timestamp=2026-11-19T21:32:23.497Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:23.498Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:24.985Z level=INFO run=a9e03356 message="resolved path" arg=/travail resolved=/travail
+timestamp=2026-11-19T21:32:24.985Z level=INFO run=a9e03356 message=evaluated permission=bash pattern=".venv/bin/python -c \"\nfrom dosage import vers_ml\nfor u in ['µl','µL','ul','uL','UL','μl','μL','ml','mL','cl','L','cm3','cm³']:\n    try: print(repr(u), vers_ml(250,u))\n    except Exception as e: print(repr(u), type(e).__name__, e)\n\"" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:25.239Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=7
+timestamp=2026-11-19T21:32:25.247Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b99f180012lWCFYKlzI6HhD
+timestamp=2026-11-19T21:32:25.247Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:25.248Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:27.857Z level=INFO run=a9e03356 message="resolved path" arg=/travail resolved=/travail
+timestamp=2026-11-19T21:32:27.857Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="python3 soumettre.py etat" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:27.857Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="python3 soumettre.py soumettre dosage" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:28.036Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=8
+timestamp=2026-11-19T21:32:28.043Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b9aa05001cRfgeW9cerAB2n
+timestamp=2026-11-19T21:32:28.043Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:28.044Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:28.893Z level=INFO run=a9e03356 message="resolved path" arg=/travail resolved=/travail
+timestamp=2026-11-19T21:32:28.893Z level=INFO run=a9e03356 message=evaluated permission=bash pattern="python3 soumettre.py fin --soumission 1 --score-validation 1.0" action.permission=bash action.action=allow action.pattern=*
+timestamp=2026-11-19T21:32:28.953Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=9
+timestamp=2026-11-19T21:32:28.960Z level=INFO run=a9e03356 message=process session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO messageID=msg_1f5b9ad9a001kNEyBBwh2pp5JO
+timestamp=2026-11-19T21:32:28.960Z level=INFO run=a9e03356 message=stream providerID=banc modelID=deepseek-v4.1-flash session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO small=false agent=build mode=primary
+timestamp=2026-11-19T21:32:28.961Z level=INFO run=a9e03356 message="llm runtime selected" llm.runtime=ai-sdk llm.provider=banc llm.model=deepseek-v4.1-flash
+timestamp=2026-11-19T21:32:31.183Z level=INFO run=a9e03356 message=loop session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO step=10
+timestamp=2026-11-19T21:32:31.184Z level=INFO run=a9e03356 message="exiting loop" session.id=ses_e0a4690b3ffeUGDB2X4CflCFgO
+timestamp=2026-11-19T21:32:31.188Z level=INFO run=a9e03356 message="disposing instance" directory=/travail

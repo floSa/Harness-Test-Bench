@@ -38,9 +38,17 @@ case "$NOM" in sonde|factice) HARNAIS="$CAGE/$NOM" ;; *) HARNAIS="$RACINE/harnai
 
 RES="$RACINE/banc-essai/resultats/$ESSAI"
 ESPACES="${BANC_ESPACES:-$HOME/banc-espaces}"
-ESPACE="$ESPACES/$ESSAI/travail" MAISON="$ESPACES/$ESSAI/maison"
+ESPACE="$ESPACES/$ESSAI/travail" MAISON="$ESPACES/$ESSAI/maison" TMP_ESSAI="$ESPACES/$ESSAI/tmp"
+# Cadre de ressources (protocole, section 5), annoncé dans les consignes.
+MEMOIRE=16G DISQUE_MAX=$((30 * 1000 * 1000 * 1000)) TELECHARGEMENT_MAX=$((10 * 1000 * 1000 * 1000))
+
+# Un seul essai à la fois sur la machine : verrou tenu jusqu'à la fin du script.
+mkdir -p "$ESPACES"
+exec 9> "$ESPACES/.verrou"
+flock -n 9 || { echo "un autre essai tourne déjà (verrou $ESPACES/.verrou)" >&2; exit 1; }
+
 [ -e "$RES" ] && { echo "$RES existe déjà" >&2; exit 1; }
-mkdir -p "$RES/harnais" "$RES/traces" "$MAISON"
+mkdir -p "$RES/harnais" "$RES/traces" "$MAISON" "$TMP_ESSAI"
 
 # Relais du modèle et clé de l'essai.
 curl -fs http://127.0.0.1:4100/health/liveliness >/dev/null || { echo "LiteLLM du banc arrêté : banc-essai/traces/demarrer.sh" >&2; exit 1; }
@@ -57,7 +65,7 @@ CLE="$TRACES/secrets/cle-$ESSAI.env"
 uv run -q --project "$EVAL" python "$EVAL/preparer.py" --recette "$RECETTE" --destination "$ESPACE" >/dev/null
 if [ -n "$(ss -ltnH 'sport = :8765')" ]; then echo "port 8765 déjà pris" >&2; exit 1; fi
 uv run -q --project "$EVAL" python "$EVAL/api.py" --tache "$TACHE" --jeu "$JEU" --sortie "$RES/evaluation" \
-  > "$RES/evaluation-api.log" 2>&1 &
+  > "$RES/evaluation-api.log" 2>&1 9>&- &
 API_PID=$!
 for _ in $(seq 1 100); do curl -fs http://127.0.0.1:8765/etat >/dev/null 2>&1 && break; sleep 0.1; done
 curl -fs http://127.0.0.1:8765/etat >/dev/null 2>&1 || { echo "API de soumission non démarrée : $RES/evaluation-api.log" >&2; exit 1; }
@@ -66,11 +74,32 @@ JOURNAL="$TRACES/journaux/appels.jsonl"
 LIGNE0=$(wc -l < "$JOURNAL")
 DEBUT=$(date --iso-8601=seconds) T0=$(date +%s.%N)
 echo "essai $ESSAI : harnais $NOM, recette $RECETTE, espace $ESPACE"
+# Carte graphique : mémoire occupée avant l'essai (autres usages de la machine), puis relevé toutes
+# les 5 s ; disque (espace, dossier personnel, /tmp) relevé toutes les 30 s, essai arrêté au-delà
+# de DISQUE_MAX.
+GPU_AVANT=$( (nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null || echo 0) | head -1)
+echo "$GPU_AVANT" > "$RES/traces/gpu.txt"
+( while kill -0 "$$" 2>/dev/null; do sleep 5; nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1 >> "$RES/traces/gpu.txt"; done ) < /dev/null > /dev/null 2>&1 9>&- &
+GPU_PID=$!
 set +e
-"$CAGE/cage.sh" --espace "$ESPACE" --maison "$MAISON" --harnais "$HARNAIS" --cle "$CLE" --api \
+"$CAGE/cage.sh" --espace "$ESPACE" --maison "$MAISON" --harnais "$HARNAIS" --cle "$CLE" --api --gpu \
+  --tmp "$TMP_ESSAI" --memoire "$MEMOIRE" --memoire-pic "$RES/traces/memoire.json" \
+  --telechargement "$TELECHARGEMENT_MAX" \
   --journal-reseau "$RES/traces/reseau.jsonl" --duree "$DUREE" -- /opt/harnais/lancer.sh "$MESSAGE" \
-  < /dev/null > "$RES/harnais/stdout.log" 2> "$RES/harnais/stderr.log"   # entrée fermée : aucun harnais n'attend de texte
+  < /dev/null > "$RES/harnais/stdout.log" 2> "$RES/harnais/stderr.log" 9>&- &   # entrée fermée : aucun harnais n'attend de texte
+CAGE_PID=$!
+( pic=0
+  while kill -0 "$CAGE_PID" 2>/dev/null; do
+    t=$(du -sb "$ESPACE" "$MAISON" "$TMP_ESSAI" 2>/dev/null | awk '{s+=$1} END {print s+0}')
+    [ "$t" -gt "$pic" ] && pic=$t && echo "$pic" > "$RES/traces/disque.txt"
+    if [ "$t" -gt "$DISQUE_MAX" ]; then echo depasse >> "$RES/traces/disque.txt"; pkill -TERM -P "$CAGE_PID" 2>/dev/null; kill "$CAGE_PID" 2>/dev/null; break; fi
+    sleep 30
+  done ) < /dev/null > /dev/null 2>&1 9>&- &
+DISQUE_PID=$!
+wait "$CAGE_PID"
 CODE=$?
+kill "$GPU_PID" "$DISQUE_PID" 2>/dev/null || true
+wait "$GPU_PID" "$DISQUE_PID" 2>/dev/null || true
 set -e
 FIN=$(date --iso-8601=seconds) DUREE_S=$(python3 -c "import sys,time; print(time.time() - float(sys.argv[1]))" "$T0")
 kill "$API_PID" 2>/dev/null || true
@@ -98,6 +127,6 @@ fi
 touch "$RES/traces/reseau.jsonl"
 tail -n +"$((LIGNE0 + 1))" "$JOURNAL" | python3 "$CAGE/collecter.py" repartir "$ESSAI" "$RES"
 python3 "$CAGE/collecter.py" essai "$RES" "$ESSAI" "$NOM" "$RECETTE" "$TACHE" "$DEBUT" "$FIN" "$DUREE_S" \
-  "$CODE" "$ESPACE" "$DUREE" "$DEPENSE" "$DEPENSE_RELANCE" "$HARNAIS"
+  "$CODE" "$ESPACE" "$DUREE" "$DEPENSE" "$DEPENSE_RELANCE" "$HARNAIS" "$MEMOIRE" "$DISQUE_MAX" "$TELECHARGEMENT_MAX"
 uv run -q --project "$EVAL" python "$EVAL/rapport.py" --essai "$RES" >/dev/null || true
 exit "$CODE"

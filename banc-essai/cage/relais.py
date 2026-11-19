@@ -4,10 +4,13 @@ La cage n'a pas de réseau (espace de noms réseau vide). Trois services y entre
 Unix montées dans la cage :
 
     exterieur SOCKET HOTE:PORT              hors cage : socket Unix -> service TCP local
-    filtre SOCKET JOURNAL DOMAINE[,...]     hors cage : mandataire HTTP CONNECT, domaines autorisés seulement
+    filtre SOCKET JOURNAL DOMAINE[,...] [QUOTA]
+                                            hors cage : mandataire HTTP CONNECT, domaines autorisés
+                                            seulement (« .hf.co » : sous-domaines), volume plafonné
     interieur PORT SOCKET                   dans la cage : 127.0.0.1:PORT -> socket Unix
 
-Le filtre journalise chaque demande (heure, domaine, port, accepté ou refusé).
+Le filtre journalise chaque demande (heure, domaine, port, accepté ou refusé) et chaque tunnel
+fermé (octets reçus et envoyés).
 """
 import asyncio
 import datetime
@@ -67,14 +70,48 @@ def interieur(port, socket):
     asyncio.run(main())
 
 
-def filtre(socket, journal, domaines):
-    autorises = {d.strip().lower() for d in domaines.split(",") if d.strip()}
+def autorise(hote, motifs):
+    """Domaine exact, ou sous-domaine d'un motif commençant par un point (« .hf.co »)."""
+    if not hote:
+        return False
+    return any(hote == m or (m.startswith(".") and (hote.endswith(m) or hote == m[1:])) for m in motifs)
 
-    def noter(hote, port, accepte, requete):
+
+def filtre(socket, journal, domaines, quota="0"):
+    """Mandataire CONNECT : domaines autorisés, port 443, volume total plafonné (quota en octets,
+    0 = sans plafond). Chaque demande est journalisée ; chaque tunnel aussi à sa fermeture, avec les
+    octets reçus et envoyés. Quota atteint : tunnels ouverts coupés, nouvelles demandes refusées."""
+    motifs = {d.strip().lower() for d in domaines.split(",") if d.strip()}
+    plafond = int(quota)
+    total = {"octets": 0, "depasse": False}
+    tunnels = set()
+
+    def noter(**champs):
         with open(journal, "a") as f:
-            f.write(json.dumps({"heure": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
-                                "hote": hote, "port": port, "accepte": accepte,
-                                "requete": requete[:200]}, ensure_ascii=False) + "\n")
+            f.write(json.dumps({"heure": datetime.datetime.now().astimezone().isoformat(timespec="seconds")}
+                               | champs, ensure_ascii=False) + "\n")
+
+    async def compter(lecteur, ecrivain, compte, cle):
+        try:
+            while data := await lecteur.read(65536):
+                compte[cle] += len(data)
+                total["octets"] += len(data)
+                if plafond and total["octets"] > plafond:
+                    if not total["depasse"]:
+                        total["depasse"] = True
+                        noter(evenement="quota_atteint", octets_total=total["octets"], quota=plafond)
+                        for t in list(tunnels):
+                            t.close()
+                    break
+                ecrivain.write(data)
+                await ecrivain.drain()
+        except (ConnectionError, asyncio.IncompleteReadError, OSError):
+            pass
+        finally:
+            try:
+                ecrivain.close()
+            except Exception:
+                pass
 
     async def client(l, e):
         try:
@@ -90,11 +127,12 @@ def filtre(socket, journal, domaines):
         if len(parties) >= 2 and parties[0].upper() == "CONNECT" and ":" in parties[1]:
             hote, port = parties[1].rsplit(":", 1)
             hote = hote.strip("[]").lower()
-        accepte = hote in autorises and port == "443"
         if not ligne:   # sonde de disponibilité du port (interieur.sh), rien à journaliser
             e.close()
             return
-        noter(hote, port, accepte, ligne)
+        accepte = autorise(hote, motifs) and port == "443" and not total["depasse"]
+        noter(evenement="demande", hote=hote, port=port, accepte=accepte, requete=ligne[:200],
+              quota_atteint=total["depasse"])
         try:
             if not accepte:
                 return await repondre(e, b"403 Forbidden")
@@ -106,7 +144,14 @@ def filtre(socket, journal, domaines):
             await e.drain()
         except ConnectionError:
             return
-        await relier(l, e, l2, e2)
+        compte = {"recus": 0, "envoyes": 0}
+        tunnels.update((e, e2))
+        try:
+            await asyncio.gather(compter(l2, e, compte, "recus"), compter(l, e2, compte, "envoyes"))
+        finally:
+            tunnels.discard(e)
+            tunnels.discard(e2)
+            noter(evenement="fin", hote=hote, octets_recus=compte["recus"], octets_envoyes=compte["envoyes"])
 
     async def repondre(e, statut):
         e.write(b"HTTP/1.1 " + statut + b"\r\nContent-Length: 0\r\nConnection: close\r\n\r\n")

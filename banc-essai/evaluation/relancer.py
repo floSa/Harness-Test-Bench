@@ -75,7 +75,8 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
         interne = commande.replace("{entree}", "/entree").replace("{sortie}", "/sortie")
         cmd = [str(CAGE), "--espace", str(espace), "--maison", str(m), "--entree", str(entree),
                "--sortie", str(sortie), "--journal-reseau", str(sortie_essai / "reseau.jsonl"),
-               "--duree", str(duree_max)]
+               "--duree", str(duree_max), "--gpu", "--memoire", "16G",
+               "--memoire-pic", str(sortie_essai / "memoire.json")]
         if cle:
             cmd += ["--cle", str(cle)]
         cmd += ["--", "bash", "-c", interne]

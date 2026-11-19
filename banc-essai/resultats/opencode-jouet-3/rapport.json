@@ -1,0 +1,95 @@
+{
+  "essai": "opencode-jouet-3",
+  "tache": "jouet",
+  "versions": {
+    "corpus_empreintes_sha256": "1401ebea2236bbb312d7ed460119a15f4530367a96b0d091cf5619b930a338c0",
+    "evaluateur_commit": "f2179ef"
+  },
+  "soumissions": [
+    {
+      "numero": 1,
+      "heure": "2026-11-19T22:43:17+01:00",
+      "statut": "acceptee",
+      "score": 1.0
+    }
+  ],
+  "soumissions_acceptees": 1,
+  "refus_format": 0,
+  "refus_limite": 0,
+  "fin": {
+    "heure": "2026-11-19T22:43:19+01:00",
+    "soumission_finale": 1,
+    "score_validation": 1.0,
+    "commande": null,
+    "commentaire": null
+  },
+  "fin_declaree": true,
+  "soumission_finale": 1,
+  "score_final": 1.0,
+  "meilleur_score": 1.0,
+  "score_validation_annonce": 1.0,
+  "ecart_validation_test": 0.0,
+  "note_finale": {
+    "score": 1.0,
+    "tests": 10,
+    "reussis": 10,
+    "echecs": [],
+    "cage": true
+  },
+  "relance": null,
+  "construction": {
+    "essai": "opencode-jouet-3",
+    "harnais": "opencode",
+    "version_harnais": "opencode 1.19.6",
+    "recette": "jouet",
+    "tache": "jouet",
+    "debut": "2026-11-19T22:42:52+01:00",
+    "fin": "2026-11-19T22:43:22+01:00",
+    "duree_s": 30.4,
+    "code_retour": 0,
+    "garde_fou_s": 1800,
+    "garde_fou_atteint": false,
+    "espace": "/home/florian/banc-espaces/opencode-jouet-3/travail",
+    "modeles": [
+      "openrouter/deepseek/deepseek-v4.1-flash-1017"
+    ],
+    "fournisseurs": [],
+    "appels_modele": 12,
+    "appels_echoues": 0,
+    "appels_429": 0,
+    "attente_429_s": 0.0,
+    "appels_avec_image": 0,
+    "jetons_entree": 104545,
+    "jetons_cache": 94208,
+    "jetons_sortie": 1504,
+    "cout_usd": 0.001251,
+    "cout_openrouter_usd": 0.001251,
+    "depense_cle_usd": 0.001250674,
+    "ecart_depense_journal_usd": 0.0,
+    "depense_cle_relance_usd": null,
+    "temps_modele_s": 25.1,
+    "demandes_reseau": 9,
+    "demandes_reseau_refusees": 5,
+    "hotes_refuses": [
+      "models.opencode.ai",
+      "registry.npmjs.org"
+    ],
+    "telechargement_octets": 4237983,
+    "telechargement_par_hote_octets": {
+      "github.com": 9079,
+      "pypi.org": 104765,
+      "files.pythonhosted.org": 1850846,
+      "release-assets.githubusercontent.com": 2273293
+    },
+    "telechargement_max_octets": 10000000000,
+    "telechargement_plafond_atteint": false,
+    "memoire_max": "16G",
+    "memoire_pic_octets": 616202240,
+    "arrets_memoire": 0,
+    "gpu_memoire_avant_mio": 4780,
+    "gpu_memoire_pic_essai_mio": 0,
+    "disque_pic_octets": 34996138,
+    "disque_max_octets": 30000000000,
+    "disque_depasse": false
+  }
+}

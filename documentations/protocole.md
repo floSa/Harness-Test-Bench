@@ -1,6 +1,6 @@
 # Protocole du banc des harnais
 
-Version 1.5, 19 novembre 2026 (corrections de la relecture indépendante : relance, routes du relais, tâche jouet, fin non déclarée, mesures). Version 1.4 : modèle de la campagne 1 remplacé par DeepSeek V4.1 Flash, une clé par essai. Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
+Version 1.6, 19 novembre 2026 (cadre de ressources de la cage : mémoire, carte graphique, disque, téléchargements ; un seul essai à la fois imposé par un verrou). Version 1.5 : corrections de la relecture indépendante. Version 1.4 : modèle DeepSeek V4.1 Flash, une clé par essai. Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
 ## 1. Question posée
 
@@ -51,11 +51,22 @@ La recette est le message de départ et ce qui l'accompagne. Il est identique po
 ## 5. Conditions d'exécution
 
 1. **Copie neuve** de l'espace de travail à chaque essai (`banc-essai/recettes/<recette>/` copié dans un dossier vierge).
-2. **Cage** : le harnais tourne dans bubblewrap (`banc-essai/cage/`). Écriture seulement dans l'espace de travail ; le reste de la machine en lecture seule ou invisible ; réseau limité au proxy de modèles, à l'API de soumission et à PyPI. Le test caché n'est jamais monté dans la cage.
+2. **Cage** : le harnais tourne dans bubblewrap (`banc-essai/cage/`). Écriture seulement dans l'espace de travail, son dossier personnel et `/tmp` (sur le disque) ; le reste de la machine en lecture seule ou invisible ; réseau limité au relais du modèle, à l'API de soumission et à un mandataire de téléchargement (PyPI, Hugging Face, GitHub). Le test caché n'est jamais monté dans la cage.
 3. **Modèle** : tous les appels passent par un LiteLLM propre au banc (`banc-essai/traces/`), qui relaie vers OpenRouter. Une clé virtuelle par essai (et une pour la relance du workflow), supprimée à la fin de l'essai. Le prix du fournisseur est déclaré au relais, qui calcule le coût de chaque appel ; le coût facturé par OpenRouter est journalisé à côté. LLM-Service n'est pas utilisé ni modifié.
 4. **Mode** : sans interaction (le harnais reçoit le message et travaille seul). Toute intervention humaine est comptée et notée.
-5. **Limites** : 5 soumissions ; plafond de 2 $ par clé, donc par essai ; plafond global de 10 $ sur la clé OpenRouter du banc ; garde-fou de 2 heures par essai (le temps est mesuré, pas imposé).
-6. **Versions figées** : version du harnais, du modèle et du corpus notées dans le résultat de chaque essai.
+5. **Limites** : 5 soumissions ; plafond de 2 $ par clé, donc par essai ; plafond global de 10 $ sur la clé OpenRouter du banc ; garde-fou de 2 heures par essai (le temps est mesuré, pas imposé) ; un seul essai à la fois sur la machine (verrou du lanceur).
+6. **Ressources** (annoncées dans les consignes, sans aucune indication d'outil ni de méthode) :
+
+| Ressource | Cadre | Tenue | Mesure |
+|---|---|---|---|
+| Processeur | tous les cœurs | un seul essai à la fois | |
+| Mémoire vive | 16 Go | plafond du noyau (unité systemd de l'utilisateur) : le processus qui dépasse est arrêté, le harnais continue | pic de mémoire, nombre d'arrêts |
+| Carte graphique | RTX 4060 Ti, 8 Go annoncés | aucun blocage possible sous WSL | pic de mémoire de la carte pendant l'essai (relevé toutes les 5 s, usage antérieur retranché) |
+| Disque | 30 Go (espace de travail, dossier personnel, `/tmp`) | essai arrêté au-delà (relevé toutes les 30 s) | pic d'occupation |
+| Téléchargements | 10 Go depuis PyPI, Hugging Face, GitHub | le mandataire coupe au-delà | volume par site, sites refusés |
+| Recherche sur Internet | non (campagne 2 : recette « outils ») | tout autre site refusé et journalisé | demandes refusées |
+
+7. **Versions figées** : version du harnais, du modèle et du corpus notées dans le résultat de chaque essai.
 
 ## 6. Ce qu'on mesure
 
@@ -125,7 +136,10 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 - Modèles gratuits écartés pour la campagne 1 : le 19/11/2026, Gemma 4 31B gratuit sur OpenRouter a renvoyé 429 (« rate-limited upstream ») à 74 appels sur 74 entre 17 h 02 et 21 h 18 ; l'offre gratuite de l'API Google plafonne Gemma 4 31B à 16 000 jetons envoyés par minute, en dessous de la taille d'un appel de harnais.
 - Le fournisseur peut garder les requêtes, d'où un corpus entièrement fictif.
 - En réponse en flux, le nom du fournisseur n'est pas journalisé (fournisseur unique, sans repli).
-- `/tmp` de la cage est en mémoire, limité à 2 Gio : un harnais peut y écrire, rien n'en sort sur l'hôte.
+- `/tmp` de la cage est sur le disque, dans le dossier de l'essai (`~/banc-espaces/<essai>/tmp`), compté dans les 30 Go.
+- La mémoire de la carte graphique n'est pas plafonnable sous WSL : les 8 Go sont une consigne, le pic est mesuré et un dépassement est noté. La mesure est globale à la carte : l'usage antérieur à l'essai est retranché.
+- Pic de mémoire vive relevé toutes les 2 s : une exécution plus courte (relance de quelques secondes) peut ne pas être relevée.
+- Le plafond de téléchargement vaut pour un passage dans la cage : la relance du workflow a son propre plafond de 10 Go.
 - `/proc/self/mountinfo` montre dans la cage les chemins de l'hôte des dossiers montés (espace de travail, dossier du harnais, uv) ; ces chemins ne donnent accès à rien.
 - Un LiteLLM arrêté pendant un essai ne laisse aucune ligne au journal : les appels perdus ne sont pas comptés. La dépense relevée sur la clé (`depense_cle_usd`) est comparée au total du journal (`ecart_depense_journal_usd`).
 - Le harnais ne peut pas lancer ses propres bacs à sable par espace de noms utilisateur (`--disable-userns`) : un harnais qui en dépend le signalera au lot 4.

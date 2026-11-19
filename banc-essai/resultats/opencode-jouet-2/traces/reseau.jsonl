@@ -1,0 +1,7 @@
+{"heure": "2026-11-19T22:32:12+01:00", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1"}
+{"heure": "2026-11-19T22:32:13+01:00", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1"}
+{"heure": "2026-11-19T22:32:13+01:00", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1"}
+{"heure": "2026-11-19T22:32:13+01:00", "hote": "registry.npmjs.org", "port": "443", "accepte": false, "requete": "CONNECT registry.npmjs.org:443 HTTP/1.1"}
+{"heure": "2026-11-19T22:32:22+01:00", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1"}
+{"heure": "2026-11-19T22:32:22+01:00", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1"}
+{"heure": "2026-11-19T22:32:31+01:00", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1"}

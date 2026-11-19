@@ -77,8 +77,8 @@ def get(url, timeout=20):
         return r.status
 
 
-for url in ["https://example.com/", "https://github.com/", "https://openrouter.ai/api/v1/models",
-            "http://pypi.org/simple/pip/"]:
+for url in ["https://example.com/", "https://openrouter.ai/api/v1/models", "https://api.openai.com/v1/models",
+            "https://www.google.com/", "http://pypi.org/simple/pip/"]:
     etat, det = tenter(lambda: get(url))
     noter(f"accès par le mandataire à {url}", "refusé", f"{etat} ({det})", etat == "refusé")
 etat, det = tenter(lambda: get("https://pypi.org/simple/pip/"))
@@ -95,6 +95,10 @@ def statut_http(url):
 etat, det = tenter(lambda: statut_http("https://files.pythonhosted.org/"))
 noter("accès par le mandataire à files.pythonhosted.org", "réussi (réponse du serveur)", f"{etat} ({det})",
       etat == "réussi")
+for url in ["https://huggingface.co/api/models/unsloth/gemma-4-26B-A4B-it-GGUF", "https://github.com/",
+            "https://raw.githubusercontent.com/gptme/gptme/master/README.md"]:
+    etat, det = tenter(lambda: statut_http(url))
+    noter(f"accès par le mandataire à {url}", "réussi", f"{etat} ({det})", etat == "réussi")
 
 # 4. API de soumission ------------------------------------------------------------------------------
 etat, det = tenter(lambda: json.loads(urllib.request.urlopen("http://127.0.0.1:8765/etat", timeout=10).read()))

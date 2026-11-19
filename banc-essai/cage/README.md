@@ -8,7 +8,7 @@ Exécution d'un harnais (ou de code qu'il a écrit) dans bubblewrap 0.9.0, sans 
 |---|---|
 | `/travail` | espace de travail de l'essai, lecture et écriture |
 | `/home/banc` | dossier personnel du harnais (`HOME`), lecture et écriture |
-| `/tmp` | en mémoire, limité à 2 Gio, perdu à la sortie |
+| `/tmp` | sur le disque : `~/banc-espaces/<essai>/tmp` pour un essai, dossier temporaire supprimé à la sortie sinon |
 | `/run/banc` | sockets des relais et clé de l'essai, lecture seule |
 | `/sortie` | sortie de la relance du workflow ou des tests cachés de la tâche jouet, si montée |
 | `/usr`, `/etc` | système, lecture seule |
@@ -16,6 +16,16 @@ Exécution d'un harnais (ou de code qu'il a écrit) dans bubblewrap 0.9.0, sans 
 | `/opt/outils/uv` | uv, lecture seule |
 | `/entree` | PDF de la relance, lecture seule, si monté |
 | reste de la racine | lecture seule ; `/home` ne contient que `banc` : le dépôt, le test caché et les secrets sont invisibles |
+
+## Ressources
+
+| Ressource | Cadre d'un essai (`lancer.sh`) | Option de `cage.sh` |
+|---|---|---|
+| Mémoire vive | 16 Go, processus fautif arrêté au-delà (unité systemd de l'utilisateur, `OOMPolicy=continue`) ; pic relevé toutes les 2 s | `--memoire 16G` (défaut), `--memoire-pic FICHIER` |
+| Carte graphique | visible (WSL : `/dev/dxg`, `/usr/lib/wsl` en lecture seule) ; 8 Go annoncés, non plafonnables ; pic relevé par `lancer.sh` | `--gpu` |
+| Disque | 30 Go (espace, dossier personnel, `/tmp`), relevé toutes les 30 s, essai arrêté au-delà | `--tmp DIR` |
+| Téléchargements | 10 Go | `--telechargement OCTETS` |
+| Essais simultanés | un seul (verrou `~/banc-espaces/.verrou`) | |
 
 ## Réseau
 
@@ -25,7 +35,7 @@ La cage a son propre espace de noms réseau, vide. Trois services y entrent par 
 |---|---|---|
 | `127.0.0.1:4100` | LiteLLM du banc | toujours (sauf `--sans-reseau`) |
 | `127.0.0.1:8765` | API de soumission de l'essai | `--api` |
-| `127.0.0.1:3128` (`HTTPS_PROXY`) | mandataire filtrant : `CONNECT` vers `pypi.org` et `files.pythonhosted.org` sur le port 443 seulement, chaque demande journalisée | toujours (sauf `--sans-reseau`) |
+| `127.0.0.1:3128` (`HTTPS_PROXY`) | mandataire filtrant : `CONNECT` sur le port 443 vers PyPI (`pypi.org`, `files.pythonhosted.org`), Hugging Face (`huggingface.co`, `*.hf.co`) et GitHub (`github.com`, `*.githubusercontent.com`) seulement ; volume total plafonné (`--telechargement`, 10 Go par défaut) ; chaque demande et chaque tunnel fermé (octets) journalisés | toujours (sauf `--sans-reseau`) |
 
 Aucune autre sortie : pas de DNS, pas de route, pas d'accès aux ports de l'hôte.
 
