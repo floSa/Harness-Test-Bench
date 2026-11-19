@@ -69,7 +69,7 @@ echo "essai $ESSAI : harnais $NOM, recette $RECETTE, espace $ESPACE"
 set +e
 "$CAGE/cage.sh" --espace "$ESPACE" --maison "$MAISON" --harnais "$HARNAIS" --cle "$CLE" --api \
   --journal-reseau "$RES/traces/reseau.jsonl" --duree "$DUREE" -- /opt/harnais/lancer.sh "$MESSAGE" \
-  > "$RES/harnais/stdout.log" 2> "$RES/harnais/stderr.log"
+  < /dev/null > "$RES/harnais/stdout.log" 2> "$RES/harnais/stderr.log"   # entrée fermée : aucun harnais n'attend de texte
 CODE=$?
 set -e
 FIN=$(date --iso-8601=seconds) DUREE_S=$(python3 -c "import sys,time; print(time.time() - float(sys.argv[1]))" "$T0")

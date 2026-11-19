@@ -2,11 +2,11 @@
 
 Adresse : variable d'environnement BANC_API (par défaut http://127.0.0.1:8765).
 
-    python soumettre.py etat
-    python soumettre.py documents DOSSIER        télécharge les PDF du test caché dans DOSSIER
-    python soumettre.py soumettre DOSSIER        extraction : un fichier <id>.json par document
+    python3 soumettre.py etat
+    python3 soumettre.py documents DOSSIER        télécharge les PDF du test caché dans DOSSIER
+    python3 soumettre.py soumettre DOSSIER        extraction : un fichier <id>.json par document
                                                  jouet : le dossier du paquet Python
-    python soumettre.py fin --soumission N [--score-validation X] [--commande "..."]
+    python3 soumettre.py fin --soumission N [--score-validation X] [--commande "..."]
 """
 import argparse
 import json

@@ -81,7 +81,8 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
         cmd += ["--", "bash", "-c", interne]
         debut = time.monotonic()
         try:
-            p = subprocess.run(cmd, cwd=espace, capture_output=True, text=True, timeout=duree_max + 60)
+            p = subprocess.run(cmd, cwd=espace, stdin=subprocess.DEVNULL, capture_output=True, text=True,
+                               timeout=duree_max + 60)
             code, out, err = p.returncode, p.stdout, p.stderr
         except subprocess.TimeoutExpired as e:
             code, out, err = "délai dépassé", e.stdout or "", e.stderr or ""

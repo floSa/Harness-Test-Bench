@@ -19,3 +19,5 @@ banc-essai/resultats/*/evaluation/contenus-cache.jsonl
 banc-essai/traces/secrets/
 banc-essai/traces/journaux/
 banc-essai/cage/outils/
+# Harnais installés (binaires, paquets), recréés par harnais/<nom>/installer.sh
+harnais/*/installe/

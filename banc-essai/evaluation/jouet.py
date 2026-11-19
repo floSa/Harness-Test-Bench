@@ -77,7 +77,8 @@ def noter(fichiers, dossier):
                "--lecture", f"{outils}:/opt/jouet", "--duree", str(DUREE_MAX), "--",
                "python3", "-I", "-B", "/opt/jouet/executant.py"]
         try:
-            p = subprocess.run(cmd, cwd=travail, capture_output=True, text=True, timeout=DUREE_MAX + 60)
+            p = subprocess.run(cmd, cwd=travail, stdin=subprocess.DEVNULL, capture_output=True, text=True,
+                               timeout=DUREE_MAX + 60)
             sortie = p.stdout
         except subprocess.TimeoutExpired:
             sortie = ""

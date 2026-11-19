@@ -10,6 +10,10 @@ Un jeu de test caché de 15 autres rapports n'est accessible que par l'API de so
 
 Aucune contrainte de méthode : bibliothèques au choix (installées depuis PyPI), lecture du texte, OCR, vision du modèle, règles, appels au modèle, en combinaison libre.
 
+## Environnement
+
+Linux sans interface graphique. Python : `python3` (pas de commande `python`, pas de `pip` système). Les paquets s'installent depuis PyPI (seul site joignable avec le modèle et l'API) dans un environnement virtuel de ce dossier : `uv venv` puis `uv pip install <paquet>`, ou `python3 -m venv .venv` puis `.venv/bin/pip install <paquet>`.
+
 ## Clés à extraire
 
 | Clé | Type | Définition |
@@ -71,10 +75,10 @@ Adresse : variable `BANC_API` (par défaut `http://127.0.0.1:8765`). Le client `
 
 | Commande | Effet |
 |---|---|
-| `python soumettre.py documents test/` | télécharge les 15 PDF du test caché dans `test/` (sans les réponses) |
-| `python soumettre.py soumettre sorties/` | envoie un dossier de `<identifiant>.json` (un par document du test) ; renvoie le score global |
-| `python soumettre.py etat` | soumissions utilisées et restantes |
-| `python soumettre.py fin ...` | déclaration de fin (ci-dessous) |
+| `python3 soumettre.py documents test/` | télécharge les 15 PDF du test caché dans `test/` (sans les réponses) |
+| `python3 soumettre.py soumettre sorties/` | envoie un dossier de `<identifiant>.json` (un par document du test) ; renvoie le score global |
+| `python3 soumettre.py etat` | soumissions utilisées et restantes |
+| `python3 soumettre.py fin ...` | déclaration de fin (ci-dessous) |
 
 **5 soumissions au maximum.** Une soumission au mauvais format (document manquant, clé manquante, nombre écrit en chaîne, date hors format) est refusée avec le détail des erreurs et ne compte pas. Toute soumission est journalisée.
 
@@ -83,7 +87,7 @@ Adresse : variable `BANC_API` (par défaut `http://127.0.0.1:8765`). Le client `
 Terminer par la déclaration de fin :
 
 ```
-python soumettre.py fin --soumission N --score-validation X --commande "<commande> {entree} {sortie}"
+python3 soumettre.py fin --soumission N --score-validation X --commande "<commande> {entree} {sortie}"
 ```
 
 - `N` : la soumission retenue comme finale ;
