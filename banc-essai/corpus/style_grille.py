@@ -215,7 +215,7 @@ class StyleGrille(Base):
         h0[ci["A1"]], h0[ci["P1"]] = self.tr("Avant réglage", "As found"), self.tr("Après réglage", "As left")
         if not calcul:
             h0[ci["M"]] = self.tr("Moyenne\naprès", "Mean\nas left")
-        h0[ci["TOL"]] = self.lib("tolerance_ml")
+        h0[ci["TOL"]] = self.cel(self.lib("tolerance_ml"), True)
         for k, e in zip(["A1", "A2", "A3", "P1", "P2", "P3"], ["E1", "E2", "E3"] * 2):
             h1[ci[k]] = e
         data = [h0, h1]

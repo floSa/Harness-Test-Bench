@@ -3,7 +3,7 @@
   "constructeur": "Calanquin",
   "numero_serie": null,
   "site": "Usine de Sablé-sur-Sarthe",
-  "reference_rapport": "ST-RI-2025-1555",
+  "reference_rapport": "ST-RI-2025-2055",
   "date_intervention": "2025-05-08",
   "date_validation": "2025-05-15",
   "volume_dose_ml": 24.6,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.25,
   "debit_ml_min": 2780.0,
   "pression_bar": 2.0,
-  "reference_piece": "CA-937-B",
+  "reference_piece": "CA-177-R",
   "technicien": "Nicolas Joly",
   "statut": "non_conforme"
 }

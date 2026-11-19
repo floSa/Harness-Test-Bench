@@ -15,7 +15,7 @@
   "page_scannee": null,
   "unites_ecrites": {
     "volume_dose_ml": "mL",
-    "volume_nominal_ml": "cm³",
+    "volume_nominal_ml": "mL",
     "tolerance_ml": "mL",
     "debit_ml_min": "mL/min",
     "pression_bar": "bar"
@@ -24,7 +24,7 @@
   "format_dates": "us",
   "champs": {
     "machine": {
-      "valeur": "Calanquin 250",
+      "valeur": "Calanquin 40",
       "emplacement": "phrase",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [
@@ -33,13 +33,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "Calanquin 250",
+          "texte": "Calanquin 40",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            134.0,
+            152.0,
             422.7,
-            212.0,
+            224.0,
             435.2
           ],
           "role": "verite"
@@ -47,20 +47,20 @@
       ],
       "leurres": [
         {
-          "texte": "K85-2P",
+          "texte": "K66-4P",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            92.0,
+            62.0,
             492.9,
-            128.0,
+            98.0,
             505.4
           ],
           "raison": "type du moteur",
           "role": "leurre"
         },
         {
-          "texte": "K85-2P",
+          "texte": "K66-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -73,13 +73,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Makinvex C34",
+          "texte": "Ostaton C21",
           "page": 2,
           "mode": "texte",
           "cadre": [
             194.0,
             459.1,
-            266.0,
+            260.0,
             471.6
           ],
           "raison": "équipement voisin",
@@ -112,20 +112,20 @@
       ],
       "leurres": [
         {
-          "texte": "Calanquin",
+          "texte": "Nevvex",
           "page": 0,
           "mode": "texte",
           "cadre": [
             416.0,
             479.7,
-            470.0,
+            452.0,
             492.2
           ],
           "raison": "marque du moteur",
           "role": "leurre"
         },
         {
-          "texte": "Calanquin",
+          "texte": "Nevvex",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -138,7 +138,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Dorvan",
+          "texte": "Ulvrel",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -166,7 +166,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "LU-2023-64906",
+      "valeur": "LU-2019-86992",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -176,7 +176,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "LU-2023-64906",
+          "texte": "LU-2019-86992",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -190,7 +190,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-58646",
+          "texte": "INV-96305",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -203,7 +203,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M2711269",
+          "texte": "M4918612",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -216,7 +216,7 @@
           "role": "leurre"
         },
         {
-          "texte": "IN-28142",
+          "texte": "IN-40012",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -229,7 +229,7 @@
           "role": "leurre"
         },
         {
-          "texte": "ET-23395",
+          "texte": "ET-68596",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -244,14 +244,14 @@
       ]
     },
     "site": {
-      "valeur": "Ipswich Works",
+      "valeur": "Swindon Works",
       "emplacement": "paragraphe",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Ipswich Works",
+          "texte": "Swindon Works",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -265,26 +265,26 @@
       ],
       "leurres": [
         {
-          "texte": "Wexford",
+          "texte": "Athlone",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            320.0,
+            332.0,
             206.2,
-            362.0,
+            374.0,
             218.7
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Wexford",
+          "texte": "Athlone",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            296.0,
+            330.3,
             635.4,
-            338.0,
+            372.3,
             647.9
           ],
           "raison": "ville du siège du client",
@@ -293,7 +293,7 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "OS-RI-2025-6200",
+      "valeur": "OS-RI-2025-9993",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [
@@ -302,7 +302,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "OS-RI-2025-6200",
+          "texte": "OS-RI-2025-9993",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -314,7 +314,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-6200",
+          "texte": "OS-RI-2025-9993",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -326,7 +326,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-6200",
+          "texte": "OS-RI-2025-9993",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -338,7 +338,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-6200",
+          "texte": "OS-RI-2025-9993",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -350,7 +350,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-6200",
+          "texte": "OS-RI-2025-9993",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -364,7 +364,7 @@
       ],
       "leurres": [
         {
-          "texte": "PO-614759",
+          "texte": "PO-881833",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -377,7 +377,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-15776",
+          "texte": "AFF-93185",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -392,7 +392,7 @@
       ]
     },
     "date_intervention": {
-      "valeur": "2025-05-06",
+      "valeur": "2025-03-25",
       "emplacement": "formulaire",
       "regle": "jour de l'intervention sur site, format ISO",
       "pieges": [
@@ -401,13 +401,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "May 6, 2025",
+          "texte": "March 25, 2025",
           "page": 0,
           "mode": "texte",
           "cadre": [
             200.0,
             335.8,
-            266.0,
+            284.0,
             348.3
           ],
           "role": "verite"
@@ -415,39 +415,39 @@
       ],
       "leurres": [
         {
-          "texte": "May 4, 2025",
+          "texte": "March 21, 2025",
           "page": 0,
           "mode": "texte",
           "cadre": [
             152.0,
             303.4,
-            218.0,
+            236.0,
             315.9
           ],
           "raison": "date de la demande",
           "role": "leurre"
         },
         {
-          "texte": "4 May 2025",
+          "texte": "21 March 2025",
           "page": 0,
           "mode": "texte",
           "cadre": [
             62.0,
             622.2,
-            524.0,
+            506.0,
             647.9
           ],
           "raison": "date de la demande",
           "role": "leurre"
         },
         {
-          "texte": "November 4, 2025",
+          "texte": "March 25, 2026",
           "page": 2,
           "mode": "texte",
           "cadre": [
             200.0,
             508.7,
-            296.0,
+            284.0,
             521.2
           ],
           "raison": "date de la prochaine visite",
@@ -456,7 +456,7 @@
       ]
     },
     "date_validation": {
-      "valeur": "2025-05-13",
+      "valeur": "2025-04-04",
       "emplacement": "phrase",
       "regle": "date de l'approbation finale du rapport (pas la rédaction, la vérification, l'impression ni l'étalonnage des instruments), format ISO",
       "pieges": [
@@ -466,13 +466,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "13 May 2025",
+          "texte": "4 April 2025",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            188.0,
+            176.0,
             440.9,
-            254.0,
+            248.0,
             453.4
           ],
           "role": "verite"
@@ -480,104 +480,104 @@
       ],
       "leurres": [
         {
-          "texte": "May 14, 2025",
+          "texte": "April 14, 2025",
           "page": 0,
           "mode": "texte",
           "cadre": [
             105.5,
             804.9,
-            159.5,
+            168.5,
             814.3
           ],
           "raison": "date d'impression",
           "role": "leurre"
         },
         {
-          "texte": "May 8, 2025",
+          "texte": "March 29, 2025",
           "page": 0,
           "mode": "texte",
           "cadre": [
             140.0,
             319.6,
-            206.0,
+            224.0,
             332.1
           ],
           "raison": "date d'émission",
           "role": "leurre"
         },
         {
-          "texte": "May 14, 2025",
+          "texte": "April 14, 2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
             105.5,
             804.9,
-            159.5,
+            168.5,
             814.3
           ],
           "raison": "date d'impression",
           "role": "leurre"
         },
         {
-          "texte": "July 29, 2024",
+          "texte": "October 26, 2024",
           "page": 1,
           "mode": "texte",
           "cadre": [
             463.2,
-            550.9,
-            525.6,
-            560.9
+            546.1,
+            516.0,
+            565.7
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "December 10, 2024",
+          "texte": "February 14, 2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
             463.2,
-            575.1,
-            544.8,
-            585.1
+            570.3,
+            520.8,
+            589.9
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "May 14, 2025",
+          "texte": "April 14, 2025",
           "page": 2,
           "mode": "texte",
           "cadre": [
             105.5,
             804.9,
-            159.5,
+            168.5,
             814.3
           ],
           "raison": "date d'impression",
           "role": "leurre"
         },
         {
-          "texte": "May 14, 2025",
+          "texte": "April 14, 2025",
           "page": 3,
           "mode": "texte",
           "cadre": [
             105.5,
             804.9,
-            159.5,
+            168.5,
             814.3
           ],
           "raison": "date d'impression",
           "role": "leurre"
         },
         {
-          "texte": "8 May 2025",
+          "texte": "30 March 2025",
           "page": 3,
           "mode": "texte",
           "cadre": [
             296.0,
             123.9,
-            356.0,
+            374.0,
             136.4
           ],
           "raison": "date de vérification",
@@ -624,7 +624,7 @@
           "role": "leurre"
         },
         {
-          "texte": "224",
+          "texte": "245",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -663,7 +663,7 @@
           "role": "leurre"
         },
         {
-          "texte": "224",
+          "texte": "245",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -752,7 +752,7 @@
       ]
     },
     "debit_ml_min": {
-      "valeur": 262.0,
+      "valeur": 246.0,
       "emplacement": "schema",
       "regle": "débit mesuré après réglage, en ml/min (pas le débit maximal, ni celui d'un équipement voisin)",
       "pieges": [
@@ -761,7 +761,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "262 mL/min",
+          "texte": "246 mL/min",
           "page": 2,
           "mode": "image",
           "cadre": [
@@ -775,7 +775,7 @@
       ],
       "leurres": [
         {
-          "texte": "244",
+          "texte": "231",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -788,7 +788,7 @@
           "role": "leurre"
         },
         {
-          "texte": "420",
+          "texte": "510",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -801,13 +801,13 @@
           "role": "leurre"
         },
         {
-          "texte": "413",
+          "texte": "343",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            308.0,
+            302.0,
             459.1,
-            326.0,
+            320.0,
             471.6
           ],
           "raison": "débit de l'équipement voisin",
@@ -824,7 +824,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "3.9",
+          "texte": "3.3",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -837,7 +837,7 @@
           "role": "leurre"
         },
         {
-          "texte": "11.5",
+          "texte": "13.0",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -850,7 +850,7 @@
           "role": "leurre"
         },
         {
-          "texte": "5.8",
+          "texte": "5.9",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -863,20 +863,20 @@
           "role": "leurre"
         },
         {
-          "texte": "5.6",
+          "texte": "6.7",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            434.0,
+            428.0,
             459.1,
-            452.0,
+            446.0,
             471.6
           ],
           "raison": "pression de l'équipement voisin",
           "role": "leurre"
         },
         {
-          "texte": "6.0",
+          "texte": "8.0",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -891,7 +891,7 @@
       ]
     },
     "reference_piece": {
-      "valeur": "LU-208-D",
+      "valeur": "LU-957-A",
       "emplacement": "tableau",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [
@@ -900,7 +900,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "LU-208-D",
+          "texte": "LU-957-A",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -914,7 +914,7 @@
       ],
       "leurres": [
         {
-          "texte": "LU-868-E",
+          "texte": "LU-196-C",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -927,7 +927,7 @@
           "role": "leurre"
         },
         {
-          "texte": "LU-868-E",
+          "texte": "LU-196-C",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -940,7 +940,7 @@
           "role": "leurre"
         },
         {
-          "texte": "LU-136-R",
+          "texte": "LU-279-E",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -953,7 +953,7 @@
           "role": "leurre"
         },
         {
-          "texte": "LU-218-R",
+          "texte": "LU-204-A",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -968,7 +968,7 @@
       ]
     },
     "technicien": {
-      "valeur": "Callum Ainsley",
+      "valeur": "Owen Ashby",
       "emplacement": "paragraphe",
       "regle": "intervenant responsable côté prestataire (pas l'accompagnant, le rédacteur, le vérificateur ou le client)",
       "pieges": [
@@ -977,13 +977,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "Callum Ainsley",
+          "texte": "Owen Ashby",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            115.8,
+            116.0,
             582.1,
-            199.6,
+            176.0,
             594.6
           ],
           "role": "verite"
@@ -991,39 +991,39 @@
       ],
       "leurres": [
         {
-          "texte": "Sarah Ainsley",
+          "texte": "Rhys Harlow",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            407.9,
+            386.0,
             582.1,
-            485.7,
+            452.0,
             594.6
           ],
           "raison": "accompagnant",
           "role": "leurre"
         },
         {
-          "texte": "Rhys Harlow",
+          "texte": "Megan Fenwick",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            127.5,
+            128.0,
             595.3,
-            193.3,
+            206.0,
             607.8
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
         },
         {
-          "texte": "Owen Ashby",
+          "texte": "Megan Stroud",
           "page": 3,
           "mode": "texte",
           "cadre": [
             400.5,
             328.8,
-            451.5,
+            461.7,
             339.4
           ],
           "raison": "approbateur côté client",

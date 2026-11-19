@@ -277,14 +277,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "ST-RI-2025-1555",
+      "valeur": "ST-RI-2025-2055",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "ST-RI-2025-1555",
+          "texte": "ST-RI-2025-2055",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -296,7 +296,7 @@
           "role": "verite"
         },
         {
-          "texte": "ST-RI-2025-1555",
+          "texte": "ST-RI-2025-2055",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -308,7 +308,7 @@
           "role": "verite"
         },
         {
-          "texte": "ST-RI-2025-1555",
+          "texte": "ST-RI-2025-2055",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -320,7 +320,7 @@
           "role": "verite"
         },
         {
-          "texte": "ST-RI-2025-1555",
+          "texte": "ST-RI-2025-2055",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -332,7 +332,7 @@
           "role": "verite"
         },
         {
-          "texte": "ST-RI-2025-1555",
+          "texte": "ST-RI-2025-2055",
           "page": 4,
           "mode": "texte",
           "cadre": [
@@ -346,7 +346,7 @@
       ],
       "leurres": [
         {
-          "texte": "ST-RI-2025-2353",
+          "texte": "ST-RI-2025-1675",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -685,7 +685,7 @@
       ],
       "leurres": [
         {
-          "texte": "24,4",
+          "texte": "24,5",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -978,20 +978,20 @@
       ]
     },
     "reference_piece": {
-      "valeur": "CA-937-B",
+      "valeur": "CA-177-R",
       "emplacement": "paragraphe",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "CA-937-B",
+          "texte": "CA-177-R",
           "page": 2,
           "mode": "texte",
           "cadre": [
             171.1,
             389.8,
-            210.6,
+            211.1,
             402.2
           ],
           "role": "verite"
@@ -999,52 +999,52 @@
       ],
       "leurres": [
         {
-          "texte": "CA-961-K",
+          "texte": "CA-268-R",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            252.1,
+            252.6,
             389.8,
-            291.6,
+            292.6,
             402.2
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
-          "texte": "CA-961-K",
+          "texte": "CA-268-R",
           "page": 4,
           "mode": "texte",
           "cadre": [
             42.0,
             88.1,
-            77.1,
+            77.6,
             99.1
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
-          "texte": "CA-746-C",
+          "texte": "CA-834-K",
           "page": 4,
           "mode": "texte",
           "cadre": [
             42.0,
             102.7,
-            77.6,
+            77.1,
             113.7
           ],
           "raison": "pièce commandée, non posée",
           "role": "leurre"
         },
         {
-          "texte": "CA-989-E",
+          "texte": "CA-459-R",
           "page": 4,
           "mode": "texte",
           "cadre": [
             42.0,
             117.3,
-            77.1,
+            77.6,
             128.3
           ],
           "raison": "pièce proposée au devis",

@@ -207,7 +207,7 @@ class Base:
         E.append({"cle": None, "titre": t("N° d'affaire", "Job no."), "valeur": lr["affaire"],
                   "groupe": "ref", "notes": [("leurre", "reference_rapport", lr["affaire"], "n° d'affaire")]})
         E.append({"cle": None, "titre": t("Client", "Customer"),
-                  "valeur": f"{lr['client']}\n{t('Siège', 'Head office')} : {lr['ville_siege']}",
+                  "valeur": f"{lr['client']}\n{t('Siège : ', 'Head office: ')}{lr['ville_siege']}",
                   "groupe": "lieu", "notes": [("leurre", "site", lr["ville_siege"], "ville du siège du client")]})
         champ("site", "lieu")
         E.append({"cle": None, "titre": t("Installation", "Installation"),
@@ -243,6 +243,10 @@ class Base:
                                     "Additional information, {l}: {v}."])
         l = self.lib(cle)
         l = l if l.isupper() or l[:2].isupper() else l[0].lower() + l[1:]
+        if cle in ("volume_dose_ml", "debit_ml_min", "pression_bar"):
+            l += self.tr(" après réglage", " as left")
+        elif cle == "reference_piece":
+            l += self.tr(" de la pièce remplacée", " of the replaced part")
         html = escape(self.r.choice(modeles).format(l=l, v=val))
         return html, [("verite", cle, val, None)]
 
@@ -458,6 +462,10 @@ class Base:
              ("leurre", "debit_ml_min", dv, "débit de l'équipement voisin"),
              ("leurre", "pression_bar", pv, "pression de l'équipement voisin"),
              ("leurre", "pression_bar", self.n(lr["air"], 1), "réseau d'air de l'atelier")]))
+        if self.pd.get("redacteur_autre"):
+            out.append((escape(self.tr(f"Rapport rédigé par {lr['accompagnant']}.",
+                                       f"Report prepared by {lr['accompagnant']}.")),
+                        [("leurre", "technicien", lr["accompagnant"], "rédacteur du rapport")]))
         arrivee = textes.STATUTS[self.langue][1]
         out.append((escape(self.tr(f"À l'arrivée, l'équipement était jugé {arrivee.lower()}.",
                                    f"On arrival the equipment was rated {arrivee.lower()}.")),
@@ -492,9 +500,9 @@ class Base:
     def note_unites(self, cur):
         if self.place_unite == "note":
             cur.para(escape(self.tr(
-                f"Unités : volumes en {self.u['volume_dose_ml']}, débits en {self.u['debit_ml_min']}, "
-                f"pressions en {self.u['pression_bar']}, températures en °C.",
-                f"Units: volumes in {self.u['volume_dose_ml']}, flow in {self.u['debit_ml_min']}, "
+                f"Unités du tableau des relevés : doses en {self.u['volume_dose_ml']}, débits en "
+                f"{self.u['debit_ml_min']}, pressions en {self.u['pression_bar']}, températures en °C.",
+                f"Readings table units: doses in {self.u['volume_dose_ml']}, flow in {self.u['debit_ml_min']}, "
                 f"pressure in {self.u['pression_bar']}, temperature in °C.")), self.s["petit"])
 
     def apres(self, cle, mode_essais=False):
@@ -521,8 +529,14 @@ class Base:
     def essais(self):
         """Essais avant et après réglage, écrits dans l'unité de la dose."""
         lr = self.lr
-        return ([[self.vol(x) for x in t] for t in lr["essais_avant"]],
-                [[self.vol(x) for x in t] for t in lr["essais_apres"]])
+        avant = [[self.vol(x) for x in t] for t in lr["essais_avant"]]
+        if self.emp("volume_dose_ml") in ("tableau", "calcul"):
+            apres = [[self.vol(x) for x in t] for t in lr["essais_apres"]]
+        else:
+            # Dose écrite ailleurs (schéma, phrase, paragraphe) : pas d'essais après réglage, sinon
+            # la dose se recalculerait depuis le tableau.
+            apres = [[self.marqueur_vide or "—"] * 3 for _ in lr["essais_apres"]]
+        return avant, apres
 
     def calcul(self):
         return self.emp("volume_dose_ml") == "calcul"
@@ -588,7 +602,7 @@ class Base:
         notes = []
         for k, ins in enumerate(lr["instruments"], start=1):
             dte = self.d(ins["etalonnage"])
-            lignes.append([self.cel(ins["nom"]), ins["marque"], ins["serie"], dte])
+            lignes.append([self.cel(ins["nom"]), ins["marque"], ins["serie"], self.cel(dte)])
             notes += [(k, 1, "leurre", "constructeur", ins["marque"], "marque d'un instrument de mesure"),
                       (k, 2, "leurre", "numero_serie", ins["serie"], "n° de série d'un instrument"),
                       (k, 3, "leurre", "date_validation", dte, "date d'étalonnage d'un instrument")]
@@ -646,14 +660,14 @@ class Base:
                    "remplisseuse": ("Têtes de remplissage", "Filling heads"),
                    "pipette": ("Module de pipetage", "Pipetting module")}
         textes_s = {"reservoir_nom": self.tr("Réservoir", "Tank"),
-                    "reservoir": f"{self.tr('Capacité', 'Capacity')} : {self.n(self.lr['reservoir_l'])} L",
-                    "circuit": f"Circuit : {self.n(self.lr['circuit_ml'])} ml",
+                    "reservoir": f"{self.tr('Capacité : ', 'Capacity: ')}{self.n(self.lr['reservoir_l'])} L",
+                    "circuit": f"{self.tr('Circuit : ', 'Line: ')}{self.n(self.lr['circuit_ml'])} {self.tr('ml', 'mL')}",
                     "organe": organes[self.marque["type"]][0 if fr else 1]}
         notes = []
         for cle, nom in [("volume_dose_ml", "dose"), ("volume_nominal_ml", "nominal"),
                          ("debit_ml_min", "debit"), ("pression_bar", "pression")]:
             if self.emp(cle) == "schema":
-                textes_s[nom] = f"{self.lib(cle)} : {self.vu(cle)}"
+                textes_s[nom] = f"{self.lib(cle)}{self.tr(' : ', ': ')}{self.vu(cle)}"
                 notes.append((cle, self.vu(cle)))
         larg = min(dessins.SCHEMA_L, cur.l)
         haut = dessins.SCHEMA_H * larg / dessins.SCHEMA_L

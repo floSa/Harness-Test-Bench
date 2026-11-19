@@ -158,8 +158,7 @@ class StyleReserve(BaseFlux):
         S.append(PageBreak())
         S += self.schema_flux(self.tr("Schéma", "Diagram"), COL)
         S += self.zones_flux(COL, empile=True)
-        S += self.P(self.tr("Pièces", "Parts"), "titre", espace=6)
-        S += self.table_flux(self.t_pieces, COL)
+        S += self.table_flux(self.t_pieces, COL, titre=self.tr("Pièces", "Parts"))
         if self.absent("reference_piece"):
             S += self.P(escape(self.texte_sans_piece()))
         S += self.sections_flux(self.paragraphes()[4:])

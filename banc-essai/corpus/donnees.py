@@ -102,6 +102,17 @@ def _pas(nominal):
     return 0.001 if nominal < 1 else (0.01 if nominal < 10 else 0.1)
 
 
+def _trois(r, ecart, pas):
+    """Trois écarts distincts, non nuls, multiples du pas, de somme nulle (essais de moyenne exacte)."""
+    kmax = max(3, int(0.45 * ecart / pas))
+    for _ in range(100):
+        k1, k2 = r.randint(1, kmax) * r.choice([-1, 1]), r.randint(1, kmax) * r.choice([-1, 1])
+        k3 = -k1 - k2
+        if len({k1, k2, k3}) == 3 and 0 not in (k1, k2, k3):
+            return tuple(round(k * pas, 6) for k in (k1, k2, k3))
+    return (pas, round(2 * pas, 6), round(-3 * pas, 6))
+
+
 def _jours(d, a, b, r):
     return d + dt.timedelta(days=r.randint(a, b))
 
@@ -138,10 +149,11 @@ def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, p
         avant = _arr(dose + max(0.03, 0.03 * nominal), pas)
     for o in offs:
         m = _arr(dose + o, pas)
-        d1 = _arr(r.uniform(-0.4, 0.4) * ecart, pas)
-        d2 = _arr(r.uniform(-0.4, 0.4) * ecart, pas)
-        essais_apres.append([_arr(m + d1, pas), _arr(m + d2, pas), _arr(m - d1 - d2, pas)])
-        essais_avant.append([_arr(avant + r.uniform(-0.6, 0.6) * ecart, pas) for _ in range(3)])
+        d1, d2, d3 = _trois(r, ecart, pas)
+        essais_apres.append([_arr(m + d1, pas), _arr(m + d2, pas), _arr(m + d3, pas)])
+        # Essais avant réglage centrés sur la dose d'arrivée : leur moyenne vaut « avant ».
+        a1, a2, a3 = _trois(r, 1.5 * ecart, pas)
+        essais_avant.append([_arr(avant + a1, pas), _arr(avant + a2, pas), _arr(avant + a3, pas)])
     incertitude = _arr(max(pas, tolerance * r.uniform(0.15, 0.35)), pas)
 
     dmin, dmax, dpas = typ["debit"]
@@ -175,8 +187,9 @@ def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, p
 
     # Références.
     an = intervention.year
-    ref = f"{prestataire['prefixe']}-RI-{an}-{r.randint(1000, 9999)}"
-    ref_ancienne = f"{prestataire['prefixe']}-RI-{an}-{r.randint(1000, 9999)}"
+    num = r.randint(1500, 9999)
+    ref = f"{prestataire['prefixe']}-RI-{an}-{num}"
+    ref_ancienne = f"{prestataire['prefixe']}-RI-{an}-{num - r.randint(3, 400):04d}"
     pref = marque["prefixe_serie"]
     serie = r.choice([f"{pref}-{r.randint(2016, 2024)}-{r.randint(10000, 99999)}",
                       f"{pref}{r.randint(100000, 999999)}",

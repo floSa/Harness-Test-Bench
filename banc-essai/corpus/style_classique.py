@@ -53,7 +53,7 @@ class StyleClassique(BaseFlux):
             tete.append(self.tr("Unité", "Unit"))
         ic = {k: i for i, k in enumerate(["G", "A", "E"] + ([] if calcul else ["M"]) + ["TOL"] +
                                           (["U"] if avec_u else []))}
-        data, notes = [tete], []
+        data, notes = [[self.cel(x, True) for x in tete]], []
         av, ap = self.essais()
         tetes = lr["tetes"]
         for h in range(tetes):
@@ -156,8 +156,7 @@ class StyleClassique(BaseFlux):
         S += self.zones_flux(lg)
         S += self.P(self.tr("3. Compte rendu", "3. Report"), "titre", espace=6)
         S += self.sections_flux(self.paragraphes()[3:])
-        S += self.P(self.tr("4. Pièces", "4. Parts"), "titre", espace=6)
-        S += self.table_flux(self.t_pieces, lg)
+        S += self.table_flux(self.t_pieces, lg, titre=self.tr("4. Pièces", "4. Parts"))
         if self.absent("reference_piece"):
             S += self.P(escape(self.texte_sans_piece()))
         S += self.P("5. Observations", "titre", espace=6)

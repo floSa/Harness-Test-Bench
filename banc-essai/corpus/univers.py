@@ -118,4 +118,7 @@ def site(r, langue, exclus=()):
     while True:
         v = r.choice(VILLES[langue])
         if v not in exclus:
-            return r.choice(FORMES_SITE[langue]).format(v=v), v
+            forme = r.choice(FORMES_SITE[langue]).format(v=v)
+            if langue == "fr" and v[0] in "AEIOUYÉÈÂÎ":
+                forme = forme.replace(f"de {v}", f"d'{v}")   # élision : Site d'Oyonnax
+            return forme, v

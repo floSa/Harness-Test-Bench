@@ -164,7 +164,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "UL/17/7009",
+      "valeur": "UL870560",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -173,13 +173,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "UL/17/7009",
+          "texte": "UL870560",
           "page": 0,
           "mode": "texte",
           "cadre": [
             158.0,
             271.0,
-            218.0,
+            206.0,
             283.5
           ],
           "role": "verite"
@@ -253,9 +253,9 @@
           "page": 0,
           "mode": "texte",
           "cadre": [
-            296.0,
+            290.0,
             206.2,
-            332.0,
+            326.0,
             218.7
           ],
           "raison": "ville du siège du client",
@@ -277,14 +277,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "OS-RI-2025-2737",
+      "valeur": "OS-RI-2025-3237",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "OS-RI-2025-2737",
+          "texte": "OS-RI-2025-3237",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -296,7 +296,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-2737",
+          "texte": "OS-RI-2025-3237",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -308,7 +308,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-2737",
+          "texte": "OS-RI-2025-3237",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -320,7 +320,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-2737",
+          "texte": "OS-RI-2025-3237",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -332,7 +332,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-2737",
+          "texte": "OS-RI-2025-3237",
           "page": 3,
           "mode": "image",
           "cadre": [
@@ -428,9 +428,9 @@
           "mode": "texte",
           "cadre": [
             200.0,
-            518.9,
+            537.1,
             284.0,
-            531.4
+            549.6
           ],
           "raison": "date de la prochaine visite",
           "role": "leurre"
@@ -453,9 +453,9 @@
           "mode": "image",
           "cadre": [
             375.0,
-            142.1,
+            156.7,
             446.4,
-            153.1
+            167.7
           ],
           "role": "verite"
         }
@@ -519,9 +519,9 @@
           "mode": "texte",
           "cadre": [
             463.2,
-            557.5,
-            544.8,
-            567.5
+            552.7,
+            520.8,
+            572.3
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
@@ -545,9 +545,9 @@
           "mode": "texte",
           "cadre": [
             440.0,
-            692.4,
+            710.6,
             518.0,
-            704.9
+            723.1
           ],
           "raison": "date de vérification",
           "role": "leurre"
@@ -827,9 +827,9 @@
           "page": 2,
           "mode": "texte",
           "cadre": [
-            218.0,
+            266.0,
             414.7,
-            272.0,
+            320.0,
             427.2
           ],
           "role": "verite"
@@ -916,9 +916,9 @@
           "mode": "texte",
           "cadre": [
             68.0,
-            746.8,
+            765.0,
             106.4,
-            756.8
+            775.0
           ],
           "role": "verite"
         }
@@ -939,13 +939,13 @@
         },
         {
           "texte": "UL-494-E",
-          "page": 2,
-          "mode": "texte",
+          "page": 3,
+          "mode": "image",
           "cadre": [
+            62.0,
             68.0,
-            761.4,
-            106.4,
-            771.4
+            158.7,
+            82.6
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
@@ -956,9 +956,9 @@
           "mode": "image",
           "cadre": [
             62.0,
-            68.0,
+            82.6,
             158.7,
-            82.6
+            97.2
           ],
           "raison": "pièce commandée, non posée",
           "role": "leurre"
@@ -969,9 +969,9 @@
           "mode": "image",
           "cadre": [
             62.0,
-            82.6,
+            97.2,
             158.7,
-            97.2
+            111.8
           ],
           "raison": "pièce proposée au devis",
           "role": "leurre"
@@ -993,9 +993,9 @@
           "mode": "image",
           "cadre": [
             153.8,
-            130.1,
+            144.7,
             230.3,
-            141.1
+            155.7
           ],
           "role": "verite"
         }
@@ -1006,10 +1006,23 @@
           "page": 2,
           "mode": "texte",
           "cadre": [
+            176.0,
+            500.7,
+            254.0,
+            513.2
+          ],
+          "raison": "rédacteur du rapport",
+          "role": "leurre"
+        },
+        {
+          "texte": "Sarah Ainsley",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
             242.0,
-            565.9,
+            584.1,
             320.0,
-            578.4
+            596.6
           ],
           "raison": "accompagnant",
           "role": "leurre"
@@ -1020,9 +1033,9 @@
           "mode": "texte",
           "cadre": [
             128.0,
-            579.1,
+            597.3,
             188.0,
-            591.6
+            609.8
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
@@ -1033,9 +1046,9 @@
           "mode": "image",
           "cadre": [
             303.6,
-            130.1,
+            144.7,
             545.3,
-            141.1
+            155.7
           ],
           "raison": "approbateur côté client",
           "role": "leurre"
@@ -1069,9 +1082,9 @@
           "mode": "texte",
           "cadre": [
             272.0,
-            500.7,
+            518.9,
             350.0,
-            513.2
+            531.4
           ],
           "raison": "statut à l'arrivée",
           "role": "leurre"

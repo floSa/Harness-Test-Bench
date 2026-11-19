@@ -107,7 +107,7 @@ class StyleCompact(BaseFlux):
                 ligne = []
         if ligne:
             lignes.append(ligne + ["", ""])
-        t = Table(lignes, colWidths=[0.17 * lg, 0.33 * lg, 0.17 * lg, 0.33 * lg])
+        t = Table(lignes, colWidths=[0.2 * lg, 0.3 * lg, 0.2 * lg, 0.3 * lg])
         t.setStyle(self.style_kv())
         S += self.T(t, notes, espace=8)
         S += self.synthese_flux(lg)
@@ -122,8 +122,7 @@ class StyleCompact(BaseFlux):
         S += self.sections_flux(self.paragraphes()[2:4])
         S += self.schema_flux(self.tr("Schéma", "Diagram"), lg * 0.8)
         S += self.zones_flux(lg)
-        S += self.P(self.tr("Pièces", "Parts"), "titre", espace=4)
-        S += self.table_flux(self.t_pieces, lg)
+        S += self.table_flux(self.t_pieces, lg, titre=self.tr("Pièces", "Parts"))
         if self.absent("reference_piece"):
             S += self.P(escape(self.texte_sans_piece()))
         S += self.sections_flux(self.paragraphes()[4:])

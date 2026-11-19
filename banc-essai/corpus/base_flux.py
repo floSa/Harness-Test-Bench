@@ -102,14 +102,14 @@ class BaseFlux(Base):
                    "remplisseuse": ("Têtes de remplissage", "Filling heads"),
                    "pipette": ("Module de pipetage", "Pipetting module")}
         ts = {"reservoir_nom": self.tr("Réservoir", "Tank"),
-              "reservoir": f"{self.tr('Capacité', 'Capacity')} : {self.n(self.lr['reservoir_l'])} L",
-              "circuit": f"Circuit : {self.n(self.lr['circuit_ml'])} ml",
+              "reservoir": f"{self.tr('Capacité : ', 'Capacity: ')}{self.n(self.lr['reservoir_l'])} L",
+              "circuit": f"{self.tr('Circuit : ', 'Line: ')}{self.n(self.lr['circuit_ml'])} {self.tr('ml', 'mL')}",
               "organe": organes[self.marque["type"]][0 if self.fr else 1]}
         notes = []
         for cle, nom in [("volume_dose_ml", "dose"), ("volume_nominal_ml", "nominal"),
                          ("debit_ml_min", "debit"), ("pression_bar", "pression")]:
             if self.emp(cle) == "schema":
-                ts[nom] = f"{self.lib(cle)} : {self.vu(cle)}"
+                ts[nom] = f"{self.lib(cle)}{self.tr(' : ', ': ')}{self.vu(cle)}"
                 notes.append(("verite", cle, self.vu(cle), None, "image"))
         larg = min(dessins.SCHEMA_L, largeur)
         out += self.Im(dessins.schema(ts), larg, dessins.SCHEMA_H * larg / dessins.SCHEMA_L, notes,
@@ -139,9 +139,12 @@ class BaseFlux(Base):
                                    ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
         return [cadre, Spacer(1, 8)]
 
-    def table_flux(self, constructeur, largeur):
+    def table_flux(self, constructeur, largeur, titre=None, style_titre="titre"):
         t, notes = constructeur(largeur)
-        return self.T(t, [x + ("texte",) for x in notes])
+        corps = self.T(t, [x + ("texte",) for x in notes])
+        if titre:
+            return [KeepTogether(self.P(titre, style_titre, espace=4) + corps)]
+        return corps
 
     def validation_flux(self, largeur, hauteur=92):
         return [Dessin(largeur, hauteur, lambda c, ctx, w, h: self.bloc_validation(c, ctx, 0, h, w), self.ctx),
@@ -187,10 +190,10 @@ class BaseFlux(Base):
         if self.place_unite != "note":
             return []
         return self.P(escape(self.tr(
-            f"Unités : volumes en {self.u['volume_dose_ml']}, débits en {self.u['debit_ml_min']}, pressions "
-            f"en {self.u['pression_bar']}, températures en °C.",
-            f"Units: volumes in {self.u['volume_dose_ml']}, flow in {self.u['debit_ml_min']}, pressure in "
-            f"{self.u['pression_bar']}, temperature in °C.")), "petit")
+            f"Unités du tableau des relevés : doses en {self.u['volume_dose_ml']}, débits en "
+            f"{self.u['debit_ml_min']}, pressions en {self.u['pression_bar']}, températures en °C.",
+            f"Readings table units: doses in {self.u['volume_dose_ml']}, flow in {self.u['debit_ml_min']}, "
+            f"pressure in {self.u['pression_bar']}, temperature in °C.")), "petit")
 
     def entete_ref(self, c, x, y, police, taille, aligner_droite=True, prefixe=None):
         """Référence du rapport en en-tête de page (si elle est à l'emplacement « formulaire »)."""
