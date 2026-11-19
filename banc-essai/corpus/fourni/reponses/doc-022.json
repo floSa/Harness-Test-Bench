@@ -1,9 +1,9 @@
 {
-  "machine": "Belorvan 250",
+  "machine": "Coronis 300",
   "constructeur": "Calanquin",
-  "numero_serie": "CA-2018-63816",
-  "site": "Swindon Plant",
-  "reference_rapport": "NC-RI-2025-5199",
+  "numero_serie": "CA/22/5706",
+  "site": "Tralee Facility",
+  "reference_rapport": "NC-RI-2025-2904",
   "date_intervention": "2025-09-13",
   "date_validation": "2025-09-17",
   "volume_dose_ml": 25.7,

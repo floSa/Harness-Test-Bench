@@ -667,7 +667,8 @@ class Base:
         for cle, nom in [("volume_dose_ml", "dose"), ("volume_nominal_ml", "nominal"),
                          ("debit_ml_min", "debit"), ("pression_bar", "pression")]:
             if self.emp(cle) == "schema":
-                textes_s[nom] = f"{self.lib(cle)}{self.tr(' : ', ': ')}{self.vu(cle)}"
+                qualif = self.tr(" après réglage", " as left") if cle != "volume_nominal_ml" else ""
+                textes_s[nom] = f"{self.lib(cle)}{qualif}{self.tr(' : ', ': ')}{self.vu(cle)}"
                 notes.append((cle, self.vu(cle)))
         larg = min(dessins.SCHEMA_L, cur.l)
         haut = dessins.SCHEMA_H * larg / dessins.SCHEMA_L

@@ -14,7 +14,7 @@
   "pages": 4,
   "page_scannee": null,
   "unites_ecrites": {
-    "volume_dose_ml": "mL",
+    "volume_dose_ml": "cm³",
     "volume_nominal_ml": "mL",
     "tolerance_ml": "mL",
     "debit_ml_min": "mL/min",
@@ -24,7 +24,7 @@
   "format_dates": "us",
   "champs": {
     "machine": {
-      "valeur": "Calanquin 40",
+      "valeur": "Calanquin 160",
       "emplacement": "phrase",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [
@@ -33,13 +33,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "Calanquin 40",
+          "texte": "Calanquin 160",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            152.0,
+            140.0,
             422.7,
-            224.0,
+            218.0,
             435.2
           ],
           "role": "verite"
@@ -47,7 +47,7 @@
       ],
       "leurres": [
         {
-          "texte": "K66-4P",
+          "texte": "L71-4P",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -60,7 +60,7 @@
           "role": "leurre"
         },
         {
-          "texte": "K66-4P",
+          "texte": "L71-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -73,13 +73,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Ostaton C21",
+          "texte": "Calzor C37",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            194.0,
+            193.3,
             459.1,
-            260.0,
+            253.1,
             471.6
           ],
           "raison": "équipement voisin",
@@ -112,7 +112,7 @@
       ],
       "leurres": [
         {
-          "texte": "Nevvex",
+          "texte": "Dorvan",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -125,7 +125,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Nevvex",
+          "texte": "Dorvan",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -138,26 +138,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Ulvrel",
+          "texte": "Ostiovan",
           "page": 1,
           "mode": "texte",
           "cadre": [
             334.1,
             550.9,
-            362.9,
+            372.5,
             560.9
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Doraetis",
+          "texte": "Riliovane",
           "page": 1,
           "mode": "texte",
           "cadre": [
             334.1,
             575.1,
-            372.5,
+            377.3,
             585.1
           ],
           "raison": "marque d'un instrument de mesure",
@@ -166,7 +166,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "LU-2019-86992",
+      "valeur": "LU-2024-14638",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -176,13 +176,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "LU-2019-86992",
+          "texte": "LU-2024-14638",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            122.0,
+            98.0,
             271.0,
-            200.0,
+            176.0,
             283.5
           ],
           "role": "verite"
@@ -190,7 +190,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-96305",
+          "texte": "INV-35869",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -203,7 +203,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M4918612",
+          "texte": "M5553911",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -216,7 +216,7 @@
           "role": "leurre"
         },
         {
-          "texte": "IN-40012",
+          "texte": "EQ-89435",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -229,7 +229,7 @@
           "role": "leurre"
         },
         {
-          "texte": "ET-68596",
+          "texte": "ET-64531",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -244,20 +244,20 @@
       ]
     },
     "site": {
-      "valeur": "Swindon Works",
+      "valeur": "Hexham Plant",
       "emplacement": "paragraphe",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Swindon Works",
+          "texte": "Hexham Plant",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            278.0,
+            276.7,
             622.2,
-            356.0,
+            348.5,
             634.7
           ],
           "role": "verite"
@@ -265,26 +265,26 @@
       ],
       "leurres": [
         {
-          "texte": "Athlone",
+          "texte": "Dundee",
           "page": 0,
           "mode": "texte",
           "cadre": [
             332.0,
             206.2,
-            374.0,
+            368.0,
             218.7
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Athlone",
+          "texte": "Dundee",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            330.3,
+            296.0,
             635.4,
-            372.3,
+            332.0,
             647.9
           ],
           "raison": "ville du siège du client",
@@ -293,7 +293,7 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "OS-RI-2025-9993",
+      "valeur": "OS-RI-2025-8690",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [
@@ -302,7 +302,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "OS-RI-2025-9993",
+          "texte": "OS-RI-2025-8690",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -314,7 +314,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-9993",
+          "texte": "OS-RI-2025-8690",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -326,7 +326,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-9993",
+          "texte": "OS-RI-2025-8690",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -338,7 +338,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-9993",
+          "texte": "OS-RI-2025-8690",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -350,7 +350,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-9993",
+          "texte": "OS-RI-2025-8690",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -364,7 +364,7 @@
       ],
       "leurres": [
         {
-          "texte": "PO-881833",
+          "texte": "PO-620682",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -377,7 +377,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-93185",
+          "texte": "AFF-12845",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -434,7 +434,7 @@
           "cadre": [
             62.0,
             622.2,
-            506.0,
+            533.3,
             647.9
           ],
           "raison": "date de la demande",
@@ -519,26 +519,26 @@
           "role": "leurre"
         },
         {
-          "texte": "October 26, 2024",
+          "texte": "July 10, 2024",
           "page": 1,
           "mode": "texte",
           "cadre": [
             463.2,
-            546.1,
-            516.0,
-            565.7
+            550.9,
+            525.6,
+            560.9
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "February 14, 2025",
+          "texte": "January 7, 2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
             463.2,
             570.3,
-            520.8,
+            511.2,
             589.9
           ],
           "raison": "date d'étalonnage d'un instrument",
@@ -624,7 +624,7 @@
           "role": "leurre"
         },
         {
-          "texte": "245",
+          "texte": "175",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -663,7 +663,7 @@
           "role": "leurre"
         },
         {
-          "texte": "245",
+          "texte": "175",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -775,7 +775,7 @@
       ],
       "leurres": [
         {
-          "texte": "231",
+          "texte": "203",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -788,7 +788,7 @@
           "role": "leurre"
         },
         {
-          "texte": "510",
+          "texte": "540",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -801,13 +801,13 @@
           "role": "leurre"
         },
         {
-          "texte": "343",
+          "texte": "516",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            302.0,
+            294.6,
             459.1,
-            320.0,
+            312.6,
             471.6
           ],
           "raison": "débit de l'équipement voisin",
@@ -824,7 +824,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "3.3",
+          "texte": "3.4",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -850,7 +850,7 @@
           "role": "leurre"
         },
         {
-          "texte": "5.9",
+          "texte": "6.6",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -863,26 +863,26 @@
           "role": "leurre"
         },
         {
-          "texte": "6.7",
+          "texte": "6.0",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            428.0,
+            410.0,
             459.1,
-            446.0,
-            471.6
+            438.0,
+            484.8
           ],
           "raison": "pression de l'équipement voisin",
           "role": "leurre"
         },
         {
-          "texte": "8.0",
+          "texte": "6.0",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            458.0,
-            472.3,
-            476.0,
+            410.0,
+            459.1,
+            438.0,
             484.8
           ],
           "raison": "réseau d'air de l'atelier",
@@ -891,7 +891,7 @@
       ]
     },
     "reference_piece": {
-      "valeur": "LU-957-A",
+      "valeur": "LU-734-K",
       "emplacement": "tableau",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [
@@ -900,7 +900,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "LU-957-A",
+          "texte": "LU-734-K",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -914,7 +914,7 @@
       ],
       "leurres": [
         {
-          "texte": "LU-196-C",
+          "texte": "LU-757-B",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -927,7 +927,7 @@
           "role": "leurre"
         },
         {
-          "texte": "LU-196-C",
+          "texte": "LU-757-B",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -940,7 +940,7 @@
           "role": "leurre"
         },
         {
-          "texte": "LU-279-E",
+          "texte": "LU-163-A",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -953,7 +953,7 @@
           "role": "leurre"
         },
         {
-          "texte": "LU-204-A",
+          "texte": "LU-682-K",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -1004,26 +1004,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Megan Fenwick",
+          "texte": "Hannah Mahon",
           "page": 2,
           "mode": "texte",
           "cadre": [
             128.0,
             595.3,
-            206.0,
+            200.0,
             607.8
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
         },
         {
-          "texte": "Megan Stroud",
+          "texte": "Grace Redding",
           "page": 3,
           "mode": "texte",
           "cadre": [
             400.5,
             328.8,
-            461.7,
+            466.8,
             339.4
           ],
           "raison": "approbateur côté client",

@@ -9,7 +9,7 @@
   "volume_dose_ml": 5.05,
   "volume_nominal_ml": 5.0,
   "tolerance_ml": null,
-  "debit_ml_min": 52.0,
+  "debit_ml_min": 53.0,
   "pression_bar": 0.6,
   "reference_piece": "VA-566-B",
   "technicien": "Damien Vasseur",

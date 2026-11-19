@@ -51,9 +51,9 @@
           "page": 0,
           "mode": "texte",
           "cadre": [
-            456.2,
+            450.8,
             440.1,
-            494.0,
+            488.6,
             451.4
           ],
           "raison": "type du moteur",
@@ -111,20 +111,20 @@
       ],
       "leurres": [
         {
-          "texte": "Riliovane",
+          "texte": "Varinnet",
           "page": 0,
           "mode": "texte",
           "cadre": [
             359.0,
             440.1,
-            407.6,
+            402.2,
             451.4
           ],
           "raison": "marque du moteur",
           "role": "leurre"
         },
         {
-          "texte": "Riliovane",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -165,7 +165,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "UL-2021-15383",
+      "valeur": "UL-2016-81151",
       "emplacement": "paragraphe",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -174,7 +174,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "UL-2021-15383",
+          "texte": "UL-2016-81151",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -242,20 +242,20 @@
       ]
     },
     "site": {
-      "valeur": "Établissement de Châteaubriant",
+      "valeur": "Établissement de Mazamet",
       "emplacement": "phrase",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Établissement de Châteaubriant",
+          "texte": "Établissement de Mazamet",
           "page": 2,
           "mode": "texte",
           "cadre": [
             251.0,
             410.7,
-            413.0,
+            380.6,
             422.0
           ],
           "role": "verite"
@@ -263,26 +263,26 @@
       ],
       "leurres": [
         {
-          "texte": "Redon",
+          "texte": "Châteaubriant",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            261.8,
+            267.2,
             200.9,
-            288.8,
+            337.4,
             212.1
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Redon",
+          "texte": "Châteaubriant",
           "page": 0,
           "mode": "texte",
           "cadre": [
             229.4,
             510.0,
-            256.4,
+            299.6,
             521.2
           ],
           "raison": "ville du siège du client",
@@ -291,14 +291,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "BA-RI-2025-3436",
+      "valeur": "BA-RI-2025-2522",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "BA-RI-2025-3436",
+          "texte": "BA-RI-2025-2522",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -310,7 +310,7 @@
           "role": "verite"
         },
         {
-          "texte": "BA-RI-2025-3436",
+          "texte": "BA-RI-2025-2522",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -322,7 +322,7 @@
           "role": "verite"
         },
         {
-          "texte": "BA-RI-2025-3436",
+          "texte": "BA-RI-2025-2522",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -334,7 +334,7 @@
           "role": "verite"
         },
         {
-          "texte": "BA-RI-2025-3436",
+          "texte": "BA-RI-2025-2522",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -346,7 +346,7 @@
           "role": "verite"
         },
         {
-          "texte": "BA-RI-2025-3436",
+          "texte": "BA-RI-2025-2522",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -904,14 +904,14 @@
       ]
     },
     "reference_piece": {
-      "valeur": "UL-402-A",
+      "valeur": "UL-199-D",
       "emplacement": "tableau",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "UL-402-A",
+          "texte": "UL-199-D",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -925,7 +925,7 @@
       ],
       "leurres": [
         {
-          "texte": "UL-575-B",
+          "texte": "UL-296-R",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -938,7 +938,7 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-575-B",
+          "texte": "UL-296-R",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -951,7 +951,7 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-976-D",
+          "texte": "UL-588-A",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -964,7 +964,7 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-125-D",
+          "texte": "UL-540-A",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -1028,26 +1028,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Damien Gauthier",
+          "texte": "Gaël Mercier",
           "page": 2,
           "mode": "texte",
           "cadre": [
             234.8,
             557.0,
-            315.8,
+            299.6,
             568.2
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
         },
         {
-          "texte": "Sophie Lemaire",
+          "texte": "Damien Gauthier",
           "page": 3,
           "mode": "texte",
           "cadre": [
             410.7,
             143.5,
-            482.1,
+            487.2,
             154.1
           ],
           "raison": "approbateur côté client",

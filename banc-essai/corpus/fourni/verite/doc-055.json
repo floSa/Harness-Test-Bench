@@ -24,7 +24,7 @@
   "format_dates": "jj.mm.aa",
   "champs": {
     "machine": {
-      "valeur": "Kaltis 40",
+      "valeur": "Kaltis 85",
       "emplacement": "formulaire",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [
@@ -33,7 +33,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "Kaltis 40",
+          "texte": "Kaltis 85",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -47,7 +47,7 @@
       ],
       "leurres": [
         {
-          "texte": "K64-2P",
+          "texte": "K67-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -60,20 +60,20 @@
           "role": "leurre"
         },
         {
-          "texte": "K64-2P",
+          "texte": "K67-4P",
           "page": 1,
           "mode": "texte",
           "cadre": [
-            100.5,
+            107.5,
             264.8,
-            130.5,
+            137.5,
             277.2
           ],
           "raison": "type du moteur",
           "role": "leurre"
         },
         {
-          "texte": "Ulvinnis C62",
+          "texte": "Ulvanlix C53",
           "page": 4,
           "mode": "texte",
           "cadre": [
@@ -111,7 +111,7 @@
       ],
       "leurres": [
         {
-          "texte": "Nevvex",
+          "texte": "Riliovane",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -124,39 +124,39 @@
           "role": "leurre"
         },
         {
-          "texte": "Nerorrix",
+          "texte": "Nevvex",
           "page": 1,
           "mode": "texte",
           "cadre": [
             336.1,
             146.1,
-            364.6,
+            362.8,
             157.1
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Lumulvan",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "texte",
           "cadre": [
             336.1,
             160.7,
-            370.8,
+            365.9,
             171.7
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Nevvex",
+          "texte": "Riliovane",
           "page": 1,
           "mode": "texte",
           "cadre": [
             36.0,
             264.8,
-            66.0,
+            73.0,
             277.2
           ],
           "raison": "marque du moteur",
@@ -165,7 +165,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "OS-2021-48141",
+      "valeur": "OS430219",
       "emplacement": "paragraphe",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -174,13 +174,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "OS-2021-48141",
+          "texte": "OS430219",
           "page": 1,
           "mode": "texte",
           "cadre": [
             359.7,
             252.9,
-            423.7,
+            402.7,
             265.3
           ],
           "role": "verite"
@@ -188,7 +188,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-32278",
+          "texte": "INV-66486",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -201,7 +201,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M8387079",
+          "texte": "M2619053",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -214,7 +214,7 @@
           "role": "leurre"
         },
         {
-          "texte": "IN-35959",
+          "texte": "IN-70402",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -227,13 +227,13 @@
           "role": "leurre"
         },
         {
-          "texte": "ET-69020",
+          "texte": "IN-53236",
           "page": 1,
           "mode": "texte",
           "cadre": [
             406.1,
             160.7,
-            441.3,
+            439.0,
             171.7
           ],
           "raison": "n° de série d'un instrument",
@@ -242,7 +242,7 @@
       ]
     },
     "site": {
-      "valeur": "Plateforme de Dole",
+      "valeur": "Établissement de Saint-Avold",
       "emplacement": "formulaire",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [
@@ -251,13 +251,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "Plateforme de Dole",
+          "texte": "Établissement de Saint-Avold",
           "page": 0,
           "mode": "texte",
           "cadre": [
             231.9,
             139.3,
-            313.2,
+            355.9,
             152.3
           ],
           "role": "verite"
@@ -265,26 +265,26 @@
       ],
       "leurres": [
         {
-          "texte": "Châteaubriant",
+          "texte": "Issoire",
           "page": 0,
           "mode": "texte",
           "cadre": [
             72.2,
             151.2,
-            131.9,
+            100.2,
             164.2
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Châteaubriant",
+          "texte": "Issoire",
           "page": 1,
           "mode": "texte",
           "cadre": [
-            197.6,
+            197.0,
             323.8,
-            254.1,
+            223.5,
             336.1
           ],
           "raison": "ville du siège du client",
@@ -293,7 +293,7 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "ST-RI-2026-8983",
+      "valeur": "ST-RI-2026-5237",
       "emplacement": "phrase",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [
@@ -302,13 +302,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "ST-RI-2026-8983",
+          "texte": "ST-RI-2026-5237",
           "page": 4,
           "mode": "texte",
           "cadre": [
-            169.6,
+            185.2,
             196.7,
-            239.2,
+            254.7,
             209.1
           ],
           "role": "verite"
@@ -316,7 +316,7 @@
       ],
       "leurres": [
         {
-          "texte": "ST-RI-2026-8719",
+          "texte": "ST-RI-2026-4888",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -329,7 +329,7 @@
           "role": "leurre"
         },
         {
-          "texte": "CDE-144206",
+          "texte": "CDE-477832",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -342,7 +342,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-45970",
+          "texte": "AFF-53382",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -510,7 +510,7 @@
           "role": "leurre"
         },
         {
-          "texte": "08.09.25",
+          "texte": "07.04.26",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -523,7 +523,7 @@
           "role": "leurre"
         },
         {
-          "texte": "28.04.26",
+          "texte": "03.10.25",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -628,20 +628,20 @@
           "role": "leurre"
         },
         {
-          "texte": "1",
+          "texte": "0,5",
           "page": 2,
           "mode": "texte",
           "cadre": [
             270.0,
             251.8,
-            274.4,
+            281.1,
             262.8
           ],
           "raison": "capacité du réservoir",
           "role": "leurre"
         },
         {
-          "texte": "6",
+          "texte": "3",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -733,7 +733,7 @@
       ]
     },
     "debit_ml_min": {
-      "valeur": 22.0,
+      "valeur": 25.0,
       "emplacement": "tableau",
       "regle": "débit mesuré après réglage, en ml/min (pas le débit maximal, ni celui d'un équipement voisin)",
       "pieges": [
@@ -742,7 +742,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "22",
+          "texte": "25",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -756,7 +756,7 @@
       ],
       "leurres": [
         {
-          "texte": "19",
+          "texte": "21",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -769,7 +769,7 @@
           "role": "leurre"
         },
         {
-          "texte": "40",
+          "texte": "60",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -782,7 +782,7 @@
           "role": "leurre"
         },
         {
-          "texte": "43",
+          "texte": "62",
           "page": 4,
           "mode": "texte",
           "cadre": [
@@ -811,9 +811,9 @@
           "page": 4,
           "mode": "texte",
           "cadre": [
-            190.6,
+            208.1,
             178.8,
-            218.6,
+            236.1,
             191.2
           ],
           "role": "verite"
@@ -847,7 +847,7 @@
           "role": "leurre"
         },
         {
-          "texte": "0,7",
+          "texte": "0,6",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -860,7 +860,7 @@
           "role": "leurre"
         },
         {
-          "texte": "3,4",
+          "texte": "3,0",
           "page": 4,
           "mode": "texte",
           "cadre": [
@@ -896,40 +896,27 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "OS-944-R",
+          "texte": "OS-632-A",
           "page": 2,
           "mode": "texte",
           "cadre": [
             482.9,
             362.2,
-            523.4,
+            523.0,
             374.6
           ],
           "raison": "pièce commandée, non posée",
           "role": "leurre"
         },
         {
-          "texte": "OS-620-E",
+          "texte": "OS-944-R",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            299.3,
+            286.3,
             374.1,
-            339.3,
+            326.8,
             386.4
-          ],
-          "raison": "pièce contrôlée, non remplacée",
-          "role": "leurre"
-        },
-        {
-          "texte": "OS-620-E",
-          "page": 4,
-          "mode": "texte",
-          "cadre": [
-            42.0,
-            88.1,
-            77.6,
-            99.1
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
@@ -940,11 +927,11 @@
           "mode": "texte",
           "cadre": [
             42.0,
-            102.7,
+            88.1,
             78.0,
-            113.7
+            99.1
           ],
-          "raison": "pièce commandée, non posée",
+          "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
@@ -953,8 +940,21 @@
           "mode": "texte",
           "cadre": [
             42.0,
-            117.3,
+            102.7,
             77.6,
+            113.7
+          ],
+          "raison": "pièce commandée, non posée",
+          "role": "leurre"
+        },
+        {
+          "texte": "OS-305-R",
+          "page": 4,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            117.3,
+            78.0,
             128.3
           ],
           "raison": "pièce proposée au devis",
@@ -1049,13 +1049,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Inès Gauthier",
+          "texte": "Mathieu Barbier",
           "page": 1,
           "mode": "texte",
           "cadre": [
             254.7,
             84.9,
-            311.7,
+            321.7,
             97.9
           ],
           "raison": "demandeur côté client",
@@ -1075,13 +1075,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Inès Gauthier",
+          "texte": "Mathieu Barbier",
           "page": 2,
           "mode": "texte",
           "cadre": [
             430.4,
             433.1,
-            484.4,
+            493.9,
             445.4
           ],
           "raison": "demandeur côté client",
@@ -1116,9 +1116,9 @@
           "page": 4,
           "mode": "texte",
           "cadre": [
-            110.5,
+            93.5,
             214.6,
-            150.0,
+            133.0,
             226.9
           ],
           "role": "verite"

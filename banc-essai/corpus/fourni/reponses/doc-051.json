@@ -1,9 +1,9 @@
 {
-  "machine": "Juvelpax 120",
+  "machine": "Juvelpax 250",
   "constructeur": "Ostiovan",
-  "numero_serie": "OS/16/5518",
-  "site": "Usine de Cholet",
-  "reference_rapport": "OT-RI-2025-3907",
+  "numero_serie": "OS/16/5080",
+  "site": "Établissement de Péronne",
+  "reference_rapport": "OT-RI-2025-1651",
   "date_intervention": "2025-05-05",
   "date_validation": null,
   "volume_dose_ml": 0.468,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.075,
   "debit_ml_min": 52.2,
   "pression_bar": 0.6,
-  "reference_piece": "OS-745-C",
+  "reference_piece": "OS-273-E",
   "technicien": "Damien Roussel",
   "statut": "conforme"
 }

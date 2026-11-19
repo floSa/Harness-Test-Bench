@@ -16,7 +16,7 @@
   "page_scannee": null,
   "unites_ecrites": {
     "volume_dose_ml": "mL",
-    "volume_nominal_ml": "mL",
+    "volume_nominal_ml": "cm³",
     "tolerance_ml": "µL",
     "debit_ml_min": "mL/min",
     "pression_bar": "bar"
@@ -25,20 +25,20 @@
   "format_dates": "abr_en",
   "champs": {
     "machine": {
-      "valeur": "Makintik 120",
+      "valeur": "Oryvane 85",
       "emplacement": "formulaire",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Makintik 120",
+          "texte": "Oryvane 85",
           "page": 0,
           "mode": "texte",
           "cadre": [
             415.1,
             154.4,
-            472.7,
+            463.1,
             164.4
           ],
           "role": "verite"
@@ -46,20 +46,20 @@
       ],
       "leurres": [
         {
-          "texte": "M99-4P",
+          "texte": "T103-2P",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            396.4,
+            407.2,
             272.1,
-            428.8,
+            445.0,
             283.4
           ],
           "raison": "type du moteur",
           "role": "leurre"
         },
         {
-          "texte": "M99-4P",
+          "texte": "T103-2P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -72,13 +72,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Kesrel C59",
+          "texte": "Braannis C89",
           "page": 1,
           "mode": "texte",
           "cadre": [
             158.8,
             724.5,
-            212.8,
+            223.6,
             735.8
           ],
           "raison": "équipement voisin",
@@ -110,20 +110,20 @@
       ],
       "leurres": [
         {
-          "texte": "Dorodal",
+          "texte": "Lumulvane",
           "page": 0,
           "mode": "texte",
           "cadre": [
             288.4,
             272.1,
-            326.2,
+            337.0,
             283.4
           ],
           "raison": "marque du moteur",
           "role": "leurre"
         },
         {
-          "texte": "Dorodal",
+          "texte": "Lumulvane",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -136,26 +136,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Lumulvane",
+          "texte": "Taldor",
           "page": 1,
           "mode": "texte",
           "cadre": [
             324.4,
             352.2,
-            367.6,
+            353.2,
             362.2
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Doridal",
+          "texte": "Taldor",
           "page": 1,
           "mode": "texte",
           "cadre": [
             324.4,
             371.6,
-            358.0,
+            353.2,
             381.6
           ],
           "raison": "marque d'un instrument de mesure",
@@ -164,7 +164,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "GA/24/5052",
+      "valeur": "GA945880",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -173,13 +173,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "GA/24/5052",
+          "texte": "GA945880",
           "page": 0,
           "mode": "texte",
           "cadre": [
             415.1,
             168.0,
-            463.1,
+            453.5,
             178.0
           ],
           "role": "verite"
@@ -187,7 +187,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-51683",
+          "texte": "INV-28781",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -200,7 +200,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M5498837",
+          "texte": "M5726548",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -213,7 +213,7 @@
           "role": "leurre"
         },
         {
-          "texte": "ET-46926",
+          "texte": "ET-60492",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -226,7 +226,7 @@
           "role": "leurre"
         },
         {
-          "texte": "IN-73914",
+          "texte": "EQ-17363",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -241,20 +241,20 @@
       ]
     },
     "site": {
-      "valeur": "Shannon Plant",
+      "valeur": "Doncaster Site",
       "emplacement": "formulaire",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Shannon Plant",
+          "texte": "Doncaster Site",
           "page": 0,
           "mode": "texte",
           "cadre": [
             415.1,
             131.2,
-            477.5,
+            482.3,
             141.2
           ],
           "role": "verite"
@@ -262,26 +262,26 @@
       ],
       "leurres": [
         {
-          "texte": "Kendal",
+          "texte": "Wrexham",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            189.9,
+            151.5,
             140.8,
-            218.7,
+            185.1,
             150.8
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Kendal",
+          "texte": "Wrexham",
           "page": 0,
           "mode": "texte",
           "cadre": [
             493.6,
             330.1,
-            526.0,
+            531.4,
             341.4
           ],
           "raison": "ville du siège du client",
@@ -290,14 +290,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "UT-RI-2026-7834",
+      "valeur": "UT-RI-2026-4666",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "UT-RI-2026-7834",
+          "texte": "UT-RI-2026-4666",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -309,7 +309,7 @@
           "role": "verite"
         },
         {
-          "texte": "UT-RI-2026-7834",
+          "texte": "UT-RI-2026-4666",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -321,7 +321,7 @@
           "role": "verite"
         },
         {
-          "texte": "UT-RI-2026-7834",
+          "texte": "UT-RI-2026-4666",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -333,7 +333,7 @@
           "role": "verite"
         },
         {
-          "texte": "UT-RI-2026-7834",
+          "texte": "UT-RI-2026-4666",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -347,7 +347,7 @@
       ],
       "leurres": [
         {
-          "texte": "UT-RI-2026-7756",
+          "texte": "UT-RI-2026-4560",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -360,7 +360,7 @@
           "role": "leurre"
         },
         {
-          "texte": "PO-516540",
+          "texte": "PO-644142",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -373,7 +373,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-17529",
+          "texte": "AFF-18727",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -514,20 +514,20 @@
           "role": "leurre"
         },
         {
-          "texte": "16 Oct 2025",
+          "texte": "4 Jan 2026",
           "page": 1,
           "mode": "texte",
           "cadre": [
             472.8,
             352.2,
-            525.6,
+            520.8,
             362.2
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "21 Oct 2025",
+          "texte": "19 Jun 2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -593,7 +593,7 @@
       ],
       "leurres": [
         {
-          "texte": "30",
+          "texte": "50",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -606,7 +606,7 @@
           "role": "leurre"
         },
         {
-          "texte": "828",
+          "texte": "353",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -641,13 +641,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "50 mL",
+          "texte": "50 cm³",
           "page": 0,
           "mode": "texte",
           "cadre": [
             353.2,
             661.6,
-            380.2,
+            385.6,
             672.9
           ],
           "role": "verite"
@@ -731,7 +731,7 @@
       ],
       "leurres": [
         {
-          "texte": "1730",
+          "texte": "1900",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -757,7 +757,7 @@
           "role": "erronee"
         },
         {
-          "texte": "5250",
+          "texte": "4340",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -770,13 +770,13 @@
           "role": "leurre"
         },
         {
-          "texte": "4200",
+          "texte": "4140",
           "page": 1,
           "mode": "texte",
           "cadre": [
-            250.6,
+            261.4,
             724.5,
-            272.2,
+            283.0,
             735.8
           ],
           "raison": "débit de l'équipement voisin",
@@ -793,7 +793,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "2.3",
+          "texte": "2.2",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -806,7 +806,7 @@
           "role": "leurre"
         },
         {
-          "texte": "8.0",
+          "texte": "6.5",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -819,7 +819,7 @@
           "role": "leurre"
         },
         {
-          "texte": "3.8",
+          "texte": "3.9",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -832,13 +832,13 @@
           "role": "leurre"
         },
         {
-          "texte": "3.8",
+          "texte": "5.4",
           "page": 1,
           "mode": "texte",
           "cadre": [
-            369.4,
+            380.2,
             724.5,
-            385.6,
+            396.4,
             735.8
           ],
           "raison": "pression de l'équipement voisin",
@@ -868,7 +868,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "GA-926-B",
+          "texte": "GA-701-E",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -881,7 +881,7 @@
           "role": "leurre"
         },
         {
-          "texte": "GA-253-B",
+          "texte": "GA-466-E",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -894,7 +894,7 @@
           "role": "leurre"
         },
         {
-          "texte": "GA-253-B",
+          "texte": "GA-466-E",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -907,7 +907,7 @@
           "role": "leurre"
         },
         {
-          "texte": "GA-926-B",
+          "texte": "GA-701-E",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -920,7 +920,7 @@
           "role": "leurre"
         },
         {
-          "texte": "GA-521-C",
+          "texte": "GA-364-K",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -971,26 +971,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Aoife Hollis",
+          "texte": "Chloe Fenwick",
           "page": 1,
           "mode": "texte",
           "cadre": [
             196.6,
             560.1,
-            261.4,
+            266.8,
             571.3
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
         },
         {
-          "texte": "Callum Redding",
+          "texte": "Hannah Whitfield",
           "page": 2,
           "mode": "texte",
           "cadre": [
             400.5,
             58.1,
-            471.9,
+            482.1,
             68.7
           ],
           "raison": "approbateur côté client",

@@ -45,20 +45,20 @@
       ],
       "leurres": [
         {
-          "texte": "L73-2P",
+          "texte": "K108-2P",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            326.2,
+            337.7,
             386.9,
-            355.2,
+            372.7,
             399.3
           ],
           "raison": "type du moteur",
           "role": "leurre"
         },
         {
-          "texte": "L73-2P",
+          "texte": "K108-2P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -109,20 +109,20 @@
       ],
       "leurres": [
         {
-          "texte": "Dorvan",
+          "texte": "Calanquin",
           "page": 0,
           "mode": "texte",
           "cadre": [
             262.6,
             386.9,
-            291.6,
+            303.1,
             399.3
           ],
           "raison": "marque du moteur",
           "role": "leurre"
         },
         {
-          "texte": "Dorvan",
+          "texte": "Calanquin",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -163,7 +163,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "NE500632",
+      "valeur": "NE468169",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -173,7 +173,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "NE500632",
+          "texte": "NE468169",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -200,7 +200,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M2680806",
+          "texte": "M9869752",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -241,20 +241,20 @@
       ]
     },
     "site": {
-      "valeur": "Établissement de Redon",
+      "valeur": "Établissement d'Issoire",
       "emplacement": "paragraphe",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Établissement de Redon",
+          "texte": "Établissement d'Issoire",
           "page": 0,
           "mode": "texte",
           "cadre": [
             46.0,
             678.2,
-            144.0,
+            138.2,
             690.6
           ],
           "role": "verite"
@@ -262,27 +262,27 @@
       ],
       "leurres": [
         {
-          "texte": "Issoire",
+          "texte": "Tulle",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            309.9,
+            327.2,
             206.6,
-            333.5,
+            344.6,
             217.6
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Issoire",
+          "texte": "Tulle",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            46.0,
-            690.1,
-            72.5,
-            702.5
+            527.2,
+            678.2,
+            546.7,
+            690.6
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
@@ -290,14 +290,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "US-RI-2025-6242",
+      "valeur": "US-RI-2025-6163",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "US-RI-2025-6242",
+          "texte": "US-RI-2025-6163",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -309,7 +309,7 @@
           "role": "verite"
         },
         {
-          "texte": "US-RI-2025-6242",
+          "texte": "US-RI-2025-6163",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -321,7 +321,7 @@
           "role": "verite"
         },
         {
-          "texte": "US-RI-2025-6242",
+          "texte": "US-RI-2025-6163",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -333,7 +333,7 @@
           "role": "verite"
         },
         {
-          "texte": "US-RI-2025-6242",
+          "texte": "US-RI-2025-6163",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -388,9 +388,9 @@
           "page": 0,
           "mode": "texte",
           "cadre": [
-            195.1,
+            189.3,
             678.2,
-            244.1,
+            238.3,
             690.6
           ],
           "role": "verite"
@@ -415,9 +415,9 @@
           "page": 0,
           "mode": "texte",
           "cadre": [
-            364.4,
+            358.6,
             678.2,
-            408.4,
+            402.6,
             690.6
           ],
           "raison": "date de la demande",
@@ -452,9 +452,9 @@
           "page": 1,
           "mode": "texte",
           "cadre": [
-            428.7,
+            421.2,
             708.3,
-            477.7,
+            470.2,
             720.7
           ],
           "role": "verite"
@@ -865,7 +865,7 @@
       ]
     },
     "reference_piece": {
-      "valeur": "NE-380-B",
+      "valeur": "NE-429-A",
       "emplacement": "tableau",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [
@@ -874,7 +874,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "NE-380-B",
+          "texte": "NE-429-A",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -888,7 +888,7 @@
       ],
       "leurres": [
         {
-          "texte": "NE-429-A",
+          "texte": "NE-125-A",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -901,7 +901,7 @@
           "role": "leurre"
         },
         {
-          "texte": "NE-429-A",
+          "texte": "NE-125-A",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -914,7 +914,7 @@
           "role": "leurre"
         },
         {
-          "texte": "NE-125-A",
+          "texte": "NE-795-B",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -927,7 +927,7 @@
           "role": "leurre"
         },
         {
-          "texte": "NE-795-B",
+          "texte": "NE-476-B",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -979,26 +979,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Manon Perrin",
+          "texte": "Pauline Robin",
           "page": 1,
           "mode": "texte",
           "cadre": [
             98.5,
             604.2,
-            152.6,
+            154.6,
             616.6
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
         },
         {
-          "texte": "Antoine Prigent",
+          "texte": "Manon Perrin",
           "page": 2,
           "mode": "texte",
           "cadre": [
             378.8,
             295.8,
-            436.9,
+            429.8,
             307.5
           ],
           "raison": "approbateur côté client",

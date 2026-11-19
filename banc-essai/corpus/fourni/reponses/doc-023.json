@@ -1,9 +1,9 @@
 {
   "machine": "Ulvanlix 120",
   "constructeur": "Varinnet",
-  "numero_serie": "VA-2023-35603",
-  "site": "Établissement de Lisieux",
-  "reference_rapport": "BA-RI-2025-8878",
+  "numero_serie": "VA-2019-36661",
+  "site": "Établissement de Saumur",
+  "reference_rapport": "BA-RI-2025-8362",
   "date_intervention": "2025-10-03",
   "date_validation": "2025-10-14",
   "volume_dose_ml": 2.04,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.06,
   "debit_ml_min": null,
   "pression_bar": 0.7,
-  "reference_piece": "VA-554-C",
+  "reference_piece": "VA-232-K",
   "technicien": "Mathieu Le Goff",
   "statut": "conforme"
 }

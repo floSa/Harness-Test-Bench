@@ -1,9 +1,9 @@
 {
-  "machine": "Calanquin 40",
+  "machine": "Calanquin 160",
   "constructeur": "Lumulvan",
-  "numero_serie": "LU-2019-86992",
-  "site": "Swindon Works",
-  "reference_rapport": "OS-RI-2025-9993",
+  "numero_serie": "LU-2024-14638",
+  "site": "Hexham Plant",
+  "reference_rapport": "OS-RI-2025-8690",
   "date_intervention": "2025-03-25",
   "date_validation": "2025-04-04",
   "volume_dose_ml": 9.8,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.1,
   "debit_ml_min": 246.0,
   "pression_bar": null,
-  "reference_piece": "LU-957-A",
+  "reference_piece": "LU-734-K",
   "technicien": "Owen Ashby",
   "statut": "non_conforme"
 }

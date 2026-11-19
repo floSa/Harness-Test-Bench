@@ -9,7 +9,7 @@
   "volume_dose_ml": 1.06,
   "volume_nominal_ml": 1.0,
   "tolerance_ml": 0.08,
-  "debit_ml_min": 52.8,
+  "debit_ml_min": 54.0,
   "pression_bar": 0.4,
   "reference_piece": null,
   "technicien": "Hugo Vasseur",

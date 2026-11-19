@@ -720,7 +720,7 @@
       ]
     },
     "debit_ml_min": {
-      "valeur": 52.0,
+      "valeur": 53.0,
       "emplacement": "tableau",
       "regle": "débit mesuré après réglage, en ml/min (pas le débit maximal, ni celui d'un équipement voisin)",
       "pieges": [
@@ -730,7 +730,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "3,12",
+          "texte": "3,18",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -757,7 +757,7 @@
           "role": "leurre"
         },
         {
-          "texte": "4,8",
+          "texte": "5,4",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -770,13 +770,13 @@
           "role": "leurre"
         },
         {
-          "texte": "6,6",
+          "texte": "6,72",
           "page": 1,
           "mode": "texte",
           "cadre": [
             202.1,
             732.8,
-            214.6,
+            219.6,
             745.2
           ],
           "raison": "débit de l'équipement voisin",
@@ -851,9 +851,9 @@
           "page": 1,
           "mode": "texte",
           "cadre": [
-            271.1,
+            276.1,
             732.8,
-            283.6,
+            288.6,
             745.2
           ],
           "raison": "pression de l'équipement voisin",

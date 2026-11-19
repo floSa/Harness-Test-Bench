@@ -1,9 +1,9 @@
 {
   "machine": "Torelbel 120",
   "constructeur": "Ulvrel",
-  "numero_serie": "UL-2021-15383",
-  "site": "Établissement de Châteaubriant",
-  "reference_rapport": "BA-RI-2025-3436",
+  "numero_serie": "UL-2016-81151",
+  "site": "Établissement de Mazamet",
+  "reference_rapport": "BA-RI-2025-2522",
   "date_intervention": "2025-10-22",
   "date_validation": null,
   "volume_dose_ml": 0.95,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.08,
   "debit_ml_min": 462.0,
   "pression_bar": 9.8,
-  "reference_piece": "UL-402-A",
+  "reference_piece": "UL-199-D",
   "technicien": "Hugo Prigent",
   "statut": "a_revoir"
 }

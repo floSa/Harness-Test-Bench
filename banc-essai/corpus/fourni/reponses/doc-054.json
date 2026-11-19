@@ -1,9 +1,9 @@
 {
-  "machine": "Coronis 40",
+  "machine": "Coronis 160",
   "constructeur": "Calanquin",
-  "numero_serie": "CA539051",
-  "site": "Usine de Tulle",
-  "reference_rapport": "BA-RI-2025-5257",
+  "numero_serie": "CA/18/9912",
+  "site": "Établissement de Saumur",
+  "reference_rapport": "BA-RI-2025-8360",
   "date_intervention": "2025-02-24",
   "date_validation": "2025-03-05",
   "volume_dose_ml": 25.1,

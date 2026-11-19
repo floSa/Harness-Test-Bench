@@ -241,20 +241,20 @@
       ]
     },
     "site": {
-      "valeur": "Plateforme de Vitré",
+      "valeur": "Site de Saint-Avold",
       "emplacement": "phrase",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Plateforme de Vitré",
+          "texte": "Site de Saint-Avold",
           "page": 2,
           "mode": "texte",
           "cadre": [
             184.1,
             250.5,
-            261.1,
+            260.6,
             262.9
           ],
           "role": "verite"
@@ -262,26 +262,26 @@
       ],
       "leurres": [
         {
-          "texte": "Saint-Avold",
+          "texte": "Lisieux",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            332.6,
+            338.4,
             221.2,
-            373.5,
+            363.2,
             232.2
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Saint-Avold",
+          "texte": "Lisieux",
           "page": 0,
           "mode": "texte",
           "cadre": [
             46.0,
             727.7,
-            92.0,
+            74.0,
             740.1
           ],
           "raison": "ville du siège du client",
@@ -986,13 +986,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Pauline Roussel",
+          "texte": "Manon Faure",
           "page": 1,
           "mode": "texte",
           "cadre": [
             417.4,
             674.1,
-            482.4,
+            470.9,
             686.5
           ],
           "raison": "demandeur côté client",
@@ -1012,13 +1012,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Inès Vasseur",
+          "texte": "Pauline Roussel",
           "page": 2,
           "mode": "texte",
           "cadre": [
             378.8,
             426.3,
-            428.4,
+            440.2,
             438.0
           ],
           "raison": "approbateur côté client",

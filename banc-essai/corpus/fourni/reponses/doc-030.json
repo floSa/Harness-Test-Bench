@@ -1,9 +1,9 @@
 {
-  "machine": "Corvex 120",
+  "machine": "Zentis 250",
   "constructeur": "Nevvex",
-  "numero_serie": "NE/19/8952",
-  "site": "Plateforme de Redon",
-  "reference_rapport": "ST-RI-2026-3934",
+  "numero_serie": "NE/22/8381",
+  "site": "Plateforme de Tulle",
+  "reference_rapport": "ST-RI-2026-8435",
   "date_intervention": "2026-08-18",
   "date_validation": "2026-08-28",
   "volume_dose_ml": 4.95,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.1,
   "debit_ml_min": 540.0,
   "pression_bar": null,
-  "reference_piece": "NE-100-C",
+  "reference_piece": "NE-634-E",
   "technicien": "Julien Prigent",
   "statut": "conforme"
 }

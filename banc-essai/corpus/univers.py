@@ -108,10 +108,13 @@ def construire(graine, n_marques=(10, 8, 6), n_prestataires=(8, 5, 4)):
 
 
 def personne(r, langue, exclus=()):
+    """Personne dont ni le prénom ni le nom ne sont déjà portés par une personne exclue."""
+    prenoms = {e.split(" ", 1)[0] for e in exclus}
+    noms = {e.split(" ", 1)[1] for e in exclus}
     while True:
-        p = f"{r.choice(PRENOMS[langue])} {r.choice(NOMS[langue])}"
-        if p not in exclus:
-            return p
+        pr, nm = r.choice(PRENOMS[langue]), r.choice(NOMS[langue])
+        if pr not in prenoms and nm not in noms:
+            return f"{pr} {nm}"
 
 
 def site(r, langue, exclus=()):

@@ -18,8 +18,8 @@
     "volume_dose_ml": "mL",
     "volume_nominal_ml": "mL",
     "tolerance_ml": "µL",
-    "debit_ml_min": "L/h",
-    "pression_bar": "kPa"
+    "debit_ml_min": "L/min",
+    "pression_bar": "psi"
   },
   "format_nombres": "ch",
   "format_dates": "us",
@@ -46,7 +46,7 @@
       ],
       "leurres": [
         {
-          "texte": "K89-2P",
+          "texte": "L97-4P",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -59,7 +59,7 @@
           "role": "leurre"
         },
         {
-          "texte": "K89-2P",
+          "texte": "L97-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -72,13 +72,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Juvbel C17",
+          "texte": "Zentis C64",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            193.3,
+            194.0,
             469.3,
-            253.1,
+            254.0,
             481.8
           ],
           "raison": "équipement voisin",
@@ -110,7 +110,7 @@
       ],
       "leurres": [
         {
-          "texte": "Varinnet",
+          "texte": "Ostiovan",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -123,7 +123,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Varinnet",
+          "texte": "Ostiovan",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -136,20 +136,20 @@
           "role": "leurre"
         },
         {
-          "texte": "Calanquin",
+          "texte": "Doraetis",
           "page": 1,
           "mode": "texte",
           "cadre": [
             334.1,
             533.3,
-            377.3,
+            372.5,
             543.3
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Lumulvan",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -164,7 +164,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "UL870560",
+      "valeur": "UL744512",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -173,7 +173,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "UL870560",
+          "texte": "UL744512",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -187,7 +187,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-24108",
+          "texte": "INV-43735",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -200,7 +200,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M6085852",
+          "texte": "M7612368",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -213,7 +213,7 @@
           "role": "leurre"
         },
         {
-          "texte": "ET-55708",
+          "texte": "ET-18121",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -226,7 +226,7 @@
           "role": "leurre"
         },
         {
-          "texte": "EQ-53146",
+          "texte": "IN-25221",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -249,26 +249,26 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "Hexham",
+          "texte": "Doncaster",
           "page": 0,
           "mode": "texte",
           "cadre": [
             290.0,
             206.2,
-            326.0,
+            344.0,
             218.7
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Hexham",
+          "texte": "Doncaster",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            234.8,
+            236.0,
             566.4,
-            270.8,
+            290.0,
             578.9
           ],
           "raison": "ville du siège du client",
@@ -277,14 +277,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "OS-RI-2025-3237",
+      "valeur": "OS-RI-2025-1694",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "OS-RI-2025-3237",
+          "texte": "OS-RI-2025-1694",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -296,7 +296,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-3237",
+          "texte": "OS-RI-2025-1694",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -308,7 +308,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-3237",
+          "texte": "OS-RI-2025-1694",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -320,7 +320,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-3237",
+          "texte": "OS-RI-2025-1694",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -332,7 +332,7 @@
           "role": "verite"
         },
         {
-          "texte": "OS-RI-2025-3237",
+          "texte": "OS-RI-2025-1694",
           "page": 3,
           "mode": "image",
           "cadre": [
@@ -346,7 +346,7 @@
       ],
       "leurres": [
         {
-          "texte": "PO-221914",
+          "texte": "PO-399338",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -359,7 +359,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-59011",
+          "texte": "AFF-24084",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -501,27 +501,27 @@
           "role": "leurre"
         },
         {
-          "texte": "July 31, 2024",
+          "texte": "September 22, 2024",
           "page": 1,
           "mode": "texte",
           "cadre": [
             463.2,
-            533.3,
+            528.5,
             525.6,
-            543.3
+            548.1
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "December 17, 2024",
+          "texte": "June 30, 2024",
           "page": 1,
           "mode": "texte",
           "cadre": [
             463.2,
-            552.7,
-            520.8,
-            572.3
+            557.5,
+            525.6,
+            567.5
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
@@ -593,7 +593,7 @@
       ],
       "leurres": [
         {
-          "texte": "162",
+          "texte": "281",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -606,13 +606,13 @@
           "role": "leurre"
         },
         {
-          "texte": "200",
+          "texte": "60",
           "page": 1,
           "mode": "texte",
           "cadre": [
             295.1,
             246.2,
-            309.5,
+            304.7,
             256.2
           ],
           "raison": "capacité du réservoir",
@@ -632,20 +632,20 @@
           "role": "leurre"
         },
         {
-          "texte": "200",
+          "texte": "60",
           "page": 1,
           "mode": "texte",
           "cadre": [
             285.5,
             654.7,
-            299.9,
+            295.1,
             664.7
           ],
           "raison": "capacité du réservoir",
           "role": "leurre"
         },
         {
-          "texte": "162",
+          "texte": "281",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -739,18 +739,19 @@
       "regle": "débit mesuré après réglage, en ml/min (pas le débit maximal, ni celui d'un équipement voisin)",
       "pieges": [
         "unite_a_convertir",
-        "tableau_coupe"
+        "tableau_coupe",
+        "format_nombre"
       ],
       "scan": false,
       "ecritures": [
         {
-          "texte": "6.18 L/h",
+          "texte": "0.103 L/min",
           "page": 1,
           "mode": "texte",
           "cadre": [
             446.0,
             384.5,
-            494.0,
+            512.0,
             397.0
           ],
           "role": "verite"
@@ -758,33 +759,33 @@
       ],
       "leurres": [
         {
-          "texte": "5.82",
+          "texte": "0.092",
           "page": 1,
           "mode": "texte",
           "cadre": [
             295.1,
             217.0,
-            314.3,
+            319.1,
             227.0
           ],
           "raison": "valeur avant réglage",
           "role": "leurre"
         },
         {
-          "texte": "13.8",
+          "texte": "0.18",
           "page": 1,
           "mode": "texte",
           "cadre": [
-            188.0,
+            218.0,
             397.7,
-            212.0,
+            242.0,
             410.2
           ],
           "raison": "débit maximal",
           "role": "leurre"
         },
         {
-          "texte": "13.8",
+          "texte": "0.18",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -797,13 +798,13 @@
           "role": "leurre"
         },
         {
-          "texte": "12.06",
+          "texte": "0.166",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            294.6,
+            296.0,
             469.3,
-            324.6,
+            326.0,
             481.8
           ],
           "raison": "débit de l'équipement voisin",
@@ -812,24 +813,23 @@
       ]
     },
     "pression_bar": {
-      "valeur": 10.0,
+      "valeur": 10.0002,
       "emplacement": "phrase",
       "regle": "pression de service mesurée après réglage, en bar (pas la pression maximale, le tarage de soupape ou le réseau d'air)",
       "pieges": [
         "unite_a_convertir",
-        "tableau_coupe",
-        "format_nombre"
+        "tableau_coupe"
       ],
       "scan": false,
       "ecritures": [
         {
-          "texte": "1'000 kPa",
+          "texte": "145.04 psi",
           "page": 2,
           "mode": "texte",
           "cadre": [
             266.0,
             414.7,
-            320.0,
+            326.0,
             427.2
           ],
           "role": "verite"
@@ -837,20 +837,20 @@
       ],
       "leurres": [
         {
-          "texte": "900",
+          "texte": "126.18",
           "page": 1,
           "mode": "texte",
           "cadre": [
             295.1,
             202.4,
-            309.5,
+            323.9,
             212.4
           ],
           "raison": "valeur avant réglage",
           "role": "leurre"
         },
         {
-          "texte": "23.0",
+          "texte": "31.5",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -863,7 +863,7 @@
           "role": "leurre"
         },
         {
-          "texte": "14.3",
+          "texte": "13.8",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -876,26 +876,26 @@
           "role": "leurre"
         },
         {
-          "texte": "11.4",
+          "texte": "10.9",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            414.0,
+            428.0,
             469.3,
-            438.0,
+            452.0,
             481.8
           ],
           "raison": "pression de l'équipement voisin",
           "role": "leurre"
         },
         {
-          "texte": "6.0",
+          "texte": "7.0",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            410.0,
+            458.0,
             482.5,
-            428.0,
+            476.0,
             495.0
           ],
           "raison": "réseau d'air de l'atelier",
@@ -904,14 +904,14 @@
       ]
     },
     "reference_piece": {
-      "valeur": "UL-963-R",
+      "valeur": "UL-288-C",
       "emplacement": "tableau",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "UL-963-R",
+          "texte": "UL-288-C",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -925,7 +925,7 @@
       ],
       "leurres": [
         {
-          "texte": "UL-494-E",
+          "texte": "UL-747-K",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -938,7 +938,7 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-494-E",
+          "texte": "UL-747-K",
           "page": 3,
           "mode": "image",
           "cadre": [
@@ -951,7 +951,7 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-260-C",
+          "texte": "UL-335-D",
           "page": 3,
           "mode": "image",
           "cadre": [
@@ -964,7 +964,7 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-510-C",
+          "texte": "UL-775-D",
           "page": 3,
           "mode": "image",
           "cadre": [
@@ -1002,33 +1002,33 @@
       ],
       "leurres": [
         {
-          "texte": "Sarah Ainsley",
+          "texte": "Liam Harlow",
           "page": 2,
           "mode": "texte",
           "cadre": [
             176.0,
             500.7,
-            254.0,
+            242.0,
             513.2
           ],
           "raison": "rédacteur du rapport",
           "role": "leurre"
         },
         {
-          "texte": "Sarah Ainsley",
+          "texte": "Liam Harlow",
           "page": 2,
           "mode": "texte",
           "cadre": [
             242.0,
             584.1,
-            320.0,
+            308.0,
             596.6
           ],
           "raison": "accompagnant",
           "role": "leurre"
         },
         {
-          "texte": "Rhys Mahon",
+          "texte": "Ryan Mahon",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -1041,7 +1041,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Rhys Doyle",
+          "texte": "Erin Calloway",
           "page": 3,
           "mode": "image",
           "cadre": [

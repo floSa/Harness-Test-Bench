@@ -109,7 +109,8 @@ class BaseFlux(Base):
         for cle, nom in [("volume_dose_ml", "dose"), ("volume_nominal_ml", "nominal"),
                          ("debit_ml_min", "debit"), ("pression_bar", "pression")]:
             if self.emp(cle) == "schema":
-                ts[nom] = f"{self.lib(cle)}{self.tr(' : ', ': ')}{self.vu(cle)}"
+                qualif = self.tr(" après réglage", " as left") if cle != "volume_nominal_ml" else ""
+                ts[nom] = f"{self.lib(cle)}{qualif}{self.tr(' : ', ': ')}{self.vu(cle)}"
                 notes.append(("verite", cle, self.vu(cle), None, "image"))
         larg = min(dessins.SCHEMA_L, largeur)
         out += self.Im(dessins.schema(ts), larg, dessins.SCHEMA_H * larg / dessins.SCHEMA_L, notes,

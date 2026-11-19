@@ -1,9 +1,9 @@
 {
-  "machine": "Nerpax 600",
+  "machine": "Nevtis 300",
   "constructeur": "Belardra",
   "numero_serie": null,
   "site": null,
-  "reference_rapport": "OS-RI-2026-7658",
+  "reference_rapport": "OS-RI-2026-6229",
   "date_intervention": "2026-06-09",
   "date_validation": "2026-06-19",
   "volume_dose_ml": 755.4,

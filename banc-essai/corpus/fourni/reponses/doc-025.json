@@ -1,9 +1,9 @@
 {
-  "machine": "Juvbel 160",
+  "machine": "Ulvinnis 250",
   "constructeur": "Doraetis",
-  "numero_serie": "DO-2023-99121",
+  "numero_serie": "DO-2016-13792",
   "site": null,
-  "reference_rapport": "US-RI-2025-7916",
+  "reference_rapport": "US-RI-2025-7069",
   "date_intervention": "2025-08-13",
   "date_validation": null,
   "volume_dose_ml": 4.78,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.125,
   "debit_ml_min": 344.0,
   "pression_bar": 7.2,
-  "reference_piece": "DO-104-E",
+  "reference_piece": "DO-849-A",
   "technicien": "Sophie Guérin",
   "statut": "non_conforme"
 }

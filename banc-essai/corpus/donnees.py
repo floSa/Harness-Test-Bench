@@ -28,7 +28,7 @@ TYPES = {
                      "pression": (0.5, 3.0), "reservoir": [150, 300, 500, 1000],
                      "circuit": (800, 5000), "tetes": [2, 3, 4]},
     "pipette": {"fr": "pipette automatique", "en": "automatic pipette",
-                "nominal": [0.5, 1, 2, 5], "debit": (1, 60, 1), "pression": (0.2, 1.5),
+                "nominal": [0.5, 1, 2, 5], "debit": (5, 60, 1), "pression": (0.2, 1.5),
                 "reservoir": [0.25, 0.5, 1, 2], "circuit": (2, 20), "tetes": [1]},
 }
 PIECES = {
@@ -226,9 +226,9 @@ def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, p
     leurres = {
         "essais_apres": essais_apres, "essais_avant": essais_avant, "avant": avant,
         "tetes": tetes, "pct": pct, "incertitude": incertitude, "pas": pas,
-        "debit_avant": _arr(debit * r.uniform(0.82, 0.95), dpas),
+        "debit_avant": min(_arr(debit * r.uniform(0.82, 0.95), dpas), _arr(debit - max(dpas, 0.03 * debit), dpas)),
         "debit_max": _arr(debit * r.uniform(1.6, 2.6), max(dpas, 10)),
-        "pression_avant": round(pression * r.uniform(0.75, 0.92), 1),
+        "pression_avant": min(round(pression * r.uniform(0.75, 0.92), 1), round(pression - 0.1, 1)),
         "pression_max": round(pression * r.uniform(2.0, 3.5) * 2) / 2,
         "tarage": round(pression * r.uniform(1.3, 1.8), 1), "air": r.choice([6.0, 7.0, 8.0]),
         "reservoir_l": float(r.choice(typ["reservoir"])),

@@ -1,9 +1,9 @@
 {
-  "machine": "Juvbel 160",
+  "machine": "Juvbel 300",
   "constructeur": "Doraetis",
-  "numero_serie": "DO/19/7616",
-  "site": "Ipswich Facility",
-  "reference_rapport": "ZS-RI-2025-1671",
+  "numero_serie": "DO-2024-96885",
+  "site": "Wexford Facility",
+  "reference_rapport": "ZS-RI-2025-3154",
   "date_intervention": "2025-10-30",
   "date_validation": "2025-11-03",
   "volume_dose_ml": 0.9,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.08,
   "debit_ml_min": 140.0,
   "pression_bar": 6.6,
-  "reference_piece": "DO-319-E",
+  "reference_piece": "DO-962-R",
   "technicien": "Liam Kerrigan",
   "statut": "non_conforme"
 }

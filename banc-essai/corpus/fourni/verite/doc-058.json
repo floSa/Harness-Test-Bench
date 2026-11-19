@@ -25,20 +25,20 @@
   "format_dates": "jj/mm/aaaa",
   "champs": {
     "machine": {
-      "valeur": "Torelbel 600",
+      "valeur": "Zenasol 250",
       "emplacement": "formulaire",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Torelbel 600",
+          "texte": "Zenasol 250",
           "page": 0,
           "mode": "texte",
           "cadre": [
             187.3,
             139.3,
-            240.1,
+            239.6,
             152.3
           ],
           "role": "verite"
@@ -46,7 +46,7 @@
       ],
       "leurres": [
         {
-          "texte": "M109-4P",
+          "texte": "M72-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -59,7 +59,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M109-4P",
+          "texte": "M72-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -72,13 +72,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Juvelpax C16",
+          "texte": "Ulvinnis C65",
           "page": 4,
           "mode": "texte",
           "cadre": [
             133.0,
             232.4,
-            187.6,
+            183.5,
             244.8
           ],
           "raison": "équipement voisin",
@@ -110,7 +110,7 @@
       ],
       "leurres": [
         {
-          "texte": "Nevvex",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -123,7 +123,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Lumulvan",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -136,7 +136,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Ostiovan",
+          "texte": "Lumulvan",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -149,7 +149,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Nevvex",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -164,7 +164,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "UL/24/6910",
+      "valeur": "UL790154",
       "emplacement": "phrase",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -173,13 +173,13 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "UL/24/6910",
+          "texte": "UL790154",
           "page": 4,
           "mode": "texte",
           "cadre": [
             157.0,
             214.6,
-            203.6,
+            198.6,
             226.9
           ],
           "role": "verite"
@@ -187,7 +187,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-46777",
+          "texte": "INV-32731",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -200,7 +200,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M3572571",
+          "texte": "M2326706",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -213,7 +213,7 @@
           "role": "leurre"
         },
         {
-          "texte": "IN-84095",
+          "texte": "IN-50684",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -226,7 +226,7 @@
           "role": "leurre"
         },
         {
-          "texte": "IN-99888",
+          "texte": "EQ-16298",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -241,20 +241,20 @@
       ]
     },
     "site": {
-      "valeur": "Hexham Works",
+      "valeur": "Carlow Facility",
       "emplacement": "formulaire",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Hexham Works",
+          "texte": "Carlow Facility",
           "page": 0,
           "mode": "texte",
           "cadre": [
             40.0,
             185.3,
-            104.9,
+            101.8,
             198.3
           ],
           "role": "verite"
@@ -262,20 +262,20 @@
       ],
       "leurres": [
         {
-          "texte": "Dundee",
+          "texte": "Tralee",
           "page": 0,
           "mode": "texte",
           "cadre": [
             468.1,
             197.2,
-            501.4,
+            495.0,
             210.2
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Dundee",
+          "texte": "Tralee",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -290,14 +290,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "DM-RI-2025-9451",
+      "valeur": "DM-RI-2025-7410",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "DM-RI-2025-9451",
+          "texte": "DM-RI-2025-7410",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -309,7 +309,7 @@
           "role": "verite"
         },
         {
-          "texte": "DM-RI-2025-9451",
+          "texte": "DM-RI-2025-7410",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -321,7 +321,7 @@
           "role": "verite"
         },
         {
-          "texte": "DM-RI-2025-9451",
+          "texte": "DM-RI-2025-7410",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -333,7 +333,7 @@
           "role": "verite"
         },
         {
-          "texte": "DM-RI-2025-9451",
+          "texte": "DM-RI-2025-7410",
           "page": 3,
           "mode": "texte",
           "cadre": [
@@ -345,7 +345,7 @@
           "role": "verite"
         },
         {
-          "texte": "DM-RI-2025-9451",
+          "texte": "DM-RI-2025-7410",
           "page": 4,
           "mode": "texte",
           "cadre": [
@@ -359,7 +359,7 @@
       ],
       "leurres": [
         {
-          "texte": "PO-805438",
+          "texte": "PO-779325",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -372,7 +372,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-32962",
+          "texte": "AFF-48238",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -539,7 +539,7 @@
           "role": "leurre"
         },
         {
-          "texte": "24/07/2025",
+          "texte": "23/07/2025",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -552,7 +552,7 @@
           "role": "leurre"
         },
         {
-          "texte": "12/08/2025",
+          "texte": "30/04/2025",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -670,7 +670,7 @@
           "role": "leurre"
         },
         {
-          "texte": "138",
+          "texte": "231",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -785,7 +785,7 @@
       ],
       "leurres": [
         {
-          "texte": "21.36",
+          "texte": "19.38",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -798,7 +798,7 @@
           "role": "leurre"
         },
         {
-          "texte": "54.6",
+          "texte": "37.2",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -811,13 +811,13 @@
           "role": "leurre"
         },
         {
-          "texte": "52.2",
+          "texte": "39.48",
           "page": 4,
           "mode": "texte",
           "cadre": [
-            211.6,
+            207.5,
             232.4,
-            229.1,
+            230.1,
             244.8
           ],
           "raison": "débit de l'équipement voisin",
@@ -862,7 +862,7 @@
           "role": "leurre"
         },
         {
-          "texte": "29.0",
+          "texte": "24.0",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -875,7 +875,7 @@
           "role": "leurre"
         },
         {
-          "texte": "17.3",
+          "texte": "16.6",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -888,13 +888,13 @@
           "role": "leurre"
         },
         {
-          "texte": "12.0",
+          "texte": "13.1",
           "page": 4,
           "mode": "texte",
           "cadre": [
-            286.6,
+            287.6,
             232.4,
-            304.1,
+            305.1,
             244.8
           ],
           "raison": "pression de l'équipement voisin",
@@ -924,7 +924,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "UL-122-R",
+          "texte": "UL-958-R",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -937,20 +937,20 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-444-A",
+          "texte": "UL-373-K",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            227.1,
+            259.1,
             374.1,
-            265.6,
+            297.6,
             386.4
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
-          "texte": "UL-444-A",
+          "texte": "UL-373-K",
           "page": 4,
           "mode": "texte",
           "cadre": [
@@ -963,7 +963,7 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-122-R",
+          "texte": "UL-958-R",
           "page": 4,
           "mode": "texte",
           "cadre": [
@@ -976,13 +976,13 @@
           "role": "leurre"
         },
         {
-          "texte": "UL-511-A",
+          "texte": "UL-775-R",
           "page": 4,
           "mode": "texte",
           "cadre": [
             42.0,
             117.3,
-            76.2,
+            76.7,
             128.3
           ],
           "raison": "pièce proposée au devis",
@@ -1040,7 +1040,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Hannah Mahon",
+          "texte": "Sarah Thornley",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -1066,7 +1066,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Sarah Thornley",
+          "texte": "Declan Kerrigan",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -1092,13 +1092,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Sarah Thornley",
+          "texte": "Declan Kerrigan",
           "page": 2,
           "mode": "texte",
           "cadre": [
             78.5,
             444.9,
-            140.0,
+            143.0,
             457.3
           ],
           "raison": "demandeur côté client",
@@ -1118,7 +1118,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Hannah Mahon",
+          "texte": "Sarah Thornley",
           "page": 4,
           "mode": "texte",
           "cadre": [

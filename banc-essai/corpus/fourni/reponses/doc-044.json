@@ -1,9 +1,9 @@
 {
-  "machine": "Saronis 40",
+  "machine": "Saronis 300",
   "constructeur": "Riliovane",
   "numero_serie": null,
-  "site": "Hexham Works",
-  "reference_rapport": "OS-RI-2025-3338",
+  "site": "Livingston Plant",
+  "reference_rapport": "OS-RI-2025-6569",
   "date_intervention": "2025-04-28",
   "date_validation": "2025-05-04",
   "volume_dose_ml": 761.9,
@@ -11,7 +11,7 @@
   "tolerance_ml": 18.75,
   "debit_ml_min": 18850.0,
   "pression_bar": 1.1,
-  "reference_piece": "RI-238-C",
+  "reference_piece": "RI-781-C",
   "technicien": null,
   "statut": "conforme"
 }

@@ -14,9 +14,9 @@
   "pages": 3,
   "page_scannee": null,
   "unites_ecrites": {
-    "volume_dose_ml": "cm³",
+    "volume_dose_ml": "ml",
     "volume_nominal_ml": "ml",
-    "tolerance_ml": "cm³",
+    "tolerance_ml": "ml",
     "debit_ml_min": "ml/min",
     "pression_bar": "bar"
   },
@@ -24,20 +24,20 @@
   "format_dates": "aaaa-mm-jj",
   "champs": {
     "machine": {
-      "valeur": "Juvbel 160",
+      "valeur": "Ulvinnis 250",
       "emplacement": "paragraphe",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Juvbel 160",
+          "texte": "Ulvinnis 250",
           "page": 0,
           "mode": "texte",
           "cadre": [
             46.0,
             428.0,
-            89.5,
+            95.0,
             440.4
           ],
           "role": "verite"
@@ -45,20 +45,20 @@
       ],
       "leurres": [
         {
-          "texte": "K75-2P",
+          "texte": "L97-2P",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            297.1,
+            299.1,
             428.0,
-            327.1,
+            328.1,
             440.4
           ],
           "raison": "type du moteur",
           "role": "leurre"
         },
         {
-          "texte": "K75-2P",
+          "texte": "L97-2P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -71,13 +71,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Torelbel C49",
+          "texte": "Pyrabel C46",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            130.0,
+            129.7,
             204.4,
-            181.6,
+            179.1,
             216.8
           ],
           "raison": "équipement voisin",
@@ -109,20 +109,20 @@
       ],
       "leurres": [
         {
-          "texte": "Riliovane",
+          "texte": "Varinnet",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            225.6,
+            231.1,
             428.0,
-            262.6,
+            264.6,
             440.4
           ],
           "raison": "marque du moteur",
           "role": "leurre"
         },
         {
-          "texte": "Riliovane",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -135,26 +135,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Nerorrix",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "texte",
           "cadre": [
             327.1,
             466.0,
-            355.5,
+            356.9,
             477.0
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Ostiovan",
+          "texte": "Ulvrel",
           "page": 1,
           "mode": "texte",
           "cadre": [
             327.1,
             480.6,
-            358.6,
+            347.5,
             491.6
           ],
           "raison": "marque d'un instrument de mesure",
@@ -163,7 +163,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "DO-2023-99121",
+      "valeur": "DO-2016-13792",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -173,7 +173,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "DO-2023-99121",
+          "texte": "DO-2016-13792",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -187,7 +187,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-79994",
+          "texte": "INV-47281",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -200,7 +200,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M9041619",
+          "texte": "M1860919",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -213,26 +213,26 @@
           "role": "leurre"
         },
         {
-          "texte": "IN-90288",
+          "texte": "EQ-71966",
           "page": 1,
           "mode": "texte",
           "cadre": [
             398.6,
             466.0,
-            431.5,
+            435.1,
             477.0
           ],
           "raison": "n° de série d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "EQ-62356",
+          "texte": "ET-50506",
           "page": 1,
           "mode": "texte",
           "cadre": [
             398.6,
             480.6,
-            435.1,
+            433.8,
             491.6
           ],
           "raison": "n° de série d'un instrument",
@@ -249,26 +249,26 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "Châteaubriant",
+          "texte": "Lisieux",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            329.5,
+            311.7,
             206.6,
-            379.7,
+            336.6,
             217.6
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Châteaubriant",
+          "texte": "Lisieux",
           "page": 0,
           "mode": "texte",
           "cadre": [
             390.9,
             724.3,
-            447.5,
+            419.0,
             736.7
           ],
           "raison": "ville du siège du client",
@@ -277,14 +277,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "US-RI-2025-7916",
+      "valeur": "US-RI-2025-7069",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "US-RI-2025-7916",
+          "texte": "US-RI-2025-7069",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -296,7 +296,7 @@
           "role": "verite"
         },
         {
-          "texte": "US-RI-2025-7916",
+          "texte": "US-RI-2025-7069",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -308,7 +308,7 @@
           "role": "verite"
         },
         {
-          "texte": "US-RI-2025-7916",
+          "texte": "US-RI-2025-7069",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -320,7 +320,7 @@
           "role": "verite"
         },
         {
-          "texte": "US-RI-2025-7916",
+          "texte": "US-RI-2025-7069",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -334,7 +334,7 @@
       ],
       "leurres": [
         {
-          "texte": "CDE-597552",
+          "texte": "CDE-403854",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -347,7 +347,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-26985",
+          "texte": "AFF-41759",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -475,7 +475,7 @@
           "role": "leurre"
         },
         {
-          "texte": "2024-11-12",
+          "texte": "2024-12-22",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -488,7 +488,7 @@
           "role": "leurre"
         },
         {
-          "texte": "2024-10-22",
+          "texte": "2024-10-25",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -568,7 +568,7 @@
           "role": "leurre"
         },
         {
-          "texte": "200",
+          "texte": "100",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -581,7 +581,7 @@
           "role": "leurre"
         },
         {
-          "texte": "247",
+          "texte": "106",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -707,7 +707,7 @@
       ],
       "leurres": [
         {
-          "texte": "287",
+          "texte": "295",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -720,7 +720,7 @@
           "role": "leurre"
         },
         {
-          "texte": "620",
+          "texte": "610",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -733,13 +733,13 @@
           "role": "leurre"
         },
         {
-          "texte": "850",
+          "texte": "612",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            209.1,
+            206.4,
             204.4,
-            224.1,
+            221.4,
             216.8
           ],
           "raison": "débit de l'équipement voisin",
@@ -771,7 +771,7 @@
       ],
       "leurres": [
         {
-          "texte": "5,6",
+          "texte": "6,3",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -784,7 +784,7 @@
           "role": "leurre"
         },
         {
-          "texte": "21,0",
+          "texte": "16,0",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -797,39 +797,39 @@
           "role": "leurre"
         },
         {
-          "texte": "9,6",
+          "texte": "12,1",
           "page": 0,
           "mode": "texte",
           "cadre": [
             280.0,
             678.0,
-            291.1,
+            295.6,
             689.0
           ],
           "raison": "tarage de la soupape",
           "role": "leurre"
         },
         {
-          "texte": "9,1",
+          "texte": "9,5",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            294.6,
+            291.5,
             204.4,
-            307.1,
+            304.0,
             216.8
           ],
           "raison": "pression de l'équipement voisin",
           "role": "leurre"
         },
         {
-          "texte": "7,0",
+          "texte": "6,0",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            130.5,
+            111.3,
             216.3,
-            143.0,
+            123.8,
             228.7
           ],
           "raison": "réseau d'air de l'atelier",
@@ -838,14 +838,14 @@
       ]
     },
     "reference_piece": {
-      "valeur": "DO-104-E",
+      "valeur": "DO-849-A",
       "emplacement": "tableau",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "DO-104-E",
+          "texte": "DO-849-A",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -859,33 +859,33 @@
       ],
       "leurres": [
         {
-          "texte": "DO-575-C",
+          "texte": "DO-105-B",
           "page": 1,
           "mode": "texte",
           "cadre": [
             403.9,
             580.5,
-            444.9,
+            444.4,
             592.9
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
-          "texte": "DO-575-C",
+          "texte": "DO-105-B",
           "page": 2,
           "mode": "texte",
           "cadre": [
             52.0,
             116.7,
-            88.4,
+            88.0,
             127.7
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
-          "texte": "DO-848-A",
+          "texte": "DO-794-A",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -898,7 +898,7 @@
           "role": "leurre"
         },
         {
-          "texte": "DO-896-B",
+          "texte": "DO-886-K",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -950,13 +950,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Damien Tanguy",
+          "texte": "Antoine Gauthier",
           "page": 1,
           "mode": "texte",
           "cadre": [
             395.6,
             638.5,
-            459.1,
+            463.1,
             650.8
           ],
           "raison": "demandeur côté client",
@@ -991,9 +991,9 @@
           "page": 2,
           "mode": "texte",
           "cadre": [
-            203.1,
+            196.6,
             187.5,
-            259.6,
+            253.1,
             199.9
           ],
           "role": "verite"

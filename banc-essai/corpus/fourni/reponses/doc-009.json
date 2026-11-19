@@ -1,9 +1,9 @@
 {
   "machine": "Corvex 160",
   "constructeur": "Nevvex",
-  "numero_serie": "NE500632",
-  "site": "Établissement de Redon",
-  "reference_rapport": "US-RI-2025-6242",
+  "numero_serie": "NE468169",
+  "site": "Établissement d'Issoire",
+  "reference_rapport": "US-RI-2025-6163",
   "date_intervention": "2025-06-18",
   "date_validation": "2025-06-28",
   "volume_dose_ml": 50.4,
@@ -11,7 +11,7 @@
   "tolerance_ml": 0.75,
   "debit_ml_min": 1130.0,
   "pression_bar": 3.4,
-  "reference_piece": "NE-380-B",
+  "reference_piece": "NE-429-A",
   "technicien": "Sophie Barbier",
   "statut": "conforme"
 }

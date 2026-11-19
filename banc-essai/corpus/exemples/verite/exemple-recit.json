@@ -229,20 +229,20 @@
       ]
     },
     "site": {
-      "valeur": "Établissement de Saumur",
+      "valeur": "Plateforme de Mazamet",
       "emplacement": "paragraphe",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Établissement de Saumur",
+          "texte": "Plateforme de Mazamet",
           "page": 0,
           "mode": "texte",
           "cadre": [
             161.7,
             494.0,
-            253.2,
+            247.6,
             506.0
           ],
           "role": "verite"
@@ -267,10 +267,10 @@
           "page": 0,
           "mode": "texte",
           "cadre": [
-            62.0,
-            505.9,
-            79.5,
-            517.9
+            513.5,
+            494.0,
+            531.0,
+            506.0
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
@@ -415,9 +415,9 @@
           "page": 0,
           "mode": "texte",
           "cadre": [
-            358.7,
+            353.0,
             494.0,
-            407.7,
+            401.9,
             506.0
           ],
           "raison": "date de la demande",
@@ -1042,13 +1042,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Céline Fontaine",
+          "texte": "Romain Prigent",
           "page": 2,
           "mode": "texte",
           "cadre": [
             107.5,
             546.1,
-            164.7,
+            164.2,
             558.1
           ],
           "raison": "demandeur côté client",

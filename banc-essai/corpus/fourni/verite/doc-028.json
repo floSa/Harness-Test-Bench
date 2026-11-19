@@ -241,20 +241,20 @@
       ]
     },
     "site": {
-      "valeur": "Plateforme de Péronne",
+      "valeur": "Plateforme d'Oyonnax",
       "emplacement": "paragraphe",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Plateforme de Péronne",
+          "texte": "Plateforme d'Oyonnax",
           "page": 1,
           "mode": "texte",
           "cadre": [
             196.6,
             335.7,
-            289.1,
+            285.3,
             348.0
           ],
           "role": "verite"
@@ -402,9 +402,9 @@
           "page": 1,
           "mode": "texte",
           "cadre": [
-            340.2,
+            336.4,
             335.7,
-            395.2,
+            391.4,
             348.0
           ],
           "role": "verite"
@@ -431,7 +431,7 @@
           "cadre": [
             36.0,
             335.7,
-            543.0,
+            539.2,
             359.9
           ],
           "raison": "date de la demande",
@@ -1188,13 +1188,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Élodie Prigent",
+          "texte": "Bastien Garnier",
           "page": 0,
           "mode": "texte",
           "cadre": [
             415.9,
             361.4,
-            468.8,
+            474.9,
             373.0
           ],
           "raison": "approbateur client",
@@ -1214,13 +1214,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Bastien Garnier",
+          "texte": "Damien Vasseur",
           "page": 1,
           "mode": "texte",
           "cadre": [
             254.7,
             84.9,
-            320.7,
+            324.9,
             97.9
           ],
           "raison": "demandeur côté client",
@@ -1240,26 +1240,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Bastien Garnier",
+          "texte": "Damien Vasseur",
           "page": 2,
           "mode": "texte",
           "cadre": [
             98.0,
             465.0,
-            160.6,
+            164.6,
             477.3
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
         },
         {
-          "texte": "Élodie Prigent",
+          "texte": "Bastien Garnier",
           "page": 4,
           "mode": "texte",
           "cadre": [
             372.8,
             311.3,
-            425.7,
+            431.8,
             323.0
           ],
           "raison": "approbateur côté client",

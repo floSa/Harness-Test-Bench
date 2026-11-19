@@ -14,7 +14,7 @@
   "pages": 3,
   "page_scannee": null,
   "unites_ecrites": {
-    "volume_dose_ml": "cm³",
+    "volume_dose_ml": "mL",
     "volume_nominal_ml": "mL",
     "tolerance_ml": "µL",
     "debit_ml_min": "mL/min",
@@ -24,20 +24,20 @@
   "format_dates": "jj/mm/aaaa",
   "champs": {
     "machine": {
-      "valeur": "Calzor 120",
+      "valeur": "Saronis 40",
       "emplacement": "paragraphe",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Calzor 120",
+          "texte": "Saronis 40",
           "page": 0,
           "mode": "texte",
           "cadre": [
             319.5,
             403.4,
-            365.4,
+            364.9,
             416.5
           ],
           "role": "verite"
@@ -45,20 +45,20 @@
       ],
       "leurres": [
         {
-          "texte": "K99-2P",
+          "texte": "K111-4P",
           "page": 0,
           "mode": "texte",
           "cadre": [
             46.0,
             416.0,
-            77.7,
+            83.0,
             429.0
           ],
           "raison": "type du moteur",
           "role": "leurre"
         },
         {
-          "texte": "K99-2P",
+          "texte": "K111-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -71,13 +71,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Zentis C33",
+          "texte": "Corvex C50",
           "page": 2,
           "mode": "texte",
           "cadre": [
             148.4,
             222.3,
-            194.4,
+            198.6,
             235.3
           ],
           "raison": "équipement voisin",
@@ -113,9 +113,9 @@
           "page": 0,
           "mode": "texte",
           "cadre": [
-            437.2,
+            436.7,
             403.4,
-            468.9,
+            468.4,
             416.5
           ],
           "raison": "marque du moteur",
@@ -135,26 +135,26 @@
           "role": "leurre"
         },
         {
-          "texte": "Nerorrix",
+          "texte": "Ulvrel",
           "page": 1,
           "mode": "texte",
           "cadre": [
             327.1,
             469.2,
-            355.5,
+            347.5,
             480.2
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Nerorrix",
+          "texte": "Ulvrel",
           "page": 1,
           "mode": "texte",
           "cadre": [
             327.1,
             483.8,
-            355.5,
+            347.5,
             494.8
           ],
           "raison": "marque d'un instrument de mesure",
@@ -163,7 +163,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "RI-2019-96916",
+      "valeur": "RI-2022-18123",
       "emplacement": "formulaire",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -172,7 +172,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "RI-2019-96916",
+          "texte": "RI-2022-18123",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -186,7 +186,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-97219",
+          "texte": "INV-38410",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -199,7 +199,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M2661086",
+          "texte": "M4338435",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -212,20 +212,20 @@
           "role": "leurre"
         },
         {
-          "texte": "ET-46431",
+          "texte": "EQ-37836",
           "page": 1,
           "mode": "texte",
           "cadre": [
             398.6,
             469.2,
-            433.8,
+            435.1,
             480.2
           ],
           "raison": "n° de série d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "IN-81307",
+          "texte": "IN-23369",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -240,20 +240,20 @@
       ]
     },
     "site": {
-      "valeur": "Shannon Plant",
+      "valeur": "Tralee Facility",
       "emplacement": "formulaire",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Shannon Plant",
+          "texte": "Tralee Facility",
           "page": 0,
           "mode": "texte",
           "cadre": [
             227.2,
             222.5,
-            279.7,
+            277.0,
             233.5
           ],
           "role": "verite"
@@ -261,26 +261,26 @@
       ],
       "leurres": [
         {
-          "texte": "Swindon",
+          "texte": "Wexford",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            343.2,
+            328.1,
             207.9,
-            373.9,
+            357.9,
             218.9
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Swindon",
+          "texte": "Wexford",
           "page": 0,
           "mode": "texte",
           "cadre": [
             208.3,
             745.4,
-            244.8,
+            243.7,
             758.4
           ],
           "raison": "ville du siège du client",
@@ -289,14 +289,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "ZS-RI-2026-9302",
+      "valeur": "ZS-RI-2026-4581",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "ZS-RI-2026-9302",
+          "texte": "ZS-RI-2026-4581",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -308,7 +308,7 @@
           "role": "verite"
         },
         {
-          "texte": "ZS-RI-2026-9302",
+          "texte": "ZS-RI-2026-4581",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -320,7 +320,7 @@
           "role": "verite"
         },
         {
-          "texte": "ZS-RI-2026-9302",
+          "texte": "ZS-RI-2026-4581",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -332,7 +332,7 @@
           "role": "verite"
         },
         {
-          "texte": "ZS-RI-2026-9302",
+          "texte": "ZS-RI-2026-4581",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -346,7 +346,7 @@
       ],
       "leurres": [
         {
-          "texte": "PO-531347",
+          "texte": "PO-305702",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -359,7 +359,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-86110",
+          "texte": "AFF-53374",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -487,7 +487,7 @@
           "role": "leurre"
         },
         {
-          "texte": "09/07/2025",
+          "texte": "04/11/2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -500,7 +500,7 @@
           "role": "leurre"
         },
         {
-          "texte": "10/09/2025",
+          "texte": "19/08/2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -656,7 +656,7 @@
           "role": "leurre"
         },
         {
-          "texte": "1509",
+          "texte": "4434",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -768,7 +768,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "17350",
+          "texte": "16950",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -781,7 +781,7 @@
           "role": "leurre"
         },
         {
-          "texte": "38950",
+          "texte": "41600",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -794,13 +794,13 @@
           "role": "leurre"
         },
         {
-          "texte": "39700",
+          "texte": "32400",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            219.7,
+            223.9,
             222.3,
-            246.1,
+            250.3,
             235.3
           ],
           "raison": "débit de l'équipement voisin",
@@ -817,7 +817,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "2.5",
+          "texte": "1.5",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -830,7 +830,7 @@
           "role": "leurre"
         },
         {
-          "texte": "1.1",
+          "texte": "1.3",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -843,20 +843,20 @@
           "role": "leurre"
         },
         {
-          "texte": "3.6",
+          "texte": "3.5",
           "page": 2,
           "mode": "texte",
           "cadre": [
-            324.8,
+            329.0,
             222.3,
-            338.0,
+            342.2,
             235.3
           ],
           "raison": "pression de l'équipement voisin",
           "role": "leurre"
         },
         {
-          "texte": "8.0",
+          "texte": "7.0",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -871,14 +871,14 @@
       ]
     },
     "reference_piece": {
-      "valeur": "RI-376-R",
+      "valeur": "RI-634-R",
       "emplacement": "paragraphe",
       "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "RI-376-R",
+          "texte": "RI-634-R",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -892,7 +892,7 @@
       ],
       "leurres": [
         {
-          "texte": "RI-649-B",
+          "texte": "RI-264-A",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -905,7 +905,7 @@
           "role": "leurre"
         },
         {
-          "texte": "RI-649-B",
+          "texte": "RI-264-A",
           "page": 2,
           "mode": "texte",
           "cadre": [
@@ -918,26 +918,26 @@
           "role": "leurre"
         },
         {
-          "texte": "RI-951-D",
+          "texte": "RI-690-B",
           "page": 2,
           "mode": "texte",
           "cadre": [
             52.0,
             165.4,
-            84.4,
+            84.0,
             176.4
           ],
           "raison": "pièce commandée, non posée",
           "role": "leurre"
         },
         {
-          "texte": "RI-634-R",
+          "texte": "RI-201-K",
           "page": 2,
           "mode": "texte",
           "cadre": [
             52.0,
             180.0,
-            84.4,
+            84.0,
             191.0
           ],
           "raison": "pièce proposée au devis",
@@ -982,13 +982,13 @@
           "role": "leurre"
         },
         {
-          "texte": "Liam Doyle",
+          "texte": "Ethan Brennan",
           "page": 1,
           "mode": "texte",
           "cadre": [
             351.7,
             646.3,
-            399.2,
+            415.1,
             659.3
           ],
           "raison": "demandeur côté client",

@@ -25,20 +25,20 @@
   "format_dates": "jj/mm/aaaa",
   "champs": {
     "machine": {
-      "valeur": "Belorvan 250",
+      "valeur": "Coronis 300",
       "emplacement": "formulaire",
       "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Belorvan 250",
+          "texte": "Coronis 300",
           "page": 0,
           "mode": "texte",
           "cadre": [
             151.5,
             143.7,
-            198.6,
+            194.6,
             154.7
           ],
           "role": "verite"
@@ -46,7 +46,7 @@
       ],
       "leurres": [
         {
-          "texte": "K89-2P",
+          "texte": "K64-4P",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -59,7 +59,7 @@
           "role": "leurre"
         },
         {
-          "texte": "K89-2P",
+          "texte": "K64-4P",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -72,7 +72,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Corvex C73",
+          "texte": "Juvbel C59",
           "page": 2,
           "mode": "image",
           "cadre": [
@@ -110,7 +110,7 @@
       ],
       "leurres": [
         {
-          "texte": "Doraetis",
+          "texte": "Varinnet",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -123,7 +123,7 @@
           "role": "leurre"
         },
         {
-          "texte": "Doraetis",
+          "texte": "Varinnet",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -136,27 +136,27 @@
           "role": "leurre"
         },
         {
-          "texte": "Nevvex",
+          "texte": "Doraetis",
           "page": 1,
           "mode": "texte",
           "cadre": [
             324.4,
-            355.9,
             351.1,
-            366.9
+            354.2,
+            362.1
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
         },
         {
-          "texte": "Lumulvan",
+          "texte": "Dorvan",
           "page": 1,
           "mode": "texte",
           "cadre": [
             324.4,
-            375.3,
-            359.1,
-            386.3
+            370.5,
+            350.2,
+            381.5
           ],
           "raison": "marque d'un instrument de mesure",
           "role": "leurre"
@@ -164,7 +164,7 @@
       ]
     },
     "numero_serie": {
-      "valeur": "CA-2018-63816",
+      "valeur": "CA/22/5706",
       "emplacement": "plaque",
       "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
       "pieges": [
@@ -173,7 +173,7 @@
       "scan": false,
       "ecritures": [
         {
-          "texte": "CA-2018-63816",
+          "texte": "CA/22/5706",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -187,7 +187,7 @@
       ],
       "leurres": [
         {
-          "texte": "INV-64916",
+          "texte": "INV-31829",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -200,7 +200,7 @@
           "role": "leurre"
         },
         {
-          "texte": "M9486317",
+          "texte": "M2698791",
           "page": 1,
           "mode": "image",
           "cadre": [
@@ -213,27 +213,27 @@
           "role": "leurre"
         },
         {
-          "texte": "ET-74936",
+          "texte": "ET-24839",
           "page": 1,
           "mode": "texte",
           "cadre": [
             398.6,
-            355.9,
+            351.1,
             433.8,
-            366.9
+            362.1
           ],
           "raison": "n° de série d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "ET-60036",
+          "texte": "IN-60564",
           "page": 1,
           "mode": "texte",
           "cadre": [
             398.6,
-            375.3,
-            433.8,
-            386.3
+            370.5,
+            431.5,
+            381.5
           ],
           "raison": "n° de série d'un instrument",
           "role": "leurre"
@@ -241,20 +241,20 @@
       ]
     },
     "site": {
-      "valeur": "Swindon Plant",
+      "valeur": "Tralee Facility",
       "emplacement": "formulaire",
       "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "Swindon Plant",
+          "texte": "Tralee Facility",
           "page": 0,
           "mode": "texte",
           "cadre": [
             151.5,
             130.1,
-            202.6,
+            201.2,
             141.1
           ],
           "role": "verite"
@@ -262,26 +262,26 @@
       ],
       "leurres": [
         {
-          "texte": "Hexham",
+          "texte": "Shannon",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            521.8,
+            517.8,
             116.5,
-            551.6,
+            549.8,
             127.5
           ],
           "raison": "ville du siège du client",
           "role": "leurre"
         },
         {
-          "texte": "Hexham",
+          "texte": "Shannon",
           "page": 0,
           "mode": "texte",
           "cadre": [
             105.0,
             276.4,
-            138.5,
+            141.1,
             288.7
           ],
           "raison": "ville du siège du client",
@@ -290,14 +290,14 @@
       ]
     },
     "reference_rapport": {
-      "valeur": "NC-RI-2025-5199",
+      "valeur": "NC-RI-2025-2904",
       "emplacement": "formulaire",
       "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
       "pieges": [],
       "scan": false,
       "ecritures": [
         {
-          "texte": "NC-RI-2025-5199",
+          "texte": "NC-RI-2025-2904",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -309,7 +309,7 @@
           "role": "verite"
         },
         {
-          "texte": "NC-RI-2025-5199",
+          "texte": "NC-RI-2025-2904",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -321,7 +321,7 @@
           "role": "verite"
         },
         {
-          "texte": "NC-RI-2025-5199",
+          "texte": "NC-RI-2025-2904",
           "page": 1,
           "mode": "texte",
           "cadre": [
@@ -333,7 +333,7 @@
           "role": "verite"
         },
         {
-          "texte": "NC-RI-2025-5199",
+          "texte": "NC-RI-2025-2904",
           "page": 2,
           "mode": "image",
           "cadre": [
@@ -347,7 +347,7 @@
       ],
       "leurres": [
         {
-          "texte": "PO-336724",
+          "texte": "PO-884537",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -360,7 +360,7 @@
           "role": "leurre"
         },
         {
-          "texte": "AFF-73896",
+          "texte": "AFF-26567",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -501,27 +501,27 @@
           "role": "leurre"
         },
         {
-          "texte": "26/07/2025",
+          "texte": "01/02/2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
             472.8,
-            355.9,
+            351.1,
             512.9,
-            366.9
+            362.1
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
         },
         {
-          "texte": "24/06/2025",
+          "texte": "11/03/2025",
           "page": 1,
           "mode": "texte",
           "cadre": [
             472.8,
-            375.3,
+            370.5,
             512.9,
-            386.3
+            381.5
           ],
           "raison": "date d'étalonnage d'un instrument",
           "role": "leurre"
@@ -593,7 +593,7 @@
           "role": "leurre"
         },
         {
-          "texte": "460",
+          "texte": "195",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -705,7 +705,7 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "2'500",
+          "texte": "2'640",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -718,7 +718,7 @@
           "role": "leurre"
         },
         {
-          "texte": "5'920",
+          "texte": "6'880",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -731,7 +731,7 @@
           "role": "leurre"
         },
         {
-          "texte": "7'220",
+          "texte": "5'080",
           "page": 2,
           "mode": "image",
           "cadre": [
@@ -769,7 +769,7 @@
       ],
       "leurres": [
         {
-          "texte": "24.66",
+          "texte": "21.76",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -782,7 +782,7 @@
           "role": "leurre"
         },
         {
-          "texte": "5.0",
+          "texte": "4.0",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -795,7 +795,7 @@
           "role": "leurre"
         },
         {
-          "texte": "2.8",
+          "texte": "3.2",
           "page": 0,
           "mode": "texte",
           "cadre": [
@@ -808,7 +808,7 @@
           "role": "leurre"
         },
         {
-          "texte": "3.6",
+          "texte": "3.9",
           "page": 2,
           "mode": "image",
           "cadre": [
@@ -821,7 +821,7 @@
           "role": "leurre"
         },
         {
-          "texte": "7.0",
+          "texte": "6.0",
           "page": 2,
           "mode": "image",
           "cadre": [
@@ -844,65 +844,65 @@
       "ecritures": [],
       "leurres": [
         {
-          "texte": "CA-925-E",
+          "texte": "CA-914-R",
           "page": 0,
           "mode": "texte",
           "cadre": [
             506.7,
             630.2,
-            546.2,
+            546.7,
             642.6
           ],
           "raison": "pièce commandée, non posée",
           "role": "leurre"
         },
         {
-          "texte": "CA-304-C",
+          "texte": "CA-232-B",
           "page": 0,
           "mode": "texte",
           "cadre": [
-            294.6,
+            286.6,
             642.1,
-            334.6,
+            326.1,
             654.5
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
-          "texte": "CA-304-C",
+          "texte": "CA-232-B",
           "page": 1,
           "mode": "texte",
           "cadre": [
             46.0,
             551.2,
-            81.6,
+            81.1,
             562.2
           ],
           "raison": "pièce contrôlée, non remplacée",
           "role": "leurre"
         },
         {
-          "texte": "CA-925-E",
+          "texte": "CA-914-R",
           "page": 1,
           "mode": "texte",
           "cadre": [
             46.0,
             565.8,
-            81.1,
+            81.6,
             576.8
           ],
           "raison": "pièce commandée, non posée",
           "role": "leurre"
         },
         {
-          "texte": "CA-875-D",
+          "texte": "CA-241-E",
           "page": 1,
           "mode": "texte",
           "cadre": [
             46.0,
             580.4,
-            81.6,
+            81.1,
             591.4
           ],
           "raison": "pièce proposée au devis",
@@ -947,20 +947,20 @@
           "role": "leurre"
         },
         {
-          "texte": "Grace Ainsley",
+          "texte": "Callum Gallagher",
           "page": 1,
           "mode": "texte",
           "cadre": [
             149.1,
             643.5,
-            205.1,
+            218.6,
             655.9
           ],
           "raison": "demandeur côté client",
           "role": "leurre"
         },
         {
-          "texte": "Ryan Ainsley",
+          "texte": "Megan Whitfield",
           "page": 2,
           "mode": "image",
           "cadre": [
