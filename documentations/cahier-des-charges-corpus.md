@@ -1,6 +1,6 @@
 # Cahier des charges du corpus
 
-Version 2, 19 novembre 2026, **proposition à valider avec les exemples** (`banc-essai/corpus/exemples/`). Remplace la version 1 (historique git). Le générateur de la version 1 est conservé dans `banc-essai/corpus/v1/` jusqu'au portage de ses mises en page.
+Version 2, 19 novembre 2026, validée par l'utilisateur sur les exemples (`banc-essai/corpus/exemples/`). Remplace la version 1 (historique git).
 
 ## 1. Principe
 
@@ -121,10 +121,11 @@ La recette « sans aide » donne au moins une définition d'une ligne par clé :
 
 ## 10. Livrables de la génération
 
-- `banc-essai/corpus/generer.py` et ses modules, graine fixe ;
-- `banc-essai/corpus/fourni/` : 35 PDF, réponses, vérité, annotations ;
-- `banc-essai/corpus/test-cache/` et `relance/` : hors git ;
-- `banc-essai/corpus/empreintes.sha256` : empreintes de tous les fichiers générés ;
+- `banc-essai/corpus/` : générateur et modules (`README.md`), graine fixe 20261119 ;
+- `fourni/` : 35 PDF, réponses, vérité, annotations, `verite.csv` (versionné) ;
+- `test-cache/` (15) et `relance/` (10) : même contenu, hors git ;
+- `plan-equilibre.md` : agrégats du plan ; `empreintes.sha256` : empreintes de tous les fichiers générés ;
+- `controler.py` : contrôle des PDF contre la vérité et le plan ;
 - `banc-essai/recettes/avec-aide/ontologie.md`.
 
 ## 11. Plan du corpus
