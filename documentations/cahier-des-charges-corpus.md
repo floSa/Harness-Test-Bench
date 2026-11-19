@@ -109,3 +109,23 @@ Score d'un essai : pourcentage de valeurs justes sur le test caché, détaillé 
 - `banc-essai/corpus/test-cache/` : 15 PDF et leurs réponses (hors git) ;
 - `banc-essai/corpus/etiquettes.json` : étiquettes de chaque valeur ;
 - `banc-essai/recettes/avec-aide/ontologie.md`.
+
+## 11. Précisions de mise en œuvre (lot 1)
+
+Ajoutées le 19 novembre 2026 avec le générateur ; elles fixent la lecture de la section 5.
+
+| Point | Règle retenue |
+|---|---|
+| Calcul des parts | par jeu (fourni, test) ; nombre visé = part × effectif, arrondi au plus proche (0,5 vers le haut) ; tirage exact de ce nombre |
+| « des valeurs » | les 12 valeurs de chaque document ; tirage parmi les clés éligibles ci-dessous |
+| « des valeurs de volume » | `volume_dose_ml` et `volume_nominal_ml` |
+| « des documents » | effectif du jeu |
+| Limite de 2 pièges | porte sur les pièges tirés au sort ; les pièges systématiques (volumes voisins, format de nombre, tableau coupé) et l'étiquette `scan` n'y comptent pas |
+| Champ absent : clés éligibles | `numero_serie`, `site`, `debit_ml_min`, `pression_bar`, `reference_piece`, `technicien` |
+| Récit seul : clés éligibles | `site`, `date_intervention`, `numero_serie`, les 4 valeurs numériques, `reference_piece` |
+| Schéma seul : clés éligibles | les 4 valeurs numériques |
+| Correction | une valeur numérique du tableau ; le tableau porte la valeur fausse, le récit la rectifie ; réponse attendue : la valeur rectifiée ; emplacement `recit` |
+| Unité à convertir | µl sous 20 ml, L au-delà |
+| Écarts minimaux | dose après réglage, volume nominal et dose avant réglage diffèrent d'au moins 0,02 ml : la tolérance de notation (0,01) les sépare |
+| Étiquettes du test caché | dans `test-cache/etiquettes.json` (une étiquette `champ_absent` révèle une réponse) ; `etiquettes.json` ne couvre que le jeu fourni |
+| Fichiers de contrôle | `controle/<id>.json` : chaque écriture d'une valeur (page, texte ou image, chaîne), lu par `controler.py` ; ceux du test caché restent dans `test-cache/` |

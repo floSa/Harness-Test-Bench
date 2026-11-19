@@ -1,0 +1,14 @@
+[project]
+name = "corpus-banc"
+version = "1.0.0"
+description = "Générateur du corpus fictif de rapports d'intervention du banc des harnais"
+requires-python = "==3.12.*"
+dependencies = [
+    "reportlab",
+    "pymupdf",
+    "pillow",
+    "numpy",
+]
+
+[tool.uv]
+package = false

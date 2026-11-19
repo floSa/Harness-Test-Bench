@@ -1,0 +1,110 @@
+[
+  {
+    "cle": "constructeur",
+    "page": 0,
+    "texte": "Mikropal",
+    "mode": "image"
+  },
+  {
+    "cle": "machine",
+    "page": 0,
+    "texte": "MP-Auto 200",
+    "mode": "texte"
+  },
+  {
+    "cle": "constructeur",
+    "page": 0,
+    "texte": "Mikropal",
+    "mode": "texte"
+  },
+  {
+    "cle": "numero_serie",
+    "page": 0,
+    "texte": "MKP7415962",
+    "mode": "texte"
+  },
+  {
+    "cle": "_voisins",
+    "page": 1,
+    "texte": "0,55",
+    "mode": "texte"
+  },
+  {
+    "cle": "_voisins",
+    "page": 1,
+    "texte": "0,5",
+    "mode": "texte"
+  },
+  {
+    "cle": "debit_ml_min",
+    "page": 2,
+    "texte": "3",
+    "mode": "image"
+  },
+  {
+    "cle": "_voisins",
+    "page": 2,
+    "texte": "0,55",
+    "mode": "image"
+  },
+  {
+    "cle": "_voisins",
+    "page": 2,
+    "texte": "± 0,033",
+    "mode": "image"
+  },
+  {
+    "cle": "volume_nominal_ml",
+    "page": 2,
+    "texte": "0,5",
+    "mode": "image"
+  },
+  {
+    "cle": "_voisins",
+    "page": 2,
+    "texte": "9",
+    "mode": "image"
+  },
+  {
+    "cle": "volume_dose_ml",
+    "page": 3,
+    "texte": "0,52 ml",
+    "mode": "image"
+  },
+  {
+    "cle": "date_intervention",
+    "page": 4,
+    "texte": "7 avril 2026",
+    "mode": "texte"
+  },
+  {
+    "cle": "site",
+    "page": 4,
+    "texte": "Usine de Lamballe",
+    "mode": "texte"
+  },
+  {
+    "cle": "_leurre",
+    "page": 4,
+    "texte": "MK.85.757",
+    "mode": "texte"
+  },
+  {
+    "cle": "_voisins",
+    "page": 4,
+    "texte": "0,5 L",
+    "mode": "texte"
+  },
+  {
+    "cle": "reference_piece",
+    "page": 4,
+    "texte": "MK.94.808",
+    "mode": "texte"
+  },
+  {
+    "cle": "statut",
+    "page": 4,
+    "texte": "Conforme",
+    "mode": "texte"
+  }
+]

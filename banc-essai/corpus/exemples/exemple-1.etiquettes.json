@@ -1,0 +1,116 @@
+{
+  "id": "exemple-1",
+  "jeu": "exemple",
+  "gabarit": 1,
+  "langue": "fr",
+  "pages": 4,
+  "page_scannee": 1,
+  "pieges_document": {
+    "logo_seul": false,
+    "deux_logos": true,
+    "correction": null,
+    "scan": true
+  },
+  "valeurs": {
+    "machine": {
+      "emplacement": "garde",
+      "cle": "exacte",
+      "unite": "sans_unite",
+      "piege": [],
+      "scan": "non"
+    },
+    "constructeur": {
+      "emplacement": "garde",
+      "cle": "synonyme",
+      "unite": "sans_unite",
+      "piege": [
+        "deux_logos",
+        "synonyme_cle"
+      ],
+      "scan": "non"
+    },
+    "numero_serie": {
+      "emplacement": "garde",
+      "cle": "exacte",
+      "unite": "sans_unite",
+      "piege": [],
+      "scan": "non"
+    },
+    "site": {
+      "emplacement": "garde",
+      "cle": "exacte",
+      "unite": "sans_unite",
+      "piege": [],
+      "scan": "non"
+    },
+    "date_intervention": {
+      "emplacement": "garde",
+      "cle": "synonyme",
+      "unite": "sans_unite",
+      "piege": [
+        "synonyme_cle"
+      ],
+      "scan": "non"
+    },
+    "volume_dose_ml": {
+      "emplacement": "schema",
+      "cle": "exacte",
+      "unite": "directe",
+      "piege": [
+        "schema_seul",
+        "volumes_voisins",
+        "format_nombre"
+      ],
+      "scan": "non"
+    },
+    "volume_nominal_ml": {
+      "emplacement": "tableau",
+      "cle": "exacte",
+      "unite": "directe",
+      "piege": [],
+      "scan": "oui"
+    },
+    "debit_ml_min": {
+      "emplacement": "schema",
+      "cle": "synonyme",
+      "unite": "directe",
+      "piege": [
+        "schema_seul",
+        "synonyme_cle"
+      ],
+      "scan": "non"
+    },
+    "pression_bar": {
+      "emplacement": "schema",
+      "cle": "synonyme",
+      "unite": "directe",
+      "piege": [
+        "schema_seul",
+        "synonyme_cle",
+        "format_nombre"
+      ],
+      "scan": "non"
+    },
+    "reference_piece": {
+      "emplacement": "tableau",
+      "cle": "exacte",
+      "unite": "sans_unite",
+      "piege": [],
+      "scan": "non"
+    },
+    "technicien": {
+      "emplacement": "conclusion",
+      "cle": "exacte",
+      "unite": "sans_unite",
+      "piege": [],
+      "scan": "non"
+    },
+    "statut": {
+      "emplacement": "conclusion",
+      "cle": "exacte",
+      "unite": "sans_unite",
+      "piege": [],
+      "scan": "non"
+    }
+  }
+}

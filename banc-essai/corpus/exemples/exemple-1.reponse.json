@@ -1,0 +1,14 @@
+{
+  "machine": "Vexidose 250",
+  "constructeur": "Vexilor",
+  "numero_serie": "VX-2018-49193",
+  "site": "Usine de Lisieux",
+  "date_intervention": "2026-08-02",
+  "volume_dose_ml": 100.2,
+  "volume_nominal_ml": 100.0,
+  "debit_ml_min": 850,
+  "pression_bar": 3.2,
+  "reference_piece": "BZ-128",
+  "technicien": "Antoine Le Goff",
+  "statut": "non_conforme"
+}
