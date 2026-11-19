@@ -1,0 +1,13 @@
+doc-039  27.9s  statut=a_revoir
+doc-029  31.5s  statut=conforme
+doc-031  36.8s  statut=non_conforme
+doc-010  40.8s  statut=conforme
+doc-017  44.4s  statut=conforme
+doc-014  51.3s  statut=conforme
+doc-046  24.5s  statut=a_revoir
+doc-050  21.3s  statut=conforme
+doc-033  56.7s  statut=conforme
+  (reponse vide, finish=length)
+  (max_tokens -> 32000)
+doc-003  193.1s  statut=a_revoir
+TERMINE 10 documents en 193s -> /sortie

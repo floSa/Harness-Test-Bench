@@ -15,6 +15,7 @@ node_modules/
 # Détail par document des soumissions au test caché (révèle la vérité)
 banc-essai/resultats/*/evaluation/detail-cache.jsonl
 banc-essai/resultats/*/evaluation/contenus-cache.jsonl
+banc-essai/resultats/*/code-cache/
 # Secrets et journaux du LiteLLM du banc
 banc-essai/traces/secrets/
 banc-essai/traces/journaux/

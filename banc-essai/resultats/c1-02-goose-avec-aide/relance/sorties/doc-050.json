@@ -1,0 +1,17 @@
+{
+ "machine": "Verlor 160",
+ "constructeur": "Lorelvex",
+ "numero_serie": null,
+ "site": "Plateforme d'Oyonnax",
+ "reference_rapport": "MI-RI-2026-1945",
+ "date_intervention": "2026-03-01",
+ "date_validation": "2026-03-09",
+ "volume_dose_ml": 2.46,
+ "volume_nominal_ml": 2.5,
+ "tolerance_ml": 0.0625,
+ "debit_ml_min": 56.0,
+ "pression_bar": 11.6,
+ "reference_piece": "LO-834-D",
+ "technicien": "Noémie Lemaire",
+ "statut": "conforme"
+}

@@ -1,0 +1,7 @@
+{
+  "heure": "2026-11-20T00:29:02+01:00",
+  "soumission_finale": 1,
+  "score_validation": 0.995,
+  "commande": ".venv/bin/python run.py {entree} {sortie}",
+  "commentaire": null
+}

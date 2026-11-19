@@ -1,0 +1,358 @@
+{
+  "commande": ".venv/bin/python run.py {entree} {sortie}",
+  "cage": true,
+  "code_retour": 0,
+  "duree_s": 193.7,
+  "duree_par_document_s": 19.37,
+  "documents": 10,
+  "json_produits": 10,
+  "json_illisibles": [],
+  "fichiers_refuses": [],
+  "erreurs_format": [],
+  "note": {
+    "documents": 10,
+    "champs": 150,
+    "justes": 148,
+    "score": 0.9867,
+    "invention": {
+      "null_attendus": 11,
+      "inventes": 0,
+      "taux": 0.0
+    },
+    "par": {
+      "cle": {
+        "constructeur": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "date_intervention": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "date_validation": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "debit_ml_min": {
+          "n": 10,
+          "justes": 8,
+          "score": 0.8
+        },
+        "machine": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "numero_serie": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "pression_bar": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "reference_piece": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "reference_rapport": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "site": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "statut": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "technicien": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "tolerance_ml": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "volume_dose_ml": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "volume_nominal_ml": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        }
+      },
+      "emplacement": {
+        "absent": {
+          "n": 11,
+          "justes": 11,
+          "score": 1.0
+        },
+        "calcul": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "formulaire": {
+          "n": 53,
+          "justes": 53,
+          "score": 1.0
+        },
+        "logo": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "paragraphe": {
+          "n": 20,
+          "justes": 19,
+          "score": 0.95
+        },
+        "phrase": {
+          "n": 20,
+          "justes": 20,
+          "score": 1.0
+        },
+        "plaque": {
+          "n": 1,
+          "justes": 1,
+          "score": 1.0
+        },
+        "schema": {
+          "n": 6,
+          "justes": 6,
+          "score": 1.0
+        },
+        "tableau": {
+          "n": 32,
+          "justes": 31,
+          "score": 0.9688
+        },
+        "tampon": {
+          "n": 3,
+          "justes": 3,
+          "score": 1.0
+        }
+      },
+      "etiquette": {
+        "absent": {
+          "n": 11,
+          "justes": 11,
+          "score": 1.0
+        },
+        "cases_a_cocher": {
+          "n": 3,
+          "justes": 3,
+          "score": 1.0
+        },
+        "conflit_regle": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "dates_multiples": {
+          "n": 20,
+          "justes": 20,
+          "score": 1.0
+        },
+        "erratum": {
+          "n": 1,
+          "justes": 1,
+          "score": 1.0
+        },
+        "format_nombre": {
+          "n": 19,
+          "justes": 18,
+          "score": 0.9474
+        },
+        "moyenne_a_calculer": {
+          "n": 2,
+          "justes": 2,
+          "score": 1.0
+        },
+        "personnes_multiples": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "redacteur_autre": {
+          "n": 4,
+          "justes": 4,
+          "score": 1.0
+        },
+        "scan": {
+          "n": 7,
+          "justes": 7,
+          "score": 1.0
+        },
+        "synonyme_cle": {
+          "n": 34,
+          "justes": 33,
+          "score": 0.9706
+        },
+        "tableau_coupe": {
+          "n": 6,
+          "justes": 6,
+          "score": 1.0
+        },
+        "tableau_multi_entrees": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "tolerance_en_pourcent": {
+          "n": 4,
+          "justes": 4,
+          "score": 1.0
+        },
+        "unite_a_convertir": {
+          "n": 11,
+          "justes": 10,
+          "score": 0.9091
+        },
+        "valeur_barree": {
+          "n": 1,
+          "justes": 1,
+          "score": 1.0
+        },
+        "version_remplacee": {
+          "n": 4,
+          "justes": 4,
+          "score": 1.0
+        },
+        "volumes_voisins": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "zones_ambigues": {
+          "n": 20,
+          "justes": 20,
+          "score": 1.0
+        }
+      },
+      "famille": {
+        "absence": {
+          "n": 11,
+          "justes": 11,
+          "score": 1.0
+        },
+        "calcul": {
+          "n": 17,
+          "justes": 16,
+          "score": 0.9412
+        },
+        "doublons": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "emplacement": {
+          "n": 54,
+          "justes": 53,
+          "score": 0.9815
+        },
+        "forme": {
+          "n": 51,
+          "justes": 49,
+          "score": 0.9608
+        },
+        "lecture_visuelle": {
+          "n": 10,
+          "justes": 10,
+          "score": 1.0
+        },
+        "systematique": {
+          "n": 64,
+          "justes": 64,
+          "score": 1.0
+        }
+      },
+      "langue": {
+        "en": {
+          "n": 75,
+          "justes": 74,
+          "score": 0.9867
+        },
+        "fr": {
+          "n": 75,
+          "justes": 74,
+          "score": 0.9867
+        }
+      },
+      "marque_vue": {
+        "inedite": {
+          "n": 150,
+          "justes": 148,
+          "score": 0.9867
+        }
+      },
+      "prestataire": {
+        "Lumanrel Services Ltd": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "Lumzor Maintenance": {
+          "n": 45,
+          "justes": 44,
+          "score": 0.9778
+        },
+        "Mabaemos Ingénierie": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "Rilolor Calibration Ltd": {
+          "n": 45,
+          "justes": 44,
+          "score": 0.9778
+        }
+      },
+      "prestataire_vu": {
+        "inedit": {
+          "n": 150,
+          "justes": 148,
+          "score": 0.9867
+        }
+      },
+      "style": {
+        "compact": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "grille": {
+          "n": 45,
+          "justes": 44,
+          "score": 0.9778
+        },
+        "recit": {
+          "n": 30,
+          "justes": 30,
+          "score": 1.0
+        },
+        "reserve": {
+          "n": 45,
+          "justes": 44,
+          "score": 0.9778
+        }
+      }
+    }
+  }
+}
