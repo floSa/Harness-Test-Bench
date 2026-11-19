@@ -38,3 +38,12 @@
 - Vérifié : contrôle du plan sans écart (effectifs par jeu, au plus 2 difficultés par valeur, aucun piège sur un champ absent) ; charge par document de 11,5 à 18,5 (moyenne 14,4 à 14,6 selon le jeu) ; plan et rapport identiques sur deux exécutions ; PDF annotés désormais reproductibles (identifiant de fichier figé).
 - Cahier des charges v2 complété (section 11, 3 à 6 pages).
 - Reste à faire : brancher le générateur sur le plan ; emplacements paragraphe et plaque, texte de remplissage ; styles classique, compact, récit, réservé ; contrôle automatique v2 ; génération des 60 ; relecture de 5 vérités ; ontologie ; empreintes.
+
+### 2026-11-19 — Lot 1 (Corpus) : générateur branché sur le plan, 5 styles
+
+- Générateur v2 branché sur le plan : `donnees.py` prend l'emplacement de chaque valeur dans le plan ; `base.py` écrit chaque champ à chacun de ses emplacements (formulaire, tableau, phrase, paragraphe sans libellé, schéma, logo, plaque, tampon, calcul, absent) ; `textes.py` : 37 phrases de remplissage par langue, titres de sections qui évoquent les clés, statut exprimé par une phrase (« peut être remis en production sans réserve »).
+- Styles : grille (`style_grille.py`, placement à la main), classique, compact, récit, réservé (`style_*.py`, mise en page en flux sur `base_flux.py` et `flux.py` : pagination automatique, position de chaque valeur notée au dessin, tableau coupé entre deux pages détecté et étiqueté, page scannée remplacée après coup).
+- Exemples : un document par style (`banc-essai/corpus/exemples/exemple-<style>`), tirés d'un plan à graine séparée : aucun document du corpus n'y figure.
+- Vérifié : essai de rendu sur 180 documents planifiés (4 graines) sans erreur, toutes les écritures en texte retrouvées dans les PDF, chaque valeur non nulle écrite au moins une fois, aucune valeur absente écrite ; pages : grille 5, classique 3, compact 3, récit 4 à 5, réservé 3 à 4 ; exemples identiques à l'octet sur deux générations.
+- Défauts trouvés à la relecture et corrigés : moyennes d'essais non arrondies, tolérance répétée dans deux tableaux, tolérance écrite sans unité sur la ligne de la dose (lue dans l'unité de la dose), style réservé à 2 pages, cadre d'annotation trop étroit pour les dates longues.
+- Reste à faire : validation des styles ; contrôle automatique v2 et `verite.csv` ; génération des 60 ; relecture de 5 vérités ; ontologie ; empreintes ; recherche web sur un échantillon de noms générés.

@@ -1,0 +1,17 @@
+{
+  "machine": "Makintik 120",
+  "constructeur": "Galiolix",
+  "numero_serie": "GA-2023-51017",
+  "site": "Dundee Facility",
+  "reference_rapport": "UT-RI-2026-9468",
+  "date_intervention": "2026-09-02",
+  "date_validation": "2026-09-09",
+  "volume_dose_ml": 50.2,
+  "volume_nominal_ml": 50.0,
+  "tolerance_ml": 0.5,
+  "debit_ml_min": 2160.0,
+  "pression_bar": null,
+  "reference_piece": null,
+  "technicien": "Rhys Hollis",
+  "statut": "a_revoir"
+}

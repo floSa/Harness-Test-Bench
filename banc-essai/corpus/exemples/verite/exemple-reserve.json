@@ -1,0 +1,1012 @@
+{
+  "id": "exemple-reserve",
+  "jeu": "test",
+  "style": "reserve",
+  "langue": "en",
+  "prestataire": "Oryovan Services Ltd",
+  "constructeur": "Tortik",
+  "prestataire_vu": false,
+  "marque_vue": false,
+  "type": "doseuse",
+  "pieges_document": {
+    "tolerance_en_pourcent": true
+  },
+  "pages": 3,
+  "page_scannee": null,
+  "unites_ecrites": {
+    "volume_dose_ml": "mL",
+    "volume_nominal_ml": "mL",
+    "tolerance_ml": "mL",
+    "debit_ml_min": "mL/min",
+    "pression_bar": "bar"
+  },
+  "format_nombres": "en_colle",
+  "format_dates": "aaaa-mm-jj",
+  "champs": {
+    "machine": {
+      "valeur": "Torolor 85",
+      "emplacement": "formulaire",
+      "regle": "modèle de l'équipement contrôlé (pas le moteur, pas un équipement voisin)",
+      "pieges": [
+        "synonyme_cle"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "Torolor 85",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            156.4,
+            76.4,
+            167.1
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "T85-2P",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            198.5,
+            303.4,
+            227.0,
+            316.0
+          ],
+          "raison": "type du moteur",
+          "role": "leurre"
+        },
+        {
+          "texte": "T85-2P",
+          "page": 2,
+          "mode": "image",
+          "cadre": [
+            36.0,
+            274.5,
+            211.0,
+            342.5
+          ],
+          "raison": "type du moteur",
+          "role": "leurre"
+        },
+        {
+          "texte": "Ostintik C80",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            440.1,
+            377.0,
+            488.9,
+            389.7
+          ],
+          "raison": "équipement voisin",
+          "role": "leurre"
+        }
+      ]
+    },
+    "constructeur": {
+      "valeur": "Tortik",
+      "emplacement": "phrase",
+      "regle": "fabricant de l'équipement contrôlé (pas le prestataire, ni le fabricant du moteur ou des instruments)",
+      "pieges": [
+        "synonyme_cle",
+        "zones_ambigues"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "Tortik",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            433.2,
+            345.9,
+            457.0,
+            358.6
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "Brazor",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            124.1,
+            303.4,
+            150.0,
+            316.0
+          ],
+          "raison": "marque du moteur",
+          "role": "leurre"
+        },
+        {
+          "texte": "Brazor",
+          "page": 2,
+          "mode": "image",
+          "cadre": [
+            36.0,
+            274.5,
+            211.0,
+            342.5
+          ],
+          "raison": "marque du moteur",
+          "role": "leurre"
+        },
+        {
+          "texte": "Calinvane",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            123.8,
+            376.5,
+            156.2,
+            387.2
+          ],
+          "raison": "marque d'un instrument de mesure",
+          "role": "leurre"
+        },
+        {
+          "texte": "Dravex",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            123.8,
+            391.1,
+            147.3,
+            401.8
+          ],
+          "raison": "marque d'un instrument de mesure",
+          "role": "leurre"
+        }
+      ]
+    },
+    "numero_serie": {
+      "valeur": null,
+      "emplacement": "absent",
+      "regle": "n° de série de l'équipement (pas celui du moteur, des instruments, ni le n° d'inventaire)",
+      "pieges": [
+        "zones_ambigues"
+      ],
+      "scan": false,
+      "ecritures": [],
+      "leurres": [
+        {
+          "texte": "INV-37716",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            188.0,
+            180.6,
+            224.9,
+            191.3
+          ],
+          "raison": "n° d'inventaire du client",
+          "role": "leurre"
+        },
+        {
+          "texte": "M1480769",
+          "page": 2,
+          "mode": "image",
+          "cadre": [
+            36.0,
+            274.5,
+            211.0,
+            342.5
+          ],
+          "raison": "n° de série du moteur",
+          "role": "leurre"
+        },
+        {
+          "texte": "ET-81269",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            188.0,
+            376.5,
+            220.4,
+            387.2
+          ],
+          "raison": "n° de série d'un instrument",
+          "role": "leurre"
+        },
+        {
+          "texte": "IN-95089",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            188.0,
+            391.1,
+            219.1,
+            401.8
+          ],
+          "raison": "n° de série d'un instrument",
+          "role": "leurre"
+        }
+      ]
+    },
+    "site": {
+      "valeur": "Hexham Works",
+      "emplacement": "formulaire",
+      "regle": "site du client où l'équipement est installé (pas le siège, ni l'adresse du prestataire)",
+      "pieges": [],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "Hexham Works",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            132.2,
+            92.4,
+            142.9
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "Livingston",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            188.0,
+            108.0,
+            222.7,
+            118.7
+          ],
+          "raison": "ville du siège du client",
+          "role": "leurre"
+        },
+        {
+          "texte": "Livingston",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            141.9,
+            389.1,
+            183.1,
+            401.7
+          ],
+          "raison": "ville du siège du client",
+          "role": "leurre"
+        }
+      ]
+    },
+    "reference_rapport": {
+      "valeur": "OS-RI-2025-4517",
+      "emplacement": "formulaire",
+      "regle": "référence du rapport en vigueur (pas la version annulée, ni la commande ou l'affaire)",
+      "pieges": [
+        "synonyme_cle"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "OS-RI-2025-4517",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            677.4,
+            165.6,
+            735.7,
+            176.2
+          ],
+          "role": "verite"
+        },
+        {
+          "texte": "OS-RI-2025-4517",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            74.2,
+            100.2,
+            84.9
+          ],
+          "role": "verite"
+        },
+        {
+          "texte": "OS-RI-2025-4517",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            677.4,
+            165.6,
+            735.7,
+            176.2
+          ],
+          "role": "verite"
+        },
+        {
+          "texte": "OS-RI-2025-4517",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            677.4,
+            165.6,
+            735.7,
+            176.2
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "PO-171977",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            188.0,
+            74.2,
+            224.9,
+            84.9
+          ],
+          "raison": "n° de commande",
+          "role": "leurre"
+        },
+        {
+          "texte": "AFF-52865",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            103.2,
+            79.3,
+            113.9
+          ],
+          "raison": "n° d'affaire",
+          "role": "leurre"
+        }
+      ]
+    },
+    "date_intervention": {
+      "valeur": "2025-11-22",
+      "emplacement": "formulaire",
+      "regle": "jour de l'intervention sur site, format ISO",
+      "pieges": [
+        "dates_multiples"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "2025-11-22",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            229.0,
+            79.3,
+            239.7
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "2025-11-15",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            204.8,
+            79.3,
+            215.5
+          ],
+          "raison": "date de la demande",
+          "role": "leurre"
+        },
+        {
+          "texte": "15 November 2025",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            215.4,
+            376.5,
+            288.7,
+            389.2
+          ],
+          "raison": "date de la demande",
+          "role": "leurre"
+        },
+        {
+          "texte": "2026-05-23",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            432.7,
+            420.6,
+            477.0,
+            433.3
+          ],
+          "raison": "date de la prochaine visite",
+          "role": "leurre"
+        }
+      ]
+    },
+    "date_validation": {
+      "valeur": "2025-11-30",
+      "emplacement": "tampon",
+      "regle": "date de l'approbation finale du rapport (pas la rédaction, la vérification, l'impression ni l'étalonnage des instruments), format ISO",
+      "pieges": [
+        "dates_multiples"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "30 Nov 2025",
+          "page": 2,
+          "mode": "image",
+          "cadre": [
+            500.0,
+            448.7,
+            634.0,
+            515.7
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "2025-12-01",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            692.6,
+            541.9,
+            725.3,
+            551.2
+          ],
+          "raison": "date d'impression",
+          "role": "leurre"
+        },
+        {
+          "texte": "2025-11-24",
+          "page": 0,
+          "mode": "texte",
+          "cadre": [
+            188.0,
+            204.8,
+            225.3,
+            215.5
+          ],
+          "raison": "date d'émission",
+          "role": "leurre"
+        },
+        {
+          "texte": "2025-12-01",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            692.6,
+            541.9,
+            725.3,
+            551.2
+          ],
+          "raison": "date d'impression",
+          "role": "leurre"
+        },
+        {
+          "texte": "2025-12-01",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            692.6,
+            541.9,
+            725.3,
+            551.2
+          ],
+          "raison": "date d'impression",
+          "role": "leurre"
+        },
+        {
+          "texte": "2025-09-29",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            252.2,
+            376.5,
+            289.6,
+            387.2
+          ],
+          "raison": "date d'étalonnage d'un instrument",
+          "role": "leurre"
+        },
+        {
+          "texte": "2025-04-03",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            252.2,
+            391.1,
+            289.6,
+            401.8
+          ],
+          "raison": "date d'étalonnage d'un instrument",
+          "role": "leurre"
+        },
+        {
+          "texte": "25 November 2025",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            439.3,
+            278.1,
+            512.6,
+            290.7
+          ],
+          "raison": "date de vérification",
+          "role": "leurre"
+        }
+      ]
+    },
+    "volume_dose_ml": {
+      "valeur": 482.6,
+      "emplacement": "schema",
+      "regle": "dose moyenne après réglage, toutes têtes et tous essais confondus, en ml",
+      "pieges": [
+        "synonyme_cle",
+        "volumes_voisins",
+        "tableau_multi_entrees"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "482.6 mL",
+          "page": 2,
+          "mode": "image",
+          "cadre": [
+            36.0,
+            66.2,
+            328.0,
+            242.7
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "20",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            217.2,
+            231.7,
+            225.2,
+            242.4
+          ],
+          "raison": "capacité du réservoir",
+          "role": "leurre"
+        },
+        {
+          "texte": "578",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            217.2,
+            246.3,
+            229.2,
+            257.0
+          ],
+          "raison": "volume du circuit",
+          "role": "leurre"
+        },
+        {
+          "texte": "497.6",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            72.7,
+            364.8,
+            94.0,
+            377.5
+          ],
+          "raison": "dose avant réglage",
+          "role": "leurre"
+        }
+      ]
+    },
+    "volume_nominal_ml": {
+      "valeur": 500.0,
+      "emplacement": "tableau",
+      "regle": "volume de consigne de l'équipement, en ml (pas la gamme du modèle)",
+      "pieges": [
+        "synonyme_cle"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "500",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            217.2,
+            202.5,
+            229.2,
+            213.2
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "5 – 500",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            217.2,
+            217.1,
+            241.2,
+            227.8
+          ],
+          "raison": "gamme du constructeur",
+          "role": "leurre"
+        }
+      ]
+    },
+    "tolerance_ml": {
+      "valeur": 10.0,
+      "emplacement": "tableau",
+      "regle": "tolérance admise sur la dose, en ml ; une tolérance en % se rapporte au volume nominal (pas l'incertitude de mesure)",
+      "pieges": [
+        "tolerance_en_pourcent",
+        "synonyme_cle"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "± 2 %",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            118.4,
+            153.9,
+            137.6,
+            164.6
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "2.7",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            223.7,
+            260.9,
+            233.7,
+            271.6
+          ],
+          "raison": "incertitude de mesure",
+          "role": "leurre"
+        }
+      ]
+    },
+    "debit_ml_min": {
+      "valeur": null,
+      "emplacement": "absent",
+      "regle": "débit mesuré après réglage, en ml/min (pas le débit maximal, ni celui d'un équipement voisin)",
+      "pieges": [],
+      "scan": false,
+      "ecritures": [],
+      "leurres": [
+        {
+          "texte": "640",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            202.0,
+            80.9,
+            214.0,
+            91.6
+          ],
+          "raison": "valeur avant réglage",
+          "role": "leurre"
+        },
+        {
+          "texte": "1280",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            217.2,
+            275.5,
+            233.2,
+            286.2
+          ],
+          "raison": "débit maximal du constructeur",
+          "role": "leurre"
+        },
+        {
+          "texte": "1180",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            514.2,
+            377.0,
+            533.2,
+            389.7
+          ],
+          "raison": "débit de l'équipement voisin",
+          "role": "leurre"
+        }
+      ]
+    },
+    "pression_bar": {
+      "valeur": 2.8,
+      "emplacement": "schema",
+      "regle": "pression de service mesurée après réglage, en bar (pas la pression maximale, le tarage de soupape ou le réseau d'air)",
+      "pieges": [
+        "synonyme_cle"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "2.8 bar",
+          "page": 2,
+          "mode": "image",
+          "cadre": [
+            36.0,
+            66.2,
+            328.0,
+            242.7
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "2.1",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            283.0,
+            80.9,
+            293.0,
+            91.6
+          ],
+          "raison": "valeur avant réglage",
+          "role": "leurre"
+        },
+        {
+          "texte": "8.0",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            217.2,
+            290.1,
+            227.2,
+            300.8
+          ],
+          "raison": "pression maximale",
+          "role": "leurre"
+        },
+        {
+          "texte": "4.7",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            217.2,
+            304.7,
+            227.2,
+            315.4
+          ],
+          "raison": "tarage de la soupape",
+          "role": "leurre"
+        },
+        {
+          "texte": "5.2",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            605.0,
+            377.0,
+            616.9,
+            389.7
+          ],
+          "raison": "pression de l'équipement voisin",
+          "role": "leurre"
+        },
+        {
+          "texte": "6.0",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            600.0,
+            389.5,
+            611.9,
+            402.2
+          ],
+          "raison": "réseau d'air de l'atelier",
+          "role": "leurre"
+        }
+      ]
+    },
+    "reference_piece": {
+      "valeur": "TO-695-E",
+      "emplacement": "tableau",
+      "regle": "référence de la pièce effectivement remplacée (pas contrôlée, commandée ou proposée au devis)",
+      "pieges": [
+        "synonyme_cle"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "TO-695-E",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            450.6,
+            74.9,
+            461.3
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "TO-442-A",
+          "page": 1,
+          "mode": "texte",
+          "cadre": [
+            36.0,
+            425.4,
+            76.1,
+            438.1
+          ],
+          "raison": "pièce contrôlée, non remplacée",
+          "role": "leurre"
+        },
+        {
+          "texte": "TO-442-A",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            465.2,
+            75.8,
+            475.9
+          ],
+          "raison": "pièce contrôlée, non remplacée",
+          "role": "leurre"
+        },
+        {
+          "texte": "TO-610-R",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            479.8,
+            75.3,
+            490.5
+          ],
+          "raison": "pièce commandée, non posée",
+          "role": "leurre"
+        },
+        {
+          "texte": "TO-702-E",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            42.0,
+            494.4,
+            74.9,
+            505.1
+          ],
+          "raison": "pièce proposée au devis",
+          "role": "leurre"
+        }
+      ]
+    },
+    "technicien": {
+      "valeur": "Emma Brennan",
+      "emplacement": "phrase",
+      "regle": "intervenant responsable côté prestataire (pas l'accompagnant, le rédacteur, le vérificateur ou le client)",
+      "pieges": [
+        "synonyme_cle",
+        "personnes_multiples"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "Emma Brennan",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            460.9,
+            361.5,
+            520.3,
+            374.1
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "Ethan Whitfield",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            502.1,
+            69.0,
+            563.0,
+            81.7
+          ],
+          "raison": "accompagnant",
+          "role": "leurre"
+        },
+        {
+          "texte": "Ethan Fenwick",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            432.4,
+            81.6,
+            489.7,
+            94.2
+          ],
+          "raison": "demandeur côté client",
+          "role": "leurre"
+        },
+        {
+          "texte": "James Mahon",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            563.4,
+            437.7,
+            610.4,
+            449.1
+          ],
+          "raison": "approbateur côté client",
+          "role": "leurre"
+        }
+      ]
+    },
+    "statut": {
+      "valeur": "non_conforme",
+      "emplacement": "formulaire",
+      "regle": "décision finale : conforme, non_conforme ou a_revoir",
+      "pieges": [
+        "synonyme_cle",
+        "cases_a_cocher"
+      ],
+      "scan": false,
+      "ecritures": [
+        {
+          "texte": "Non-compliant",
+          "page": 0,
+          "mode": "trace",
+          "cadre": [
+            655.9,
+            186.0,
+            805.9,
+            232.0
+          ],
+          "role": "verite"
+        }
+      ],
+      "leurres": [
+        {
+          "texte": "non-compliant",
+          "page": 2,
+          "mode": "texte",
+          "cadre": [
+            484.1,
+            405.1,
+            539.5,
+            417.8
+          ],
+          "raison": "statut à l'arrivée",
+          "role": "leurre"
+        }
+      ]
+    }
+  }
+}

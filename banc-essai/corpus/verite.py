@@ -40,7 +40,7 @@ REGLES = {
 SYSTEMATIQUES = {"volume_dose_ml": ["volumes_voisins", "tableau_multi_entrees"],
                  "date_validation": ["dates_multiples"], "date_intervention": ["dates_multiples"],
                  "technicien": ["personnes_multiples"], "numero_serie": ["zones_ambigues"],
-                 "constructeur": ["zones_ambigues"], "statut": ["cases_a_cocher"]}
+                 "constructeur": ["zones_ambigues"]}
 
 
 def _norm(t):
@@ -74,18 +74,12 @@ def construire(doc, style, placements, page_scan, n_pages):
         occ = [p for p in placements if p["cle"] == cle and p["role"] in ("verite", "calcul")]
         fausses = [p for p in placements if p["cle"] == cle and p["role"] in ("leurre", "erronee")]
         pieges = list(doc["pieges"][cle]) + SYSTEMATIQUES.get(cle, [])
+        if cle in getattr(style, "coupe", ()):
+            pieges.append("tableau_coupe")
         if cle in CLES_NUMERIQUES and any(re.search(r"\d[ .,']\d{3}(?!\d)", o["texte"]) or
                                           ("," in o["texte"]) for o in occ):
             pieges.append("format_nombre")
-        absent = "champ_absent" in doc["pieges"][cle]
-        if absent:
-            emplacement = "absent"
-        elif "logo_seul" in doc["pieges"][cle]:
-            emplacement = "logo"
-        elif any(o["role"] == "calcul" for o in occ):
-            emplacement = "calcul"
-        else:
-            emplacement = doc["emplacements"][cle]
+        emplacement = doc["emplacements"][cle]
         champs[cle] = {
             "valeur": style.verite[cle],
             "emplacement": emplacement,
@@ -97,8 +91,13 @@ def construire(doc, style, placements, page_scan, n_pages):
             "leurres": [{k: o[k] for k in ("texte", "page", "mode", "cadre", "raison")} |
                         {"role": o["role"]} for o in fausses],
         }
-    return {"id": doc["id"], "jeu": doc["jeu"], "style": "grille", "langue": doc["langue"],
-            "prestataire": doc["prestataire"]["nom"], "pages": n_pages, "page_scannee": page_scan,
+    if any(p["cle"] == "statut" and p["mode"] == "trace" for p in placements):
+        champs["statut"]["pieges"].append("cases_a_cocher")
+    return {"id": doc["id"], "jeu": doc["jeu"], "style": doc["style"], "langue": doc["langue"],
+            "prestataire": doc["prestataire"]["nom"], "constructeur": doc["marque"]["nom"],
+            "prestataire_vu": doc.get("presta_vu"), "marque_vue": doc.get("marque_vue"),
+            "type": doc["marque"]["type"], "pieges_document": {k: v for k, v in doc["pieges_doc"].items()},
+            "pages": n_pages, "page_scannee": page_scan,
             "unites_ecrites": style.u, "format_nombres": style.style_nb, "format_dates": style.forme_date,
             "champs": champs}
 

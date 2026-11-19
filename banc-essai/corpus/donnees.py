@@ -89,15 +89,9 @@ LIBELLES = {
     },
 }
 
-# Emplacement par défaut de chaque valeur dans le style « grille » (« grille » et « visas » :
-# formulaire de la page d'entrée).
-EMPLACEMENT_DEFAUT = {
-    "machine": "grille", "constructeur": "grille", "numero_serie": "grille", "site": "grille",
-    "reference_rapport": "grille", "date_intervention": "grille", "date_validation": "visas",
-    "volume_dose_ml": "tableau", "volume_nominal_ml": "tableau", "tolerance_ml": "tableau",
-    "debit_ml_min": "tableau", "pression_bar": "tableau", "reference_piece": "tableau",
-    "technicien": "visas", "statut": "cases",
-}
+# Emplacement par défaut (le plan du corpus fixe l'emplacement réel de chaque valeur).
+EMPLACEMENT_DEFAUT = {c: "formulaire" for c in CLES}
+EMPLACEMENT_DEFAUT.update({c: "tableau" for c in CLES_NUMERIQUES + ["reference_piece"]})
 
 
 def _arr(x, pas):
@@ -112,8 +106,10 @@ def _jours(d, a, b, r):
     return d + dt.timedelta(days=r.randint(a, b))
 
 
-def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, pieges_doc=None):
-    """Un document. pieges : {cle: [noms]} imposés ; pieges_doc : {nom: valeur}."""
+def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, pieges_doc=None,
+          emplacements=None, style="grille"):
+    """Un document. emplacements : {cle: emplacement} du plan ; pieges : {cle: [noms]} ;
+    pieges_doc : {nom: valeur}."""
     r = random.Random(f"{graine}/{doc_id}/valeurs")
     langue = prestataire["langue"]
     typ = TYPES[marque["type"]]
@@ -240,29 +236,22 @@ def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, p
         "type_machine": typ[langue],
         "ligne": f"{'Ligne' if langue == 'fr' else 'Line'} {r.randint(1, 4)}",
     }
-    doc = {"id": doc_id, "jeu": jeu, "langue": langue, "prestataire": prestataire,
+    doc = {"id": doc_id, "jeu": jeu, "langue": langue, "prestataire": prestataire, "style": style,
            "marque": marque, "valeurs": valeurs, "leurres": leurres,
            "pieges": {k: list((pieges or {}).get(k, [])) for k in CLES},
            "pieges_doc": dict(pieges_doc or {})}
-    _presentation(doc, r)
+    _presentation(doc, r, emplacements or {})
     return doc
 
 
-def _presentation(doc, r):
+def _presentation(doc, r, emplacements):
     langue = doc["langue"]
     p = doc["pieges"]
     lib, emp, unites = {}, {}, {}
     for cle in CLES:
         exact, syn = LIBELLES[langue][cle]
         lib[cle] = r.choice(syn) if "synonyme_cle" in p[cle] else exact
-        if "recit_seul" in p[cle]:
-            emp[cle] = "recit"
-        elif "schema_seul" in p[cle]:
-            emp[cle] = "schema"
-        elif "tampon_seul" in p[cle]:
-            emp[cle] = "tampon"
-        else:
-            emp[cle] = EMPLACEMENT_DEFAUT[cle]
+        emp[cle] = emplacements.get(cle, EMPLACEMENT_DEFAUT[cle])
     v = doc["valeurs"]
     ml = "ml" if langue == "fr" else "mL"
     for cle in ["volume_dose_ml", "volume_nominal_ml", "tolerance_ml"]:

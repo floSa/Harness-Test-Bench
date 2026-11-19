@@ -266,11 +266,11 @@ def schema(textes):
 
 # Page scannée --------------------------------------------------------------------------------
 
-def scanner(dessin, largeur, hauteur, graine):
-    """Trame une page, la tourne légèrement, ajoute du bruit et la compresse en JPEG."""
+def degrader(img, graine):
+    """Tourne légèrement une page tramée, ajoute du bruit et la compresse en JPEG."""
     r = random.Random(graine)
     bruit = np.random.default_rng(r.randint(0, 2**32 - 1))
-    img = raster(dessin, largeur, hauteur, dpi=150).convert("L")
+    img = img.convert("L")
     angle = r.choice([-1, 1]) * r.uniform(0.4, 1.4)
     img = img.rotate(angle, resample=Image.BICUBIC, expand=False, fillcolor=255)
     tab = np.asarray(img, dtype=np.float32) * 0.9 + 14
@@ -279,3 +279,8 @@ def scanner(dessin, largeur, hauteur, graine):
     sortie = io.BytesIO()
     img.save(sortie, format="JPEG", quality=55)
     return sortie.getvalue(), angle
+
+
+def scanner(dessin, largeur, hauteur, graine):
+    """Trame une page dessinée, puis la dégrade (voir degrader)."""
+    return degrader(raster(dessin, largeur, hauteur, dpi=150), graine)

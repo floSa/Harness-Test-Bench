@@ -30,13 +30,14 @@ Total : 60 documents, au-dessus du minimum de 50.
 
 ## 4. Mises en page
 
-| Style | Description | Jeu |
-|---|---|---|
-| Grille | page d'entrée en cases de tailles variées (référence, indice, dates, visas, révisions), tableau de mesures à entrées multiples | fourni, test |
-| Classique | formulaire à deux colonnes, tableaux simples | fourni, test |
-| Compact anglais | lignes clé-valeur, nombres anglais | fourni, test |
-| Texte abondant | récit long, tableau coupé entre deux pages | fourni, test |
-| Réservé | mise en page absente du jeu fourni (à concevoir) | test, relance |
+| Critère | Grille | Classique | Compact | Récit | Réservé |
+|---|---|---|---|---|---|
+| Page d'entrée | cases de tailles variées, visas, révisions | bandeau, formulaire à deux colonnes | lignes clé-valeur sur quatre colonnes | formulaire écrit en lignes de texte | A4 paysage, deux colonnes, cartouche vertical |
+| Tableau de mesures | entrées multiples (têtes × essais × avant ou après), cases fusionnées | essais regroupés dans une case (« a / b / c ») | liste « paramètre, valeur » | une ligne par essai, coupé entre deux pages selon la longueur | transposé (grandeurs en colonnes) |
+| Statut | cases à cocher | case du formulaire | case du formulaire | case du formulaire | cases à cocher dans le cartouche |
+| Texte libre | moyen | moyen | court | abondant | moyen |
+| Pages | 5 | 3 | 3 | 4 à 5 | 3 à 4 |
+| Jeux | fourni, test, relance | fourni, test | fourni, test, relance | fourni, test, relance | test, relance |
 
 Dans un style, la disposition dépend du prestataire (ordre et largeur des cases, police, format des nombres, des dates et place des unités).
 
