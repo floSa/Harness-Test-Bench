@@ -42,6 +42,7 @@ def construire(essai):
         if (ev / "soumissions.jsonl").exists() else []
     acceptees = [l for l in lignes if l["statut"] == "acceptee"]
     fin = json.loads((ev / "fin.json").read_text()) if (ev / "fin.json").exists() else None
+    construction = json.loads((essai / "essai.json").read_text()) if (essai / "essai.json").exists() else None
     relance = json.loads((essai / "relance" / "resultat.json").read_text()) \
         if (essai / "relance" / "resultat.json").exists() else None
     finale = next((l for l in acceptees if fin and l["numero"] == fin["soumission_finale"]), None)
@@ -65,6 +66,7 @@ def construire(essai):
         if fin and finale and fin.get("score_validation") is not None else None,
         "note_finale": note,
         "relance": relance,
+        "construction": construction,
     }
     if tache == "extraction" and note:
         r["taux_invention"] = note["invention"]["taux"]
@@ -99,6 +101,18 @@ def markdown(r):
                    ("Relance : durée par document", f"{rl['duree_par_document_s']} s"),
                    ("Relance : code de retour", rl["code_retour"])]
     L += [f"| {a} | {b} |" for a, b in lignes] + [""]
+    c = r.get("construction")
+    if c:
+        L += ["## Construction", "", "| Mesure | Valeur |", "|---|---|"]
+        L += [f"| {a} | {b} |" for a, b in [
+            ("Harnais", c["harnais"]), ("Recette", c["recette"]), ("Début", c["debut"]), ("Fin", c["fin"]),
+            ("Durée totale", f"{c['duree_s']} s"), ("Garde-fou atteint", "oui" if c["garde_fou_atteint"] else "non"),
+            ("Code de retour du harnais", c["code_retour"]), ("Appels au modèle", c["appels_modele"]),
+            ("Appels échoués", c["appels_echoues"]), ("Appels refusés pour quota (429)", c["appels_429"]),
+            ("Appels avec image", c["appels_avec_image"]), ("Jetons d'entrée", c["jetons_entree"]),
+            ("Jetons de sortie", c["jetons_sortie"]), ("Temps dans le modèle", f"{c['temps_modele_s']} s"),
+            ("Demandes réseau (mandataire PyPI)", c["demandes_reseau"]),
+            ("Demandes réseau refusées", c["demandes_reseau_refusees"])]] + [""]
     if r["soumissions"]:
         S = r["soumissions"]
         L += ["## Soumissions", "", "| Critère | " + " | ".join(f"Requête {k + 1}" for k in range(len(S))) + " |",

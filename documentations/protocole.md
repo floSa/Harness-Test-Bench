@@ -1,6 +1,6 @@
 # Protocole du banc des harnais
 
-Version 1.2, 19 novembre 2026 (fonctionnement de l'API de soumission précisé au lot 2). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
+Version 1.3, 19 novembre 2026 (cage et traces précisées au lot 3). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
 ## 1. Question posée
 
@@ -95,7 +95,7 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 
 | Mesure | Source |
 |---|---|
-| Fonctionne sur de nouveaux documents | relance hors cage, sur un lot neuf |
+| Fonctionne sur de nouveaux documents | relance après l'essai, sans le harnais, dans la cage, sur un lot neuf |
 | Temps d'exécution par document | relance |
 | Coût d'exécution par document (si le workflow appelle un modèle) | journaux LiteLLM |
 
@@ -119,6 +119,7 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 ## 9. Limites connues
 
 - Modèles gratuits : 20 requêtes par minute, 1 000 par jour ; le fournisseur peut garder les requêtes, d'où un corpus entièrement fictif.
-- La relance du workflow livré et les tests cachés de la tâche jouet exécutent du code écrit par le harnais hors cage (sous-processus avec délai) ; à placer dans la cage au lot 3.
+- `/tmp` de la cage est en mémoire : un harnais peut y écrire, rien n'en sort sur l'hôte.
+- Le harnais ne peut pas lancer ses propres bacs à sable par espace de noms utilisateur (`--disable-userns`) : un harnais qui en dépend le signalera au lot 4.
 - La gratuité d'un modèle peut disparaître : la date et l'identifiant exact sont notés.
 - Cline : sa CLI (version 2.0) a un mode sans interaction ; s'il ne peut pas viser le LiteLLM du banc, il appelle OpenRouter directement et ses traces viennent du journal OpenRouter, écart signalé dans les résultats.
