@@ -23,6 +23,7 @@ Harness-Test-Bench/
 │   └── resultats/        résultat brut de chaque essai
 └── documentations/       lire
     ├── protocole.md
+    ├── protocole-explique.md
     ├── cahier-des-charges-corpus.md
     └── journal.md
 ```
@@ -31,6 +32,7 @@ Harness-Test-Bench/
 
 | Besoin | Page |
 |---|---|
-| Méthode | [Protocole](documentations/protocole.md) |
+| Comprendre le banc (schémas, plusieurs niveaux de lecture) | [Protocole expliqué](documentations/protocole-explique.md) |
+| Méthode (référence) | [Protocole](documentations/protocole.md) |
 | Corpus | [Cahier des charges](documentations/cahier-des-charges-corpus.md) |
 | Avancement | [Journal](documentations/journal.md) |

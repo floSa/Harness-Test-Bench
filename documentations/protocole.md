@@ -2,6 +2,8 @@
 
 Version 1.6, 19 novembre 2026 (cadre de ressources de la cage : mémoire, carte graphique, disque, téléchargements ; un seul essai à la fois imposé par un verrou). Version 1.5 : corrections de la relecture indépendante. Version 1.4 : modèle DeepSeek V4.1 Flash, une clé par essai. Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
+Explication vulgarisée, avec schémas : [protocole-explique.md](protocole-explique.md).
+
 ## 1. Question posée
 
 À modèle identique, un harnais change-t-il la qualité de la solution produite, sa méthode, son coût et sa vitesse ? Et le classement des harnais tient-il quand on change de modèle ?
