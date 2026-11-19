@@ -1,0 +1,7 @@
+{"heure": "2026-11-19T23:09:08+01:00", "evenement": "demande", "hote": "registry.npmjs.org", "port": "443", "accepte": false, "requete": "CONNECT registry.npmjs.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:09:08+01:00", "evenement": "demande", "hote": "registry.npmjs.org", "port": "443", "accepte": false, "requete": "CONNECT registry.npmjs.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:09:08+01:00", "evenement": "demande", "hote": "data.cline.bot", "port": "443", "accepte": false, "requete": "CONNECT data.cline.bot:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:09:21+01:00", "evenement": "demande", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:09:21+01:00", "evenement": "demande", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-19T23:09:23+01:00", "evenement": "fin", "hote": "files.pythonhosted.org", "octets_recus": 1867615, "octets_envoyes": 6862}
+{"heure": "2026-11-19T23:09:23+01:00", "evenement": "fin", "hote": "pypi.org", "octets_recus": 108068, "octets_envoyes": 3804}
