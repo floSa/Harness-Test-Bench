@@ -27,7 +27,7 @@ Harness-Test-Bench/
     └── journal.md
 ```
 
-État : cadrage terminé (protocole et cahier des charges) ; corpus, évaluation, cage et harnais à construire.
+État : cadrage terminé ; corpus généré (60 rapports, vérité terrain annotée) ; évaluation, cage et harnais à construire.
 
 | Besoin | Page |
 |---|---|

@@ -1,6 +1,6 @@
 # Protocole du banc des harnais
 
-Version 1, 18 novembre 2026. Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
+Version 1.1, 19 novembre 2026 (mesures ajoutées avec le corpus v2). Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
 ## 1. Question posée
 
@@ -43,7 +43,7 @@ La recette est le message de départ et ce qui l'accompagne. Il est identique po
 
 | Recette | Contenu de `consignes.md` |
 |---|---|
-| Sans aide | la tâche, la liste des clés à extraire, le format de sortie, l'API de soumission et sa limite de 5 |
+| Sans aide | la tâche, la liste des clés à extraire avec une définition d'une ligne chacune, le format de sortie, l'API de soumission et sa limite de 5 |
 | Avec aide | la même chose, plus l'ontologie : pour chaque clé, définition métier, unité attendue, synonymes, règles (« volume de dose mesuré après réglage, en ml, pas la capacité du réservoir ») |
 
 ## 5. Conditions d'exécution
@@ -67,7 +67,9 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 | Meilleur score obtenu | API de soumission |
 | Écart entre le score de validation annoncé et le score de test | déclaration de fin, API |
 | Score par champ et par étiquette de difficulté | API de soumission, étiquettes du corpus |
-| Score sur le gabarit jamais vu | API de soumission |
+| Score par famille de pièges, par style de mise en page, par nom vu ou inédit | API de soumission, vérité terrain du corpus |
+| Taux d'invention : part des réponses non nulles là où `null` est attendu | API de soumission |
+| Score sur le style de mise en page jamais vu | API de soumission |
 
 **Construction**
 
