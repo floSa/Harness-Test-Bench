@@ -161,3 +161,4 @@
   - plafond par défaut relevé de 10 à 30 millions de jetons, car les essais réels de la campagne 1 ont consommé 6 à 21 millions de jetons en 25 à 35 min.
 - Non essayé : mandataire d'entreprise et certificat interne (mécanismes standard de Python, confirmés par l'étape de vérification sur le poste).
 
+- Guide du kit allégé à la demande de l'utilisateur : section sur LiteLLM et annexe des vérifications retirées (inutiles au testeur), sections renumérotées ; archive reconstruite.

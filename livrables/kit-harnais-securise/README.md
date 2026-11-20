@@ -63,20 +63,7 @@ flowchart LR
 
 Le harnais croit parler à une API OpenAI ordinaire : il reçoit `OPENAI_BASE_URL=http://relais:8080/v1`, `OPENAI_API_KEY=<clé locale>` et `MODELE=<nom du modèle>`. La plupart des harnais savent utiliser ces trois informations.
 
-## 3. Faut-il LiteLLM ?
-
-Non. Un relais est nécessaire, pour que la clé du portail reste hors de portée du harnais. Mais ce relais tient en 200 lignes de Python, sans dépendance (`relais/portail.py`).
-
-| Critère | Relais du kit | LiteLLM |
-|---|---|---|
-| Composants à installer | 1 conteneur Python, sans base de données | conteneur LiteLLM et base Postgres pour les clés par personne |
-| Code à faire relire par une équipe sécurité | environ 200 lignes, bibliothèque standard | projet important, nombreuses dépendances |
-| Usage visé | une personne, un poste, un harnais | un service partagé : plusieurs personnes, plusieurs fournisseurs, tableaux de bord |
-| Plafond de consommation | en jetons, pour toute la durée du test | en dollars, par clé |
-
-LiteLLM devient pertinent si une seule clé du portail doit servir à plusieurs testeurs : il faut alors un relais central qui distribue une clé par personne. Ce cas n'est pas couvert par ce kit (section 10).
-
-## 4. Prérequis
+## 3. Prérequis
 
 | Élément | Détail |
 |---|---|
@@ -98,7 +85,7 @@ LiteLLM devient pertinent si une seule clé du portail doit servir à plusieurs 
 | La clé passe-t-elle par `Authorization: Bearer` ou par un autre en-tête ? | réglage `IAG_ENTETE_CLE` |
 | Quel niveau de données le portail peut-il recevoir ? Les requêtes sont-elles conservées ? | tout ce que le harnais lit dans l'espace de travail peut partir au portail |
 
-## 5. Installation pas à pas
+## 4. Installation pas à pas
 
 Toutes les commandes se lancent depuis le dossier du kit.
 
@@ -130,7 +117,7 @@ Le script fait trois choses :
 
 ### Étape 2. Choisir le harnais
 
-Dans `harnais/Dockerfile`, adapter la section « INSTALLATION DU HARNAIS ». Goose y est installé en exemple ; l'annexe B donne la ligne de chacun des cinq harnais essayés.
+Dans `harnais/Dockerfile`, adapter la section « INSTALLATION DU HARNAIS ». Goose y est installé en exemple ; l'annexe B donne la ligne de Goose, OpenCode, gptme, Pi et Cline.
 
 Pourquoi installer le harnais dans l'image plutôt qu'à la main :
 
@@ -190,7 +177,7 @@ Il n'affiche jamais le contenu des échanges.
 | Remettre le compteur de jetons à zéro | supprimer `journaux/compteur.json`, puis `docker compose up -d relais` | nouveau plafond complet |
 | Changer la clé locale | `bash preparer.sh --nouvelle-cle`, puis `docker compose up -d relais` | l'ancienne clé ne fonctionne plus |
 
-## 6. Essai à blanc, sans clé du portail
+## 5. Essai à blanc, sans clé du portail
 
 Ce mode permet de tout installer et vérifier avant d'avoir la clé, ou de montrer le kit à une équipe sécurité.
 
@@ -220,7 +207,7 @@ Ce mode permet de tout installer et vérifier avant d'avoir la clé, ou de montr
 
    Ce journal montre le chemin appelé, l'en-tête qui portait la clé du portail (jamais sa valeur), les en-têtes ajoutés et le modèle.
 
-## 7. Réglages (`.env`)
+## 6. Réglages (`.env`)
 
 | Réglage | Rôle | Valeur par défaut |
 |---|---|---|
@@ -241,9 +228,9 @@ Ce mode permet de tout installer et vérifier avant d'avoir la clé, ou de montr
 | `ROUTES_SUPPLEMENTAIRES` | autres routes que `/v1/chat/completions` (ex. `/v1/responses`) | aucune |
 | `COMPTER_FLUX` | `0` si le portail refuse le champ `stream_options`, utilisé pour compter les jetons des réponses en flux | `1` |
 
-Ordre de grandeur pour régler le plafond : avec quatre des harnais essayés, une tâche d'extraction de documents de 25 à 35 minutes a consommé de 6 à 21 millions de jetons. 85 à 90 % de ces jetons étaient des relectures du cache du fournisseur, facturées beaucoup moins cher, mais le relais les compte comme des jetons envoyés. Un harnais renvoie en effet toute la conversation à chaque appel.
+Ordre de grandeur pour régler le plafond : une tâche d'une demi-heure consomme de 6 à 21 millions de jetons, car le harnais renvoie toute la conversation à chaque appel. Le relais compte tous les jetons envoyés, y compris ceux que le portail relit dans son cache et facture moins cher.
 
-## 8. Les protections une par une
+## 7. Les protections une par une
 
 | Protection | Pourquoi (le risque évité) | Comment | Contrôle du vérificateur |
 |---|---|---|---|
@@ -251,7 +238,7 @@ Ordre de grandeur pour régler le plafond : avec quatre des harnais essayés, un
 | Clé locale propre au relais | si elle fuit, elle ne sert à rien : le relais n'est joignable que depuis le réseau interne | `CLE_RELAIS`, créée par `preparer.sh`, remplaçable à tout moment | fausse clé refusée (401) |
 | Relais limité à l'appel du modèle | ni gestion de compte, ni fichiers déposés chez le portail, ni autres services | routes autorisées : `/v1/chat/completions` et `/v1/models` | route hors appel au modèle refusée (404) |
 | Modèles autorisés | éviter qu'un harnais choisisse seul un modèle plus coûteux ou non validé | `IAG_MODELE`, `IAG_MODELES` | modèle non autorisé refusé (403) |
-| Plafond de jetons et débit | une boucle ne vide pas le quota de l'équipe | `PLAFOND_JETONS`, `APPELS_PAR_MINUTE`, `APPELS_SIMULTANES` ; compteur gardé après redémarrage | essayé : refus 429 au-delà |
+| Plafond de jetons et débit | une boucle ne vide pas le quota de l'équipe | `PLAFOND_JETONS`, `APPELS_PAR_MINUTE`, `APPELS_SIMULTANES` ; compteur gardé après redémarrage | |
 | Aucun accès direct à Internet | pas d'envoi de données vers une adresse quelconque, pas de téléchargement libre | réseau Docker `internal: true` : aucune route vers l'extérieur | connexion directe impossible (par adresse et par nom) |
 | Sorties limitées à une liste | permettre `pip install` et `npm install` sans ouvrir le reste ; bloquer la télémétrie des harnais | filtre : HTTPS seulement, domaines autorisés, quota, journal de chaque demande | domaine non autorisé refusé, domaine autorisé accepté |
 | Seul l'espace de travail est visible | le harnais ne peut ni lire ni effacer le reste du poste | un seul dossier du poste monté : `espace/` | aucun dossier personnel visible, `.env` invisible |
@@ -263,7 +250,7 @@ Ordre de grandeur pour régler le plafond : avec quatre des harnais essayés, un
 | Journal sans contenu | mesurer et auditer sans recopier les documents ni les clés | une ligne par appel : heure, durée, modèle, statut, jetons, nombre d'outils et d'images | `outils/bilan.py` |
 | Vérification du certificat du portail | une interception de la connexion exposerait la clé | jamais désactivée ; certificat interne ajouté si besoin (`SSL_CERT_FILE`) | appel réel réussi |
 
-## 9. Ce que le kit ne protège pas
+## 8. Ce que le kit ne protège pas
 
 | Limite | Explication | Que faire |
 |---|---|---|
@@ -274,7 +261,7 @@ Ordre de grandeur pour régler le plafond : avec quatre des harnais essayés, un
 | Facturation | le compteur du relais est une estimation en jetons | la référence reste le suivi du portail |
 | Conservation des requêtes | elle dépend du portail | à vérifier avec ses administrateurs |
 
-## 10. Organiser un test à plusieurs
+## 9. Organiser un test à plusieurs
 
 | Point | Recommandation | Pourquoi |
 |---|---|---|
@@ -284,9 +271,9 @@ Ordre de grandeur pour régler le plafond : avec quatre des harnais essayés, un
 | Version du harnais | figée dans `harnais/Dockerfile` | même comportement pour tous |
 | Résultats à collecter | `journaux/` (aucun contenu) et le code produit dans `espace/` | mesurer et relire, sans transmettre de clé |
 | Fin du test | révoquer la clé du portail, `docker compose down -v`, supprimer `.env` | plus aucune clé valable sur les postes |
-| Une seule clé pour toute l'équipe | non couvert par ce kit : il faut un relais central qui distribue une clé par personne (LiteLLM convient) | partager la même clé du portail sur plusieurs postes rend toute révocation collective |
+| Une seule clé pour toute l'équipe | à éviter | la même clé sur plusieurs postes rend toute révocation collective et la consommation impossible à attribuer |
 
-## 11. Problèmes fréquents
+## 10. Problèmes fréquents
 
 | Symptôme | Cause probable | Correction |
 |---|---|---|
@@ -299,11 +286,9 @@ Ordre de grandeur pour régler le plafond : avec quatre des harnais essayés, un
 | le harnais répond mais n'agit pas | modèle sans appel d'outils | changer de modèle ; vérifier avec le portail |
 | `pip install` ou `npm install` échoue | domaine absent de la liste, ou quota atteint | `journaux/telechargements.jsonl`, puis `DOMAINES_AUTORISES` |
 | fichiers de `espace/` non modifiables sur le poste | `preparer.sh` non relancé après un changement d'utilisateur | `bash preparer.sh`, puis `docker compose build` |
-| le harnais signale un catalogue de modèles ou une mise à jour injoignable | sortie vers l'éditeur refusée par le filtre | normal ; sans effet sur le travail dans les essais menés |
+| le harnais signale un catalogue de modèles ou une mise à jour injoignable | sortie vers l'éditeur refusée par le filtre | normal ; sans effet sur son travail |
 
 ## Annexe A. Ce que le kit transmet au portail
-
-Mesuré avec le faux portail :
 
 | Ce que le harnais envoie au relais | Ce que le portail reçoit |
 |---|---|
@@ -315,7 +300,7 @@ Mesuré avec le faux portail :
 
 ## Annexe B. Brancher chaque harnais
 
-Les cinq harnais ci-dessous ont été installés dans l'image du kit et ont réalisé une tâche à travers le relais le 20/11/2026, lancés par leur commande sans dialogue (indiquée pour chacun). Le mode interactif utilise les mêmes réglages. Chaque ligne d'installation va dans la section « INSTALLATION DU HARNAIS » de `harnais/Dockerfile`. Les réglages se font dans le terminal du conteneur (`docker compose run --rm harnais`), où `OPENAI_BASE_URL`, `OPENAI_API_KEY` et `MODELE` sont déjà définis. Ils sont gardés dans le volume `maison` d'une session à l'autre.
+Versions vérifiées avec ce kit. Chaque ligne d'installation va dans la section « INSTALLATION DU HARNAIS » de `harnais/Dockerfile`. Les réglages se font dans le terminal du conteneur (`docker compose run --rm harnais`), où `OPENAI_BASE_URL`, `OPENAI_API_KEY` et `MODELE` sont déjà définis. Ils sont gardés dans le volume `maison` d'une session à l'autre.
 
 ### Goose 1.60.1
 
@@ -422,20 +407,3 @@ Chercher dans sa documentation la configuration d'un « fournisseur compatible O
 
 Si le harnais utilise la route `/v1/responses`, l'ajouter à `ROUTES_SUPPLEMENTAIRES`.
 
-## Annexe C. Vérifications effectuées
-
-Le 20/11/2026, sous Linux (WSL2) avec Docker 29.9 et Docker Compose 5.7 :
-
-| Vérification | Résultat |
-|---|---|
-| Vérificateur, avec le faux portail | 21 sur 21 conformes |
-| Vérificateur, avec un vrai point d'accès compatible OpenAI à la place du portail IAG | 21 sur 21 conformes, réponse du modèle reçue |
-| Réponse en flux par le relais | relayée au fil de l'eau, jetons comptés |
-| Plafond de jetons (30) puis débit (2 par minute) | refus 429 au-delà, compteur gardé après redémarrage du relais |
-| Clé dans l'en-tête `api-key` et en-tête fixe ajouté | reçus par le faux portail |
-| `uv pip install requests` et `npm view` dans le conteneur | réussis par le filtre |
-| github.com, example.com | refusés par le filtre (403) |
-| Goose, OpenCode, gptme, Pi, Cline | tâche réalisée par chacun à travers le relais ; Goose a vu sa tentative vers example.com refusée et l'a signalé |
-| Sorties refusées pendant ces essais | catalogues de modèles et télémétrie des harnais (`models.dev`, `models.opencode.ai`, `data.cline.bot`), sans effet sur leur travail |
-
-Non essayé : le passage par un vrai mandataire d'entreprise (`HTTPS_PROXY`) et un certificat interne. Les deux reposent sur des mécanismes standard de Python (variables `HTTPS_PROXY` et `SSL_CERT_FILE`). L'étape 4 le confirme sur le poste.

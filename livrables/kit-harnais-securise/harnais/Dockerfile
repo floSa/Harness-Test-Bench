@@ -31,7 +31,7 @@ RUN groupadd -g "$GID_AGENT" agent && useradd -m -u "$UID_AGENT" -g agent -d /ho
 
 # ---------------------------------------------------------------------------------------------
 # INSTALLATION DU HARNAIS (à adapter). Version figée et, si possible, empreinte vérifiée.
-# Exemple essayé avec ce kit : Goose 1.60.1, binaire officiel.
+# Exemple : Goose 1.60.1, binaire officiel.
 ARG GOOSE_VERSION=1.60.1
 ARG GOOSE_SHA256=0327b1857f8030343f59b77503e0455629bbf472c2901cb94b88389d6278635a
 RUN curl -fsSL -o /tmp/goose.tar.gz \
