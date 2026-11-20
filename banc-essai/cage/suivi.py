@@ -24,6 +24,8 @@ for l in open(RACINE / "banc-essai/traces/journaux/appels.jsonl"):
 soum = [json.loads(l) for l in open(res / "evaluation/soumissions.jsonl")] if (res / "evaluation/soumissions.jsonl").exists() else []
 acceptees = [s for s in soum if s["statut"] == "acceptee"]
 trace = res / "harnais/stdout.log"
+if not trace.exists() and (res / "harnais/stdout.log.gz").exists():
+    trace = res / "harnais/stdout.log.gz"
 age = int(time.time() - trace.stat().st_mtime) if trace.exists() else None
 debut = (res / "evaluation-api.log").stat().st_mtime if (res / "evaluation-api.log").exists() else time.time()
 print(f"{time.strftime('%H:%M')} {essai} : {int((time.time() - debut) / 60)} min, {len(appels)} appels "

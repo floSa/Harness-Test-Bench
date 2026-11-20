@@ -1,0 +1,52 @@
+{
+  "essai": "c1-04-pi-avec-aide",
+  "harnais": "pi",
+  "version_harnais": "pi 1.5.2",
+  "recette": "avec-aide",
+  "tache": "extraction",
+  "debut": "2026-11-20T01:10:03+01:00",
+  "fin": "2026-11-20T01:36:58+01:00",
+  "duree_s": 1615.3,
+  "code_retour": 0,
+  "garde_fou_s": 7200,
+  "garde_fou_atteint": false,
+  "espace": "/home/florian/banc-espaces/c1-04-pi-avec-aide/travail",
+  "modeles": [
+    "openrouter/deepseek/deepseek-v4.1-flash-1017"
+  ],
+  "fournisseurs": [
+    "Pearl Research"
+  ],
+  "appels_modele": 365,
+  "appels_echoues": 10,
+  "appels_429": 0,
+  "attente_429_s": 0.0,
+  "appels_avec_image": 341,
+  "jetons_entree": 12676135,
+  "jetons_cache": 10874752,
+  "jetons_sortie": 503684,
+  "cout_usd": 0.273799,
+  "cout_openrouter_usd": 0.273799,
+  "depense_cle_usd": 0.2737986059999998,
+  "ecart_depense_journal_usd": -0.0,
+  "depense_cle_relance_usd": 0.0073809,
+  "temps_modele_s": 1578.3,
+  "demandes_reseau": 2,
+  "demandes_reseau_refusees": 0,
+  "hotes_refuses": [],
+  "telechargement_octets": 118063304,
+  "telechargement_par_hote_octets": {
+    "pypi.org": 1598801,
+    "files.pythonhosted.org": 116464503
+  },
+  "telechargement_max_octets": 10000000000,
+  "telechargement_plafond_atteint": false,
+  "memoire_max": "16G",
+  "memoire_pic_octets": 1246601216,
+  "arrets_memoire": 0,
+  "gpu_memoire_avant_mio": 832,
+  "gpu_memoire_pic_essai_mio": 0,
+  "disque_pic_octets": 554041317,
+  "disque_max_octets": 30000000000,
+  "disque_depasse": false
+}

@@ -133,5 +133,6 @@ python3 "$CAGE/collecter.py" essai "$RES" "$ESSAI" "$NOM" "$RECETTE" "$TACHE" "$
 python3 "$CAGE/archiver_code.py" "$ESPACE" "$RES" >/dev/null || true
 python3 "$CAGE/masquer.py" "$RES" >/dev/null || true
 uv run -q --project "$EVAL" python "$EVAL/rapport.py" --essai "$RES" >/dev/null || true
+python3 "$CAGE/compresser.py" "$RES" >/dev/null || true   # traces de plus de 20 Mo en gzip (limite GitHub)
 uv run -q --project "$EVAL" python "$EVAL/index_resultats.py" >/dev/null || true
 exit "$CODE"
