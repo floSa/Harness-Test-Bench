@@ -1,0 +1,17 @@
+{
+  "machine": "Braipax 120",
+  "constructeur": "Polra",
+  "numero_serie": "PO731792",
+  "site": "Ipswich Works",
+  "reference_rapport": "LS-RI-2026-1790",
+  "date_intervention": "2026-02-18",
+  "date_validation": "2026-02-28",
+  "volume_dose_ml": 0.95,
+  "volume_nominal_ml": 1.0,
+  "tolerance_ml": null,
+  "debit_ml_min": null,
+  "pression_bar": 1.4,
+  "reference_piece": "PO-938-C",
+  "technicien": "Hannah Hollis",
+  "statut": "conforme"
+}

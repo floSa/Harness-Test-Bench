@@ -1,0 +1,10 @@
+doc-003.pdf -> doc-003.json
+doc-010.pdf -> doc-010.json
+doc-014.pdf -> doc-014.json
+doc-017.pdf -> doc-017.json
+doc-029.pdf -> doc-029.json
+doc-031.pdf -> doc-031.json
+doc-033.pdf -> doc-033.json
+doc-039.pdf -> doc-039.json
+doc-046.pdf -> doc-046.json
+doc-050.pdf -> doc-050.json
