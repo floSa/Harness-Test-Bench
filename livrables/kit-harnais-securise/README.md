@@ -393,6 +393,15 @@ Ordre de grandeur pour régler le plafond : une tâche d'une demi-heure consomme
 | Facturation | le compteur du relais est une estimation en jetons | la référence reste le suivi du portail |
 | Conservation des requêtes | elle dépend du portail | à vérifier avec ses administrateurs |
 
+Points qui dépendent de la configuration du poste, à confirmer au premier lancement :
+
+| Point | Risque | Comment le voir | Que faire |
+|---|---|---|---|
+| Limites de mémoire et de processus sous Podman | un harnais qui s'emballe peut saturer le poste | vérificateur : « mémoire plafonnée » ou « nombre de processus plafonné » `NON CONFORME` | demander au service informatique la délégation cgroups v2 (section 4.3), ou passer en mode sans conteneur |
+| Autorisation AppArmor de bubblewrap | le mode sans conteneur ne démarre pas | `setting up uid map: Permission denied` à la vérification de bubblewrap | activer le profil `bwrap-userns-restrict` (section 4.4) |
+| Mandataire (proxy) et autorité de certification de l'entreprise | relais ou filtre sans accès au portail ni aux paquets | vérificateur : appel réel au modèle en 502, ou domaine autorisé refusé | renseigner `HTTPS_PROXY` et `SSL_CERT_FILE` (section 6) ; voir `journaux/` |
+| Accès au portail IAG depuis le poste | aucun appel possible | vérificateur : appel réel au modèle en erreur | vérifier l'adresse, la clé et l'accès réseau avec les administrateurs du portail |
+
 ## 9. Organiser un test à plusieurs
 
 | Point | Recommandation | Pourquoi |
