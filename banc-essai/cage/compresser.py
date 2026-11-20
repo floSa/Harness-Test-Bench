@@ -20,3 +20,11 @@ for f in sorted(dossier.rglob("*")):
         avant, apres = f.stat().st_size, gz.stat().st_size
         f.unlink()
         print(f"{f} : {avant / 1e6:.1f} Mo -> {apres / 1e6:.1f} Mo (gzip)")
+        if apres > 90 * 1024 * 1024:   # toujours trop lourd pour GitHub : gardé hors git, signalé
+            hors = dossier / "hors-git"
+            hors.mkdir(exist_ok=True)
+            gz.rename(hors / gz.name)
+            (f.parent / (f.name + ".HORS-GIT.txt")).write_text(
+                f"Trace de {apres / 1e6:.0f} Mo après compression, trop lourde pour GitHub : gardée sur la machine "
+                f"d'essai dans {hors.name}/{gz.name}.\n")
+            print(f"  -> hors git : {hors / gz.name}")

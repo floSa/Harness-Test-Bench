@@ -16,6 +16,7 @@ node_modules/
 banc-essai/resultats/*/evaluation/detail-cache.jsonl
 banc-essai/resultats/*/evaluation/contenus-cache.jsonl
 banc-essai/resultats/*/code-cache/
+banc-essai/resultats/*/hors-git/
 # Secrets et journaux du LiteLLM du banc
 banc-essai/traces/secrets/
 banc-essai/traces/journaux/
