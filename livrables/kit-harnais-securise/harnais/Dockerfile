@@ -38,7 +38,7 @@ RUN curl -fsSL -o /tmp/goose.tar.gz \
       "https://github.com/aaif-goose/goose/releases/download/v${GOOSE_VERSION}/goose-x86_64-unknown-linux-gnu.tar.gz" \
  && echo "${GOOSE_SHA256}  /tmp/goose.tar.gz" | sha256sum -c --quiet \
  && tar -xzf /tmp/goose.tar.gz -C /usr/local/bin ./goose && rm /tmp/goose.tar.gz
-# Autres harnais (une ligne à décommenter ; voir le guide, annexe B) :
+# Autres harnais (une ligne à décommenter ; voir guide/05-brancher-un-harnais.md) :
 # RUN npm install -g --ignore-scripts cline@3.0.74
 # RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent@1.5.2
 # RUN pip install --no-cache-dir gptme==0.37.0

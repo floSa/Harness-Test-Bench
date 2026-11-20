@@ -27,4 +27,4 @@ sed -i '/^UID_AGENT=/d;/^GID_AGENT=/d' .env
 printf 'UID_AGENT=%s\nGID_AGENT=%s\n' "$(id -u)" "$(id -g)" >> .env
 umask 022
 mkdir -p espace journaux certificats
-echo "Prêt. Suite : guide, section 4 (Docker, Podman ou sans conteneur)."
+echo "Prêt. Suite : README.md, « Par où commencer »."
