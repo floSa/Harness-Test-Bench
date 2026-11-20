@@ -78,6 +78,20 @@ Le harnais croit parler à une API OpenAI ordinaire. Il reçoit trois variables,
 
 ## 3. Prérequis et choix du mode
 
+### Par où commencer
+
+Lancer ces trois commandes sur le poste et prendre le premier mode qui répond :
+
+| Ordre | Commande | Si elle affiche une version |
+|---|---|---|
+| 1 | `docker compose version` | mode Docker (section 4.2) |
+| 2 | `podman --version` | mode Podman (section 4.3) |
+| 3 | `bwrap --version` | mode sans conteneur (section 4.4) |
+
+Si aucune ne répond, installer Podman ou bubblewrap (sections 4.3 et 4.4 : une commande sur Ubuntu 24.04, avec les droits d'administration).
+
+### Prérequis
+
 Communs aux trois modes :
 
 | Élément | Détail |
@@ -95,8 +109,10 @@ Choix du mode :
 | Ce qui enferme le harnais | conteneur et réseau Docker interne | conteneur et réseau Podman interne | cage bubblewrap : espaces de noms du noyau, comme un conteneur, sans image |
 | Installation du harnais | dans l'image (`harnais/Dockerfile`), version identique pour tous | dans l'image (`harnais/Dockerfile`), version identique pour tous | dans `sans-conteneur/harnais/`, à la main sur chaque poste |
 | Système vu par le harnais | celui de l'image, en lecture seule | celui de l'image, en lecture seule | `/usr` et `/etc` du poste, en lecture seule |
-| Limites de mémoire et de processus | appliquées par Docker | appliquées si le système délègue ces réglages à l'utilisateur (cgroups v2 avec systemd) | appliquées par systemd (`systemd-run --user`) |
+| Limites de mémoire et de processus | appliquées par Docker | appliquées si le système délègue ces réglages à l'utilisateur (c'est le cas par défaut sur Ubuntu 24.04) | appliquées par systemd (`systemd-run --user`) |
 | Installation | section 4.2 | section 4.3 | section 4.4 |
+
+### Questions au portail
 
 À demander aux administrateurs du portail avant de commencer :
 
@@ -187,10 +203,18 @@ Cette commande ouvre un terminal dans le conteneur du harnais, dans `/travail`, 
 
 ### 4.3 Podman
 
-Podman lit les mêmes images et le même `compose.yaml` que Docker. Deux différences :
+Podman lit les mêmes images et le même `compose.yaml` que Docker. Il fonctionne sans droits root et sans service permanent.
+
+**Installer Podman** s'il manque (droits d'administration, une fois par poste ; Ubuntu 24.04 fournit Podman 4.9 et podman-compose 1.0.6) :
+
+```bash
+sudo apt install podman podman-compose
+```
+
+Deux différences avec Docker :
 
 - **Correspondance des utilisateurs.** Sans droits root, Podman décale les numéros d'utilisateur des conteneurs. Le fichier `compose.podman.yaml` les fait correspondre à ceux du poste (`keep-id`). Sans lui, le harnais ne peut pas écrire dans `espace/`, ni le relais dans `journaux/`.
-- **Limites de mémoire et de processus.** Podman sans droits root ne les applique que si le système lui délègue ces réglages (cgroups v2 avec systemd). Le vérificateur le signale : si la ligne « mémoire plafonnée » est `NON CONFORME`, demander au service informatique d'activer cette délégation.
+- **Limites de mémoire et de processus.** Podman sans droits root ne les applique que si le système lui délègue ces réglages. Ubuntu 24.04 le fait par défaut pour une session ouverte normalement. Si la ligne « mémoire plafonnée » du vérificateur est `NON CONFORME`, demander au service informatique d'activer cette délégation (cgroups v2, mémoire et processus, pour `user@.service`).
 
 Dans chaque nouveau terminal, déclarer d'abord les deux fichiers :
 
@@ -216,6 +240,8 @@ podman compose run --rm harnais python3 /kit/verifier.py --appel
 podman compose run --rm harnais
 ```
 
+Avec podman-compose 1.0.6 (Ubuntu 24.04), des messages `the container name … is already in use` peuvent apparaître : ils sont sans effet, les conteneurs déjà démarrés sont réutilisés.
+
 ### 4.4 Sans conteneur (bubblewrap)
 
 Le relais et le filtre tournent comme de simples programmes Python sur le poste. Le harnais tourne dans une cage bubblewrap. bubblewrap est l'outil d'isolement des applications Flatpak : il utilise les mêmes mécanismes du noyau que les conteneurs, sans image ni service.
@@ -230,10 +256,26 @@ Dans la cage, le harnais :
 **Installer bubblewrap** (droits d'administration, une fois par poste) :
 
 ```bash
-sudo apt install bubblewrap
+sudo apt install bubblewrap apparmor-profiles
 ```
 
-Sur Ubuntu 24.04, une protection du système (AppArmor) peut bloquer bubblewrap avec le message `setting up uid map: Permission denied`. La solution recommandée consiste à ajouter le profil `bwrap-userns-restrict` du paquet `apparmor-profiles`, plutôt que de désactiver la protection pour tout le poste. C'est au service informatique de le faire.
+**Vérifier que bubblewrap peut créer une cage :**
+
+```bash
+bwrap --ro-bind / / --unshare-user --unshare-net true && echo "bubblewrap utilisable"
+```
+
+Sur Ubuntu 24.04, cette commande peut échouer avec `setting up uid map: Permission denied`. C'est une protection d'Ubuntu (AppArmor) qui réserve la création d'espaces de noms aux programmes autorisés. Ubuntu fournit l'autorisation de bubblewrap dans le paquet `apparmor-profiles`, sans l'activer. Pour l'activer (droits d'administration, une fois par poste) :
+
+```bash
+sudo cp /usr/share/apparmor/extra-profiles/bwrap-userns-restrict /etc/apparmor.d/
+```
+
+```bash
+sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
+```
+
+Puis relancer la vérification. Ce profil n'autorise que bubblewrap. Il est préférable à la désactivation de la protection pour tout le poste (`kernel.apparmor_restrict_unprivileged_userns=0`), qui la retire à tous les programmes.
 
 **Installer le harnais** dans `sans-conteneur/harnais/` ; ce dossier est visible dans la cage en lecture seule, sous `/opt/harnais`. Exemple avec Goose ; l'annexe B donne les autres harnais :
 
@@ -290,11 +332,11 @@ Ce mode permet de tout installer et vérifier avant d'avoir la clé, ou de montr
 | Étape | Docker ou Podman | Sans conteneur |
 |---|---|---|
 | Réglages dans `.env`, puis `bash preparer.sh` | `IAG_URL=http://faux-portail:4198/v1`, `IAG_CLE=cle-factice`, `IAG_MODELE=modele-factice` | `IAG_URL=http://127.0.0.1:4198/v1`, `IAG_CLE=cle-factice`, `IAG_MODELE=modele-factice` |
-| Démarrer le faux portail | `docker compose --profile essai up -d relais filtre faux-portail` | `ECOUTE=127.0.0.1:4198 python3 outils/faux_portail.py` dans un second terminal |
+| Démarrer le faux portail | Docker : `docker compose --profile essai up -d relais filtre faux-portail` ; Podman : `podman compose up -d relais filtre faux-portail` | `ECOUTE=127.0.0.1:4198 python3 outils/faux_portail.py` dans un second terminal |
 | Vérifier | `docker compose run --rm harnais python3 /kit/verifier.py --appel` | `python3 sans-conteneur/lancer.py python3 /kit/verifier.py --appel` |
 | Lire ce que le portail a reçu | `docker compose logs faux-portail` | sortie du second terminal |
 
-Avec Podman, remplacer `docker compose` par `podman compose`, après l'`export COMPOSE_FILE` de la section 4.3.
+Avec Podman, remplacer `docker compose` par `podman compose`, après l'`export COMPOSE_FILE` de la section 4.3. podman-compose 1.0.6 ne connaît pas `--profile` : nommer le faux portail suffit à le démarrer.
 
 ## 6. Réglages (`.env`)
 
@@ -377,7 +419,8 @@ Ordre de grandeur pour régler le plafond : une tâche d'une demi-heure consomme
 | `pip install` ou `npm install` échoue | domaine absent de la liste, ou quota atteint | `journaux/telechargements.jsonl`, puis `DOMAINES_AUTORISES` |
 | fichiers de `espace/` non modifiables | Docker : `preparer.sh` non relancé après un changement d'utilisateur ; Podman : `compose.podman.yaml` oublié | Docker : `bash preparer.sh`, puis `docker compose build` ; Podman : `export COMPOSE_FILE=compose.yaml:compose.podman.yaml` |
 | Podman : « mémoire plafonnée » `NON CONFORME` | limites non déléguées à l'utilisateur par le système | demander au service informatique la délégation cgroups v2 (mémoire, processus) |
-| bubblewrap : `setting up uid map: Permission denied` | protection AppArmor d'Ubuntu 24.04 | profil `bwrap-userns-restrict` à ajouter par le service informatique (section 4.4) |
+| Podman : `invalid choice: 'essai'` | podman-compose 1.0.6 sans option `--profile` | `podman compose up -d relais filtre faux-portail` |
+| bubblewrap : `setting up uid map: Permission denied` | protection AppArmor d'Ubuntu 24.04 | activer le profil `bwrap-userns-restrict` (section 4.4) |
 | `systemd-run --user indisponible` | pas de session systemd de l'utilisateur (WSL sans systemd) | activer systemd dans WSL (`[boot] systemd=true` dans `/etc/wsl.conf`) |
 | le harnais signale un catalogue de modèles ou une mise à jour injoignable | sortie vers l'éditeur refusée par le filtre | normal ; sans effet sur son travail |
 
