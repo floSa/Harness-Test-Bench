@@ -11,6 +11,8 @@ Relais entre les harnais et OpenRouter, propre au banc : LLM-Service et les cont
 | Journal | `journaux/appels.jsonl` (hors git) : une ligne par appel, succès ou échec |
 | Réglages | pas de pause du déploiement après une erreur (`disable_cooldowns`), pas de nouvelle tentative par le relais (`num_retries: 0`) : le harnais reçoit les vrais 429 ; dépense des clés écrite en base toutes les 1 à 6 s (`proxy_batch_write_at: 1`) |
 
+Autre fournisseur compatible OpenAI (portail d'entreprise) : [guide d'adaptation](../../documentations/adapter-point-d-acces.md) ; `faux_portail.py` imite un point d'accès pour vérifier ce que le relais transmet, sans dépense.
+
 ## Commandes
 
 Depuis la racine du dépôt :
