@@ -1,0 +1,11 @@
+# Complément pour Podman sans droits root, à ajouter à compose.yaml :
+#   podman compose -f compose.yaml -f compose.podman.yaml ...
+#
+# Pourquoi : sans droits root, Podman décale les numéros d'utilisateur des conteneurs. Sans ce réglage,
+# l'utilisateur du conteneur n'est pas le propriétaire des dossiers espace/ et journaux/ et ne peut pas y
+# écrire. « keep-id » fait correspondre l'utilisateur du conteneur à celui de la machine.
+services:
+  relais: {userns_mode: keep-id}
+  filtre: {userns_mode: keep-id}
+  harnais: {userns_mode: keep-id}
+  faux-portail: {userns_mode: keep-id}

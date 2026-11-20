@@ -17,7 +17,7 @@ x-durcissement: &durcissement
 services:
   relais:
     <<: *durcissement
-    image: python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+    image: docker.io/library/python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
     command: ["python3", "-I", "/app/portail.py"]
     env_file: [.env]
     volumes:
@@ -31,7 +31,7 @@ services:
 
   filtre:
     <<: *durcissement
-    image: python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+    image: docker.io/library/python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
     command: ["python3", "-I", "/app/filtre.py"]
     # Pas de env_file : le filtre n'a pas besoin de la clé du portail.
     environment:
@@ -86,7 +86,7 @@ services:
   # Essai à blanc, sans clé du portail : `docker compose --profile essai up -d faux-portail`.
   faux-portail:
     <<: *durcissement
-    image: python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+    image: docker.io/library/python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
     command: ["python3", "-I", "/app/faux_portail.py"]
     volumes:
       - ./outils/faux_portail.py:/app/faux_portail.py:ro

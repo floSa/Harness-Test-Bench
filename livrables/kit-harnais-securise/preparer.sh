@@ -27,7 +27,4 @@ sed -i '/^UID_AGENT=/d;/^GID_AGENT=/d' .env
 printf 'UID_AGENT=%s\nGID_AGENT=%s\n' "$(id -u)" "$(id -g)" >> .env
 umask 022
 mkdir -p espace journaux certificats
-echo "Prêt. Suite :"
-echo "  docker compose build"
-echo "  docker compose up -d relais filtre"
-echo "  docker compose run --rm harnais python3 /kit/verifier.py"
+echo "Prêt. Suite : guide, section 4 (Docker, Podman ou sans conteneur)."

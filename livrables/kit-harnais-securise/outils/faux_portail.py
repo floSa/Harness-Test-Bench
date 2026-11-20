@@ -2,12 +2,14 @@
 
 Lancé par `docker compose --profile essai up -d faux-portail` ; dans .env :
 IAG_URL=http://faux-portail:4198/v1, IAG_CLE=cle-factice, IAG_MODELE=modele-factice.
+Mode sans conteneur : `ECOUTE=127.0.0.1:4198 python3 outils/faux_portail.py` et IAG_URL=http://127.0.0.1:4198/v1.
 
 Répond « OK » (en flux ou non) à toute requête POST .../chat/completions et affiche sur sa sortie,
 pour chaque requête reçue du relais : chemin, présence de la clé du portail (jamais sa valeur), en-têtes
 X-*, modèle, champs du corps. Lecture : `docker compose logs faux-portail`.
 """
 import json
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
@@ -46,5 +48,6 @@ class Portail(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print("faux portail prêt : http://faux-portail:4198/v1", flush=True)
-    ThreadingHTTPServer(("0.0.0.0", 4198), Portail).serve_forever()
+    hote, port = (os.environ.get("ECOUTE") or "0.0.0.0:4198").rsplit(":", 1)
+    print(f"faux portail prêt : port {port}", flush=True)
+    ThreadingHTTPServer((hote, int(port)), Portail).serve_forever()

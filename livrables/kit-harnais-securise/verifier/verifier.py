@@ -1,7 +1,7 @@
-"""Vérifie, depuis l'intérieur du conteneur du harnais, que chaque protection du kit est en place.
+"""Vérifie, depuis l'endroit où tourne le harnais (conteneur ou cage), que chaque protection est en place.
 
-    docker compose run --rm harnais python3 /kit/verifier.py            sans appel payant
-    docker compose run --rm harnais python3 /kit/verifier.py --appel    plus un vrai appel au modèle
+    python3 /kit/verifier.py            sans appel payant
+    python3 /kit/verifier.py --appel    plus un vrai appel au modèle
 
 Chaque ligne : la protection, le résultat attendu, le résultat obtenu, CONFORME ou NON CONFORME.
 Code de sortie 0 si tout est conforme. Bibliothèque standard seulement.
@@ -11,11 +11,13 @@ import os
 import socket
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 RELAIS = os.environ.get("OPENAI_BASE_URL", "http://relais:8080/v1")
 CLE = os.environ.get("OPENAI_API_KEY", "")
 MODELE = os.environ.get("MODELE", "")
+FILTRE = urllib.parse.urlsplit(os.environ.get("HTTPS_PROXY", "http://filtre:3128"))
 resultats = []
 
 
@@ -42,7 +44,7 @@ def statut_http(methode, url, corps=None, cle=CLE, delai=30):
 def tunnel(hote):
     """Demande au filtre un tunnel HTTPS vers hote ; renvoie la ligne de statut."""
     try:
-        s = socket.create_connection(("filtre", 3128), timeout=15)
+        s = socket.create_connection((FILTRE.hostname, FILTRE.port or 3128), timeout=15)
         s.sendall(f"CONNECT {hote}:443 HTTP/1.1\r\nHost: {hote}:443\r\n\r\n".encode())
         ligne = s.recv(200).split(b"\r\n", 1)[0].decode(errors="replace")
         s.close()
@@ -71,7 +73,7 @@ try:
     obtenu = "écriture réussie"
 except OSError:
     obtenu = "écriture refusée"
-noter("système de l'image en lecture seule", "écriture refusée", obtenu, obtenu == "écriture refusée")
+noter("système en lecture seule", "écriture refusée", obtenu, obtenu == "écriture refusée")
 try:
     with open("/travail/.verif-ecriture", "w") as f:
         f.write("x")
@@ -88,17 +90,23 @@ noter("réglages et clés du kit invisibles", ".env absent de /travail et de /ki
       "absent" if not any(os.path.exists(p) for p in ("/travail/.env", "/kit/.env")) else "présent",
       not any(os.path.exists(p) for p in ("/travail/.env", "/kit/.env")))
 
-# 3. Ressources
-try:
-    memoire = open("/sys/fs/cgroup/memory.max").read().strip()
-except OSError:
-    memoire = "illisible"
+# 3. Ressources (groupe de contrôle du processus : le conteneur, ou l'unité systemd de la cage)
+groupe = open("/proc/self/cgroup").read().strip().split("::", 1)[-1]
+
+
+def limite(nom):
+    for chemin in (f"/sys/fs/cgroup{groupe}/{nom}", f"/sys/fs/cgroup/{nom}"):
+        try:
+            return open(chemin).read().strip()
+        except OSError:
+            pass
+    return "illisible"
+
+
+memoire = limite("memory.max")
 noter("mémoire plafonnée", "un nombre d'octets", memoire, memoire.isdigit())
-try:
-    processus = open("/sys/fs/cgroup/pids.max").read().strip()
-except OSError:
-    processus = "illisible"
-noter("nombre de processus plafonné", "un nombre", processus, processus.isdigit())
+processus = limite("pids.max")
+noter("nombre de processus plafonné", "4096 au plus", processus, processus.isdigit() and int(processus) <= 4096)
 
 # 4. Secrets
 suspects = [k for k in os.environ if k.startswith("IAG_") or k in ("CLE_RELAIS",)]

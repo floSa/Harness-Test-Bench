@@ -162,3 +162,15 @@
 - Non essayé : mandataire d'entreprise et certificat interne (mécanismes standard de Python, confirmés par l'étape de vérification sur le poste).
 
 - Guide du kit allégé à la demande de l'utilisateur : section sur LiteLLM et annexe des vérifications retirées (inutiles au testeur), sections renumérotées ; archive reconstruite.
+
+## 2026-11-20 — Kit : modes Podman et sans conteneur
+
+- Besoin : postes sans Docker ; Podman peut-être disponible. Le kit propose trois modes : Docker, Podman, sans conteneur (bubblewrap).
+- Podman : `compose.podman.yaml` (`userns_mode: keep-id`, sinon `espace/` et `journaux/` non modifiables sans droits root) ; noms d'images complets (`docker.io/library/…`).
+- Sans conteneur : `sans-conteneur/lancer.py` lance relais et filtre sur le poste (sockets Unix dans un dossier privé) puis le harnais dans une cage bubblewrap sans réseau ; `passerelle.py` relie 127.0.0.1:8080 et :3128 de la cage aux sockets ; limites par `systemd-run --user`. Relais et filtre : réglages `ECOUTE` et `JOURNAUX`.
+- Vérificateur : adresse du filtre lue dans `HTTPS_PROXY`, limites lues dans le groupe de contrôle du processus, nombre de processus exigé à 4096 au plus.
+- Vérifications (faux portail) :
+  - Docker : 21 sur 21 ;
+  - Podman 6.2 sans droits root, dans un conteneur d'essai, avec docker-compose et avec podman-compose 1.6.0 : 19 sur 21 ; limites de mémoire et de processus enregistrées par Podman mais non appliquées dans cet environnement imbriqué (pas de systemd) ; non vérifié sur un vrai poste ;
+  - sans conteneur (bubblewrap 0.9.0, WSL2 Ubuntu 24.04) : 21 sur 21, archive décompressée ailleurs comprise ; Goose et gptme ont appelé le modèle par le relais ; Ctrl+C atteint le harnais sans fermer la cage ; échec du démarrage du filtre sans relais orphelin.
+- Guide : choix du mode (section 3), installation par mode (section 4), protections par mode (section 7), problèmes propres à Podman et bubblewrap (section 10), installation de chaque harnais sans conteneur (annexe B).

@@ -15,6 +15,8 @@ with zipfile.ZipFile(ICI / "kit-harnais-securise.zip", "w", zipfile.ZIP_DEFLATED
             continue
         if rel.parts[0] in ("espace", "journaux", "certificats") and f.name != ".gitkeep":
             continue
+        if rel.parts[:2] in (("sans-conteneur", "harnais"), ("sans-conteneur", "maison")) or f.name == ".verrou":
+            continue
         info = zipfile.ZipInfo(f"kit-harnais-securise/{rel.as_posix()}", date_time=(2026, 11, 20, 0, 0, 0))
         info.external_attr = (0o755 if f.stat().st_mode & 0o111 else 0o644) << 16
         info.compress_type = zipfile.ZIP_DEFLATED

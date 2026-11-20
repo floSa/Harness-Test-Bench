@@ -1,9 +1,9 @@
 # Image du harnais : Debian 13, Python 3.12, Node 24, uv, git.
 # Seule la section « INSTALLATION DU HARNAIS » est à adapter. Les images de base sont figées par
 # leur empreinte (sha256) : la même image est reconstruite à l'identique chez chaque testeur.
-FROM node:24-trixie-slim@sha256:af02d57b57719b9657a45199a79264a9437940cd55b3c7b3fc99615654f124a0 AS node
+FROM docker.io/library/node:24-trixie-slim@sha256:af02d57b57719b9657a45199a79264a9437940cd55b3c7b3fc99615654f124a0 AS node
 FROM ghcr.io/astral-sh/uv:0.12.17@sha256:10787c682e4184e4f290de1171fd4703dc63de99221f10fe1c99002ce7fa9acc AS uv
-FROM python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+FROM docker.io/library/python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends ca-certificates curl git ripgrep less procps \

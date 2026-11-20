@@ -9,7 +9,8 @@ Le contenu chiffré n'est ni lu ni modifié. Bibliothèque standard seulement.
 Variables : DOMAINES_AUTORISES (liste séparée par des virgules ; « .exemple.org » autorise aussi
 les sous-domaines), QUOTA_TELECHARGEMENT_MO (volume reçu maximal, pour toute la durée du filtre).
 Si HTTPS_PROXY est défini (mandataire d'entreprise), les connexions passent par lui.
-Journal : /journaux/telechargements.jsonl.
+Journal : telechargements.jsonl dans JOURNAUX (/journaux par défaut). ECOUTE : adresse d'écoute
+(0.0.0.0:3128 par défaut ; un chemin pour une socket Unix).
 """
 import base64
 import datetime
@@ -23,7 +24,8 @@ import urllib.parse
 DOMAINES = [d.strip().lower() for d in os.environ.get("DOMAINES_AUTORISES", "").split(",") if d.strip()]
 QUOTA = int(os.environ.get("QUOTA_TELECHARGEMENT_MO") or 5000) * 1024 * 1024
 PARENT = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
-JOURNAL = "/journaux/telechargements.jsonl"
+JOURNAL = os.path.join(os.environ.get("JOURNAUX") or "/journaux", "telechargements.jsonl")
+ECOUTE = os.environ.get("ECOUTE") or "0.0.0.0:3128"
 verrou = threading.Lock()
 recus_total = 0
 
@@ -133,7 +135,17 @@ class Serveur(socketserver.ThreadingTCPServer):
     allow_reuse_address = True
 
 
+class ServeurUnix(socketserver.ThreadingUnixStreamServer):
+    daemon_threads = True
+
+
 if __name__ == "__main__":
     print(f"filtre prêt : domaines {DOMAINES}, quota {QUOTA // (1024 * 1024)} Mo, "
           f"mandataire d'entreprise {'oui' if PARENT else 'non'}", flush=True)
-    Serveur(("0.0.0.0", 3128), Filtre).serve_forever()
+    if ECOUTE.startswith("/"):   # mode sans conteneur : socket Unix, seul passage depuis la cage
+        if os.path.exists(ECOUTE):
+            os.remove(ECOUTE)
+        ServeurUnix(ECOUTE, Filtre).serve_forever()
+    else:
+        hote, port = ECOUTE.rsplit(":", 1)
+        Serveur((hote, int(port)), Filtre).serve_forever()

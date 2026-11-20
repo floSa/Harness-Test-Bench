@@ -17,7 +17,8 @@ Ce que fait le relais, dans l'ordre, pour chaque requête :
 Variables : IAG_URL (avec /v1), IAG_CLE, IAG_MODELE, IAG_MODELES (facultatif, liste séparée par des
 virgules), CLE_RELAIS, PLAFOND_JETONS, APPELS_PAR_MINUTE, APPELS_SIMULTANES, TAILLE_MAX_MO,
 ROUTES_SUPPLEMENTAIRES (ex. /v1/responses), IAG_ENTETE_CLE (en-tête de la clé si le portail
-n'utilise pas « Authorization: Bearer »), IAG_ENTETES (en-têtes fixes, en JSON), COMPTER_FLUX.
+n'utilise pas « Authorization: Bearer »), IAG_ENTETES (en-têtes fixes, en JSON), COMPTER_FLUX,
+ECOUTE (adresse d'écoute, 0.0.0.0:8080 par défaut ; un chemin pour une socket Unix), JOURNAUX (dossier).
 Le mandataire d'entreprise (HTTPS_PROXY, NO_PROXY) et le certificat interne (SSL_CERT_FILE) sont
 pris dans l'environnement.
 """
@@ -26,6 +27,7 @@ import datetime
 import hmac
 import json
 import os
+import socketserver
 import ssl
 import threading
 import time
@@ -45,8 +47,10 @@ TAILLE_MAX = int(os.environ.get("TAILLE_MAX_MO") or 20) * 1024 * 1024
 ENTETE_CLE = os.environ.get("IAG_ENTETE_CLE") or "Authorization"
 ENTETES = json.loads(os.environ.get("IAG_ENTETES") or "{}")
 COMPTER_FLUX = (os.environ.get("COMPTER_FLUX") or "1") == "1"
-JOURNAL = "/journaux/appels.jsonl"
-COMPTEUR = "/journaux/compteur.json"
+ECOUTE = os.environ.get("ECOUTE") or "0.0.0.0:8080"
+JOURNAUX = os.environ.get("JOURNAUX") or "/journaux"
+JOURNAL = os.path.join(JOURNAUX, "appels.jsonl")
+COMPTEUR = os.path.join(JOURNAUX, "compteur.json")
 CONTEXTE_TLS = ssl.create_default_context()   # lit SSL_CERT_FILE s'il est défini
 
 verrou = threading.Lock()
@@ -218,9 +222,19 @@ class Relais(BaseHTTPRequestHandler):
             self.close_connection = True
 
 
+class ServeurUnix(socketserver.ThreadingMixIn, socketserver.UnixStreamServer):
+    daemon_threads = True
+
+
 if __name__ == "__main__":
-    serveur = ThreadingHTTPServer(("0.0.0.0", 8080), Relais)
-    serveur.daemon_threads = True
+    if ECOUTE.startswith("/"):   # mode sans conteneur : socket Unix, seul passage depuis la cage
+        if os.path.exists(ECOUTE):
+            os.remove(ECOUTE)
+        serveur = ServeurUnix(ECOUTE, Relais)
+    else:
+        hote, port = ECOUTE.rsplit(":", 1)
+        serveur = ThreadingHTTPServer((hote, int(port)), Relais)
+        serveur.daemon_threads = True
     print(f"relais prêt : modèles {MODELES}, routes {sorted(ROUTES)}, plafond {PLAFOND} jetons "
           f"(déjà consommés : {cumul}), {PAR_MINUTE} appels par minute", flush=True)
     serveur.serve_forever()
