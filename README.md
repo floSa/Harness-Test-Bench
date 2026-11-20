@@ -21,10 +21,10 @@ Harness-Test-Bench/
 │   ├── traces/           journal de chaque appel au modèle
 │   ├── recettes/         consignes de départ : sans aide, avec aide
 │   └── resultats/        résultat brut de chaque essai
+├── livrables/           kit à distribuer (environnement sécurisé pour un harnais)
 └── documentations/       lire
     ├── protocole.md
     ├── protocole-explique.md
-    ├── adapter-point-d-acces.md
     ├── cahier-des-charges-corpus.md
     └── journal.md
 ```
@@ -35,6 +35,6 @@ Harness-Test-Bench/
 |---|---|
 | Comprendre le banc (schémas, plusieurs niveaux de lecture) | [Protocole expliqué](documentations/protocole-explique.md) |
 | Méthode (référence) | [Protocole](documentations/protocole.md) |
-| Brancher le banc sur un autre fournisseur compatible OpenAI (configuration, sécurité) | [Adapter le point d'accès](documentations/adapter-point-d-acces.md) |
+| Tester un harnais en sécurité avec un portail compatible OpenAI (kit à distribuer, archive zip) | [Kit](livrables/kit-harnais-securise/README.md), [archive](livrables/kit-harnais-securise.zip) |
 | Corpus | [Cahier des charges](documentations/cahier-des-charges-corpus.md) |
 | Avancement | [Journal](documentations/journal.md) |

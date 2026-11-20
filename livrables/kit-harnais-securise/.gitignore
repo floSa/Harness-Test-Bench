@@ -1,0 +1,7 @@
+# Réglages avec clés : jamais versionnés ni partagés.
+.env
+# Fichiers du test et journaux : propres à chaque poste.
+espace/*
+journaux/*
+certificats/*
+!*/.gitkeep

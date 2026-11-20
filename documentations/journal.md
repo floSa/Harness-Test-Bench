@@ -134,3 +134,30 @@
 
 - Demande de l'utilisateur : document réutilisable pour un projet similaire qui passe par un portail d'entreprise compatible OpenAI (une URL, une clé d'API), centré sur la configuration et la sécurité du banc. Rédigé sans nom d'entreprise (dépôt public) : `documentations/adapter-point-d-acces.md`.
 - Vérifié avec LiteLLM v1.106.4 : relais temporaire en mode générique (`openai/<modèle>`, `api_base`) vers OpenRouter, réponse obtenue, coût calculé (0,0000053 $) ; faux point d'accès local (`banc-essai/traces/faux_portail.py`, ajouté) : chemin `/v1/chat/completions`, clé du portail transmise à la place de celle du relais, en-tête `extra_headers` et outils transmis ; limite de requêtes par clé virtuelle (`rpm_limit: 2` : 3e appel refusé en 429, clé supprimée) ; lecture de `SSL_CERT_FILE` et `AIOHTTP_TRUST_ENV` dans le code de LiteLLM (mandataire d'entreprise non essayé, à confirmer par l'appel de test du guide). Schéma Mermaid validé (mermaid 12.3.0).
+- Remplacé le même jour, à la demande de l'utilisateur, par un kit autonome à distribuer (entrée suivante) ; document et faux point d'accès du banc retirés.
+
+### 2026-11-20 — Livrable : kit de test sécurisé d'un harnais avec le portail IAG
+
+- Demande de l'utilisateur : archive zip à remettre à plusieurs testeurs (un harnais chacun), qui explique et met en place l'environnement le plus sûr, le modèle étant servi par le portail IAG (API compatible OpenAI : une URL et une clé) ; sans référence au banc ni à son fournisseur ; LiteLLM seulement si nécessaire ; chaque protection vulgarisée et justifiée.
+- `livrables/kit-harnais-securise/` et `livrables/kit-harnais-securise.zip` (construit par `livrables/construire-zip.py`, sans `.env`, espace ni journaux) :
+  - Docker Compose, trois conteneurs :
+    - relais Python sans dépendance, seul détenteur de la clé du portail : clé locale, routes, modèles autorisés, plafond de jetons, débit, journal sans contenu ;
+    - filtre de téléchargements : HTTPS vers une liste de domaines, quota, journal ;
+    - harnais : réseau interne sans route vers l'extérieur, lecture seule, sans droits ni privilèges, mémoire, processeur et processus plafonnés, seul l'espace de travail monté.
+  - Images de base figées par empreinte, vérificateur de 21 protections, faux portail pour un essai à blanc, bilan.
+  - LiteLLM jugé inutile pour un poste et un testeur (expliqué dans le guide) ; pertinent seulement pour un relais central avec une seule clé partagée, cas non couvert.
+- Vérifié :
+  - 21 sur 21 avec le faux portail et avec un vrai point d'accès compatible OpenAI ;
+  - flux relayé et compté ;
+  - plafond de jetons et débit : refus 429, compteur gardé au redémarrage ;
+  - clé dans l'en-tête `api-key` ;
+  - pip et npm par le filtre, github.com et example.com refusés ;
+  - Goose, OpenCode, gptme, Pi et Cline ont réalisé une tâche à travers le relais ;
+  - sorties de télémétrie et catalogues des harnais refusées sans effet ;
+  - archive décompressée ailleurs puis suivie pas à pas : 21 sur 21.
+- Corrigé en route :
+  - extraction du binaire de Goose (chemin `./goose` dans l'archive) ;
+  - bit d'exécution perdu à la décompression : le guide utilise `bash preparer.sh` ;
+  - plafond par défaut relevé de 10 à 30 millions de jetons, car les essais réels de la campagne 1 ont consommé 6 à 21 millions de jetons en 25 à 35 min.
+- Non essayé : mandataire d'entreprise et certificat interne (mécanismes standard de Python, confirmés par l'étape de vérification sur le poste).
+

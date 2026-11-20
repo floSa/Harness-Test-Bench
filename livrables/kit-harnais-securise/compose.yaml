@@ -1,0 +1,102 @@
+# Environnement sécurisé pour tester un harnais d'agent avec le portail IAG.
+#
+#   relais   : seul service qui connaît la clé du portail ; transmet les appels au modèle.
+#   filtre   : seule sortie vers Internet, limitée aux domaines autorisés (paquets).
+#   harnais  : le harnais à tester ; réseau « interne » seulement, sans accès direct à Internet.
+#
+# Réseau « interne » (internal: true) : aucune route vers l'extérieur. Seuls le relais et le filtre
+# sont aussi branchés sur le réseau « sortie ». Aucun port n'est publié sur la machine.
+name: harnais-securise
+
+x-durcissement: &durcissement
+  read_only: true                          # système de fichiers de l'image en lecture seule
+  cap_drop: [ALL]                          # aucun privilège noyau
+  security_opt: ["no-new-privileges:true"] # aucun gain de droits (setuid, sudo)
+  user: "${UID_AGENT:-1000}:${GID_AGENT:-1000}"
+
+services:
+  relais:
+    <<: *durcissement
+    image: python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+    command: ["python3", "-I", "/app/portail.py"]
+    env_file: [.env]
+    volumes:
+      - ./relais/portail.py:/app/portail.py:ro
+      - ./certificats:/certificats:ro
+      - ./journaux:/journaux
+    networks: [interne, sortie]
+    mem_limit: 256m
+    pids_limit: 128
+    restart: unless-stopped
+
+  filtre:
+    <<: *durcissement
+    image: python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+    command: ["python3", "-I", "/app/filtre.py"]
+    # Pas de env_file : le filtre n'a pas besoin de la clé du portail.
+    environment:
+      DOMAINES_AUTORISES: ${DOMAINES_AUTORISES:-pypi.org,files.pythonhosted.org,registry.npmjs.org}
+      QUOTA_TELECHARGEMENT_MO: ${QUOTA_TELECHARGEMENT_MO:-5000}
+      HTTPS_PROXY: ${HTTPS_PROXY:-}
+    volumes:
+      - ./relais/filtre.py:/app/filtre.py:ro
+      - ./journaux:/journaux
+    networks: [interne, sortie]
+    mem_limit: 256m
+    pids_limit: 256
+    restart: unless-stopped
+
+  harnais:
+    <<: *durcissement
+    build:
+      context: .
+      dockerfile: harnais/Dockerfile
+      args:
+        UID_AGENT: ${UID_AGENT:-1000}
+        GID_AGENT: ${GID_AGENT:-1000}
+    image: harnais-securise-agent
+    # Variables transmises une à une : ni la clé du portail ni le reste de .env n'entrent ici.
+    environment:
+      OPENAI_BASE_URL: http://relais:8080/v1
+      OPENAI_API_BASE: http://relais:8080/v1
+      OPENAI_API_KEY: ${CLE_RELAIS:?lancer bash preparer.sh}
+      MODELE: ${IAG_MODELE:?renseigner IAG_MODELE dans .env}
+      HTTPS_PROXY: http://filtre:3128
+      HTTP_PROXY: http://filtre:3128
+      https_proxy: http://filtre:3128
+      http_proxy: http://filtre:3128
+      NO_PROXY: relais,localhost,127.0.0.1
+      no_proxy: relais,localhost,127.0.0.1
+    volumes:
+      - ./espace:/travail                  # seul dossier de la machine visible et modifiable
+      - maison:/home/agent                 # configuration et caches du harnais, gardés entre deux sessions
+      - ./verifier:/kit:ro
+    tmpfs:
+      - /tmp:size=4g,exec
+    working_dir: /travail
+    networks: [interne]
+    mem_limit: ${MEMOIRE_MAX:-8g}
+    memswap_limit: ${MEMOIRE_MAX:-8g}      # égal à la mémoire : pas d'échange sur disque
+    cpus: ${CPU_MAX:-4}
+    pids_limit: 2048
+    stdin_open: true
+    tty: true
+    depends_on: [relais, filtre]
+
+  # Essai à blanc, sans clé du portail : `docker compose --profile essai up -d faux-portail`.
+  faux-portail:
+    <<: *durcissement
+    image: python:3.12-slim-trixie@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+    command: ["python3", "-I", "/app/faux_portail.py"]
+    volumes:
+      - ./outils/faux_portail.py:/app/faux_portail.py:ro
+    networks: [sortie]
+    profiles: [essai]
+
+networks:
+  interne:
+    internal: true
+  sortie: {}
+
+volumes:
+  maison: {}

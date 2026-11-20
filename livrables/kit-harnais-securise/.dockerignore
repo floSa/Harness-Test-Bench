@@ -1,0 +1,5 @@
+# Contexte de construction de l'image : seulement l'image du harnais et les certificats.
+# Ni .env (clés), ni l'espace de travail, ni les journaux.
+*
+!harnais/
+!certificats/
