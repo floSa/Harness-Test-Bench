@@ -35,6 +35,6 @@ Harness-Test-Bench/
 |---|---|
 | Comprendre le banc (schémas, plusieurs niveaux de lecture) | [Protocole expliqué](documentations/protocole-explique.md) |
 | Méthode (référence) | [Protocole](documentations/protocole.md) |
-| Tester un harnais en sécurité avec un portail compatible OpenAI, avec Docker, Podman ou sans conteneur | [Kit](livrables/kit-harnais-securise/README.md) ; version SharePoint (Word et scripts) dans [livrables/sharepoint](livrables/sharepoint) |
+| Tester un harnais en sécurité avec un portail compatible OpenAI, avec Docker, Podman ou sans conteneur | document Word : [livrables/sharepoint](livrables/sharepoint) ; kit complet : [livrables/kit-harnais-securise](livrables/kit-harnais-securise/README.md) |
 | Corpus | [Cahier des charges](documentations/cahier-des-charges-corpus.md) |
 | Avancement | [Journal](documentations/journal.md) |
