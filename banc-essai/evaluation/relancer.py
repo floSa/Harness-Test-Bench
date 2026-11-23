@@ -26,6 +26,7 @@ import time
 from pathlib import Path
 
 import notation
+import notation_dossiers
 
 ICI = Path(__file__).resolve().parent
 CAGE = ICI.parent / "cage" / "cage.sh"
@@ -51,14 +52,17 @@ def lire_sortie(f):
             os.close(fd)
 
 
-def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=None, maison=None):
+def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=None, maison=None,
+             tache="extraction"):
     essai = Path(essai)
     if shutil.which("bwrap") is None or not CAGE.exists():
         raise SystemExit("relance refusée : bubblewrap ou banc-essai/cage/cage.sh absent")
-    jeu = Path(jeu or ICI.parent / "corpus" / "relance")
+    defaut = ICI.parent / "corpus" / ("dossiers/relance" if tache == "dossiers" else "relance")
+    jeu = Path(jeu or defaut)
+    module = notation_dossiers if tache == "dossiers" else notation
     if commande is None:
         commande = json.loads((essai / "evaluation" / "fin.json").read_text())["commande"]
-    ids, attendus, verites = notation.charger_jeu(jeu)
+    ids, attendus, verites = module.charger_jeu(jeu)
     sortie_essai = essai / "relance"
     if sortie_essai.exists():
         shutil.rmtree(sortie_essai)
@@ -67,7 +71,12 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
         entree = Path(tmp) / "entree"
         entree.mkdir()
         for i in ids:
-            shutil.copy2(jeu / f"{i}.pdf", entree / f"{i}.pdf")
+            if tache == "dossiers":   # pièces seules, ni réponses ni vérité
+                (entree / i).mkdir()
+                for piece in sorted((jeu / i).glob("piece-*.pdf")):
+                    shutil.copy2(piece, entree / i / piece.name)
+            else:
+                shutil.copy2(jeu / f"{i}.pdf", entree / f"{i}.pdf")
         sortie = Path(tmp) / "sortie"
         sortie.mkdir()
         m = Path(maison) if maison else Path(tmp) / "maison"
@@ -105,18 +114,21 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
                 illisibles.append(i)
     (sortie_essai / "stdout.txt").write_text(out)
     (sortie_essai / "stderr.txt").write_text(err)
-    erreurs = notation.valider(reponses, ids)
+    erreurs = module.valider(reponses, ids)
     produits = len(reponses) + len(illisibles)
     # Une réponse mal formée (nombre immense, type faux…) compte faux, sans faire échouer la relance.
     for i in list(reponses):
         r = reponses[i]
-        if not isinstance(r, dict) or any(notation.erreurs_valeur(k, r.get(k)) for k in notation.CLES if k in r):
+        if tache == "dossiers":
+            if notation_dossiers.erreurs_dossier(r):
+                reponses.pop(i)
+        elif not isinstance(r, dict) or any(notation.erreurs_valeur(k, r.get(k)) for k in notation.CLES if k in r):
             reponses.pop(i)
-    note = notation.noter(reponses, attendus, verites)
+    note = module.noter(reponses, attendus, verites)
     note.pop("detail")
     resultat = {
         "commande": commande, "cage": True, "code_retour": code, "duree_s": round(duree, 1),
-        "duree_par_document_s": round(duree / len(ids), 2), "documents": len(ids),
+        "tache": tache, "duree_par_document_s": round(duree / len(ids), 2), "documents": len(ids),
         "json_produits": produits, "json_illisibles": illisibles,
         "fichiers_refuses": refuses,
         "erreurs_format": erreurs[:50],
@@ -135,8 +147,9 @@ def main():
     a.add_argument("--duree-max", type=int, default=DUREE_MAX)
     a.add_argument("--cle", help="fichier de clé virtuelle (appels au modèle du workflow)")
     a.add_argument("--maison", help="dossier personnel du harnais pendant l'essai")
+    a.add_argument("--tache", choices=["extraction", "dossiers"], default="extraction")
     o = a.parse_args()
-    r = relancer(o.espace, o.essai, o.commande, o.jeu, o.duree_max, o.cle, o.maison)
+    r = relancer(o.espace, o.essai, o.commande, o.jeu, o.duree_max, o.cle, o.maison, o.tache)
     print(f"relance : {r['json_produits']}/{r['documents']} JSON, score {r['note']['score']}, "
           f"{r['duree_par_document_s']} s par document, code {r['code_retour']}")
 

@@ -118,18 +118,24 @@ def _jours(d, a, b, r):
 
 
 def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, pieges_doc=None,
-          emplacements=None, style="grille"):
+          emplacements=None, style="grille", impose=None):
     """Un document. emplacements : {cle: emplacement} du plan ; pieges : {cle: [noms]} ;
-    pieges_doc : {nom: valeur}."""
+    pieges_doc : {nom: valeur}. impose : valeurs fixées par un dossier (même équipement d'un
+    rapport à l'autre) : nominal, intervention (date), machine, serie, site, client, ref,
+    statut, pct, debit, pression ; les tirages ont lieu quand même, pour que le reste du document ne change pas."""
+    impose = impose or {}
     r = random.Random(f"{graine}/{doc_id}/valeurs")
     langue = prestataire["langue"]
     typ = TYPES[marque["type"]]
 
     # Volumes, tolérance et statut.
     statut = r.choices(["conforme", "non_conforme", "a_revoir"], weights=[65, 20, 15])[0]
+    statut = impose.get("statut", statut)
     nominal = float(r.choice(typ["nominal"]))
+    nominal = float(impose.get("nominal", nominal))
     pas = _pas(nominal)
     pct = r.choice([0.5, 1, 1.5, 2, 2.5, 3])
+    pct = impose.get("pct", pct)
     while nominal * pct / 100 < 0.06:
         pct = {0.5: 1, 1: 2, 1.5: 2, 2: 3, 2.5: 3, 3: 5, 5: 8, 8: 10, 10: 15}[pct]
     tolerance = round(nominal * pct / 100, 6)
@@ -158,11 +164,14 @@ def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, p
 
     dmin, dmax, dpas = typ["debit"]
     debit = _arr(r.uniform(dmin, dmax), dpas)
+    debit = _arr(impose["debit"], dpas) if "debit" in impose else debit
     pmin, pmax = typ["pression"]
     pression = round(r.uniform(pmin, pmax), 1)
+    pression = round(impose["pression"], 1) if "pression" in impose else pression
 
     # Dates.
     intervention = dt.date(2025, 2, 3) + dt.timedelta(days=r.randint(0, 600))
+    intervention = impose.get("intervention", intervention)
     demande = intervention - dt.timedelta(days=r.randint(2, 12))
     incident = demande - dt.timedelta(days=r.randint(0, 4))
     emission = _jours(intervention, 1, 5, r)
@@ -184,16 +193,19 @@ def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, p
     _, ville_siege = univers.site(r, langue, (ville_site,))
     mot_client = r.choice(univers.DEBUTS) + r.choice(univers.FINS)
     client = r.choice(CLIENTS[langue]).format(m=mot_client)
+    site, client = impose.get("site", site), impose.get("client", client)
 
     # Références.
     an = intervention.year
     num = r.randint(1500, 9999)
     ref = f"{prestataire['prefixe']}-RI-{an}-{num}"
     ref_ancienne = f"{prestataire['prefixe']}-RI-{an}-{num - r.randint(3, 400):04d}"
+    ref, ref_ancienne = impose.get("ref", ref), impose.get("ref_ancienne", ref_ancienne)
     pref = marque["prefixe_serie"]
     serie = r.choice([f"{pref}-{r.randint(2016, 2024)}-{r.randint(10000, 99999)}",
                       f"{pref}{r.randint(100000, 999999)}",
                       f"{pref}/{r.randint(16, 24)}/{r.randint(1000, 9999)}"])
+    serie = impose.get("serie", serie)
     pieces = r.sample(PIECES[marque["type"]], 4)
     refs_pieces = [f"{pref}-{r.randint(100, 999)}-{r.choice('ABCDEKR')}" for _ in pieces]
 
@@ -215,7 +227,8 @@ def tirer(doc_id, jeu, prestataire, marque, part_univers, graine, pieges=None, p
               "pression": round(pression + r.uniform(0.8, 3), 1)}
 
     valeurs = {
-        "machine": f"{r.choice(marque['familles'])} {r.choice([40, 85, 120, 160, 250, 300, 600])}",
+        "machine": impose.get("machine") or
+                   f"{r.choice(marque['familles'])} {r.choice([40, 85, 120, 160, 250, 300, 600])}",
         "constructeur": marque["nom"], "numero_serie": serie, "site": site,
         "reference_rapport": ref, "date_intervention": intervention.isoformat(),
         "date_validation": validation.isoformat(), "volume_dose_ml": dose,

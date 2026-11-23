@@ -1,11 +1,12 @@
 """Prépare l'espace de travail neuf d'un essai à partir d'une recette.
 
     uv run --project banc-essai/evaluation python banc-essai/evaluation/preparer.py \
-        --recette sans-aide|avec-aide|jouet --destination DOSSIER
+        --recette sans-aide|avec-aide|dossiers|jouet --destination DOSSIER
 
 Contenu : la recette (`consignes.md`, et `ontologie.md` pour « avec aide ») ; le client
 `soumettre.py` ; pour l'extraction, `fourni/` avec les 35 PDF et leurs réponses seulement (ni la
-vérité détaillée, ni les annotations). Rien du test caché ni de la relance.
+vérité détaillée, ni les annotations) ; pour les dossiers, `fourni/dos-XXX/` (pièces) et
+`fourni/reponses/`. Rien du test caché ni de la relance.
 """
 import argparse
 import shutil
@@ -14,7 +15,7 @@ from pathlib import Path
 
 ICI = Path(__file__).resolve().parent
 BANC = ICI.parent
-RECETTES = ["sans-aide", "avec-aide", "jouet"]
+RECETTES = ["sans-aide", "avec-aide", "dossiers", "jouet"]
 
 
 def preparer(recette, destination):
@@ -25,7 +26,13 @@ def preparer(recette, destination):
     shutil.copytree(BANC / "recettes" / recette, dest, dirs_exist_ok=True,
                     ignore=shutil.ignore_patterns("__pycache__", ".pytest_cache"))
     shutil.copy2(ICI / "client" / "soumettre.py", dest / "soumettre.py")
-    if recette != "jouet":
+    if recette == "dossiers":
+        source = BANC / "corpus" / "dossiers" / "fourni"
+        (dest / "fourni" / "reponses").mkdir(parents=True)
+        for d in sorted(p for p in source.glob("dos-*") if p.is_dir()):
+            shutil.copytree(d, dest / "fourni" / d.name)
+            shutil.copy2(source / "reponses" / f"{d.name}.json", dest / "fourni" / "reponses")
+    elif recette != "jouet":
         source = BANC / "corpus" / "fourni"
         (dest / "fourni" / "reponses").mkdir(parents=True)
         for pdf in sorted(source.glob("doc-*.pdf")):

@@ -1,0 +1,74 @@
+{
+  "id": "dos-015",
+  "langue": "en",
+  "type": "remplisseuse",
+  "rectificatif": null,
+  "pieces": [
+    {
+      "piece": "piece-01.pdf",
+      "nature": "rapport",
+      "retenu": true,
+      "reference": "MM-RI-2024-4965",
+      "style": "classique",
+      "prestataire": "Mirlor Metrology",
+      "pages": 3,
+      "introuvables": 0
+    },
+    {
+      "piece": "piece-02.pdf",
+      "nature": "version_remplacee",
+      "retenu": false,
+      "reference": "LS-RI-2024-6488",
+      "remplacee_par": "LS-RI-2024-6689",
+      "style": "grille",
+      "prestataire": "Lororzor Services Ltd",
+      "pages": 5,
+      "introuvables": 0
+    },
+    {
+      "piece": "piece-03.pdf",
+      "nature": "rapport",
+      "retenu": true,
+      "reference": "LS-RI-2024-6689",
+      "style": "grille",
+      "prestataire": "Lororzor Services Ltd",
+      "pages": 5,
+      "introuvables": 0
+    }
+  ],
+  "reponse": {
+    "machine": "Helorquin 160",
+    "constructeur": "Tortis",
+    "numero_serie": "TO312707",
+    "site": "Wexford Works",
+    "interventions": [
+      {
+        "reference_rapport": "LS-RI-2024-6689",
+        "date_intervention": "2024-06-08",
+        "date_validation": "2024-06-18",
+        "volume_dose_ml": 740.8,
+        "volume_nominal_ml": 750.0,
+        "tolerance_ml": 15.0,
+        "debit_ml_min": 13250.0,
+        "pression_bar": 0.6998,
+        "reference_piece": "TO-981-D",
+        "technicien": "Declan Marsh",
+        "statut": "conforme"
+      },
+      {
+        "reference_rapport": "MM-RI-2024-4965",
+        "date_intervention": "2024-11-20",
+        "date_validation": "2024-11-26",
+        "volume_dose_ml": 745.3,
+        "volume_nominal_ml": 750.0,
+        "tolerance_ml": 15.0,
+        "debit_ml_min": 14150.0,
+        "pression_bar": 0.6,
+        "reference_piece": "TO-934-A",
+        "technicien": null,
+        "statut": "conforme"
+      }
+    ],
+    "statut_actuel": "conforme"
+  }
+}

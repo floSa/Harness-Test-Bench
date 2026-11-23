@@ -5,7 +5,7 @@
 #
 # <harnais> : dossier harnais/<harnais>/ (lot 4), ou « sonde » (banc-essai/cage/sonde/, preuves
 # du lot 3), ou « factice » (banc-essai/cage/factice/, vérification du lanceur sur l'extraction). Le harnais est lancé dans la cage par /opt/harnais/lancer.sh "<message>".
-# <recette> : sans-aide, avec-aide ou jouet.
+# <recette> : sans-aide, avec-aide, dossiers ou jouet.
 #
 # Étapes : espace de travail neuf (hors du dépôt, dans $BANC_ESPACES, ~/banc-espaces par défaut),
 # clé virtuelle propre à l'essai (alias = nom de l'essai, plafond de 2 $, dépense relevée puis clé
@@ -32,6 +32,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 case "$RECETTE" in sans-aide|avec-aide) TACHE=extraction JEU="$RACINE/banc-essai/corpus/test-cache" ;;
+  dossiers) TACHE=dossiers JEU="$RACINE/banc-essai/corpus/dossiers/test-cache" ;;
   jouet) TACHE=jouet JEU="$EVAL/taches/jouet" ;; *) echo "recette inconnue : $RECETTE" >&2; exit 2 ;; esac
 case "$NOM" in sonde|factice) HARNAIS="$CAGE/$NOM" ;; *) HARNAIS="$RACINE/harnais/$NOM" ;; esac
 [ -x "$HARNAIS/lancer.sh" ] || { echo "$HARNAIS/lancer.sh introuvable" >&2; exit 1; }
@@ -113,10 +114,10 @@ python3 "$TRACES/cles.py" --supprimer "$ESSAI" >/dev/null || echo "clé $ESSAI n
 # Relance du workflow déclaré (extraction), avec une clé neuve. Sans déclaration de fin : pas de
 # relance (protocole, section 7).
 DEPENSE_RELANCE=null
-if [ "$TACHE" = extraction ] && [ -f "$RES/evaluation/fin.json" ]; then
+if [ "$TACHE" != jouet ] && [ -f "$RES/evaluation/fin.json" ]; then
   python3 "$TRACES/cles.py" "$ESSAI-relance" >/dev/null
   uv run -q --project "$EVAL" python "$EVAL/relancer.py" --espace "$ESPACE" --essai "$RES" \
-    --cle "$TRACES/secrets/cle-$ESSAI-relance.env" --maison "$MAISON" || true
+    --cle "$TRACES/secrets/cle-$ESSAI-relance.env" --maison "$MAISON" --tache "$TACHE" || true
   sleep 10
   DEPENSE_RELANCE=$(python3 "$TRACES/cles.py" --depense "$ESSAI-relance")
   python3 "$TRACES/cles.py" --supprimer "$ESSAI-relance" >/dev/null || echo "clé $ESSAI-relance non supprimée" >&2

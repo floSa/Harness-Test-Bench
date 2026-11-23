@@ -8,6 +8,8 @@ donnees/
 # Test caché du corpus : jamais versionné, jamais visible des harnais
 banc-essai/corpus/test-cache/
 banc-essai/corpus/relance/
+banc-essai/corpus/dossiers/test-cache/
+banc-essai/corpus/dossiers/relance/
 # Environnements
 .venv/
 __pycache__/

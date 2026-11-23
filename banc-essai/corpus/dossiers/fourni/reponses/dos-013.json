@@ -1,0 +1,48 @@
+{
+  "machine": "Tallor 120",
+  "constructeur": "Mabbel",
+  "numero_serie": "MA-2022-14356",
+  "site": null,
+  "interventions": [
+    {
+      "reference_rapport": "BS-RI-2024-5638",
+      "date_intervention": "2024-04-11",
+      "date_validation": "2024-04-17",
+      "volume_dose_ml": 4.94,
+      "volume_nominal_ml": 5.0,
+      "tolerance_ml": 0.1,
+      "debit_ml_min": 810.0,
+      "pression_bar": null,
+      "reference_piece": "MA-348-R",
+      "technicien": "Noémie Lacombe",
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "CT-RI-2024-7844",
+      "date_intervention": "2024-09-05",
+      "date_validation": "2024-09-13",
+      "volume_dose_ml": 4.94,
+      "volume_nominal_ml": 5.0,
+      "tolerance_ml": null,
+      "debit_ml_min": 750.0,
+      "pression_bar": 2.6,
+      "reference_piece": "MA-856-A",
+      "technicien": "Damien Tanguy",
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "PA-RI-2025-7225",
+      "date_intervention": "2025-01-31",
+      "date_validation": "2025-02-12",
+      "volume_dose_ml": 4.95,
+      "volume_nominal_ml": 5.0,
+      "tolerance_ml": 0.1,
+      "debit_ml_min": null,
+      "pression_bar": 2.7,
+      "reference_piece": "MA-545-B",
+      "technicien": "Mathieu Lemaire",
+      "statut": "conforme"
+    }
+  ],
+  "statut_actuel": "conforme"
+}

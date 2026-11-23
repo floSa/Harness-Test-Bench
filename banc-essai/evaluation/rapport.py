@@ -85,6 +85,9 @@ def construire(essai):
         "relance": relance,
         "construction": construction,
     }
+    if tache == "dossiers" and note:
+        r["taux_invention"] = note["invention"]["taux"]
+        r["dossiers_parfaits"] = f"{note['dossiers_parfaits']} sur {note['dossiers']}"
     if tache == "extraction" and note:
         r["taux_invention"] = note["invention"]["taux"]
         r["score_style_inedit"] = note["par"].get("style", {}).get(STYLE_INEDIT, {}).get("score")
@@ -114,9 +117,14 @@ def markdown(r):
     if r["tache"] == "extraction":
         lignes += [("Taux d'invention", pc(r.get("taux_invention"))),
                    ("Score sur le style jamais vu", pc(r.get("score_style_inedit")))]
+    if r["tache"] == "dossiers":
+        lignes += [("Dossiers entièrement justes", r.get("dossiers_parfaits", "")),
+                   ("Taux d'invention", pc(r.get("taux_invention")))]
     if r["relance"]:
         rl = r["relance"]
         lignes += [("Relance : score", pc(rl["note"]["score"])),
+                   ("Relance : dossiers entièrement justes", f"{rl['note']['dossiers_parfaits']} sur "
+                    f"{rl['note']['dossiers']}" if "dossiers_parfaits" in rl["note"] else ""),
                    ("Relance : JSON produits", f"{rl['json_produits']} sur {rl['documents']}"),
                    ("Relance : durée par document", f"{rl['duree_par_document_s']} s"),
                    ("Relance : appels au modèle", rl.get("appels_modele", "")),
@@ -160,6 +168,18 @@ def markdown(r):
             d = note["par"].get(g, {})
             L += [f"### {titre}", "", f"| {titre} | Champs | Justes | Score |", "|---|---|---|---|"]
             L += [f"| {k} | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in d.items()] + [""]
+    if r["tache"] == "dossiers" and note:
+        L += ["## Détail de la soumission finale", "", "| Mesure | Valeur |", "|---|---|",
+              f"| Précision par champ | {pc(note['precision'])} |", f"| Rappel par champ | {pc(note['rappel'])} |",
+              f"| Interventions oubliées | {note['interventions']['oubliees']} sur "
+              f"{note['interventions']['attendues']} |",
+              f"| Dossiers dans le bon ordre | {note['ordre_juste']} sur {note['dossiers']} |"]
+        L += [f"| Pièges inclus à tort : {k} | {v['inclus_a_tort']} sur {v['presents']} |"
+              for k, v in note["pieges"].items()]
+        L += [f"| Rectificatifs : {k} | {v} |" for k, v in note["rectificatifs"].items()] + [""]
+        L += ["| Clé | Champs | Justes | Score |", "|---|---|---|---|"]
+        L += [f"| {k} | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in note["par"]["cle"].items()]
+        L += [""]
     if r["tache"] == "jouet" and note:
         L += ["## Tests cachés de la soumission finale", "", "| Mesure | Valeur |", "|---|---|",
               f"| Tests | {note['tests']} |", f"| Réussis | {note['reussis']} |",

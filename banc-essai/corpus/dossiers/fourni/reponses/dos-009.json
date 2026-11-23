@@ -1,0 +1,48 @@
+{
+  "machine": "Lornet 600",
+  "constructeur": "Corlix",
+  "numero_serie": "CO463282",
+  "site": "Shannon Works",
+  "interventions": [
+    {
+      "reference_rapport": "TS-RI-2024-8901",
+      "date_intervention": "2024-11-09",
+      "date_validation": null,
+      "volume_dose_ml": 25.2,
+      "volume_nominal_ml": 25.0,
+      "tolerance_ml": 0.625,
+      "debit_ml_min": 3080.0,
+      "pression_bar": 3.0,
+      "reference_piece": null,
+      "technicien": "Aoife Mahon",
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "MM-RI-2025-8108",
+      "date_intervention": "2025-05-16",
+      "date_validation": "2025-05-27",
+      "volume_dose_ml": 24.7,
+      "volume_nominal_ml": 25.0,
+      "tolerance_ml": 0.625,
+      "debit_ml_min": 3310.0,
+      "pression_bar": 3.0,
+      "reference_piece": "CO-418-C",
+      "technicien": "Declan Ainsley",
+      "statut": "a_revoir"
+    },
+    {
+      "reference_rapport": "US-RI-2025-2721",
+      "date_intervention": "2025-10-27",
+      "date_validation": "2025-11-01",
+      "volume_dose_ml": 25.2,
+      "volume_nominal_ml": 25.0,
+      "tolerance_ml": 0.625,
+      "debit_ml_min": null,
+      "pression_bar": 2.8,
+      "reference_piece": null,
+      "technicien": "Aoife Ainsley",
+      "statut": "conforme"
+    }
+  ],
+  "statut_actuel": "conforme"
+}
