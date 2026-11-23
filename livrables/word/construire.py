@@ -31,7 +31,7 @@ BLEU = RGBColor(0x1F, 0x3A, 0x5F)
 
 def schema(chemin):
     fig, ax = plt.subplots(figsize=(11, 3.0), dpi=200)
-    ax.set_xlim(0, 11.6)
+    ax.set_xlim(0, 12.0)
     ax.set_ylim(0, 3.0)
     ax.axis("off")
 
@@ -50,14 +50,14 @@ def schema(chemin):
 
     ax.add_patch(FancyBboxPatch((0.15, 0.2), 3.3, 2.6, boxstyle="round,pad=0.05,rounding_size=0.2",
                                 facecolor="#f7f7f7", edgecolor="#888888", linewidth=1.2, linestyle="--"))
-    ax.text(1.8, 2.5, "Environnement fermé : conteneur ou cage", ha="center", va="center", fontsize=9,
+    ax.text(1.8, 2.45, "Environnement fermé\n(conteneur ou cage)", ha="center", va="center", fontsize=9,
             color="#555555")
     ax.text(1.8, 0.45, "ni Internet, ni reste du poste", ha="center", va="center", fontsize=8.5, color="#555555")
     boite(1.8, 1.45, 2.8, 1.2, ["Harnais", "voit seulement espace/", "clé locale sans valeur ailleurs"])
-    boite(6.0, 1.45, 2.8, 1.2, ["Relais", "seul à connaître la vraie clé", "relaie l'appel au modèle"])
-    boite(10.0, 1.45, 2.4, 0.9, ["Portail IAG", "API compatible OpenAI"], fond="#ffffff")
-    fleche(3.2, 4.55, 1.45, "clé locale")
-    fleche(7.45, 8.75, 1.45, "vraie clé")
+    boite(6.4, 1.45, 2.8, 1.2, ["Relais", "seul à connaître la vraie clé", "relaie l'appel au modèle"])
+    boite(10.5, 1.45, 2.4, 0.9, ["Portail IAG", "API compatible OpenAI"], fond="#ffffff")
+    fleche(3.25, 4.95, 1.45, "clé locale")
+    fleche(7.85, 9.25, 1.45, "vraie clé")
     fig.savefig(chemin, bbox_inches="tight", facecolor="white")
     plt.close(fig)
 

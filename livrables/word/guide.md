@@ -1,4 +1,16 @@
-# 1. Le principe
+**Sommaire**
+
+1. [Le principe](#principe) : pourquoi et comment on enferme un harnais d'agent
+2. [Mettre en place l'environnement fermé](#installation) : une option au choix selon le poste
+    - 2.1 [Fichiers communs aux trois options](#communs)
+    - 2.2 [Option A : Docker](#docker)
+    - 2.3 [Option B : Podman](#podman)
+    - 2.4 [Option C : sans conteneur (bubblewrap)](#bubblewrap)
+3. [Contrôler que l'environnement est bien fermé](#controler) : cinq contrôles avant le premier lancement
+4. [Relier le harnais au modèle du portail IAG](#relier) : installation et configuration de Goose, OpenCode, gptme, Cline, Pi ou d'un autre harnais
+5. [Ce que l'environnement fermé ne couvre pas](#limites)
+
+# 1. Le principe {#principe}
 
 Un harnais d'agent (Goose, OpenCode, gptme, Pi, Cline…) exécute les commandes que décide un modèle de langage : lire, écrire, effacer, installer. Le modèle peut se tromper, ou obéir à une consigne cachée dans un document qu'il lit. On ne cherche donc pas à faire confiance au harnais : on borne ce qu'il peut atteindre.
 
@@ -12,15 +24,17 @@ Un harnais d'agent (Goose, OpenCode, gptme, Pi, Cline…) exécute les commandes
 | Le harnais n'a aucun droit d'administration | modification du système | utilisateur ordinaire, aucun privilège |
 | Mémoire et processus plafonnés | poste saturé par un programme qui s'emballe | limites du conteneur ou de systemd |
 
-Trois façons de l'obtenir, au choix selon le poste. Les protections sont les mêmes.
+# 2. Mettre en place l'environnement fermé {#installation}
 
-| Mode | À choisir si | Section |
+Trois options pour enfermer le harnais, au choix selon ce que le poste permet. Les protections sont les mêmes. Toutes commencent par les fichiers communs (2.1).
+
+| Option | À choisir si | Partie |
 |---|---|---|
-| Docker | `docker compose version` répond | 3 |
-| Podman | `podman --version` répond, ou Podman peut être installé | 4 |
-| Sans conteneur (bubblewrap) | ni Docker ni Podman | 5 |
+| A. Docker | `docker compose version` répond | 2.2 |
+| B. Podman | `podman --version` répond, ou Podman peut être installé | 2.3 |
+| C. Sans conteneur (bubblewrap) | ni Docker ni Podman | 2.4 |
 
-# 2. Fichiers communs : le relais et les réglages
+## 2.1 Fichiers communs aux trois options {#communs}
 
 Créer un dossier de travail et y placer les deux fichiers suivants.
 
@@ -47,9 +61,9 @@ chmod 600 .env
 
 Seul ce que l'on dépose dans `espace/` est visible du harnais, et peut donc partir au portail IAG.
 
-# 3. Avec Docker
+## 2.2 Option A : Docker {#docker}
 
-**`Dockerfile`** : l'image du harnais. Seule la ligne d'installation change d'un harnais à l'autre (section 7).
+**`Dockerfile`** : l'image du harnais. Seule la ligne d'installation change d'un harnais à l'autre (partie 4).
 
 {{code:Dockerfile:dockerfile}}
 
@@ -65,9 +79,9 @@ docker compose up -d relais
 docker compose run --rm harnais
 ```
 
-Le terminal s'ouvre dans `/travail`, qui est le dossier `espace/` du poste. Faire les contrôles (section 6), puis configurer et lancer le harnais (section 7). Arrêter : `docker compose down`.
+Le terminal s'ouvre dans `/travail`, qui est le dossier `espace/` du poste. Faire les contrôles (partie 3), puis relier le harnais au modèle (partie 4). Arrêter : `docker compose down`.
 
-# 4. Avec Podman
+## 2.3 Option B : Podman {#podman}
 
 Installer Podman s'il manque (Ubuntu) :
 
@@ -75,7 +89,7 @@ Installer Podman s'il manque (Ubuntu) :
 sudo apt install podman podman-compose
 ```
 
-Mêmes fichiers que pour Docker, avec une ligne en plus dans `compose.yaml`, sous `harnais:`. Sans elle, Podman décale les numéros d'utilisateur et le harnais ne peut pas écrire dans `espace/`.
+Mêmes fichiers que pour l'option A, avec une ligne en plus dans `compose.yaml`, sous `harnais:`. Sans elle, Podman décale les numéros d'utilisateur et le harnais ne peut pas écrire dans `espace/`.
 
 ```yaml
   harnais:
@@ -90,9 +104,11 @@ podman compose up -d relais
 podman compose run --rm harnais
 ```
 
+Le terminal s'ouvre dans `/travail`, qui est le dossier `espace/` du poste. Faire les contrôles (partie 3), puis relier le harnais au modèle (partie 4). Arrêter : `podman compose down`.
+
 Avec la version de podman-compose fournie par Ubuntu 24.04 (1.0.6), la limite du nombre de processus (`pids_limit`) n'est pas appliquée ; la limite de mémoire l'est.
 
-# 5. Sans conteneur (bubblewrap)
+## 2.4 Option C : sans conteneur (bubblewrap) {#bubblewrap}
 
 bubblewrap enferme un programme avec les mêmes mécanismes du noyau qu'un conteneur, sans image ni service. socat sert de passage unique entre la cage et le relais.
 
@@ -100,7 +116,7 @@ bubblewrap enferme un programme avec les mêmes mécanismes du noyau qu'un conte
 sudo apt install bubblewrap socat
 ```
 
-Créer les dossiers du harnais et y installer le harnais (exemple : Goose ; autres harnais en section 7) :
+Créer les dossiers du harnais et y installer le harnais (exemple : Goose ; autres harnais en partie 4) :
 
 ```bash
 mkdir -p maison harnais/bin
@@ -120,9 +136,11 @@ ECOUTE="$XDG_RUNTIME_DIR/harnais/relais.sock" python3 relais.py
 
 {{code:cage.sh:bash}}
 
-Ce que fait chaque partie de la commande :
+Le terminal s'ouvre dans la cage, dans `/travail`, qui est le dossier `espace/` du poste. Faire les contrôles (partie 3), puis relier le harnais au modèle (partie 4). Arrêter : `exit`.
 
-| Partie | Effet |
+Ce que fait chaque élément de la commande :
+
+| Élément | Effet |
 |---|---|
 | `systemd-run … MemoryMax=8G TasksMax=2048` | plafonne la mémoire et le nombre de processus |
 | `--unshare-all` | réseau, processus et utilisateurs propres à la cage : aucun accès à Internet |
@@ -139,9 +157,9 @@ sudo cp /usr/share/apparmor/extra-profiles/bwrap-userns-restrict /etc/apparmor.d
 sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
 ```
 
-# 6. Vérifier avant de commencer
+# 3. Contrôler que l'environnement est bien fermé {#controler}
 
-Dans le terminal du harnais (conteneur ou cage), coller :
+Avant le premier lancement du harnais, coller ces lignes dans le terminal ouvert à la fin de l'option choisie (conteneur ou cage). Elles vérifient que le harnais n'a ni Internet, ni la vraie clé, ni accès au reste du poste, et que le modèle répond par le relais.
 
 {{code:controles.sh:bash}}
 
@@ -153,13 +171,15 @@ Résultat attendu :
 - fausse clé : `401` ;
 - une réponse du modèle (JSON avec `"content"`).
 
-Ne pas commencer si une ligne diffère.
+Ne pas lancer le harnais si un résultat diffère.
 
-# 7. Brancher un harnais
+# 4. Relier le harnais au modèle du portail IAG {#relier}
 
-Dans le terminal du harnais, trois variables sont déjà définies : `OPENAI_BASE_URL` (adresse du relais), `OPENAI_API_KEY` (clé locale) et `MODELE`. Il suffit de les donner au harnais. Pour chaque harnais : la ligne d'installation, à placer dans le `Dockerfile` à la place de celle de Goose, puis la configuration, à taper dans le terminal du harnais.
+Le harnais a besoin d'un modèle de langage pour décider de ses actions : ici, le modèle du portail IAG, joint par le relais. Dans le terminal du harnais, trois variables sont déjà définies : `OPENAI_BASE_URL` (adresse du relais), `OPENAI_API_KEY` (clé locale) et `MODELE` (nom du modèle). Il suffit de les donner au harnais, comme pour n'importe quel fournisseur compatible OpenAI. Pour chaque harnais : la ligne d'installation, à placer dans le `Dockerfile` à la place de celle de Goose, puis la configuration, à taper dans le terminal du harnais.
 
-**Goose 1.60.1** (installation : déjà dans le `Dockerfile` d'exemple)
+## 4.1 Goose 1.60.1
+
+Installation : déjà dans le `Dockerfile` d'exemple. Configuration :
 
 ```bash
 export GOOSE_PROVIDER=openai OPENAI_HOST="${OPENAI_BASE_URL%/v1}" OPENAI_BASE_PATH=v1/chat/completions \
@@ -167,7 +187,7 @@ export GOOSE_PROVIDER=openai OPENAI_HOST="${OPENAI_BASE_URL%/v1}" OPENAI_BASE_PA
 goose session
 ```
 
-**OpenCode 1.19.6**
+## 4.2 OpenCode 1.19.6
 
 ```dockerfile
 RUN curl -fsSL https://github.com/anomalyco/opencode/releases/download/v1.19.6/opencode-linux-x64.tar.gz \
@@ -185,7 +205,7 @@ EOF
 opencode
 ```
 
-**gptme 0.37.0**
+## 4.3 gptme 0.37.0
 
 ```dockerfile
 RUN pip install gptme==0.37.0
@@ -203,7 +223,9 @@ export GPTME_TIKTOKEN_TIMEOUT=0 GPTME_NO_LOCAL_DISCOVERY=1
 gptme --tool-format tool -m "iag/$MODELE"
 ```
 
-**Harnais Node (Cline 3.0.74, Pi 1.5.2).** Ajouter d'abord Node 24 au `Dockerfile` :
+## 4.4 Cline 3.0.74 et Pi 1.5.2 (harnais Node)
+
+Ajouter d'abord Node 24 au `Dockerfile`, puis le harnais :
 
 ```dockerfile
 COPY --from=node:24-slim /usr/local/bin/node /usr/local/bin/node
@@ -228,11 +250,15 @@ export PI_OFFLINE=1 PI_SKIP_VERSION_CHECK=1 PI_TELEMETRY=0
 pi --provider iag --model "$MODELE"
 ```
 
-**Autre harnais** : configurer un « fournisseur compatible OpenAI » avec `$OPENAI_BASE_URL`, `$OPENAI_API_KEY` et `$MODELE`.
+## 4.5 Autre harnais
 
-**Sans conteneur**, le harnais s'installe sur le poste dans `harnais/` au lieu du `Dockerfile` : binaire dans `harnais/bin` (Goose, OpenCode) ; pour les harnais Node, Node.js doit être installé sur le poste.
+Configurer un « fournisseur compatible OpenAI » avec `$OPENAI_BASE_URL`, `$OPENAI_API_KEY` et `$MODELE`.
 
-# 8. Ce que ces protections ne couvrent pas
+## 4.6 Installation avec l'option C (sans conteneur)
+
+Le harnais s'installe sur le poste dans `harnais/` au lieu du `Dockerfile` : binaire dans `harnais/bin` (Goose, OpenCode) ; pour les harnais Node, Node.js doit être installé sur le poste.
+
+# 5. Ce que l'environnement fermé ne couvre pas {#limites}
 
 | Limite | Que faire |
 |---|---|
