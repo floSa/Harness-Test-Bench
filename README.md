@@ -21,7 +21,7 @@ Harness-Test-Bench/
 │   ├── traces/           journal de chaque appel au modèle
 │   ├── recettes/         consignes de départ : sans aide, avec aide
 │   └── resultats/        résultat brut de chaque essai
-├── livrables/           kit à distribuer (environnement sécurisé pour un harnais)
+├── livrables/           document Word à distribuer (sécuriser un harnais) et sa source
 └── documentations/       lire
     ├── protocole.md
     ├── protocole-explique.md
@@ -35,6 +35,6 @@ Harness-Test-Bench/
 |---|---|
 | Comprendre le banc (schémas, plusieurs niveaux de lecture) | [Protocole expliqué](documentations/protocole-explique.md) |
 | Méthode (référence) | [Protocole](documentations/protocole.md) |
-| Tester un harnais en sécurité avec un portail compatible OpenAI, avec Docker, Podman ou sans conteneur | document Word : [livrables/sharepoint](livrables/sharepoint) ; kit complet : [livrables/kit-harnais-securise](livrables/kit-harnais-securise/README.md) |
+| Tester un harnais en sécurité avec un portail compatible OpenAI, avec Docker, Podman ou sans conteneur | document Word : [livrables/sharepoint](livrables/sharepoint) (source : [livrables/word](livrables/word)) |
 | Corpus | [Cahier des charges](documentations/cahier-des-charges-corpus.md) |
 | Avancement | [Journal](documentations/journal.md) |
