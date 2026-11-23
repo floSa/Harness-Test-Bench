@@ -180,3 +180,10 @@
   - Podman 4.9.3 et podman-compose 1.0.6 d'Ubuntu 24.04, sans droits root : 19 sur 21, limites non appliquées dans l'environnement imbriqué ; `--profile` inconnu de podman-compose 1.0.6 (faux portail démarré en le nommant) ; messages « already in use » sans effet.
 - Guide du kit : tableau des points à confirmer au premier lancement (limites sous Podman, AppArmor, mandataire et certificat d'entreprise, accès au portail), avec le signe donné par le vérificateur et la correction.
 - Kit restructuré à la demande de l'utilisateur : ce n'est pas un projet mais des consignes et scripts à copier dans un projet. `README.md` réduit à deux pages (principe, choix du mode, table des documents, contenu, trois règles) ; détail découpé dans `guide/` (01 principe et risques, 02 à 04 installation par mode, 05 harnais, 06 réglages, 07 dépannage, 08 test à plusieurs). Archive zip et `construire-zip.py` retirés : le dossier se copie tel quel.
+
+## 2026-11-23 — Kit : version SharePoint
+
+- Demande : le kit part sur un SharePoint, pas sur un dépôt de code ; format retenu par l'utilisateur : Word.
+- `livrables/word/construire.py` (uv, pandoc embarqué, python-docx, matplotlib) assemble `livrables/word/introduction.md` et `kit-harnais-securise/guide/0*.md` en un seul document : page de titre, présentation, schéma en image, chapitres 1 à 8, renvois entre fichiers changés en « chapitre N », tableaux bordés et lignes non coupées entre deux pages.
+- Sorties dans `livrables/sharepoint/` : « Sécuriser un harnais d'agent - guide.docx » (20 pages) et « … - scripts.zip » (scripts sans le guide Markdown, avec un LISEZMOI).
+- Vérifié : export PDF par Word et relecture des pages ; zip décompressé ailleurs, mode sans conteneur avec le faux portail : 21 sur 21.
