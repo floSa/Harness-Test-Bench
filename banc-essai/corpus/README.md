@@ -12,6 +12,7 @@ Depuis `banc-essai/corpus/` :
 | `uv run python generer.py` | génère les 60 documents dans `fourni/`, `test-cache/`, `relance/` |
 | `uv run python generer.py --exemples` | un document par style dans `exemples/` (plan à graine séparée) |
 | `uv run python generer.py --sortie DIR` | régénère ailleurs, pour comparer les empreintes |
+| `uv run python dossiers.py` | tâche 2 : 26 dossiers d'équipement dans `dossiers/fourni/`, `dossiers/test-cache/`, `dossiers/relance/` |
 | `uv run python controler.py` | contrôle les PDF générés contre la vérité et le plan |
 | `sha256sum -c empreintes.sha256` | vérifie que les fichiers générés n'ont pas changé |
 
@@ -25,7 +26,7 @@ Depuis `banc-essai/corpus/` :
 | `annotations/doc-NNN.pdf` | le rapport annoté (vert : valeur juste ; rouge numéroté : leurre ; orange : valeur barrée) |
 | `verite.csv` | une ligne par document et par champ |
 
-`test-cache/` et `relance/` ne sont jamais versionnés ni copiés dans un espace de travail de harnais.
+`test-cache/`, `relance/` et leurs équivalents sous `dossiers/` ne sont jamais versionnés ni copiés dans un espace de travail de harnais.
 
 ## Modules
 
@@ -39,3 +40,12 @@ Depuis `banc-essai/corpus/` :
 | `base.py`, `base_flux.py`, `flux.py`, `mise_en_page.py`, `dessins.py` | briques de rendu communes |
 | `style_*.py` | les 5 mises en page |
 | `verite.py` | vérité terrain et PDF annoté |
+
+## Tâche 2 : dossiers d'équipement
+
+| Fichier | Contenu |
+|---|---|
+| `dossiers/<jeu>/dos-NNN/piece-NN.pdf` | pièces du dossier, dans le désordre |
+| `dossiers/<jeu>/reponses/dos-NNN.json` | réponse attendue : équipement, interventions retenues, statut actuel |
+| `dossiers/<jeu>/verite/dos-NNN.json` | nature de chaque pièce (rapport retenu, version remplacée, équipement jumeau, rapport annulé, avis d'annulation, rectificatif) |
+| `dossiers/<jeu>/verite/dos-NNN/piece-NN.json` | vérité détaillée de chaque rapport (format de la tâche 1) |

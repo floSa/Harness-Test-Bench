@@ -1,6 +1,6 @@
 # Protocole du banc des harnais
 
-Version 1.6, 19 novembre 2026 (cadre de ressources de la cage : mémoire, carte graphique, disque, téléchargements ; un seul essai à la fois imposé par un verrou). Version 1.5 : corrections de la relecture indépendante. Version 1.4 : modèle DeepSeek V4.1 Flash, une clé par essai. Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
+Version 1.7, 23 novembre 2026 (tâche 2 « dossiers d'équipement », section 3.1, après une campagne 1 à 99,6-100 %). Version 1.6, 19 novembre 2026 (cadre de ressources de la cage : mémoire, carte graphique, disque, téléchargements ; un seul essai à la fois imposé par un verrou). Version 1.5 : corrections de la relecture indépendante. Version 1.4 : modèle DeepSeek V4.1 Flash, une clé par essai. Ce document fait foi : toute campagne s'y conforme, tout écart est noté au journal.
 
 Explication vulgarisée, avec schémas : [protocole-explique.md](protocole-explique.md).
 
@@ -41,6 +41,23 @@ Le harnais livre :
 
 Aucune contrainte de méthode : le harnais choisit ses bibliothèques (installées depuis PyPI), l'usage ou non de la vision du modèle, la découpe, le nombre d'itérations.
 
+### 3.1 Tâche 2 : dossiers d'équipement
+
+La tâche 1 ne sépare plus les harnais : 99,6 à 100 % au test caché sur les 4 premiers essais de la campagne 1, chaque rapport se lisant isolément. La tâche 2 garde les mêmes rapports et les mêmes pièges, mais oblige à recouper plusieurs pièces (générateur : `banc-essai/corpus/dossiers.py`).
+
+| Critère | Tâche 1 : rapports | Tâche 2 : dossiers |
+|---|---|---|
+| Unité | un rapport PDF | un dossier : toutes les pièces reçues pour un équipement, dans le désordre, sous des noms opaques |
+| Pièces | rapport | rapports, ancienne version d'un rapport, rapport d'un équipement jumeau, rapport annulé et son avis d'annulation, rectificatif (courriers tramés dans 40 % des cas) |
+| Réponse | 15 valeurs | équipement (4 valeurs), interventions retenues dans l'ordre des dates (11 valeurs chacune, après rectificatif), statut actuel |
+| Fourni | 35 rapports | 6 dossiers (31 pièces, 102 pages) |
+| Test caché | 15 rapports | 12 dossiers (66 pièces, 228 pages) |
+| Relance | 10 rapports | 8 dossiers (45 pièces, 159 pages) |
+| Score | exactitude par champ | F1 par champ (interventions appariées par référence ; une intervention en trop compte 11 valeurs fausses, une oubliée 11 valeurs manquées) |
+| Mesures ajoutées | | dossiers entièrement justes, pièges inclus à tort par nature, rectificatifs appliqués ou ignorés, ordre des interventions |
+
+Les règles de recoupement sont données dans les consignes (`banc-essai/recettes/dossiers/consignes.md`) : la tâche reste décidable, la difficulté tient à leur application sur des pièces nombreuses et dispersées. Référence calculée sur le test caché avec une lecture parfaite de chaque rapport : tout garder sans rectificatif donne 81,3 % (aucun dossier juste), écarter tous les pièges sans appliquer les rectificatifs 98,7 % (6 dossiers justes sur 12).
+
 ## 4. Les recettes
 
 La recette est le message de départ et ce qui l'accompagne. Il est identique pour tous les harnais : « Suis les consignes de `consignes.md`. »
@@ -49,6 +66,7 @@ La recette est le message de départ et ce qui l'accompagne. Il est identique po
 |---|---|
 | Sans aide | la tâche, la liste des clés à extraire avec une définition d'une ligne chacune, le format de sortie, l'API de soumission et sa limite de 5 |
 | Avec aide | la même chose, plus l'ontologie : pour chaque clé, définition métier, unité attendue, synonymes, règles (« volume de dose mesuré après réglage, en ml, pas la capacité du réservoir ») |
+| Dossiers | tâche 2 : la tâche, les règles de recoupement, les clés avec une définition d'une ligne, le format de sortie, l'API et sa limite de 5 |
 
 ## 5. Conditions d'exécution
 
@@ -130,7 +148,7 @@ Les capacités (ce que le harnais sait faire) et les résultats (ce qu'il a fait
 
 1. **Mise au point** : une tâche jouet (corriger un bug, tests cachés) pour valider cage, traces et lancement de chaque harnais.
 2. **Campagne 1** : 5 harnais × 2 recettes, DeepSeek V4.1 Flash, 1 passe ; puis 2e passe si le budget le permet.
-3. **Campagne 2** : autres recettes (consignes de méthode, skills, outils) sur les 2 meilleurs harnais.
+3. **Campagne 2** : tâche 2 (dossiers d'équipement) sur les 5 harnais ; puis autres recettes (consignes de méthode, skills, outils) sur les 2 meilleurs harnais.
 4. **Campagne 3** : autres modèles, dont des modèles locaux, pour vérifier que le classement tient.
 
 ## 9. Limites connues
