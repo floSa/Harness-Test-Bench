@@ -195,3 +195,15 @@
 - Document Word restructuré : sommaire cliquable (liens vérifiés dans Word), parties 1 Principe, 2 Mise en place (2.1 fichiers communs, 2.2 à 2.4 options Docker, Podman, bubblewrap), 3 Contrôle de l'environnement, 4 Relier le harnais au modèle du portail IAG (une sous-partie par harnais), 5 Limites ; schéma corrigé ; 9 pages.
 - Livrable finalisé : l'ancien kit complet (`livrables/kit-harnais-securise/`, scripts et guide en Markdown) est retiré ; seul livrable : le document Word de `livrables/sharepoint/`, régénérable depuis `livrables/word/` (`uv run livrables/word/construire.py`). L'ancien kit reste dans l'historique Git (commit a11cb5d).
 - Non vérifiable hors poste cible : portail IAG réel, proxy et certificat d'entreprise, profil AppArmor de bubblewrap, limites de Podman.
+
+## 2026-11-23 — Veille : nouveautés Docker pour isoler les agents
+
+- Recherche documentaire, aucun essai (connexion à un compte Docker et groupe `kvm` nécessaires, non disponibles sans action de l'utilisateur).
+- Docker Sandboxes (CLI `sbx`, v0.54.0 du 16 novembre 2026) : une micro-VM par agent (noyau propre, Docker propre), réseau sortant refusé par défaut avec liste d'autorisations (`sbx policy`), clés jamais présentes dans la VM (proxy de l'hôte qui injecte la vraie clé, même principe que le relais du document Word). Ne demande ni Docker Desktop ni Docker Engine. Gratuit en local, y compris en usage professionnel.
+  - Prérequis Linux : Ubuntu 24.04 ou plus, KVM, utilisateur dans le groupe `kvm` ; virtualisation imbriquée si le poste est une VM ou un VDI.
+  - Agents fournis : Claude Code, Codex, Copilot, Cursor, Devin, Docker Agent, Droid, Kiro, OpenCode ; autres harnais par « kits » (image personnalisée).
+  - Portail compatible OpenAI : possible (`model.providers`, `wire: openai`), fonction expérimentale ; la documentation précise que le service de l'hôte peut transmettre la clé à d'autres points d'accès qu'il connaît.
+  - Freins pour un poste d'entreprise : connexion à un compte Docker (`sbx login`, OAuth) et accès à login.docker.com, hub.docker.com, registry-1.docker.io ; proxy d'entreprise en expérimental ; autorité de certification interne non documentée (page de dépannage introuvable) ; liste d'autorisations par défaut avec des jokers larges (`*.googleapis.com`) à restreindre.
+  - Docker Cloud Sandboxes (24 septembre 2026) : même chose hébergée chez Docker ; le code part chez Docker.
+- MCP Gateway : isole les serveurs d'outils MCP dans des conteneurs ; Docker Agent (ex-cagent) : cadre pour écrire des agents. Ni l'un ni l'autre n'isole un harnais existant.
+- Sources : https://docs.docker.com/ai/sandboxes/ , https://docs.docker.com/ai/sandboxes/install/ , https://docs.docker.com/ai/sandboxes/security/defaults/ , https://docs.docker.com/ai/sandboxes/configuration/models/ , https://docs.docker.com/ai/sandboxes/faq/ , https://github.com/docker/sbx-releases/releases , https://docs.docker.com/ai/mcp-gateway/
