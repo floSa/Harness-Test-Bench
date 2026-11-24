@@ -1,0 +1,7 @@
+{
+  "heure": "2026-11-24T07:18:40+01:00",
+  "soumission_finale": 4,
+  "score_validation": 0.99,
+  "commande": ".venv/bin/python workflow/run.py {entree} {sortie}",
+  "commentaire": null
+}

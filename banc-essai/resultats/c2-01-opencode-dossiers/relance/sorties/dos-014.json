@@ -1,0 +1,48 @@
+{
+  "machine": "Lumra 85",
+  "constructeur": "Varorvan",
+  "numero_serie": "VA168906",
+  "site": "Wrexham Site",
+  "interventions": [
+    {
+      "reference_rapport": "LS-RI-2024-8488",
+      "date_intervention": "2024-11-03",
+      "date_validation": "2024-11-09",
+      "volume_dose_ml": 5.07,
+      "volume_nominal_ml": 5.0,
+      "tolerance_ml": 0.1,
+      "debit_ml_min": 243.0,
+      "pression_bar": 1.784,
+      "reference_piece": null,
+      "technicien": "Erin Hollis",
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "DC-RI-2025-4905",
+      "date_intervention": "2025-01-20",
+      "date_validation": null,
+      "volume_dose_ml": 5.06,
+      "volume_nominal_ml": 5.0,
+      "tolerance_ml": null,
+      "debit_ml_min": 236.0,
+      "pression_bar": 9.5,
+      "reference_piece": "VA-578-R",
+      "technicien": "Megan Calloway",
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "ST-RI-2025-9997",
+      "date_intervention": "2025-05-03",
+      "date_validation": "2025-05-11",
+      "volume_dose_ml": 5.04,
+      "volume_nominal_ml": 5.0,
+      "tolerance_ml": 0.1,
+      "debit_ml_min": 288.0,
+      "pression_bar": 9.7,
+      "reference_piece": "VA-551-A",
+      "technicien": "Aoife Redding",
+      "statut": "conforme"
+    }
+  ],
+  "statut_actuel": "conforme"
+}

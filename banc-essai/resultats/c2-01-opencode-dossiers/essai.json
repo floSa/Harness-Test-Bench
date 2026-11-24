@@ -1,0 +1,55 @@
+{
+  "essai": "c2-01-opencode-dossiers",
+  "harnais": "opencode",
+  "version_harnais": "opencode 1.19.6",
+  "recette": "dossiers",
+  "tache": "dossiers",
+  "debut": "2026-11-24T06:18:12+01:00",
+  "fin": "2026-11-24T07:20:13+01:00",
+  "duree_s": 3721.3,
+  "code_retour": 0,
+  "garde_fou_s": 7200,
+  "garde_fou_atteint": false,
+  "espace": "/home/florian/banc-espaces/c2-01-opencode-dossiers/travail",
+  "modeles": [
+    "openrouter/deepseek/deepseek-v4.1-flash-1017"
+  ],
+  "fournisseurs": [
+    "Pearl Research"
+  ],
+  "appels_modele": 691,
+  "appels_echoues": 0,
+  "appels_429": 0,
+  "attente_429_s": 0.0,
+  "appels_avec_image": 672,
+  "jetons_entree": 28835629,
+  "jetons_cache": 24943616,
+  "jetons_sortie": 1993926,
+  "cout_usd": 0.867609,
+  "cout_openrouter_usd": 0.867609,
+  "depense_cle_usd": 0.8676092979999995,
+  "ecart_depense_journal_usd": -0.0,
+  "depense_cle_relance_usd": 0.04515592199999999,
+  "temps_modele_s": 3602.8,
+  "demandes_reseau": 16,
+  "demandes_reseau_refusees": 8,
+  "hotes_refuses": [
+    "models.opencode.ai",
+    "registry.npmjs.org"
+  ],
+  "telechargement_octets": 143471792,
+  "telechargement_par_hote_octets": {
+    "pypi.org": 3322267,
+    "files.pythonhosted.org": 140149525
+  },
+  "telechargement_max_octets": 10000000000,
+  "telechargement_plafond_atteint": false,
+  "memoire_max": "16G",
+  "memoire_pic_octets": 2380603392,
+  "arrets_memoire": 0,
+  "gpu_memoire_avant_mio": 1642,
+  "gpu_memoire_pic_essai_mio": 25,
+  "disque_pic_octets": 759260525,
+  "disque_max_octets": 30000000000,
+  "disque_depasse": false
+}

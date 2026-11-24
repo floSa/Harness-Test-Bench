@@ -1,0 +1,131 @@
+{
+  "commande": ".venv/bin/python workflow/run.py {entree} {sortie}",
+  "cage": true,
+  "code_retour": 0,
+  "duree_s": 98.3,
+  "tache": "dossiers",
+  "duree_par_document_s": 12.29,
+  "documents": 8,
+  "json_produits": 8,
+  "json_illisibles": [],
+  "fichiers_refuses": [],
+  "erreurs_format": [],
+  "note": {
+    "dossiers": 8,
+    "score": 0.9937,
+    "precision": 0.9937,
+    "rappel": 0.9937,
+    "dossiers_parfaits": 6,
+    "interventions": {
+      "attendues": 25,
+      "oubliees": 0
+    },
+    "pieges": {
+      "equipement_jumeau": {
+        "presents": 4,
+        "inclus_a_tort": 0
+      },
+      "rapport_annule": {
+        "presents": 3,
+        "inclus_a_tort": 0
+      },
+      "version_remplacee": {
+        "presents": 6,
+        "inclus_a_tort": 0
+      }
+    },
+    "rectificatifs": {
+      "applique": 4
+    },
+    "ordre_juste": 8,
+    "invention": {
+      "null_attendus": 14,
+      "inventes": 0,
+      "taux": 0.0
+    },
+    "par": {
+      "cle": {
+        "constructeur": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "date_intervention": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "date_validation": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "debit_ml_min": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "machine": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "numero_serie": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "pression_bar": {
+          "n": 25,
+          "justes": 24,
+          "score": 0.96
+        },
+        "reference_piece": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "reference_rapport": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "site": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "statut": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "statut_actuel": {
+          "n": 8,
+          "justes": 8,
+          "score": 1.0
+        },
+        "technicien": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "tolerance_ml": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        },
+        "volume_dose_ml": {
+          "n": 25,
+          "justes": 24,
+          "score": 0.96
+        },
+        "volume_nominal_ml": {
+          "n": 25,
+          "justes": 25,
+          "score": 1.0
+        }
+      }
+    }
+  }
+}

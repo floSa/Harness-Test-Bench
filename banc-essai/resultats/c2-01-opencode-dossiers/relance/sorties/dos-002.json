@@ -1,0 +1,48 @@
+{
+  "machine": "Galaelor 300",
+  "constructeur": "Praulrel",
+  "numero_serie": "PR307951",
+  "site": "Doncaster Plant",
+  "interventions": [
+    {
+      "reference_rapport": "ST-RI-2024-4198",
+      "date_intervention": "2024-10-01",
+      "date_validation": "2024-10-09",
+      "volume_dose_ml": 49.7,
+      "volume_nominal_ml": 50.0,
+      "tolerance_ml": 0.5,
+      "debit_ml_min": 860.0,
+      "pression_bar": 3.9,
+      "reference_piece": "PR-622-K",
+      "technicien": "Olivia Mahon",
+      "statut": "a_revoir"
+    },
+    {
+      "reference_rapport": "DC-RI-2025-1705",
+      "date_intervention": "2025-02-04",
+      "date_validation": "2025-02-11",
+      "volume_dose_ml": 49.6,
+      "volume_nominal_ml": 50.0,
+      "tolerance_ml": 0.5,
+      "debit_ml_min": 850.0,
+      "pression_bar": 4.1003,
+      "reference_piece": "PR-101-E",
+      "technicien": null,
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "PT-RI-2025-4524",
+      "date_intervention": "2025-04-10",
+      "date_validation": "2025-04-17",
+      "volume_dose_ml": 50.3,
+      "volume_nominal_ml": 50.0,
+      "tolerance_ml": 0.5,
+      "debit_ml_min": 910.0,
+      "pression_bar": 3.7,
+      "reference_piece": "PR-549-D",
+      "technicien": "Aoife Whitfield",
+      "statut": "conforme"
+    }
+  ],
+  "statut_actuel": "conforme"
+}

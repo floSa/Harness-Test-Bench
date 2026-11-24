@@ -1,0 +1,48 @@
+{
+  "machine": "Lumtis 40",
+  "constructeur": "Vermar",
+  "numero_serie": "VE560226",
+  "site": "Usine de Romans",
+  "interventions": [
+    {
+      "reference_rapport": "SM-RI-2024-4149",
+      "date_intervention": "2024-04-08",
+      "date_validation": null,
+      "volume_dose_ml": 0.96,
+      "volume_nominal_ml": 1.0,
+      "tolerance_ml": 0.08,
+      "debit_ml_min": 122.0,
+      "pression_bar": 2.0,
+      "reference_piece": "VE-543-R",
+      "technicien": "Gaël Guérin",
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "NT-RI-2024-9488",
+      "date_intervention": "2024-08-22",
+      "date_validation": "2024-08-25",
+      "volume_dose_ml": 1.1,
+      "volume_nominal_ml": 1.0,
+      "tolerance_ml": 0.08,
+      "debit_ml_min": 119.0,
+      "pression_bar": 2.2,
+      "reference_piece": null,
+      "technicien": "Hugo Garnier",
+      "statut": "non_conforme"
+    },
+    {
+      "reference_rapport": "TM-RI-2024-6189",
+      "date_intervention": "2024-11-21",
+      "date_validation": "2024-11-30",
+      "volume_dose_ml": null,
+      "volume_nominal_ml": 1.0,
+      "tolerance_ml": null,
+      "debit_ml_min": null,
+      "pression_bar": 1.9,
+      "reference_piece": null,
+      "technicien": "Loïc Lemaire",
+      "statut": "non_conforme"
+    }
+  ],
+  "statut_actuel": "non_conforme"
+}

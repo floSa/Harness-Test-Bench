@@ -1,0 +1,48 @@
+{
+  "machine": "Saragen 85",
+  "constructeur": "Draanlor",
+  "numero_serie": "DR379509",
+  "site": "Établissement de Dole",
+  "interventions": [
+    {
+      "reference_rapport": "TM-RI-2024-4415",
+      "date_intervention": "2024-03-26",
+      "date_validation": "2024-04-01",
+      "volume_dose_ml": 252.6,
+      "volume_nominal_ml": 250.0,
+      "tolerance_ml": 3.75,
+      "debit_ml_min": null,
+      "pression_bar": 2.4,
+      "reference_piece": "DR-247-K",
+      "technicien": "Loïc Vasseur",
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "TM-RI-2024-4579",
+      "date_intervention": "2024-08-19",
+      "date_validation": "2024-08-29",
+      "volume_dose_ml": 248.5,
+      "volume_nominal_ml": 250.0,
+      "tolerance_ml": 3.75,
+      "debit_ml_min": 8700.0,
+      "pression_bar": 2.2,
+      "reference_piece": "DR-350-C",
+      "technicien": null,
+      "statut": "conforme"
+    },
+    {
+      "reference_rapport": "PM-RI-2024-3431",
+      "date_intervention": "2024-12-21",
+      "date_validation": "2025-01-02",
+      "volume_dose_ml": 251.1,
+      "volume_nominal_ml": 250.0,
+      "tolerance_ml": 3.75,
+      "debit_ml_min": 6750.0,
+      "pression_bar": 1.9,
+      "reference_piece": "DR-630-K",
+      "technicien": "Pauline Joly",
+      "statut": "conforme"
+    }
+  ],
+  "statut_actuel": "conforme"
+}

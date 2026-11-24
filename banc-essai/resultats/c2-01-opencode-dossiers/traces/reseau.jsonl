@@ -1,0 +1,24 @@
+{"heure": "2026-11-24T06:18:13+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:13+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:14+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:14+01:00", "evenement": "demande", "hote": "registry.npmjs.org", "port": "443", "accepte": false, "requete": "CONNECT registry.npmjs.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "fin", "hote": "pypi.org", "octets_recus": 6169, "octets_envoyes": 1724}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "fin", "hote": "pypi.org", "octets_recus": 6169, "octets_envoyes": 1724}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "fin", "hote": "pypi.org", "octets_recus": 6169, "octets_envoyes": 1724}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "demande", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "fin", "hote": "files.pythonhosted.org", "octets_recus": 6155, "octets_envoyes": 1738}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "fin", "hote": "files.pythonhosted.org", "octets_recus": 1541, "octets_envoyes": 1957}
+{"heure": "2026-11-24T06:18:24+01:00", "evenement": "fin", "hote": "files.pythonhosted.org", "octets_recus": 1541, "octets_envoyes": 1957}
+{"heure": "2026-11-24T06:18:26+01:00", "evenement": "fin", "hote": "files.pythonhosted.org", "octets_recus": 140140288, "octets_envoyes": 16486}
+{"heure": "2026-11-24T06:18:26+01:00", "evenement": "fin", "hote": "pypi.org", "octets_recus": 3303760, "octets_envoyes": 3114}
+{"heure": "2026-11-24T07:18:14+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T07:18:14+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T07:18:14+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}
+{"heure": "2026-11-24T07:20:12+01:00", "evenement": "demande", "hote": "models.opencode.ai", "port": "443", "accepte": false, "requete": "CONNECT models.opencode.ai:443 HTTP/1.1", "quota_atteint": false}

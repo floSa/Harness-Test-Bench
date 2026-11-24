@@ -219,3 +219,11 @@
 - Branchements : API (`--tache dossiers`, routes `/dossiers`), client `soumettre.py`, `preparer.py` (recette `dossiers`), `relancer.py --tache dossiers`, `lancer.sh <harnais> dossiers`, rapport d'essai. Recette `banc-essai/recettes/dossiers/consignes.md`.
 - Vérifié : 33 tests réussis (6 nouveaux : vérité parfaite, intervention en trop et oubliée, ordre, rectificatif ignoré, format, API, relance dans la cage).
 - Reste à faire : essai réel d'un harnais sur la tâche 2 pour mesurer sa difficulté.
+
+## 2026-11-24 — Tâche 2 : essai d'OpenCode (c2-01)
+
+- Premier lancement le 23/11 à 23 h 41, arrêté à 23 h 54 par l'arrêt de la machine (61 appels, 0,04 $, aucune soumission) : résultats partiels écartés, clé supprimée, essai relancé depuis le début le 24/11 à 6 h 18, détaché de la session.
+- `c2-01-opencode-dossiers` (6 h 18 à 7 h 20) : F1 99,4 % au test caché (soumissions 98,5 ; 98,5 ; 98,7 ; 99,4 %), 9 dossiers entièrement justes sur 12 ; relance sur 8 dossiers neufs : 99,4 %, 6 dossiers justes sur 8 ; validation annoncée 99,0 % ; 0 % d'invention.
+- Recoupement sans faute : 0 équipement jumeau, 0 rapport annulé et 0 version remplacée retenus à tort, 0 intervention oubliée, 6 rectificatifs appliqués sur 6, ordre juste dans les 12 dossiers. Erreurs restantes : lecture d'un rapport (site écrit « Fougères » au lieu de « Site de Fougères » dans 2 dossiers, une dose répondue `null`).
+- Coût et durée : 691 appels dont 672 avec images, 0,87 $ (tâche 1 : 0,31 $), 62 min (tâche 1 : 24 min) ; relance 0,0056 $ et 12 s par dossier.
+- Constat : les règles de recoupement, écrites dans les consignes, sont appliquées sans erreur par OpenCode ; le F1 reste proche du plafond, le taux de dossiers entièrement justes (75 %) sépare davantage. Essai d'un second harnais (Goose) pour vérifier que la tâche classe les harnais.
