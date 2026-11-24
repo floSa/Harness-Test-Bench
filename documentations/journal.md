@@ -235,3 +235,9 @@
 - Portail compatible OpenAI (fonction expérimentale `model.providers`, faux portail local qui journalise l'en-tête reçu) : OpenCode dans le bac à sable répond par le portail ; la configuration de l'agent ne porte que `sbx-provider-key-iag` ; le portail reçoit la vraie clé, ajoutée par `llmman` sur l'hôte.
 - Défaut constaté : `llmman` ne vérifie pas la clé fictive (un appel avec une autre clé est transmis tel quel au portail) et transmet la clé du portail à d'autres fournisseurs : un modèle `llmman.provider/openai/gpt-4o-mini` demandé depuis le bac à sable a fait envoyer la clé du portail à api.openai.com (réponse d'OpenAI : « Incorrect API key provided: vraie-cl*****tail »). Conforme à l'avertissement de la documentation (« selecting `--provider` does not restrict the key to that provider's endpoint »). Avec une vraie clé, elle partirait chez un tiers.
 - Bilan pour un poste d'entreprise : isolation plus forte que conteneur ou bubblewrap, sans Docker installé ; mais compte Docker obligatoire, KVM et groupe `kvm`, et relais du modèle à proscrire avec une clé de portail tant que ce défaut existe (garder le relais à route unique du document Word, joint par une règle réseau limitée à son adresse).
+
+## 2026-11-24 — Tâche 2 : essai de Goose (c2-02) interrompu
+
+- `c2-02-goose-dossiers` lancé à 7 h 16, arrêté volontairement à 8 h 45 avant l'arrêt de la machine demandé par l'utilisateur : 764 appels, 0,98 $, une seule soumission acceptée (8 h 41 : F1 97,6 %, 8 dossiers entièrement justes sur 12), pas de déclaration de fin ni de relance. Clé supprimée. Résultats partiels gardés hors dépôt (`~/banc-espaces/c2-02-goose-dossiers/resultats-partiels/`), non comptés.
+- Précision sur l'arrêt de la nuit du 23 au 24/11 : c'est WSL qui s'est arrêté (démarrage du système Linux à 6 h 15), pas Windows.
+- Reste à faire : relancer c2-02 depuis le début, puis comparer OpenCode et Goose et décider s'il faut durcir la tâche 2.
