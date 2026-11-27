@@ -12,17 +12,16 @@ Prérequis : Cline installé ([installation](installation.md)), relais démarré
 banc-essai/cage/lancer.sh cline <recette> [--essai NOM] [--duree SECONDES] [--message "..."]
 ```
 
-| Recette | Tâche | Jeu noté par l'API | Résultats écrits dans | Commande |
-|---|---|---|---|---|
-| `jouet` | mise au point : corriger un petit paquet Python | cas cachés de `banc-essai/evaluation/taches/jouet` | `banc-essai/resultats/<essai>/` | `banc-essai/cage/lancer.sh cline jouet` |
-| `sans-aide` | extraction dans les rapports PDF, consignes seules | `banc-essai/corpus/test-cache` | `banc-essai/resultats/<essai>/` | `banc-essai/cage/lancer.sh cline sans-aide` |
-| `avec-aide` | même tâche, consignes et ontologie des champs | `banc-essai/corpus/test-cache` | `banc-essai/resultats/<essai>/` | `banc-essai/cage/lancer.sh cline avec-aide` |
-| `dossiers` | tâche 2 : dossiers d'équipement à recouper | `banc-essai/corpus/dossiers/test-cache` | `banc-essai/resultats/<essai>/` | `banc-essai/cage/lancer.sh cline dossiers` |
-| `goldset` | jeu de PDF et de réponses fourni (importé et validé au préalable) | `$BANC_GOLDSET/test-cache` (`banc-essai/corpus/goldset` par défaut) | `banc-essai/resultats-goldset/<essai>/`, hors git | `banc-essai/cage/lancer.sh cline goldset` |
+| Critère | `jouet` | `goldset` |
+|---|---|---|
+| Tâche | vérification du branchement : corriger un petit paquet Python | extraction dans le goldset de PDF de l'équipe (jeu de PDF et de réponses attendues, importé et validé au préalable) |
+| Jeu noté par l'API | cas cachés de `banc-essai/evaluation/taches/jouet` | `$BANC_GOLDSET/test-cache` (`banc-essai/corpus/goldset` par défaut) |
+| Résultats écrits dans | `banc-essai/resultats/<essai>/` (dossier créé par le lanceur) | `banc-essai/resultats-goldset/<essai>/`, hors git |
+| Commande | `banc-essai/cage/lancer.sh cline jouet` | `banc-essai/cage/lancer.sh cline goldset` |
 
 Source : en-tête et corps de [`banc-essai/cage/lancer.sh`](../../../banc-essai/cage/lancer.sh). Le nom de l'essai vaut par défaut `cline-<recette>-<date>-<heure>` ; le message envoyé à Cline vaut par défaut « Suis les consignes de consignes.md. ». La recette `goldset` refuse de démarrer si `schema.json` n'est pas validé ou si les consignes manquent ([goldset.md](../../../banc-essai/documentation/goldset.md)).
 
-Ordre de grandeur mesuré : essai jouet de 29 s pour 0,0016 $ (section 6 de [fonctionnement](fonctionnement.md)). Aucun essai d'extraction de Cline n'a encore été fait sur le banc ; les autres harnais y ont mis 24 à 35 min pour 0,27 à 0,31 $ (journal, campagne 1).
+L'essai jouet est court et ne sert qu'à vérifier le branchement. La durée et la consommation d'un essai goldset dépendent du nombre de documents et du modèle ; aucun essai d'extraction de Cline n'a été fait pendant la mise au point du banc ([fonctionnement](fonctionnement.md#2-comportements-constatés-lors-des-essais-de-mise-au-point)).
 
 ## 2. Ce qui se passe dans la cage
 
@@ -33,21 +32,21 @@ Ordre de grandeur mesuré : essai jouet de 29 s pour 0,0016 $ (section 6 de [fon
 | 3 | `banc-essai/cage/interieur.sh` | relais intérieurs (`127.0.0.1:4100` modèle, `:3128` filtre, `:8765` API), chargement de `BANC_CLE_MODELE` depuis `/run/banc/cle.env` |
 | 4 | `harnais/cline/lancer.sh` | `configurer.sh` (`cline auth`, sortie renvoyée sur l'erreur standard), Node du harnais en tête du `PATH`, puis `exec cline --json -y "<message>"` ; les arguments sont réunis en un seul message (`"$*"`) |
 | 5 | Cline | une session non interactive dans `/travail` : boucle appel au modèle, outils (`run_commands`, `editor`…), jusqu'à l'outil `submit_and_exit` ; la commande se termine avec la session |
-| 6 | `banc-essai/cage/lancer.sh` | dépense relevée, clé supprimée, relance du workflow déclaré (sauf `jouet`), collecte, masque des clés, rapport |
+| 6 | `banc-essai/cage/lancer.sh` | dépense relevée, clé supprimée, relance du workflow déclaré (recette `goldset` seulement), collecte, masque des clés, rapport |
 
 ## 3. Sorties et où les trouver
 
-Dans `banc-essai/resultats/<essai>/` (ou `banc-essai/resultats-goldset/<essai>/`), d'après [la cage](../../../banc-essai/cage/README.md) et l'essai `cline-jouet-1` :
+Dans `banc-essai/resultats/<essai>/` (ou `banc-essai/resultats-goldset/<essai>/`), d'après [la cage](../../../banc-essai/cage/README.md) et les essais de mise au point :
 
 | Fichier | Contenu pour Cline |
 |---|---|
-| `harnais/stdout.log` | trace complète de Cline en NDJSON (section 4) ; 150 Ko pour l'essai jouet ; compressée en `stdout.log.gz` au-delà de 20 Mo |
+| `harnais/stdout.log` | trace complète de Cline en NDJSON (section 4) ; compressée en `stdout.log.gz` au-delà de 20 Mo |
 | `harnais/stderr.log` | ligne « Provider configured: openai-compatible (<modèle>) » de `configurer.sh`, avec des codes de couleur ; erreurs éventuelles de Cline (`{"type":"error",…}` d'après la [CLI reference](https://docs.cline.bot/cline-cli/cli-reference.md), consulté le 27/11/2026) |
 | `essai.json`, `rapport.md`, `rapport.json` | mesures et rapport du banc (durée, appels, jetons, coût, score) |
 | `traces/appels.jsonl` | appels au modèle vus par le relais |
 | `traces/reseau.jsonl` | demandes au filtre : on y voit `registry.npmjs.org` et `data.cline.bot` refusés |
 | `evaluation/` | soumissions et fin déclarée, journaux de l'API |
-| `code/` | code écrit par le harnais, archivé pour relecture par `banc-essai/cage/archiver_code.py` (absent de `cline-jouet-1`, antérieur à cette étape) |
+| `code/` | code écrit par le harnais, archivé pour relecture par `banc-essai/cage/archiver_code.py` |
 
 Restent hors du dépôt, dans `~/banc-espaces/<essai>/` :
 
@@ -61,26 +60,26 @@ Restent hors du dépôt, dans `~/banc-espaces/<essai>/` :
 
 ## 4. Format de la trace
 
-Une ligne JSON par événement, chacune avec `ts` (horodatage ISO 8601) et `type` ([CLI reference](https://docs.cline.bot/cline-cli/cli-reference.md), consulté le 27/11/2026 : types `agent_event`, `hook_event`, `team_event`, `run_result`, `run_aborted`). Types relevés dans la trace de l'essai jouet :
+Une ligne JSON par événement, chacune avec `ts` (horodatage ISO 8601) et `type` ([CLI reference](https://docs.cline.bot/cline-cli/cli-reference.md), consulté le 27/11/2026 : types `agent_event`, `hook_event`, `team_event`, `run_result`, `run_aborted`). Types relevés dans les traces des essais de mise au point du banc :
 
-| `type` | `event.type` | Nombre (essai jouet) | Contenu |
-|---|---|---|---|
-| `agent_event` | `iteration_start`, `iteration_end` | 8 et 8 | début et fin d'un tour ; `iteration_end` donne `hadToolCalls` et `toolCallCount` |
-| `agent_event` | `usage` | 8 | jetons et coût de l'appel et cumulés (`inputTokens`, `outputTokens`, `cacheReadTokens`, `cost`, `totalCost`) |
-| `agent_event` | `content_start` | 589 (580 de raisonnement, 9 d'outil) | morceau de raisonnement du modèle, ou appel d'outil (`toolName`, `input`) |
-| `agent_event` | `content_update` | 43 | sortie au fil de l'eau d'une commande |
-| `agent_event` | `content_end` | 15 | fin d'un raisonnement ou résultat d'un outil (`output`) |
-| `agent_event` | `done` | 1 | fin de l'agent, avec le texte final |
-| `run_result` | | 1 | bilan : `finishReason`, `iterations`, `usage`, `aggregateUsage`, `durationMs`, `text`, `model` |
+| `type` | `event.type` | Contenu |
+|---|---|---|
+| `agent_event` | `iteration_start`, `iteration_end` | début et fin d'un tour ; `iteration_end` donne `hadToolCalls` et `toolCallCount` |
+| `agent_event` | `usage` | jetons et coût de l'appel et cumulés (`inputTokens`, `outputTokens`, `cacheReadTokens`, `cost`, `totalCost`) |
+| `agent_event` | `content_start` | morceau de raisonnement du modèle, ou appel d'outil (`toolName`, `input`) ; les morceaux de raisonnement sont de loin les plus nombreux |
+| `agent_event` | `content_update` | sortie au fil de l'eau d'une commande |
+| `agent_event` | `content_end` | fin d'un raisonnement ou résultat d'un outil (`output`) |
+| `agent_event` | `done` | fin de l'agent, avec le texte final (une fois par session) |
+| `run_result` | | bilan, une fois par session : `finishReason`, `iterations`, `usage`, `aggregateUsage`, `durationMs`, `text`, `model` |
 
-Exemples réels (abrégés) :
+Forme des lignes (abrégées ; identifiants et valeurs numériques remplacés) :
 
-```json
-{"ts":"2026-11-19T22:09:09.915Z","type":"agent_event","event":{"type":"content_start","contentType":"tool","toolName":"run_commands","toolCallId":"chatcmpl-tool-bfa65d1a20264952","input":{"commands":["ls -la /travail","cat /travail/consignes.md"]}}}
-{"ts":"2026-11-19T22:09:35.575Z","type":"run_result","finishReason":"completed","iterations":8,"usage":{"inputTokens":57551,"outputTokens":1276,"cacheReadTokens":47360,"cacheWriteTokens":0,"totalCost":0.00157593},"durationMs":26774,"text":"Submission recorded (verified): …","model":{"id":"deepseek-v4.1-flash","provider":"openai-compatible"}}
+```text
+{"ts":"<horodatage>","type":"agent_event","event":{"type":"content_start","contentType":"tool","toolName":"run_commands","toolCallId":"<id>","input":{"commands":["ls -la /travail","cat /travail/consignes.md"]}}}
+{"ts":"<horodatage>","type":"run_result","finishReason":"completed","iterations":<n>,"usage":{"inputTokens":<n>,"outputTokens":<n>,"cacheReadTokens":<n>,"cacheWriteTokens":<n>,"totalCost":<n>},"durationMs":<n>,"text":"Submission recorded (verified): …","model":{"id":"modele-banc","provider":"openai-compatible"}}
 ```
 
-Lire la trace sans outil supplémentaire (`jq` n'est pas installé sur le poste du banc) :
+Lire la trace sans outil supplémentaire (`jq` n'est pas forcément installé sur le poste) :
 
 ```bash
 # Appels d'outils, dans l'ordre
@@ -90,7 +89,7 @@ for ligne in open(sys.argv[1]):
     d = json.loads(ligne); e = d.get("event") or {}
     if e.get("type") == "content_start" and e.get("contentType") == "tool":
         print(d["ts"], e["toolName"], json.dumps(e.get("input"), ensure_ascii=False)[:100])
-' banc-essai/resultats/cline-jouet-1/harnais/stdout.log
+' banc-essai/resultats/<essai>/harnais/stdout.log
 ```
 
 ```bash
@@ -101,16 +100,16 @@ for ligne in open(sys.argv[1]):
     d = json.loads(ligne)
     if d["type"] == "run_result":
         print(d["finishReason"], d["iterations"], "itérations,", d["durationMs"] / 1000, "s,", d["usage"])
-' banc-essai/resultats/cline-jouet-1/harnais/stdout.log
+' banc-essai/resultats/<essai>/harnais/stdout.log
 ```
 
-Sortie de la seconde commande sur l'essai jouet :
+Pour un essai goldset, remplacer `banc-essai/resultats/` par `banc-essai/resultats-goldset/`. Forme de la sortie de la seconde commande :
 
 ```text
-completed 8 itérations, 26.774 s, {'inputTokens': 57551, 'outputTokens': 1276, 'cacheReadTokens': 47360, 'cacheWriteTokens': 0, 'totalCost': 0.00157593}
+completed <n> itérations, <durée> s, {'inputTokens': <n>, 'outputTokens': <n>, 'cacheReadTokens': <n>, 'cacheWriteTokens': <n>, 'totalCost': <coût>}
 ```
 
-Les chiffres qui font foi pour le banc sont ceux du relais (`essai.json`), pas ceux de Cline : sur l'essai jouet, Cline compte 1 276 jetons de sortie là où le relais en compte 3 081 (`banc-essai/resultats/cline-jouet-1/essai.json`) ; l'écart vient probablement des jetons de raisonnement (non vérifié). Les jetons d'entrée, le cache et le coût concordent.
+Les chiffres qui font foi pour le banc sont ceux du relais (`essai.json`), pas ceux de Cline : lors des essais de mise au point du banc, Cline comptait nettement moins de jetons de sortie que le relais ; l'écart vient probablement des jetons de raisonnement (non vérifié). Les jetons d'entrée, le cache et le coût concordaient.
 
 ## 5. Suivre un essai en cours
 
@@ -118,7 +117,7 @@ Les chiffres qui font foi pour le banc sont ceux du relais (`essai.json`), pas c
 python3 banc-essai/cage/suivi.py <essai>
 ```
 
-Une ligne : minutes écoulées, appels au modèle et échecs, coût, soumissions, fin déclarée, taille et âge de la dernière écriture de la trace ([lancer-un-essai.md](../../../banc-essai/documentation/lancer-un-essai.md), section 4). Une trace qui ne grossit plus pendant plusieurs minutes alors que les appels continuent n'est pas anormale (raisonnement long) ; une trace et des appels figés le sont.
+Une ligne : minutes écoulées, appels au modèle et échecs, coût, soumissions, fin déclarée, taille et âge de la dernière écriture de la trace ([lancer-un-essai.md](../../../banc-essai/documentation/lancer-un-essai.md), section « Suivre un essai en cours »). Une trace qui ne grossit plus pendant plusieurs minutes alors que les appels continuent n'est pas anormale (raisonnement long) ; une trace et des appels figés le sont.
 
 Suivre la trace elle-même (outils appelés au fil de l'eau) :
 
@@ -126,9 +125,11 @@ Suivre la trace elle-même (outils appelés au fil de l'eau) :
 tail -f banc-essai/resultats/<essai>/harnais/stdout.log | grep --line-buffered '"contentType":"tool","toolName"'
 ```
 
+(essai goldset : `banc-essai/resultats-goldset/<essai>/harnais/stdout.log`).
+
 ## 6. Arrêter un essai proprement
 
-Arrêter la cage, pas le lanceur, pour qu'il supprime la clé et écrive un rapport partiel ([lancer-un-essai.md](../../../banc-essai/documentation/lancer-un-essai.md), section 5) :
+Arrêter la cage, pas le lanceur, pour qu'il supprime la clé et écrive un rapport partiel ([lancer-un-essai.md](../../../banc-essai/documentation/lancer-un-essai.md), section « Arrêter un essai proprement ») :
 
 ```bash
 pgrep -af "timeout --kill-after=30"
@@ -144,7 +145,7 @@ Hors de la cage, sans risque, seules les commandes qui n'appellent pas le modèl
 
 ```bash
 T=$(mktemp -d)
-HOME=$T BANC_MODELE_URL=http://127.0.0.1:4100 BANC_MODELE=essai BANC_CLE_MODELE=sk-factice \
+HOME=$T BANC_MODELE_URL=http://127.0.0.1:4100 BANC_MODELE=modele-banc BANC_CLE_MODELE=sk-factice \
   CLINE_NO_AUTO_UPDATE=1 harnais/cline/configurer.sh
 cat "$T/.cline/data/settings/providers.json"
 rm -rf "$T"
@@ -165,4 +166,4 @@ python3 banc-essai/traces/cles.py --supprimer manuel-cline
 
 La trace NDJSON s'affiche dans le terminal ; le fichier produit est dans `~/banc-espaces/manuel-cline/travail/`. Le relais compte la dépense sur la clé `manuel-cline`. Le verrou d'essai n'est pas pris par `cage.sh` : ne pas lancer cette commande pendant un essai.
 
-Commandes de Cline qui démarrent un service d'arrière-plan (« hub », constaté avec `cline history` hors cage) : l'arrêter avec `cline hub stop` et le même `HOME`. Dans la cage, l'essai jouet a tourné sans hub (`"backendMode":"local"` dans `cline.log`).
+Commandes de Cline qui démarrent un service d'arrière-plan (« hub », constaté avec `cline history` hors cage) : l'arrêter avec `cline hub stop` et le même `HOME`. Dans la cage, les essais de mise au point du banc ont tourné sans hub (`"backendMode":"local"` dans `cline.log`).

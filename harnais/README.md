@@ -36,7 +36,7 @@ banc-essai/cage/lancer.sh <harnais> jouet --essai jouet-<harnais>
 cat banc-essai/resultats/jouet-<harnais>/rapport.md
 ```
 
-La tâche jouet (quelques centimes, quelques minutes) prouve que le harnais tourne dans la cage, joint le modèle, soumet et déclare sa fin.
+La tâche jouet (quelques minutes) prouve que le harnais tourne dans la cage, joint le modèle, soumet et déclare sa fin.
 
 ## Contrat entre un harnais et le banc
 

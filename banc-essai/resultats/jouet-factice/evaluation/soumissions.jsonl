@@ -1,2 +1,0 @@
-{"heure": "2026-11-19T22:02:40+01:00", "statut": "acceptee", "numero": 1, "score": 0.6, "note": {"score": 0.6, "tests": 10, "reussis": 6, "echecs": ["microlitres_250", "microlitres_500", "microlitres_1", "microlitres_1500"], "cage": true}}
-{"heure": "2026-11-19T22:02:40+01:00", "statut": "acceptee", "numero": 2, "score": 0.7, "note": {"score": 0.7, "tests": 10, "reussis": 7, "echecs": ["microlitres_500", "microlitres_1", "microlitres_1500"], "cage": true}}

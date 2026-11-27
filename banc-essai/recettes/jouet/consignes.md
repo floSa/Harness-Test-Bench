@@ -10,7 +10,7 @@ Linux sans interface graphique, dans un bac à sable. Python : `python3` (pas de
 |---|---|
 | Processeur | tous les cœurs de la machine |
 | Mémoire vive | 16 Go ; au-delà, le processus qui dépasse est arrêté |
-| Carte graphique | NVIDIA RTX 4060 Ti (CUDA) : 8 Go de mémoire au plus |
+| Carte graphique | celle du poste si elle existe (CUDA), sinon aucune |
 | Disque | 30 Go pour ce dossier, le dossier personnel et `/tmp` ; au-delà, l'essai est arrêté |
 | Réseau | le modèle, l'API de soumission, et en téléchargement : PyPI, Hugging Face et GitHub, 10 Go au total ; tout autre site est refusé |
 | Durée | 2 heures au plus |

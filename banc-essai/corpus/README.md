@@ -1,51 +1,24 @@
-# Corpus du banc
+# Corpus : goldset de l'équipe et démonstration
 
-Rapports d'intervention fictifs (PDF) et leur vérité terrain. Cahier des charges : [documentations/cahier-des-charges-corpus.md](../../documentations/cahier-des-charges-corpus.md).
+| Fichier ou dossier | Rôle | Versionné |
+|---|---|---|
+| `importer_goldset.py` | importe un goldset (`goldset/` à la racine du dépôt) dans le format du banc, après vérification | oui |
+| `consignes_goldset.py` | écrit les consignes données aux harnais à partir du schéma validé | oui |
+| `goldset_demo.py` | fabrique un goldset de démonstration à partir de `fourni/` et l'importe | oui |
+| `fourni/` | 35 rapports d'intervention fictifs (PDF), leurs réponses attendues (`reponses/`) et leur vérité détaillée (`verite/`) : matière première de la démonstration et des tests automatiques | oui |
+| `goldset/` | goldset de l'équipe importé : `schema.json`, `rapport-import.md`, `correspondance.json`, `fourni/`, `test-cache/`, `relance/`, `recette/consignes.md` | jamais |
+| `demo/` | goldset de démonstration et son import | jamais |
+
+Guide complet : [banc-essai/documentation/goldset.md](../documentation/goldset.md).
 
 ## Commandes
 
-Depuis `banc-essai/corpus/` :
+Depuis la racine du dépôt :
 
 | Commande | Effet |
 |---|---|
-| `uv run python plan.py` | tire le plan des 60 documents et écrit `plan-equilibre.md` |
-| `uv run python generer.py` | génère les 60 documents dans `fourni/`, `test-cache/`, `relance/` |
-| `uv run python generer.py --exemples` | un document par style dans `exemples/` (plan à graine séparée) |
-| `uv run python generer.py --sortie DIR` | régénère ailleurs, pour comparer les empreintes |
-| `uv run python dossiers.py` | tâche 2 : 26 dossiers d'équipement dans `dossiers/fourni/`, `dossiers/test-cache/`, `dossiers/relance/` |
-| `uv run python controler.py` | contrôle les PDF générés contre la vérité et le plan |
-| `sha256sum -c empreintes.sha256` | vérifie que les fichiers générés n'ont pas changé |
+| `python3 banc-essai/corpus/importer_goldset.py` | importe `goldset/` dans `banc-essai/corpus/goldset/` et écrit le rapport d'import |
+| `python3 banc-essai/corpus/consignes_goldset.py` | consignes du goldset importé (schéma validé exigé) |
+| `python3 banc-essai/corpus/goldset_demo.py` | démonstration : `demo/goldset/` (même arborescence qu'un goldset réel) et `demo/import/` |
 
-## Contenu d'un dossier de jeu
-
-| Fichier | Contenu |
-|---|---|
-| `doc-NNN.pdf` | le rapport |
-| `reponses/doc-NNN.json` | les 15 valeurs attendues |
-| `verite/doc-NNN.json` | valeurs, emplacements, pièges, écritures et leurres avec leur cadre |
-| `annotations/doc-NNN.pdf` | le rapport annoté (vert : valeur juste ; rouge numéroté : leurre ; orange : valeur barrée) |
-| `verite.csv` | une ligne par document et par champ |
-
-`test-cache/`, `relance/` et leurs équivalents sous `dossiers/` ne sont jamais versionnés ni copiés dans un espace de travail de harnais.
-
-## Modules
-
-| Module | Rôle |
-|---|---|
-| `univers.py` | noms inventés (marques, familles, prestataires, personnes, sites) |
-| `plan.py` | composition, emplacements et pièges de chaque document, équilibrage |
-| `donnees.py` | tirage des valeurs et des leurres d'un document |
-| `formats.py` | nombres, unités, dates |
-| `textes.py` | phrases de remplissage, titres, statut en phrase |
-| `base.py`, `base_flux.py`, `flux.py`, `mise_en_page.py`, `dessins.py` | briques de rendu communes |
-| `style_*.py` | les 5 mises en page |
-| `verite.py` | vérité terrain et PDF annoté |
-
-## Tâche 2 : dossiers d'équipement
-
-| Fichier | Contenu |
-|---|---|
-| `dossiers/<jeu>/dos-NNN/piece-NN.pdf` | pièces du dossier, dans le désordre |
-| `dossiers/<jeu>/reponses/dos-NNN.json` | réponse attendue : équipement, interventions retenues, statut actuel |
-| `dossiers/<jeu>/verite/dos-NNN.json` | nature de chaque pièce (rapport retenu, version remplacée, équipement jumeau, rapport annulé, avis d'annulation, rectificatif) |
-| `dossiers/<jeu>/verite/dos-NNN/piece-NN.json` | vérité détaillée de chaque rapport (format de la tâche 1) |
+Les trois scripts n'utilisent que la bibliothèque standard de Python.

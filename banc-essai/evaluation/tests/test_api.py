@@ -1,6 +1,7 @@
 """Tests de l'API : documents, refus de format, notation sur réponses connues, limite de 5, fin."""
 import copy
 import json
+from pathlib import Path
 
 import api
 import notation
@@ -264,7 +265,7 @@ def test_jouet_dans_la_cage(toy, tmp_path):
     espion = (
         "import pathlib, urllib.request\n"
         "trace = []\n"
-        f"for f in [{str(verite)!r}, '/home/florian']:\n"
+        f"for f in [{str(verite)!r}, {str(Path.home())!r}]:\n"
         "    try:\n"
         "        pathlib.Path(f).read_text(); trace.append('lu ' + f)\n"
         "    except Exception as e:\n"

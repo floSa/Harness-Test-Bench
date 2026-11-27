@@ -10,13 +10,11 @@ Prérequis : gptme installé ([installation.md](installation.md)), relais du mod
 banc-essai/cage/lancer.sh gptme <recette> [--essai NOM] [--duree S] [--message "..."]
 ```
 
-| Recette | Tâche | Résultats dans | Remarque |
-|---|---|---|---|
-| `jouet` | correction d'un petit paquet Python, tests cachés | `banc-essai/resultats/<essai>/` | quelques centimes, à lancer d'abord |
-| `sans-aide` | extraction de données de rapports PDF fictifs | `banc-essai/resultats/<essai>/` | consignes de base |
-| `avec-aide` | même tâche | `banc-essai/resultats/<essai>/` | consignes avec aide |
-| `dossiers` | dossiers d'équipement, pièces à recouper | `banc-essai/resultats/<essai>/` | jamais lancée avec gptme |
-| `goldset` | jeu de PDF et réponses fourni par l'utilisateur | `banc-essai/resultats-goldset/<essai>/` (hors git) | schéma validé et consignes générées exigés ([goldset.md](../../../banc-essai/documentation/goldset.md)) ; jamais lancée avec gptme |
+| Critère | `jouet` | `goldset` |
+|---|---|---|
+| Tâche | correction d'un petit paquet Python, tests cachés | extraction de données d'un jeu de PDF de l'équipe, réponses de référence fournies par l'utilisateur |
+| Résultats dans | `banc-essai/resultats/<essai>/` (dossier créé par le lanceur) | `banc-essai/resultats-goldset/<essai>/` (hors git) |
+| Remarque | quelques appels au modèle, à lancer d'abord | schéma validé et consignes générées exigés ([goldset.md](../../../banc-essai/documentation/goldset.md)) ; non essayée avec gptme lors de la mise au point du banc |
 
 | Option | Défaut | Effet |
 |---|---|---|
@@ -27,8 +25,7 @@ banc-essai/cage/lancer.sh gptme <recette> [--essai NOM] [--duree S] [--message "
 Exemples :
 
 ```bash
-banc-essai/cage/lancer.sh gptme jouet --essai jouet-gptme
-banc-essai/cage/lancer.sh gptme sans-aide --essai c1-07-gptme-sans-aide
+banc-essai/cage/lancer.sh gptme jouet --essai test-gptme
 BANC_GOLDSET=/chemin/du/goldset banc-essai/cage/lancer.sh gptme goldset
 ```
 
@@ -46,22 +43,24 @@ Le lanceur du banc appelle `/opt/harnais/lancer.sh "<message>"` dans la cage, en
 |---|---|---|
 | `--non-interactive` | traite le message puis s'arrête ; aucune confirmation | `gptme --help` |
 | `--output-format json` | un objet JSON par message sur la sortie standard | `gptme --help` |
-| `--tool-format tool` | appels d'outils natifs de l'API (champ `tools` des requêtes), pas d'outils écrits en Markdown | `gptme --help` ; 15 outils déclarés par appel dans le journal du relais (`banc-essai/resultats/gptme-jouet-1/traces/appels.jsonl`) |
+| `--tool-format tool` | appels d'outils natifs de l'API (champ `tools` des requêtes), pas d'outils écrits en Markdown | `gptme --help` ; 15 outils déclarés par appel dans le journal du relais (`traces/appels.jsonl`), constaté lors des essais de mise au point du banc |
 | `-m "banc/$BANC_MODELE"` | modèle du fournisseur `banc` | [configuration.md](configuration.md) |
 | `--name essai` | nom de la conversation, donc de son dossier de journaux | `gptme --help` |
 | `"$*"` | message, tous les arguments réunis en un seul texte | |
 
-La session se termine quand le modèle appelle l'outil `complete` (`Complete tool call detected, stopping session immediately` dans `stderr.log`), ou au garde-fou de durée. Code de retour 0 dans les deux essais réels.
+La session se termine quand le modèle appelle l'outil `complete` (`Complete tool call detected, stopping session immediately` dans `stderr.log`), ou au garde-fou de durée. Code de retour 0 lors des essais de mise au point du banc.
 
 ## 3. Sorties produites
 
+`<résultats>` désigne `banc-essai/resultats/<essai>/` pour la recette `jouet` et `banc-essai/resultats-goldset/<essai>/` pour la recette `goldset`.
+
 | Fichier | Contenu | Dans git |
 |---|---|---|
-| `banc-essai/resultats/<essai>/harnais/stdout.log` | trace de la session : objets JSON des messages, mêlés aux sorties brutes des commandes | oui (hors goldset) ; compressé en `.gz` au-delà de 20 Mo |
-| `banc-essai/resultats/<essai>/harnais/stderr.log` | messages d'état de gptme : configuration, avertissements, compactions, nouvelles tentatives, fin | oui (hors goldset) |
-| `banc-essai/resultats/<essai>/traces/appels.jsonl` | appels au modèle vus par le relais (jetons, coût, statut) | oui (hors goldset) |
-| `banc-essai/resultats/<essai>/essai.json`, `rapport.md` | chiffres de l'essai, rapport | oui (hors goldset) |
-| `banc-essai/resultats/<essai>/code/` | code écrit par l'agent, archivé pour la relecture | oui (hors goldset) |
+| `<résultats>/harnais/stdout.log` | trace de la session : objets JSON des messages, mêlés aux sorties brutes des commandes | `jouet` : oui ; `goldset` : non ; compressé en `.gz` au-delà de 20 Mo |
+| `<résultats>/harnais/stderr.log` | messages d'état de gptme : configuration, avertissements, compactions, nouvelles tentatives, fin | `jouet` : oui ; `goldset` : non |
+| `<résultats>/traces/appels.jsonl` | appels au modèle vus par le relais (jetons, coût, statut) | `jouet` : oui ; `goldset` : non |
+| `<résultats>/essai.json`, `rapport.md` | chiffres de l'essai, rapport | `jouet` : oui ; `goldset` : non |
+| `<résultats>/code/` | code écrit par l'agent, archivé pour la relecture | `jouet` : oui ; `goldset` : non |
 | `~/banc-espaces/<essai>/maison/.local/share/gptme/logs/essai/` | journaux complets de la conversation (section 4) | non : hors du dépôt, non recopiés par le lanceur |
 | `~/banc-espaces/<essai>/travail/` | espace de travail de l'agent | non |
 
@@ -69,7 +68,7 @@ Le dossier `~/banc-espaces` devient `$BANC_ESPACES` si cette variable est défin
 
 ## 4. Journaux de conversation de gptme
 
-Constatés après les essais dans `~/banc-espaces/c1-03-gptme-sans-aide/maison/.local/share/gptme/logs/essai/` :
+Constatés lors des essais de mise au point du banc, dans `~/banc-espaces/<essai>/maison/.local/share/gptme/logs/essai/` :
 
 | Fichier | Contenu |
 |---|---|
@@ -87,7 +86,7 @@ Ces fichiers restent sur le poste et ne sont pas suivis par git. Après un essai
 
 ## 5. Format de la trace (`stdout.log`)
 
-Chaque message est une ligne JSON qui commence par `{"type": "message"`. Entre ces lignes, gptme écrit aussi la sortie brute des commandes lancées par l'agent : le fichier n'est pas un JSON par ligne. Dans `gptme-jouet-1`, 29 lignes de messages et 300 autres lignes ; dans `c1-03-gptme-sans-aide`, 451 messages.
+Chaque message est une ligne JSON qui commence par `{"type": "message"`. Entre ces lignes, gptme écrit aussi la sortie brute des commandes lancées par l'agent : le fichier n'est pas un JSON par ligne.
 
 | Champ | Contenu |
 |---|---|
@@ -106,14 +105,15 @@ Chaque message est une ligne JSON qui commence par `{"type": "message"`. Entre c
 Extraire les messages et les lire en une ligne chacun :
 
 ```bash
-grep '^{"type": "message"' banc-essai/resultats/gptme-jouet-1/harnais/stdout.log | python3 -c '
+R=banc-essai/resultats/<essai>        # recette goldset : banc-essai/resultats-goldset/<essai>
+grep '^{"type": "message"' "$R/harnais/stdout.log" | python3 -c '
 import json, sys
 for ligne in sys.stdin:
     m = json.loads(ligne); meta = m.get("metadata") or {}
     print(m["timestamp"][11:19], m["role"], meta.get("tool", ""), (meta.get("usage") or {}).get("input_tokens", ""))'
 ```
 
-Compter les outils utilisés : même filtre, puis `metadata.tool`. Relevé du 27/11/2026 : `gptme-jouet-1` : `shell` 11, `patch` 1, `complete` 1 ; `c1-03-gptme-sans-aide` : `shell` 196, `save` 16, `patch` 7, `ipython` 2, `complete` 1.
+Compter les outils utilisés : même filtre, puis `metadata.tool`. Constaté lors des essais de mise au point du banc : `shell` domine largement, suivi de `save` et `patch`, `ipython` reste rare, `complete` termine la session.
 
 Pour une trace compressée : `zcat .../stdout.log.gz | grep '^{"type": "message"'`.
 
@@ -121,7 +121,7 @@ Pour une trace compressée : `zcat .../stdout.log.gz | grep '^{"type": "message"
 
 ```bash
 python3 banc-essai/cage/suivi.py <essai>
-tail -f banc-essai/resultats/<essai>/harnais/stderr.log
+tail -f banc-essai/resultats/<essai>/harnais/stderr.log      # recette goldset : banc-essai/resultats-goldset/<essai>/
 ```
 
 `suivi.py` donne en une ligne la durée, les appels au modèle et leurs échecs, le coût mesuré par le relais, les soumissions, la déclaration de fin, la taille de la trace et l'âge de sa dernière écriture. `stderr.log` montre les événements propres à gptme : `Auto-summarize triggered` (compaction), `Discarding failed LLM attempt N/11` (nouvelle tentative après une erreur du fournisseur), `Complete tool call detected` (fin). Le montant `Session cost reached $…` de ce fichier est faux ; le coût réel est celui de `suivi.py`.

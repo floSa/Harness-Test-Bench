@@ -6,7 +6,7 @@ Ce fichier est le prompt à donner à un agent de code (par exemple : « Lis pia
 
 Tu es l'agent chargé d'installer et de faire tourner ce banc d'essai sur ce poste. Le banc compare des harnais d'agents (OpenCode, Pi, gptme, Goose, Cline) sur l'extraction d'informations dans des PDF. Ici :
 
-- le modèle est servi par un **portail compatible OpenAI** (une adresse et une clé), pas par OpenRouter ;
+- le modèle est servi par un **portail compatible OpenAI** (une adresse et une clé) ;
 - les documents sont un **goldset** de l'équipe : `goldset/` à la racine du dépôt, avec `split/train`, `split/val`, `split/test` (PDF) et `split/train_ground_truth.json`, `split/val_ground_truth.json`, `split/test_ground_truth.json` (pour chaque PDF, les valeurs à extraire), plus `goldset/ground_truth.json` (tous les documents) ;
 - le but final : un tableau qui compare les harnais sur ce goldset.
 
@@ -62,10 +62,9 @@ Lis d'abord, dans cet ordre : `README.md`, `banc-essai/README.md`, `banc-essai/d
 
 1. Demander à l'utilisateur, s'il ne les a pas donnés : l'adresse du portail, le nom du modèle à utiliser, le mandataire et le certificat éventuels. La clé, il l'écrit lui-même dans `.env` : ne jamais la demander en clair dans la conversation.
 2. `cp .env.exemple .env && chmod 600 .env`, puis l'utilisateur remplit `PORTAIL_URL`, `PORTAIL_CLE`, et si besoin `BANC_MANDATAIRE`, `BANC_CERTIFICAT`.
-3. Dans `banc-essai/modele.env` : `BANC_FOURNISSEUR=portail`, `BANC_MODELE_FOURNISSEUR=<nom du modèle>`, `BANC_MODELE=modele-banc`.
-4. `python3 banc-essai/traces/verifier_portail.py` : lire chaque ligne. Les vérifications indispensables doivent toutes réussir (outils et flux compris : sans eux, aucun harnais ne peut travailler).
-5. Reporter dans `modele.env` : `BANC_VISION` (résultat de la vérification d'image), `BANC_CONTEXTE` et `BANC_SORTIE_MAX` (annoncés par le portail ou sa documentation, sinon demander à l'utilisateur), et des prix : ceux du portail s'il en a, sinon des prix conventionnels (section 5 de la page) avec un `BANC_BUDGET_ESSAI` qui laisse un essai aller au bout (repère : un essai de construction a consommé entre 10 et 30 millions de jetons d'entrée sur le banc d'origine).
-6. `banc-essai/traces/demarrer.sh`, puis la sonde :
+3. `python3 banc-essai/traces/verifier_portail.py --modele <nom du modèle>` : lire chaque ligne (la première vérification affiche les modèles du portail si le nom est faux). Les vérifications indispensables doivent toutes réussir (outils et flux compris : sans eux, aucun harnais ne peut travailler).
+4. Remplir `banc-essai/modele.env` : `BANC_MODELE_FOURNISSEUR` (nom exact du modèle), `BANC_VISION` (résultat de la vérification d'image), `BANC_CONTEXTE` et `BANC_SORTIE_MAX` (annoncés par le portail ou sa documentation, sinon demander à l'utilisateur), et des prix : ceux du portail s'il en a, sinon des prix conventionnels (section 5 de la page) avec un `BANC_BUDGET_ESSAI` qui laisse un essai aller au bout (repère : un essai de construction consomme couramment de 10 à 30 millions de jetons d'entrée, en grande partie relus dans le cache ; plafond livré : 40 millions).
+5. `banc-essai/traces/demarrer.sh`, puis la sonde :
 
    ```bash
    banc-essai/cage/lancer.sh sonde jouet --essai sonde-portail
@@ -73,7 +72,7 @@ Lis d'abord, dans cet ordre : `README.md`, `banc-essai/README.md`, `banc-essai/d
    ```
 
 **Décisions réservées :** modèle choisi, prix conventionnels et plafond par essai.
-**Fin du niveau 1 :** vérificateur sans KO indispensable ; sonde « 44/44 vérifications conformes » (ou 43/43 si le modèle n'a pas de vision) ; le rapport de la sonde ne contient aucune clé.
+**Fin du niveau 1 :** vérificateur sans KO indispensable ; sonde « 42/42 vérifications conformes » (ou 41/41 si le modèle n'a pas de vision) ; le rapport de la sonde ne contient aucune clé.
 
 ## Niveau 2. Banc sans harnais
 

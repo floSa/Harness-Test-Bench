@@ -26,7 +26,6 @@ import time
 from pathlib import Path
 
 import notation
-import notation_dossiers
 import notation_goldset
 
 ICI = Path(__file__).resolve().parent
@@ -58,9 +57,9 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
     essai = Path(essai)
     if shutil.which("bwrap") is None or not CAGE.exists():
         raise SystemExit("relance refusée : bubblewrap ou banc-essai/cage/cage.sh absent")
-    defaut = ICI.parent / "corpus" / {"dossiers": "dossiers/relance", "goldset": "goldset/relance"}.get(tache, "relance")
+    defaut = ICI.parent / "corpus" / {"goldset": "goldset/relance"}.get(tache, "relance")
     jeu = Path(jeu or defaut)
-    module = {"dossiers": notation_dossiers, "goldset": notation_goldset}.get(tache, notation)
+    module = {"goldset": notation_goldset}.get(tache, notation)
     if commande is None:
         commande = json.loads((essai / "evaluation" / "fin.json").read_text())["commande"]
     ids, attendus, verites = module.charger_jeu(jeu)
@@ -72,12 +71,7 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
         entree = Path(tmp) / "entree"
         entree.mkdir()
         for i in ids:
-            if tache == "dossiers":   # pièces seules, ni réponses ni vérité
-                (entree / i).mkdir()
-                for piece in sorted((jeu / i).glob("piece-*.pdf")):
-                    shutil.copy2(piece, entree / i / piece.name)
-            else:
-                shutil.copy2(jeu / f"{i}.pdf", entree / f"{i}.pdf")
+            shutil.copy2(jeu / f"{i}.pdf", entree / f"{i}.pdf")   # PDF seuls, ni réponses ni vérité
         sortie = Path(tmp) / "sortie"
         sortie.mkdir()
         m = Path(maison) if maison else Path(tmp) / "maison"
@@ -120,10 +114,7 @@ def relancer(espace, essai, commande=None, jeu=None, duree_max=DUREE_MAX, cle=No
     # Une réponse mal formée (nombre immense, type faux…) compte faux, sans faire échouer la relance.
     for i in list(reponses):
         r = reponses[i]
-        if tache == "dossiers":
-            if notation_dossiers.erreurs_dossier(r):
-                reponses.pop(i)
-        elif tache == "goldset":   # « verites » : le schéma
+        if tache == "goldset":   # « verites » : le schéma
             if notation_goldset.erreurs_document(r, verites):
                 reponses.pop(i)
         elif not isinstance(r, dict) or any(notation.erreurs_valeur(k, r.get(k)) for k in notation.CLES if k in r):
@@ -151,7 +142,7 @@ def main():
     a.add_argument("--duree-max", type=int, default=DUREE_MAX)
     a.add_argument("--cle", help="fichier de clé virtuelle (appels au modèle du workflow)")
     a.add_argument("--maison", help="dossier personnel du harnais pendant l'essai")
-    a.add_argument("--tache", choices=["extraction", "dossiers", "goldset"], default="extraction")
+    a.add_argument("--tache", choices=["extraction", "goldset"], default="extraction")
     o = a.parse_args()
     r = relancer(o.espace, o.essai, o.commande, o.jeu, o.duree_max, o.cle, o.maison, o.tache)
     print(f"relance : {r['json_produits']}/{r['documents']} JSON, score {r['note']['score']}, "

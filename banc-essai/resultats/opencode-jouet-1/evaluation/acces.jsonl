@@ -1,6 +1,0 @@
-{"heure": "2026-11-19T22:11:43+01:00", "methode": "GET", "chemin": "/etat", "code": 200}
-{"heure": "2026-11-19T22:11:43+01:00", "methode": "GET", "chemin": "/etat", "code": 200}
-{"heure": "2026-11-19T22:11:59+01:00", "methode": "GET", "chemin": "/etat", "code": 200}
-{"heure": "2026-11-19T22:12:00+01:00", "methode": "GET", "chemin": "/etat", "code": 200}
-{"heure": "2026-11-19T22:12:00+01:00", "methode": "POST", "chemin": "/soumissions", "code": 200}
-{"heure": "2026-11-19T22:12:02+01:00", "methode": "POST", "chemin": "/fin", "code": 200}

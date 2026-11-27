@@ -12,15 +12,12 @@ Avant le premier essai : Pi installé ([installation](installation.md)), relais 
 banc-essai/cage/lancer.sh pi <recette> [--essai NOM] [--duree SECONDES] [--message "..."]
 ```
 
-| Recette | Tâche | Ordre de grandeur pour Pi | Préalable |
-|---|---|---|---|
-| `jouet` | corriger un petit paquet Python, noté par des tests cachés ; sert à vérifier le harnais | `pi-jouet-1` : 23 s, 11 appels, 0,0013 $ | aucun |
-| `sans-aide` | extraction dans les rapports d'intervention fictifs, une définition d'une ligne par clé | aucun essai de Pi | aucun |
-| `avec-aide` | même tâche, avec l'ontologie des clés | `c1-04-pi-avec-aide` : 27 min, 365 appels, 0,27 $ | aucun |
-| `dossiers` | recoupement de pièces par équipement (tâche 2) | aucun essai de Pi | aucun |
-| `goldset` | extraction dans le goldset importé | aucun essai terminé de Pi au 27/11/2026 | goldset importé, schéma validé, consignes générées ([`banc-essai/documentation/goldset.md`](../../../banc-essai/documentation/goldset.md)) |
-
-Chiffres tirés de [`banc-essai/resultats/pi-jouet-1/rapport.md`](../../../banc-essai/resultats/pi-jouet-1/rapport.md) et [`banc-essai/resultats/c1-04-pi-avec-aide/rapport.md`](../../../banc-essai/resultats/c1-04-pi-avec-aide/rapport.md) ; les autres recettes n'ont pas encore été essayées avec Pi.
+| Critère | `jouet` | `goldset` |
+|---|---|---|
+| Tâche | corriger un petit paquet Python, noté par des tests cachés | extraction dans les PDF du goldset de l'équipe |
+| Usage | vérifier le harnais et la chaîne portail, relais, cage : essai court, quelques appels au modèle | essai de mesure, long (garde-fou de durée de 7 200 s par défaut) |
+| Préalable | aucun | goldset importé, schéma validé, consignes générées ([`banc-essai/documentation/goldset.md`](../../../banc-essai/documentation/goldset.md)) |
+| Dossier de résultats | `banc-essai/resultats/<essai>/` (créé par le lanceur) | `banc-essai/resultats-goldset/<essai>/`, hors git |
 
 | Option | Effet | Défaut |
 |---|---|---|
@@ -32,7 +29,7 @@ Exemples :
 
 ```bash
 banc-essai/cage/lancer.sh pi jouet
-banc-essai/cage/lancer.sh pi avec-aide --essai c3-pi-avec-aide
+banc-essai/cage/lancer.sh pi goldset --essai pi-goldset-01
 ```
 
 Un essai long se lance détaché du terminal, pour survivre à sa fermeture :
@@ -68,17 +65,17 @@ node /opt/harnais/installe/pi/node_modules/@earendil-works/pi-coding-agent/dist/
 | `--` | fin des options : le message peut commencer par un tiret |
 | `"$*"` | tous les arguments de `lancer.sh` réunis en un seul message |
 
-Environnement vu par Pi dans la cage (relevé le 27/11/2026, clé exclue) :
+Environnement vu par Pi dans la cage, clé exclue (variables posées par [`banc-essai/cage/cage.sh`](../../../banc-essai/cage/cage.sh), valeurs par défaut de `banc-essai/modele.env`) :
 
 ```text
 BANC_MODELE_URL=http://127.0.0.1:4100
-BANC_MODELE=deepseek-v4.1-flash
-BANC_CONTEXTE=1000000
-BANC_SORTIE_MAX=32768
-BANC_VISION=1
-BANC_PRIX_ENTREE=0.05
-BANC_PRIX_CACHE=0.003
-BANC_PRIX_SORTIE=0.30
+BANC_MODELE=modele-banc
+BANC_CONTEXTE=128000
+BANC_SORTIE_MAX=16384
+BANC_VISION=0
+BANC_PRIX_ENTREE=1
+BANC_PRIX_CACHE=1
+BANC_PRIX_SORTIE=1
 BANC_API=http://127.0.0.1:8765
 HTTPS_PROXY=http://127.0.0.1:3128
 HTTP_PROXY=http://127.0.0.1:3128
@@ -92,7 +89,7 @@ S'y ajoutent `BANC_CLE_MODELE` (clé de l'essai), `HOME=/home/banc`, et `BANC_AP
 | Emplacement | Contenu | Dans git |
 |---|---|---|
 | `banc-essai/resultats/<essai>/harnais/stdout.log` | trace JSONL de Pi (section 4) ; compressée en `stdout.log.gz` au-delà de 20 Mo | oui (goldset : non) |
-| `banc-essai/resultats/<essai>/harnais/stderr.log` | message de `configurer.sh`, puis diagnostics de Pi s'il y en a ; une seule ligne dans les deux essais réels | idem |
+| `banc-essai/resultats/<essai>/harnais/stderr.log` | message de `configurer.sh`, puis diagnostics de Pi s'il y en a ; une seule ligne lors des essais de mise au point du banc | idem |
 | `banc-essai/resultats/<essai>/traces/appels.jsonl` | appels au modèle de la clé de l'essai, vus par le relais (jetons, durée, coût, images, outils, erreurs) | idem |
 | `banc-essai/resultats/<essai>/code/` | code écrit par Pi dans l'espace de travail (ni PDF ni JSON) | idem |
 | `banc-essai/resultats/<essai>/rapport.md`, `essai.json` | rapport et mesures de l'essai | idem |
@@ -106,22 +103,22 @@ Pour la recette `goldset`, le dossier de résultats est `banc-essai/resultats-go
 
 `stdout.log` est un flux JSONL : un objet JSON par ligne, défini par [json.md v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/json.md) (consulté le 27/11/2026).
 
-| Événement | Contenu | Nombre dans `pi-jouet-1` | Nombre dans `c1-04-pi-avec-aide` |
-|---|---|---|---|
-| `session` | en-tête : version du format (3), identifiant, heure, dossier de travail | 1 | 1 |
-| `agent_start`, `agent_end` | début et fin d'une exécution ; `agent_end` contient tous les messages produits | 1 | 1 |
-| `turn_start`, `turn_end` | un tour = une réponse du modèle et les outils qu'elle appelle ; `turn_end` porte le message complet (fournisseur, modèle, jetons, coût, raison d'arrêt) | 11 | 99 |
-| `message_start`, `message_end` | début et fin d'un message (système, utilisateur, modèle, résultat d'outil) ; `message_end` fait foi (nombre de chacun) | 28 | 199 |
-| `message_update` | morceau de réponse en flux (texte ou appel d'outil), écrit au fil de l'eau | 595 | 8 684 |
-| `tool_execution_start`, `_update`, `_end` | appel d'outil : nom, arguments, résultat (nombre de `tool_execution_start`) | 15 | 98 |
-| `agent_settled` | Pi n'a plus rien à faire ; `aborted` vaut `true` si l'exécution a été interrompue | 1 | 1 |
+| Événement | Contenu | Fréquence |
+|---|---|---|
+| `session` | en-tête : version du format (3), identifiant, heure, dossier de travail | une fois |
+| `agent_start`, `agent_end` | début et fin d'une exécution ; `agent_end` contient tous les messages produits | une fois chacun |
+| `turn_start`, `turn_end` | un tour = une réponse du modèle et les outils qu'elle appelle ; `turn_end` porte le message complet (fournisseur, modèle, jetons, coût, raison d'arrêt) | un par appel de Pi au modèle |
+| `message_start`, `message_end` | début et fin d'un message (système, utilisateur, modèle, résultat d'outil) ; `message_end` fait foi | un par message |
+| `message_update` | morceau de réponse en flux (texte ou appel d'outil), écrit au fil de l'eau | la grande majorité des lignes de la trace |
+| `tool_execution_start`, `_update`, `_end` | appel d'outil : nom, arguments, résultat | un `tool_execution_start` par appel d'outil |
+| `agent_settled` | Pi n'a plus rien à faire ; `aborted` vaut `true` si l'exécution a été interrompue | une fois |
 
-Comptes relevés le 27/11/2026 dans les traces des deux essais. Le premier `message_start` contient l'invite système de Pi, découpée en sections (`preamble`, `tools`, `rules`, `docs`, `cwd`).
+Fréquences constatées lors des essais de mise au point du banc. Le premier `message_start` contient l'invite système de Pi, découpée en sections (`preamble`, `tools`, `rules`, `docs`, `cwd`).
 
 Outils appelés et dernier message du modèle (Python seul, sans dépendance ; pour une trace compressée, remplacer `open(...)` par `gzip.open(..., "rt")`) :
 
 ```bash
-python3 - banc-essai/resultats/pi-jouet-1/harnais/stdout.log <<'PY'
+python3 - banc-essai/resultats/<essai>/harnais/stdout.log <<'PY'
 import json, sys, collections
 outils = collections.Counter()
 for ligne in open(sys.argv[1]):
@@ -135,14 +132,14 @@ print(dict(outils))
 PY
 ```
 
-Résultat pour `pi-jouet-1` : `{'bash': 9, 'read': 5, 'edit': 1}`. Pour `c1-04-pi-avec-aide` : `{'bash': 77, 'read': 21}`.
+La dernière ligne affichée a la forme `{'bash': 9, 'read': 5, 'edit': 1}` : nombre d'appels de chaque outil. Pour un essai `goldset`, remplacer `resultats` par `resultats-goldset`.
 
-Lecture dans un navigateur : Pi exporte une session en page HTML, sans réseau ni modèle (essayé le 27/11/2026 sur la session de `pi-jouet-1`). `PI_CODING_AGENT_DIR` pointe vers un dossier jetable pour que Pi n'écrive rien dans `~/.pi` du compte :
+Lecture dans un navigateur : Pi exporte une session en page HTML, sans réseau ni modèle (essayé lors des essais de mise au point du banc). `PI_CODING_AGENT_DIR` pointe vers un dossier jetable pour que Pi n'écrive rien dans `~/.pi` du compte :
 
 ```bash
 PI_OFFLINE=1 PI_CODING_AGENT_DIR=$(mktemp -d) harnais/pi/installe/node/bin/node \
   harnais/pi/installe/pi/node_modules/@earendil-works/pi-coding-agent/dist/bundle/cli.js \
-  --export ~/banc-espaces/pi-jouet-1/maison/.pi/agent/sessions/--travail--/<fichier>.jsonl /tmp/session.html
+  --export ~/banc-espaces/<essai>/maison/.pi/agent/sessions/--travail--/<fichier>.jsonl /tmp/session.html
 ```
 
 La page exportée contient tout le contenu de la session : ne pas la diffuser pour un essai `goldset`.
@@ -158,6 +155,8 @@ Une ligne : durée, appels au modèle et échecs, coût, soumissions, déclarati
 ```bash
 grep -c '"type":"turn_end"' banc-essai/resultats/<essai>/harnais/stdout.log
 ```
+
+Pour un essai `goldset`, le chemin commence par `banc-essai/resultats-goldset/`.
 
 ## 6. Arrêter un essai proprement
 

@@ -77,7 +77,7 @@ def get(url, timeout=20):
         return r.status
 
 
-for url in ["https://example.com/", "https://openrouter.ai/api/v1/models", "https://api.openai.com/v1/models",
+for url in ["https://example.com/", "https://api.openai.com/v1/models",
             "https://www.google.com/", "http://pypi.org/simple/pip/"]:
     etat, det = tenter(lambda: get(url))
     noter(f"accès par le mandataire à {url}", "refusé", f"{etat} ({det})", etat == "refusé")
@@ -107,7 +107,7 @@ noter("API de soumission /etat", "réussi", f"{etat} ({det})", etat == "réussi"
 # 5. Modèle par le LiteLLM du banc -------------------------------------------------------------------
 cle = os.environ.get("BANC_CLE_MODELE")
 noter("clé virtuelle du harnais présente dans l'environnement", "oui", "oui" if cle else "non", bool(cle))
-for nom in ("OPENROUTER_API_KEY", "PORTAIL_CLE", "BANC_FOURNISSEUR_CLE"):
+for nom in ("PORTAIL_CLE", "BANC_FOURNISSEUR_CLE"):
     noter(f"clé du fournisseur ({nom}) absente de l'environnement", "absente",
           "présente" if nom in os.environ else "absente", nom not in os.environ)
 
@@ -123,7 +123,7 @@ def png_rouge(n=16):
 PNG = base64.b64encode(png_rouge()).decode()
 
 def appel(messages):
-    corps = {"model": os.environ.get("BANC_MODELE", "deepseek-v4.1-flash"), "messages": messages, "max_tokens": 300}
+    corps = {"model": os.environ.get("BANC_MODELE", "modele-banc"), "messages": messages, "max_tokens": 300}
     req = urllib.request.Request(os.environ["BANC_MODELE_URL"] + "/v1/chat/completions",
                                  data=json.dumps(corps).encode(), method="POST",
                                  headers={"Authorization": f"Bearer {cle}", "Content-Type": "application/json"})
@@ -140,7 +140,7 @@ if os.environ.get("BANC_VISION", "1") == "1":   # modèle sans vision (banc-essa
     noter("appel avec image au modèle", "réussi", f"{etat} ({det})", etat == "réussi")
 faux = urllib.request.Request(
     os.environ["BANC_MODELE_URL"] + "/v1/chat/completions", method="POST",
-    data=json.dumps({"model": os.environ.get("BANC_MODELE", "deepseek-v4.1-flash"), "messages": [{"role": "user", "content": "x"}]}).encode(),
+    data=json.dumps({"model": os.environ.get("BANC_MODELE", "modele-banc"), "messages": [{"role": "user", "content": "x"}]}).encode(),
     headers={"Authorization": "Bearer sk-fausse", "Content-Type": "application/json"})
 etat, det = tenter(lambda: urllib.request.urlopen(faux, timeout=30).status)
 noter("appel au modèle avec une fausse clé", "refusé", f"{etat} ({det})", etat == "refusé")
@@ -154,9 +154,10 @@ def route(methode, chemin, corps=None):
         return r.status
 
 
+# Routes de transfert direct intégrées à LiteLLM (/openrouter/..., /gemini/...) et routes de gestion.
 for methode, chemin, corps in [
         ("GET", "/openrouter/v1/key", None), ("GET", "/openrouter/v1/models", None),
-        ("POST", "/openrouter/v1/chat/completions", {"models": ["deepseek/deepseek-v4.1-flash"],
+        ("POST", "/openrouter/v1/chat/completions", {"models": ["x"],
                                                      "messages": [{"role": "user", "content": "x"}]}),
         ("GET", "/gemini/v1beta/models", None), ("GET", "/key/info", None),
         ("POST", "/key/generate", {}), ("POST", "/key/update", {}), ("GET", "/spend/logs", None)]:

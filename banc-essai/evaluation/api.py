@@ -4,16 +4,13 @@ Usage (depuis la racine du dépôt) :
     uv run --project banc-essai/evaluation python banc-essai/evaluation/api.py \
         --tache extraction --jeu banc-essai/corpus/test-cache --sortie banc-essai/resultats/<essai>/evaluation
     ... --tache jouet --jeu banc-essai/evaluation/taches/jouet --sortie ...
-    ... --tache dossiers --jeu banc-essai/corpus/dossiers/test-cache --sortie ...
     ... --tache goldset --jeu banc-essai/corpus/goldset/test-cache --sortie ...   (schéma : ../schema.json)
 
 Routes :
     GET  /etat                     tâche, soumissions utilisées et restantes, fin déclarée
     GET  /documents                identifiants des documents à traiter (extraction, goldset)
     GET  /documents/<id>.pdf       PDF d'un document (jamais ses réponses)
-    GET  /dossiers                 dossiers et leurs pièces (tâche dossiers)
-    GET  /dossiers/<id>/<piece>.pdf  une pièce d'un dossier
-    POST /soumissions              {"reponses": {id: {clé: valeur}}} (extraction, dossiers, goldset)
+    POST /soumissions              {"reponses": {id: {clé: valeur}}} (extraction, goldset)
                                    {"fichiers": {chemin: contenu}} (jouet) ; renvoie le score global
     POST /fin                      {"soumission_finale": n, "score_validation": x, "commande": "..."}
 
@@ -34,7 +31,6 @@ from pathlib import Path
 
 import jouet
 import notation
-import notation_dossiers
 import notation_goldset
 
 HOTE = "127.0.0.1"
@@ -59,11 +55,6 @@ class Etat:
             self.ids, self.attendus, self.verites = notation_goldset.charger_jeu(self.jeu)
             if not self.ids:
                 raise SystemExit(f"aucun document dans {self.jeu}")
-        elif tache == "dossiers":
-            self.ids, self.attendus, self.verites = notation_dossiers.charger_jeu(self.jeu)
-            if not self.ids:
-                raise SystemExit(f"aucun dossier dans {self.jeu}")
-            self.pieces = {i: sorted(p.name for p in (self.jeu / i).glob("piece-*.pdf")) for i in self.ids}
         else:
             self.ids = []
             jouet.config(self.jeu)
@@ -104,8 +95,6 @@ class Etat:
                 err = ["objet JSON attendu"]
             elif self.tache == "extraction":
                 err = notation.valider(corps.get("reponses"), self.ids)
-            elif self.tache == "dossiers":
-                err = notation_dossiers.valider(corps.get("reponses"), self.ids)
             elif self.tache == "goldset":
                 err = notation_goldset.valider(corps.get("reponses"), self.ids, self.verites)
             else:
@@ -115,8 +104,8 @@ class Etat:
                 return 400, {"erreur": "format", "details": err[:50],
                              "soumissions_restantes": self.limite - len(self.scores)}
             numero = len(self.scores) + 1
-            if self.tache in ("extraction", "dossiers", "goldset"):
-                module = {"extraction": notation, "dossiers": notation_dossiers, "goldset": notation_goldset}[self.tache]
+            if self.tache in ("extraction", "goldset"):
+                module = {"extraction": notation, "goldset": notation_goldset}[self.tache]
                 note = module.noter(corps["reponses"], self.attendus, self.verites)
                 detail = note.pop("detail")
                 self.ecrire(self.f_detail, {"numero": numero, "detail": detail})
@@ -142,7 +131,7 @@ class Etat:
             sv = corps.get("score_validation")
             if sv is not None and (isinstance(sv, bool) or not isinstance(sv, (int, float)) or not 0 <= sv <= 1):
                 err.append("score_validation : nombre entre 0 et 1, ou null")
-            if self.tache in ("extraction", "dossiers", "goldset") and not (isinstance(corps.get("commande"), str)
+            if self.tache in ("extraction", "goldset") and not (isinstance(corps.get("commande"), str)
                                                    and "{entree}" in corps["commande"]
                                                    and "{sortie}" in corps["commande"]):
                 err.append("commande : texte contenant {entree} et {sortie}")
@@ -181,13 +170,6 @@ def gestionnaire(etat):
                 if i in etat.ids:
                     return self.repondre(200, octets=(etat.jeu / f"{i}.pdf").read_bytes(),
                                          type_="application/pdf")
-            if etat.tache == "dossiers" and self.path == "/dossiers":
-                return self.repondre(200, {"dossiers": etat.pieces})
-            if etat.tache == "dossiers" and self.path.startswith("/dossiers/") and self.path.endswith(".pdf"):
-                morceaux = self.path[len("/dossiers/"):].split("/")
-                if len(morceaux) == 2 and morceaux[0] in etat.pieces and morceaux[1] in etat.pieces[morceaux[0]]:
-                    return self.repondre(200, octets=(etat.jeu / morceaux[0] / morceaux[1]).read_bytes(),
-                                         type_="application/pdf")
             return self.repondre(404, {"erreur": "introuvable"})
 
         def do_POST(self):
@@ -222,7 +204,7 @@ def serveur(etat, port):
 
 def main():
     a = argparse.ArgumentParser(description="API de soumission du banc")
-    a.add_argument("--tache", choices=["extraction", "dossiers", "goldset", "jouet"], required=True)
+    a.add_argument("--tache", choices=["extraction", "goldset", "jouet"], required=True)
     a.add_argument("--jeu", required=True, help="dossier du jeu caché (PDF, reponses/, verite/) ou de la tâche jouet")
     a.add_argument("--sortie", required=True, help="dossier des journaux de l'essai")
     a.add_argument("--port", type=int, default=8765)

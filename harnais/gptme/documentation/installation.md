@@ -6,9 +6,9 @@ Retour à la [page d'entrée](../README.md). Toutes les commandes se lancent dep
 
 | Élément | Exigence | Pourquoi | Preuve |
 |---|---|---|---|
-| Système | Linux (banc mis au point sous WSL2, Ubuntu 24.04) | la cage repose sur bubblewrap | [`banc-essai/cage/README.md`](../../../banc-essai/cage/README.md) |
-| Python | `/usr/bin/python3`, version 3.11.5 à 3.15 (3.12.3 sur le banc) | gptme 0.37.0 exige `>=3.11.5,<3.16` ; le Python géré par uv vit dans le dossier personnel, invisible dans la cage | métadonnées du paquet (`installe/lib/python3.12/site-packages/gptme-0.37.0.dist-info/METADATA`) ; en-tête de [`installer.sh`](../installer.sh) |
-| uv | dans le `PATH` (0.12.17 sur le banc) | crée l'environnement virtuel et installe le paquet | [`installer.sh`](../installer.sh) |
+| Système | Linux, WSL2 compris | la cage repose sur bubblewrap | [`banc-essai/cage/README.md`](../../../banc-essai/cage/README.md) |
+| Python | `/usr/bin/python3`, version 3.11.5 à 3.15 | gptme 0.37.0 exige `>=3.11.5,<3.16` ; le Python géré par uv vit dans le dossier personnel, invisible dans la cage | métadonnées du paquet (`installe/lib/python3.12/site-packages/gptme-0.37.0.dist-info/METADATA`) ; en-tête de [`installer.sh`](../installer.sh) |
+| uv | dans le `PATH` | crée l'environnement virtuel et installe le paquet | [`installer.sh`](../installer.sh) |
 | Disque | environ 200 Mo | 78 paquets installés, 194 Mo relevés pour `installe/` | relevé `du -sh harnais/gptme/installe` du 27/11/2026 |
 | Réseau | accès HTTPS à PyPI, direct ou par un mandataire | téléchargement du paquet et de ses dépendances | section 3 |
 
@@ -41,14 +41,14 @@ Points à connaître :
 - Emplacement : `harnais/gptme/installe/`, ignoré par git (règle `harnais/*/installe/` de `.gitignore`). Dans la cage, ce dossier apparaît sous `/opt/harnais/installe/`, en lecture seule ([`banc-essai/cage/cage.sh`](../../../banc-essai/cage/cage.sh), montage `--ro-bind "$HARNAIS" /opt/harnais`).
 - Vérification : seule la version de gptme est figée. Aucune empreinte n'est vérifiée et les dépendances ne sont pas figées (pas de fichier de verrouillage) : deux installations à des dates différentes peuvent donner des dépendances différentes. Ce point diffère de ce qu'annonce [`harnais/README.md`](../../README.md) (« empreinte ou intégrité vérifiée »).
 - Aucune extension facultative (`gptme[browser]`, `gptme[telemetry]`, etc.) n'est installée : les outils `browser`, `morph`, `precommit`, `rag` et `screenshot` sont indisponibles (relevé `gptme-util tools list` du 27/11/2026, voir [fonctionnement.md](fonctionnement.md)).
-- Le script `installe/bin/gptme` désigne son interpréteur par le chemin absolu de l'hôte (`#!/home/.../harnais/gptme/installe/bin/python`), invisible dans la cage ; c'est pourquoi [`lancer.sh`](../lancer.sh) appelle `installe/bin/python` et le module `gptme.cli.main` (constat du journal, 19/11/2026 : premier essai en échec immédiat, code 127). Conséquence pratique : déplacer le dépôt après l'installation casse aussi le script `installe/bin/gptme` sur l'hôte ; réinstaller.
+- Le script `installe/bin/gptme` désigne son interpréteur par le chemin absolu de l'hôte (`#!/home/.../harnais/gptme/installe/bin/python`), invisible dans la cage ; c'est pourquoi [`lancer.sh`](../lancer.sh) appelle `installe/bin/python` et le module `gptme.cli.main` (constaté lors des essais de mise au point du banc : appeler `installe/bin/gptme` dans la cage fait échouer l'essai immédiatement, code 127). Conséquence pratique : déplacer le dépôt après l'installation casse aussi le script `installe/bin/gptme` sur l'hôte ; réinstaller.
 
 ## 3. Sources réseau contactées à l'installation
 
 | Hôte | Port | Usage | Preuve |
 |---|---|---|---|
 | `pypi.org` | 443 | index des paquets (`https://pypi.org/simple`, index par défaut de uv) | `uv pip install --help` (uv 0.12.17) |
-| `files.pythonhosted.org` | 443 | téléchargement des fichiers des paquets | hôte des fichiers de PyPI, vu dans les demandes de paquets des essais ([`banc-essai/resultats/gptme-jouet-1/traces/reseau.jsonl`](../../../banc-essai/resultats/gptme-jouet-1/traces/reseau.jsonl)) |
+| `files.pythonhosted.org` | 443 | téléchargement des fichiers des paquets | hôte des fichiers de PyPI, vu dans les demandes de paquets (`traces/reseau.jsonl`) lors des essais de mise au point du banc |
 
 Aucun téléchargement de Python : `--python /usr/bin/python3` désigne un interpréteur déjà présent. Sur un poste d'entreprise, ce sont les deux hôtes à autoriser dans le mandataire, ou à remplacer par un miroir interne de PyPI (section 4). La liste exacte des fichiers téléchargés n'a pas été relevée pendant l'installation du banc (non vérifié sur le banc).
 
@@ -94,10 +94,10 @@ harnais/gptme/installe/bin/python -c 'import sys; from gptme.cli.main import mai
 
 Les deux commandes affichent `0.37.0` (relevé du 27/11/2026). La seconde passe par le même point d'entrée que [`lancer.sh`](../lancer.sh). Le fichier [`version`](../version) contient `gptme 0.37.0` : il est écrit à la main, pas par `installer.sh`.
 
-Vérification de bout en bout, dans la cage, avec le modèle (quelques centimes) : la tâche jouet, voir [lancement.md](lancement.md).
+Vérification de bout en bout, dans la cage, avec le modèle (quelques appels au modèle) : la tâche jouet, voir [lancement.md](lancement.md).
 
 ```bash
-banc-essai/cage/lancer.sh gptme jouet --essai jouet-gptme
+banc-essai/cage/lancer.sh gptme jouet --essai test-gptme
 ```
 
 Pour lister les outils disponibles sans toucher au dossier personnel réel (gptme crée sinon `~/.config/gptme/config.toml` au premier lancement sur l'hôte ; commande essayée le 27/11/2026) :
@@ -113,8 +113,8 @@ HOME=$(mktemp -d) GPTME_NO_LOCAL_DISCOVERY=1 GPTME_TIKTOKEN_TIMEOUT=0 \
 2. Changer `VERSION=` dans [`installer.sh`](../installer.sh) et le contenu du fichier [`version`](../version) (`gptme <version>`), les deux à la même valeur.
 3. Réinstaller : `harnais/gptme/installer.sh` (le script supprime l'ancien `installe/`).
 4. Vérifier `--help` : présence de `--non-interactive`, `--output-format json`, `--tool-format tool`, `--name`, `-m`.
-5. Lancer la tâche jouet et comparer avec `banc-essai/resultats/gptme-jouet-1/` (score, appels, coût).
-6. Mettre à jour la [page d'entrée](../README.md), [fonctionnement.md](fonctionnement.md) et le journal (`documentations/journal.md`).
+5. Lancer la tâche jouet et comparer avec un essai jouet fait avec la version précédente (score, nombre d'appels, jetons, outils appelés).
+6. Mettre à jour la [page d'entrée](../README.md) et [fonctionnement.md](fonctionnement.md).
 
 Les essais déjà faits gardent la version utilisée dans leur `essai.json` (champ `version_harnais`).
 
@@ -129,7 +129,7 @@ Restent hors du dépôt, à supprimer à la main si besoin :
 | Emplacement | Contenu | Origine |
 |---|---|---|
 | `~/banc-espaces/<essai>/maison/.config/gptme/` et `.../.local/share/gptme/` | configuration et journaux de conversation de chaque essai (dossier `$BANC_ESPACES` s'il est défini) | [lancement.md](lancement.md), section 4 |
-| `~/.config/gptme/`, `~/.local/share/gptme/` | configuration et conversations créées par un lancement de gptme sur l'hôte, hors cage | gptme écrit une configuration par défaut si le fichier n'existe pas (fonction `_load_config_doc` de `installe/lib/python3.12/site-packages/gptme/config/user.py`) ; sur le poste du banc, `~/.config/gptme/config.toml` est daté du 19/11/2026 23:02, minute de l'installation |
+| `~/.config/gptme/`, `~/.local/share/gptme/` | configuration et conversations créées par un lancement de gptme sur l'hôte, hors cage | gptme écrit une configuration par défaut si le fichier n'existe pas (fonction `_load_config_doc` de `installe/lib/python3.12/site-packages/gptme/config/user.py`) ; constaté lors de la mise au point du banc : le fichier apparaît sur l'hôte dès les premières commandes de gptme lancées hors cage |
 | cache de uv (`~/.cache/uv`) | paquets téléchargés | uv |
 
 Après un essai sur un goldset, le dossier `maison/` de l'essai contient des extraits des documents (conversation de l'agent) : le traiter comme les résultats goldset (voir [securite-et-donnees.md](../../../banc-essai/documentation/securite-et-donnees.md)).

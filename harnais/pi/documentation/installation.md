@@ -12,7 +12,7 @@ Toutes les commandes se lancent depuis la racine du dépôt. Pi est installé da
 | curl | téléchargement de Node.js | `curl --version` | idem |
 | sha256sum, tar avec xz | contrôle d'empreinte et décompression de l'archive `.tar.xz` | `sha256sum --version`, `tar --version`, `xz --version` | idem |
 | python3 | utilisé par `configurer.sh` à chaque lancement (Python du système, visible dans la cage par `/usr`) | `python3 --version` | [`configurer.sh`](../configurer.sh) |
-| Node.js du poste | aucun : `installer.sh` installe le sien. Pi exige Node.js 22.19 ou plus récent ; un Node.js 20 de Debian s'est révélé trop ancien lors d'un essai hors banc | | [README de Pi v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/README.md) ; [`documentations/journal.md`](../../../documentations/journal.md), entrée du 23/11/2026 |
+| Node.js du poste | aucun : `installer.sh` installe le sien. Pi exige Node.js 22.19 ou plus récent ; un Node.js 20 de Debian s'est révélé trop ancien (constaté lors des essais de mise au point du banc, hors cage) | | [README de Pi v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/README.md) |
 | Accès réseau | sortie HTTPS vers `nodejs.org` et `registry.npmjs.org` (section 3) | | `installer.sh`, `installer-node.sh`, `installe/pi/package-lock.json` |
 | Espace disque | environ 390 Mo : 230 Mo pour Node.js, 160 Mo pour Pi et ses dépendances (relevé par `du -sh` le 27/11/2026) | `du -sh harnais/pi/installe/*` | |
 | Pour lancer un essai | bubblewrap, systemd de l'utilisateur, uv, Docker et le relais LiteLLM démarré | voir la page du banc | [`banc-essai/documentation/lancer-un-essai.md`](../../../banc-essai/documentation/lancer-un-essai.md), section 1 |
@@ -107,17 +107,17 @@ banc-essai/cage/cage.sh --espace "$T/travail" --maison "$T/maison" --harnais har
 rm -rf "$T"
 ```
 
-Sortie relevée le 27/11/2026 :
+Sortie relevée le 27/11/2026 avec les valeurs par défaut de `banc-essai/modele.env` (`BANC_MODELE=modele-banc`, `BANC_CONTEXTE=128000`, `BANC_SORTIE_MAX=16384`, `BANC_VISION=0`) :
 
 ```text
 configuration écrite : /home/banc/.pi/agent/models.json, /home/banc/.pi/agent/settings.json
-provider  model                context  max-out  thinking  images
-banc      deepseek-v4.1-flash  1M       32.8K    no        yes
+provider  model        context  max-out  thinking  images
+banc      modele-banc  128K     16.4K    no        no
 ```
 
-La ligne `banc` montre que Pi lit la configuration du banc et le modèle décrit dans `banc-essai/modele.env`. Sans clé (`BANC_CLE_MODELE` absente), Pi répond « No models available » : il ignore un fournisseur sans clé.
+La ligne `banc` montre que Pi lit la configuration du banc et le modèle décrit dans `banc-essai/modele.env` ; la colonne `images` passe à `yes` avec `BANC_VISION=1`. Sans clé (`BANC_CLE_MODELE` absente), Pi répond « No models available » : il ignore un fournisseur sans clé.
 
-Vérification complète, avec appels au modèle (quelques dixièmes de centime) : l'essai jouet.
+Vérification complète, avec quelques appels au modèle par le portail : l'essai jouet.
 
 ```bash
 banc-essai/cage/lancer.sh pi jouet

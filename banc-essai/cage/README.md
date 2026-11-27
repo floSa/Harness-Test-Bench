@@ -1,6 +1,6 @@
 # Cage
 
-Exécution d'un harnais (ou de code qu'il a écrit) dans bubblewrap 0.9.0, sans `sudo`.
+Exécution d'un harnais (ou de code qu'il a écrit) dans bubblewrap, sans `sudo` (mise au point avec bubblewrap 0.9.0, celui d'Ubuntu 24.04).
 
 ## Ce que voit un processus dans la cage
 
@@ -48,14 +48,13 @@ Aucune autre sortie : pas de DNS, pas de route, pas d'accès aux ports de l'hôt
 | `interieur.sh` | démarrage dans la cage : relais intérieurs, clé du harnais, commande |
 | `relais.py` | relais socket Unix vers TCP, mandataire filtrant |
 | `sonde/` | « harnais » de preuve : tente lectures, écritures, connexions et routes du relais interdites, appelle le modèle |
-| `factice/` | faux harnais d'extraction : vérifie le lanceur de bout en bout (soumission, fin, relance, clé gardée refusée à la relance, répartition des appels) |
 | `collecter.py` | répartition du journal entre l'essai et sa relance, écriture de `essai.json` |
 
-## Résultats d'un essai (`banc-essai/resultats/<essai>/`)
+## Résultats d'un essai (`banc-essai/resultats-goldset/<essai>/` pour le goldset, `banc-essai/resultats/<essai>/` sinon)
 
 | Fichier | Contenu |
 |---|---|
-| `essai.json` | harnais, recette, heures, durée, code de retour, garde-fou, appels au modèle (dont échecs, 429, images), jetons (dont cache), coût (relais et OpenRouter), dépense relevée sur la clé et écart avec le journal, attente après les 429, temps dans le modèle (union des intervalles), modèles et fournisseurs du journal, version du harnais (`harnais/<nom>/version`), demandes réseau |
+| `essai.json` | harnais, recette, heures, durée, code de retour, garde-fou, appels au modèle (dont échecs, 429, images), jetons (dont cache), coût (relais, et portail s'il en renvoie un), dépense relevée sur la clé et écart avec le journal, attente après les 429, temps dans le modèle (union des intervalles), modèles et fournisseurs du journal, version du harnais (`harnais/<nom>/version`), demandes réseau |
 | `harnais/stdout.log`, `stderr.log` | sorties du harnais |
 | `traces/appels.jsonl` | appels au modèle de la clé de l'essai |
 | `traces/reseau.jsonl` | demandes au mandataire PyPI, acceptées ou refusées |
@@ -65,9 +64,9 @@ Aucune autre sortie : pas de DNS, pas de route, pas d'accès aux ports de l'hôt
 
 ## Preuve
 
-```
-banc-essai/cage/lancer.sh sonde jouet --essai preuve-cage-<date> --message "$PWD/banc-essai/corpus/test-cache"
-banc-essai/cage/lancer.sh factice sans-aide --essai verif-lanceur-<date>
+```bash
+banc-essai/cage/lancer.sh sonde jouet --essai preuve-cage
+grep bilan banc-essai/resultats/preuve-cage/harnais/stdout.log
 ```
 
-La sonde reçoit le chemin réel du test caché et tente de le lire, d'écrire hors de l'espace de travail, de joindre des sites non autorisés, puis appelle le modèle (texte, puis image) ; chaque appel doit apparaître dans `traces/appels.jsonl`.
+La sonde tente de lire hors de son espace (dépôt, secrets), d'écrire hors de l'espace de travail, de joindre des sites non autorisés et des routes interdites du relais, vérifie qu'aucune clé du portail n'est visible, puis appelle le modèle (texte, et image si `BANC_VISION=1`) ; chaque appel doit apparaître dans `traces/appels.jsonl`. Bilan attendu : 42 vérifications conformes sur 42 (41 sur 41 sans vision).

@@ -13,8 +13,7 @@ import json
 from pathlib import Path
 
 RESULTATS = Path(__file__).resolve().parents[1] / "resultats"
-NATURES = [("preuve-cage", "preuve de la cage (sonde)"), ("verif-", "vérification du lanceur (faux harnais)"),
-           ("essai-factice", "essai factice (fausses solutions)"), ("jouet-factice", "essai factice (fausses solutions)")]
+NATURES = [("preuve-cage", "preuve de la cage (sonde)"), ("sonde", "preuve de la cage (sonde)")]
 
 
 def lire(f):
@@ -62,7 +61,7 @@ def main():
          "Un dossier par essai. Dans chaque dossier : `rapport.md` (synthèse lisible), `essai.json` (mesures de "
          "construction : durée, appels, jetons, coût, ressources), `harnais/stdout.log` (trace de la session), "
          "`traces/` (appels au modèle, réseau), `evaluation/` (soumissions), `relance/` (workflow relancé). "
-         "Explication du banc : [protocole expliqué](../../documentations/protocole-explique.md).", "",
+         "Principe du banc : [documentations/principe.md](../../documentations/principe.md).", "",
          "Page régénérée à la fin de chaque essai (`banc-essai/evaluation/index_resultats.py`).", "",
          "| Essai | Nature | Début | Harnais | Recette | Score final | Score de relance | Durée | Appels au modèle | Coût |",
          "|---|---|---|---|---|---|---|---|---|---|"]

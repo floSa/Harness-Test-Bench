@@ -2,8 +2,8 @@
 
     python3 banc-essai/traces/verifier_portail.py [--modele NOM] [--url URL] [--variable-cle NOM]
 
-Appelle directement le fournisseur choisi dans banc-essai/modele.env (adresse et clé lues dans .env :
-PORTAIL_URL et PORTAIL_CLE, ou OPENROUTER_API_KEY), par le mandataire BANC_MANDATAIRE et avec le
+Appelle directement le portail (adresse et clé lues dans .env : PORTAIL_URL et PORTAIL_CLE ; modèle :
+BANC_MODELE_FOURNISSEUR de banc-essai/modele.env), par le mandataire BANC_MANDATAIRE et avec le
 certificat BANC_CERTIFICAT s'ils sont définis dans .env. Sept vérifications, dans l'ordre :
 
     1. liste des modèles (GET /models) et présence du modèle demandé
@@ -115,14 +115,14 @@ def main():
     p.add_argument("--variable-cle", help="nom de la variable de .env qui porte la clé")
     a = p.parse_args()
     m, env = lire_modele(), lire_env()
-    modele = a.modele or m["BANC_MODELE_FOURNISSEUR"]
-    if m["BANC_FOURNISSEUR"] == "openrouter":
-        url, var = a.url or "https://openrouter.ai/api/v1", a.variable_cle or "OPENROUTER_API_KEY"
-    else:
-        url, var = a.url or env.get("PORTAIL_URL", ""), a.variable_cle or "PORTAIL_CLE"
+    modele = a.modele or m.get("BANC_MODELE_FOURNISSEUR", "")
+    url, var = a.url or env.get("PORTAIL_URL", ""), a.variable_cle or "PORTAIL_CLE"
+    if not modele:
+        sys.exit("BANC_MODELE_FOURNISSEUR vide dans banc-essai/modele.env : y écrire le nom du modèle, "
+                 "ou le donner par --modele (la liste des modèles du portail s'affiche à la première vérification)")
     if not url or not env.get(var):
         sys.exit(f"adresse ou clé absente : URL={'oui' if url else 'non'}, {var} dans .env={'oui' if env.get(var) else 'non'}")
-    print(f"fournisseur {m['BANC_FOURNISSEUR']}, adresse {url}, modèle {modele}, clé {var} (non affichée)")
+    print(f"portail {url}, modèle {modele}, clé {var} (non affichée)")
     c = Client(url, env[var], env.get("BANC_MANDATAIRE") or None, env.get("BANC_CERTIFICAT") or None)
     res, usage_vu = [], {}
 
@@ -198,7 +198,7 @@ def main():
           f"à reporter dans banc-essai/modele.env : BANC_VISION={1 if vision else 0}")
     (ICI / "journaux").mkdir(exist_ok=True)
     (ICI / "journaux" / "verification-portail.json").write_text(json.dumps(
-        {"date": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "fournisseur": m["BANC_FOURNISSEUR"], "modele": modele,
+        {"date": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "portail": url, "modele": modele,
          "utilisable": ok, "vision": vision, "resultats": res}, ensure_ascii=False, indent=2))
     sys.exit(0 if ok else 1)
 

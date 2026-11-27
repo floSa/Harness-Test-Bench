@@ -14,18 +14,18 @@ cline auth -p openai-compatible -k "$BANC_CLE_MODELE" -m "$BANC_MODELE" -b "${BA
 
 | Option de `cline auth` | Valeur sur le banc | Sens ([CLI reference](https://docs.cline.bot/cline-cli/cli-reference.md), consulté le 27/11/2026) |
 |---|---|---|
-| `-p` | `openai-compatible` | fournisseur : tout service compatible OpenAI à adresse personnalisée. La documentation cite plutôt l'identifiant `openai` ; sur la 3.0.74, `openai` et `openai-compatible` donnent le même fournisseur enregistré (constat du journal, 19/11/2026) |
+| `-p` | `openai-compatible` | fournisseur : tout service compatible OpenAI à adresse personnalisée. La documentation cite plutôt l'identifiant `openai` ; sur la 3.0.74, `openai` et `openai-compatible` donnent le même fournisseur enregistré (constaté lors des essais de mise au point du banc) |
 | `-k` | clé virtuelle de l'essai | clé d'API, enregistrée par Cline |
-| `-m` | `BANC_MODELE` (`deepseek-v4.1-flash` dans `modele.env`) | nom du modèle tel que le relais l'expose |
+| `-m` | `BANC_MODELE` (`modele-banc` par défaut dans `modele.env`) | nom du modèle tel que le relais l'expose |
 | `-b` | `http://127.0.0.1:4100/v1` | adresse de base ; Cline y ajoute `/chat/completions` |
 
 Sortie (sur l'erreur standard de l'essai, `harnais/stderr.log`) :
 
 ```text
-Provider configured: openai-compatible (deepseek-v4.1-flash)
+Provider configured: openai-compatible (modele-banc)
 ```
 
-`cline auth` n'appelle ni le relais ni le modèle : lancé hors cage avec des valeurs factices (`BANC_MODELE=essai`, `BANC_CLE_MODELE=sk-factice`) et un dossier personnel temporaire, il répond « Provider configured » sans erreur.
+`cline auth` n'appelle ni le relais ni le modèle : lancé hors cage avec des valeurs factices (`BANC_MODELE=modele-banc`, `BANC_CLE_MODELE=sk-factice`) et un dossier personnel temporaire, il répond « Provider configured » sans erreur.
 
 ## 2. Variables lues
 
@@ -37,13 +37,13 @@ Provider configured: openai-compatible (deepseek-v4.1-flash)
 | `BANC_CONTEXTE` | `modele.env` | non (voir section 7) |
 | `BANC_SORTIE_MAX` | `modele.env` | non |
 | `BANC_VISION` | `modele.env` | non |
-| `BANC_PRIX_ENTREE`, `BANC_PRIX_CACHE`, `BANC_PRIX_SORTIE` | `modele.env` | non ; le coût que Cline affiche dans sa trace (0,00157593 $ sur l'essai jouet) est pourtant égal à la dépense relevée par le relais (`banc-essai/resultats/cline-jouet-1/essai.json`, `depense_cle_usd`) |
-| `HTTPS_PROXY`, `NO_PROXY` | `cage.sh` : filtre de la cage sur `127.0.0.1:3128`, relais local exclu | oui : les sorties vers `data.cline.bot` et `registry.npmjs.org` passent par le filtre (`traces/reseau.jsonl` de l'essai jouet) |
+| `BANC_PRIX_ENTREE`, `BANC_PRIX_CACHE`, `BANC_PRIX_SORTIE` | `modele.env` | non ; lors des essais de mise au point du banc, le coût que Cline affiche dans sa trace était pourtant égal à la dépense relevée par le relais (champ `depense_cle_usd` de `essai.json`) |
+| `HTTPS_PROXY`, `NO_PROXY` | `cage.sh` : filtre de la cage sur `127.0.0.1:3128`, relais local exclu | oui : les sorties vers `data.cline.bot` et `registry.npmjs.org` passent par le filtre (visibles dans `traces/reseau.jsonl` de chaque essai) |
 | `HOME` | `cage.sh` : `/home/banc`, dossier `~/banc-espaces/<essai>/maison` de l'hôte | oui : dossier de configuration `~/.cline` |
 
 ## 3. Fichiers écrits dans `$HOME/.cline`
 
-Relevés dans le dossier personnel de l'essai jouet (`~/banc-espaces/cline-jouet-1/maison/.cline/`) et avec un dossier personnel temporaire :
+Relevés lors des essais de mise au point du banc, dans le dossier personnel d'un essai jouet (`~/banc-espaces/<essai>/maison/.cline/`) et avec un dossier personnel temporaire :
 
 | Fichier | Écrit par | Contenu |
 |---|---|---|
@@ -68,7 +68,7 @@ Exemple réel de `providers.json`, produit par `configurer.sh` avec des valeurs 
       "settings": {
         "provider": "openai-compatible",
         "apiKey": "<CLE>",
-        "model": "essai",
+        "model": "modele-banc",
         "baseUrl": "http://127.0.0.1:4100/v1"
       },
       "updatedAt": "2026-11-27T08:54:02.746Z",
@@ -82,13 +82,13 @@ Autres emplacements reconnus par Cline, inutilisés par le banc ([config](https:
 
 ## 4. Changer de modèle ou de portail sans toucher au harnais
 
-Le harnais ne connaît que le relais du banc. Le choix du fournisseur (OpenRouter ou portail compatible OpenAI), de son adresse et de sa clé se fait hors du harnais :
+Le harnais ne connaît que le relais du banc. Le modèle est servi par le portail compatible OpenAI ; son adresse, sa clé et le nom du modèle se règlent hors du harnais :
 
-1. Modifier `banc-essai/modele.env` (`BANC_FOURNISSEUR`, `BANC_MODELE_FOURNISSEUR`, `BANC_MODELE`…) et, pour un portail, `PORTAIL_URL` et `PORTAIL_CLE` dans `.env` ([modele-et-fournisseur.md](../../../banc-essai/documentation/modele-et-fournisseur.md)).
+1. Renseigner `PORTAIL_URL` et `PORTAIL_CLE` dans `.env`, puis, dans `banc-essai/modele.env`, `BANC_MODELE_FOURNISSEUR` (nom du modèle chez le portail, contrôlé par `python3 banc-essai/traces/verifier_portail.py`) et les capacités `BANC_CONTEXTE`, `BANC_SORTIE_MAX`, `BANC_VISION` ; `BANC_MODELE` (`modele-banc` par défaut) est le nom sous lequel Cline voit le modèle ([modele-et-fournisseur.md](../../../banc-essai/documentation/modele-et-fournisseur.md)).
 2. `banc-essai/traces/demarrer.sh` (le relais relit sa configuration).
-3. Lancer l'essai : `configurer.sh` reprend le nouveau `BANC_MODELE`, avec une clé neuve.
+3. Lancer l'essai : `configurer.sh` reprend `BANC_MODELE`, avec une clé neuve.
 
-L'adresse et la clé du portail n'entrent jamais dans la cage (sonde de la cage : `banc-essai/resultats/piag-sonde-portail/`, journal du 27/11/2026). Cline n'a pas été essayé par le relais branché sur un portail ; seul le chemin harnais-relais, identique dans les deux cas, l'a été.
+L'adresse et la clé du portail n'entrent jamais dans la cage : la sonde de la cage le contrôle (`banc-essai/cage/lancer.sh sonde jouet` ; 42 vérifications, 41 si `BANC_VISION=0`, dont l'absence de `PORTAIL_CLE` dans l'environnement du harnais). Lors des essais de mise au point, Cline a été essayé par le relais branché sur un autre fournisseur, pas sur un portail ; le chemin harnais-relais, seul vu par Cline, est le même dans les deux cas.
 
 ## 5. Autonomie, télémétrie, mise à jour automatique et réseau
 
@@ -100,7 +100,7 @@ L'adresse et la clé du portail n'entrent jamais dans la cage (sonde de la cage 
 |---|---|---|
 | Approbations | aucune demande : les outils sont approuvés automatiquement | `cline --help` : « Auto-approve a limited tool set for unsupervised runs (benchmarks, CI). DANGEROUS: use only in sandboxed environments. » |
 | Fin de tâche | outil `submit_and_exit` activé : l'agent déclare la fin et la commande se termine | README 3.0.74, tableau des options |
-| Sous-agents et équipes | outils de sous-agents (`spawn_agent`) et d'équipe désactivés par défaut | README 3.0.74 ; confirmé sur le banc : `"enable_spawn": false`, `"enable_teams": false` dans le résumé de session de l'essai jouet |
+| Sous-agents et équipes | outils de sous-agents (`spawn_agent`) et d'équipe désactivés par défaut | README 3.0.74 ; constaté lors des essais de mise au point du banc : `"enable_spawn": false`, `"enable_teams": false` dans le résumé de session |
 | Commandes du shell | aucune liste d'autorisation ou d'interdiction : « The CLI has no allow or deny list for shell commands » ; un point d'accroche `PreToolUse` est le seul moyen de bloquer | [CLI reference](https://docs.cline.bot/cline-cli/cli-reference.md), consulté le 27/11/2026 |
 
 La cage borne ce que les outils peuvent toucher : écriture dans `/travail`, `/home/banc` et `/tmp` seulement, réseau limité au relais, à l'API de soumission et au filtre ([cage](../../../banc-essai/cage/README.md)). Sans cage, `-y` donne au modèle les droits de l'utilisateur sur tout le poste.
@@ -109,8 +109,8 @@ La cage borne ce que les outils peuvent toucher : écriture dans `/travail`, `/h
 
 | Sortie | Origine | Dans la cage | Pour la couper (non appliqué sur le banc) |
 |---|---|---|---|
-| `registry.npmjs.org` | mise à jour automatique : `npm update --global cline --tag latest`, lancé à chaque commande (journal de npm relevé le 27/11/2026) | refusée par le filtre (2 demandes sur l'essai jouet) ; de toute façon, `/opt/harnais` est en lecture seule | `CLINE_NO_AUTO_UPDATE=1` : vérifié le 27/11/2026, aucun appel à npm avec la variable, un appel sans elle. Le réglage `autoUpdateEnabled` de `global-settings.json` existe aussi dans le schéma de la 3.0.74 (lecture du binaire), effet non vérifié sur le banc |
-| `data.cline.bot` | télémétrie et indicateurs de fonctionnalités (hôte du client PostHog dans le binaire) ; la télémétrie est active par défaut dans la CLI | refusée par le filtre (1 demande sur l'essai jouet) | `"telemetryOptOut": true` dans `~/.cline/data/settings/global-settings.json` ([télémétrie](https://docs.cline.bot/enterprise-solutions/monitoring/telemetry.md), consulté le 27/11/2026 ; clé présente dans le binaire 3.0.74) ; non vérifié sur le banc. La même page cite `DO_NOT_TRACK=1` et `CLINE_TELEMETRY_DISABLED=1` : `CLINE_TELEMETRY_DISABLED` est absent du binaire 3.0.74, donc probablement sans effet sur cette version |
+| `registry.npmjs.org` | mise à jour automatique : `npm update --global cline --tag latest`, lancé à chaque commande (journal de npm relevé le 27/11/2026) | refusée par le filtre dès le démarrage (constaté lors des essais de mise au point du banc) ; de toute façon, `/opt/harnais` est en lecture seule | `CLINE_NO_AUTO_UPDATE=1` : vérifié lors de la mise au point du banc, aucun appel à npm avec la variable, un appel sans elle. Le réglage `autoUpdateEnabled` de `global-settings.json` existe aussi dans le schéma de la 3.0.74 (lecture du binaire), effet non vérifié sur le banc |
+| `data.cline.bot` | télémétrie et indicateurs de fonctionnalités (hôte du client PostHog dans le binaire) ; la télémétrie est active par défaut dans la CLI | refusée par le filtre dès le démarrage (constaté lors des essais de mise au point du banc) | `"telemetryOptOut": true` dans `~/.cline/data/settings/global-settings.json` ([télémétrie](https://docs.cline.bot/enterprise-solutions/monitoring/telemetry.md), consulté le 27/11/2026 ; clé présente dans le binaire 3.0.74) ; non vérifié sur le banc. La même page cite `DO_NOT_TRACK=1` et `CLINE_TELEMETRY_DISABLED=1` : `CLINE_TELEMETRY_DISABLED` est absent du binaire 3.0.74, donc probablement sans effet sur cette version |
 
 D'après la page de télémétrie, celle-ci ne contient ni code, ni contenu de fichiers, ni consignes, hors fournisseurs Cline et ClinePass (non utilisés ici). Sur un poste d'entreprise hors cage, couper les deux sorties est recommandé : `CLINE_NO_AUTO_UPDATE=1` dans l'environnement, et `global-settings.json` écrit avant le premier lancement.
 
@@ -122,7 +122,7 @@ Acceptable sur le banc parce que :
 
 | Protection | Preuve |
 |---|---|
-| ce n'est pas la clé du fournisseur mais une clé virtuelle du relais, propre à l'essai, limitée au modèle du banc, aux routes d'appel du modèle et à un plafond de dépense (`BANC_BUDGET_ESSAI`, 2 $) | [`banc-essai/traces/README.md`](../../../banc-essai/traces/README.md), `banc-essai/modele.env` |
+| ce n'est pas la clé du fournisseur mais une clé virtuelle du relais, propre à l'essai, limitée au modèle du banc, aux routes d'appel du modèle et à un plafond de dépense (`BANC_BUDGET_ESSAI` ; avec les prix conventionnels de 1 de `modele.env`, 40 millions de jetons) | [`banc-essai/traces/README.md`](../../../banc-essai/traces/README.md), `banc-essai/modele.env` |
 | la clé est supprimée du relais dès la sortie du harnais : la copie de `providers.json` devient inutilisable | `banc-essai/cage/lancer.sh` (`cles.py --supprimer`) |
 | le dossier personnel de l'essai est hors du dépôt (`~/banc-espaces/`) : il n'est jamais commité | `banc-essai/cage/lancer.sh` (`MAISON`) |
 | les résultats copiés dans le dépôt sont passés au masque des chaînes qui ressemblent à une clé | `banc-essai/cage/masquer.py`, appelé par `lancer.sh` |
@@ -136,7 +136,7 @@ Acceptable sur le banc parce que :
 
 ## 7. Fenêtre de contexte (piste, non appliquée)
 
-Cline ne lit pas `BANC_CONTEXTE` et `cline auth` n'a pas d'option pour la fenêtre de contexte (`cline auth --help`). Pour un modèle inconnu de Cline, il ignore donc que le relais annonce 1 000 000 jetons ; c'est la compaction (`--compaction agentic`, par défaut) qui dépend de cette valeur.
+Cline ne lit pas `BANC_CONTEXTE` et `cline auth` n'a pas d'option pour la fenêtre de contexte (`cline auth --help`). Pour un modèle inconnu de Cline, il ignore donc la fenêtre déclarée dans `BANC_CONTEXTE` (128 000 jetons par défaut dans `modele.env`, à remplacer par la valeur du portail) ; c'est la compaction (`--compaction agentic`, par défaut) qui dépend de cette valeur.
 
 | Source | Ce qu'elle dit |
 |---|---|

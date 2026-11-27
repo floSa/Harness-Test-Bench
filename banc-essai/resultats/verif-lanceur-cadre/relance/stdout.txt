@@ -1,2 +1,0 @@
-appel refusé clé gardée HTTPError
-appel réussi clé de la relance

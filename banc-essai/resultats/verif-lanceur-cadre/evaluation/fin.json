@@ -1,7 +1,0 @@
-{
-  "heure": "2026-11-19T22:42:22+01:00",
-  "soumission_finale": 1,
-  "score_validation": 0.1,
-  "commande": "python3 workflow.py {entree} {sortie}",
-  "commentaire": null
-}

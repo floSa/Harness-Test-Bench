@@ -39,7 +39,7 @@ Réponse attendue : `1.5.2`.
 banc-essai/cage/lancer.sh pi jouet
 ```
 
-Les résultats arrivent dans `banc-essai/resultats/pi-jouet-<date>-<heure>/` ; essai de référence `pi-jouet-1` : 100 %, 23 s, 11 appels, 0,0013 $ ([rapport](../../banc-essai/resultats/pi-jouet-1/rapport.md)).
+Les résultats arrivent dans `banc-essai/resultats/<essai>/` (dossier créé par le lanceur ; nom par défaut : `pi-jouet-<AAAAMMJJ-HHMMSS>`) ; ceux de la recette `goldset`, dans `banc-essai/resultats-goldset/<essai>/`. L'essai jouet est court et ne fait que quelques appels au modèle : il sert à vérifier le harnais avant un essai `goldset`.
 
 ## Documentation
 
@@ -48,6 +48,6 @@ Les résultats arrivent dans `banc-essai/resultats/pi-jouet-<date>-<heure>/` ; e
 | [Installation](documentation/installation.md) | prérequis, ce que fait `installer.sh`, hôtes contactés, mandataire et certificat d'entreprise, vérification, mise à jour, désinstallation |
 | [Configuration](documentation/configuration.md) | fichiers écrits par `configurer.sh` (exemple réel), variables lues, lien avec `banc-essai/modele.env`, autonomie, télémétrie et réseau coupés, emplacement de la clé |
 | [Lancement](documentation/lancement.md) | lancer un essai par recette, ce qui se passe dans la cage, sorties et format de la trace, suivi, arrêt, essai à la main |
-| [Fonctionnement](documentation/fonctionnement.md) | capacités du harnais avec sources, résultats des essais réels, problèmes connus et dépannage, limites |
+| [Fonctionnement](documentation/fonctionnement.md) | capacités du harnais avec sources, comportements constatés lors des essais de mise au point du banc, problèmes connus et dépannage, limites |
 
 Voir aussi : [vue d'ensemble des harnais](../README.md) et [documentation du banc](../../banc-essai/documentation/).

@@ -30,7 +30,7 @@ La configuration est donc réécrite à chaque essai, dans un dossier personnel 
 | `BANC_PRIX_CACHE` | non | `0.003` | `cost.cacheRead` |
 | `BANC_CLE_MODELE` | pas à l'écriture | | non lue par le script : `models.json` contient le texte `$BANC_CLE_MODELE`, que Pi remplace par la valeur de la variable au lancement |
 
-Les défauts du script reprennent les valeurs actuelles de `modele.env` ; dans la cage, ce sont toujours les valeurs de `modele.env` qui s'appliquent.
+Les défauts du script ne servent que si la variable est absente ; ils ne correspondent pas aux valeurs de `modele.env` (fenêtre de 1 000 000 jetons, vision active). Dans la cage, `cage.sh` transmet toujours les valeurs de `modele.env`, qui s'appliquent. Hors de la cage, charger `modele.env` avant d'appeler `configurer.sh` (exemple de la section 3), sous peine de déclarer au modèle une fenêtre et une vision qu'il n'a pas.
 
 Le script accepte un dossier de destination en argument (défaut : `$HOME/.pi/agent`) :
 
@@ -60,18 +60,17 @@ cat "$T/models.json" "$T/settings.json"
       "apiKey": "$BANC_CLE_MODELE",
       "models": [
         {
-          "id": "deepseek-v4.1-flash",
-          "name": "deepseek-v4.1-flash",
+          "id": "modele-banc",
+          "name": "modele-banc",
           "input": [
-            "text",
-            "image"
+            "text"
           ],
-          "contextWindow": 1000000,
-          "maxTokens": 32768,
+          "contextWindow": 128000,
+          "maxTokens": 16384,
           "cost": {
-            "input": 0.05,
-            "output": 0.3,
-            "cacheRead": 0.003,
+            "input": 1.0,
+            "output": 1.0,
+            "cacheRead": 1.0,
             "cacheWrite": 0
           }
         }
@@ -88,17 +87,17 @@ cat "$T/models.json" "$T/settings.json"
 | `api` | `openai-completions` : API Chat Completions compatible OpenAI (`/v1/chat/completions`) |
 | `apiKey` | « $NOM » : la clé est lue dans la variable d'environnement `NOM` au moment de l'appel |
 | `id`, `name` | nom du modèle envoyé à l'API, et nom utilisé par `--model` |
-| `input` | types d'entrée acceptés par le modèle : texte, et images si la vision est déclarée |
+| `input` | types d'entrée acceptés par le modèle : texte, et images si la vision est déclarée (`BANC_VISION=1` ; `["text", "image"]`) |
 | `contextWindow`, `maxTokens` | fenêtre de contexte et sortie maximale ; défauts de Pi sans ces champs : 128 000 et 16 384 |
-| `cost` | prix en dollars par million de jetons ; Pi en tire le coût affiché par message (champ `usage.cost` de la session) ; `cacheWrite` est fixé à 0 par le script |
-| `reasoning` | absent : Pi considère que le modèle ne raisonne pas et fixe le niveau de réflexion à `off` (entrée `thinking_level_change` des sessions des essais, colonne `thinking: no` de `--list-models`) |
+| `cost` | prix en dollars par million de jetons ; Pi en tire le coût affiché par message (champ `usage.cost` de la session) ; `cacheWrite` est fixé à 0 par le script. Avec les prix conventionnels de 1 de `modele.env`, ce coût se lit comme un nombre de millions de jetons |
+| `reasoning` | absent : Pi considère que le modèle ne raisonne pas et fixe le niveau de réflexion à `off` (entrée `thinking_level_change` des sessions, constatée lors des essais de mise au point du banc ; colonne `thinking: no` de `--list-models`) |
 
 `settings.json` :
 
 ```json
 {
   "defaultProvider": "banc",
-  "defaultModel": "deepseek-v4.1-flash",
+  "defaultModel": "modele-banc",
   "enableInstallTelemetry": false,
   "enableAnalytics": false
 }
@@ -110,28 +109,28 @@ cat "$T/models.json" "$T/settings.json"
 | `enableInstallTelemetry` | `false` : pas de signalement anonyme d'installation ou de mise à jour, pas d'en-têtes d'attribution vers le fournisseur (défaut de Pi : `true`) |
 | `enableAnalytics` | `false` : pas de partage de données d'usage (défaut de Pi : `false`, utilisé seulement par l'assistant de premier lancement) |
 
-Fichiers créés par Pi lui-même au démarrage dans le même dossier : `auth.json` et `models-store.json`, vides (`{}`) sur le banc (constaté dans `~/banc-espaces/pi-jouet-1/maison/.pi/agent/` et lors de la vérification du 27/11/2026).
+Fichiers créés par Pi lui-même au démarrage dans le même dossier : `auth.json` et `models-store.json`, vides (`{}`) sur le banc (constaté lors des essais de mise au point du banc, dans `~/banc-espaces/<essai>/maison/.pi/agent/`, et lors de la vérification du 27/11/2026).
 
 Tous les autres réglages restent aux défauts de Pi 1.5.2. Ceux qui comptent pour un essai :
 
 | Réglage | Défaut | Conséquence sur le banc |
 |---|---|---|
 | `defaultTools` | `read`, `bash`, `edit`, `write` | quatre outils déclarés au modèle (champ `outils` = 4 dans `traces/appels.jsonl` des essais) |
-| `compaction.enabled`, `compaction.reserveTokens`, `compaction.keepRecentTokens` | `true`, 16 384, 20 000 | résumé automatique de l'historique quand le contexte dépasse `contextWindow` − 16 384 jetons |
+| `compaction.enabled`, `compaction.reserveTokens`, `compaction.keepRecentTokens` | `true`, 16 384, 20 000 | résumé automatique de l'historique quand le contexte dépasse `contextWindow` − 16 384 jetons, soit 111 616 jetons avec `BANC_CONTEXTE=128000` |
 | `retry.enabled`, `retry.maxRetries` | `true`, 3 | nouvelles tentatives de Pi après une erreur passagère du fournisseur |
 | `defaultProjectTrust` | `"ask"` | en mode JSON, sans invite possible : les ressources de projet (`.pi/` de l'espace de travail) ne sont pas chargées |
 | `httpProxy` | aucun | Pi suit `HTTP_PROXY` et `HTTPS_PROXY` de la cage (section 5) |
 
 ## 4. Changer de modèle ou de portail
 
-Le harnais ne contient ni nom de fournisseur ni clé. Pour passer d'OpenRouter à un portail compatible OpenAI, ou changer de modèle :
+Le harnais ne contient ni adresse de portail ni clé : le modèle est servi par un portail compatible OpenAI, joint par le relais du banc. Pour brancher le portail ou changer de modèle :
 
 | Étape | Action | Référence |
 |---|---|---|
-| 1 | `.env` : `PORTAIL_URL` et `PORTAIL_CLE` (ou `OPENROUTER_API_KEY`) | [`banc-essai/documentation/modele-et-fournisseur.md`](../../../banc-essai/documentation/modele-et-fournisseur.md), section 2.2 |
-| 2 | `banc-essai/modele.env` : `BANC_FOURNISSEUR`, `BANC_MODELE_FOURNISSEUR`, `BANC_MODELE`, puis `BANC_CONTEXTE`, `BANC_SORTIE_MAX`, `BANC_VISION`, prix | idem, section 2.1 |
-| 3 | `banc-essai/traces/demarrer.sh` : le relais relit sa configuration | idem, section 3 |
-| 4 | Vérification sans harnais : `banc-essai/traces/verifier_portail.py` | idem |
+| 1 | `.env` : `PORTAIL_URL` et `PORTAIL_CLE` | [`banc-essai/documentation/modele-et-fournisseur.md`](../../../banc-essai/documentation/modele-et-fournisseur.md) |
+| 2 | `banc-essai/modele.env` : `BANC_MODELE_FOURNISSEUR` (nom du modèle chez le portail), `BANC_MODELE` (`modele-banc` par défaut), puis `BANC_CONTEXTE`, `BANC_SORTIE_MAX`, `BANC_VISION`, `BANC_PRIX_*`, `BANC_BUDGET_ESSAI` | [`banc-essai/modele.env`](../../../banc-essai/modele.env), idem |
+| 3 | `banc-essai/traces/demarrer.sh` : le relais relit sa configuration | idem |
+| 4 | Vérification sans harnais : `python3 banc-essai/traces/verifier_portail.py` | idem |
 | 5 | `banc-essai/cage/lancer.sh pi jouet` | [lancement](lancement.md) |
 
 Points propres à Pi :
@@ -139,10 +138,10 @@ Points propres à Pi :
 | Variable de `modele.env` | Effet sur Pi | Risque si elle est fausse |
 |---|---|---|
 | `BANC_MODELE` | nom demandé au relais | refus du relais (modèle non permis à la clé) |
-| `BANC_CONTEXTE` | seuil de compaction automatique | trop grand : Pi ne résume pas à temps et le portail refuse les requêtes trop longues ; Pi tente alors un résumé puis une nouvelle requête ([compaction.md v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/compaction.md)) ; non observé sur le banc |
-| `BANC_SORTIE_MAX` | sortie maximale déclarée | supérieure à la limite du portail : refus possible des requêtes ; non vérifié sur le banc |
-| `BANC_VISION` | déclare au modèle l'entrée `image` ; l'outil `read` lit les images (82 appels de Pi avec image dans `c1-04-pi-avec-aide`) | `1` avec un modèle sans vision : appels avec image en échec ; comportement de Pi avec `0` non vérifié sur le banc |
-| `BANC_PRIX_*` | coût affiché par Pi dans sa session | sans effet sur le plafond, calculé par le relais avec les mêmes prix |
+| `BANC_CONTEXTE` | seuil de compaction automatique (`BANC_CONTEXTE` − 16 384 jetons) | trop grand : Pi ne résume pas à temps et le portail refuse les requêtes trop longues ; Pi tente alors un résumé puis une nouvelle requête ([compaction.md v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/compaction.md)) ; non observé lors des essais de mise au point du banc, faits avec une fenêtre déclarée bien plus grande que le contexte atteint |
+| `BANC_SORTIE_MAX` | sortie maximale déclarée | supérieure à la limite du portail : refus possible des requêtes ; non vérifié lors des essais de mise au point du banc |
+| `BANC_VISION` | `1` : déclare au modèle l'entrée `image`, et l'outil `read` lui transmet les images lues (constaté lors des essais de mise au point du banc, avec un modèle à vision) ; `0` (défaut de `modele.env`) : entrée texte seule | `1` avec un modèle sans vision : appels avec image en échec ; comportement de Pi pendant un essai avec `0` non vérifié lors des essais de mise au point du banc (seul `--list-models` l'a été, [installation](installation.md), section 5) |
+| `BANC_PRIX_*` | coût affiché par Pi dans sa session | sans effet sur le plafond, calculé par le relais avec les mêmes prix (`BANC_BUDGET_ESSAI`) |
 
 Aucune variable de `modele.env` ne permet de déclarer un modèle qui raisonne (`reasoning`) : avec un tel modèle, Pi reste au niveau de réflexion `off` (voir [fonctionnement](fonctionnement.md), limites).
 
@@ -166,18 +165,18 @@ Télémétrie et accès réseau coupés par `lancer.sh` :
 | `PI_TELEMETRY=0` | coupe la télémétrie d'installation et de mise à jour et les en-têtes d'attribution | idem |
 | `enableInstallTelemetry: false`, `enableAnalytics: false` | mêmes coupures, dans `settings.json` | [settings.md v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
 
-Constat : dans les essais `pi-jouet-1` et `c1-04-pi-avec-aide`, le filtre de la cage n'a reçu que des demandes vers `pypi.org` et `files.pythonhosted.org` (installation de paquets Python par le harnais), aucune refusée, aucune vers `pi.dev` ([`traces/reseau.jsonl`](../../../banc-essai/resultats/pi-jouet-1/traces/reseau.jsonl) de chaque essai). Les appels au modèle vers `127.0.0.1:4100` ne passent pas par le filtre : la cage pose `NO_PROXY=127.0.0.1,localhost` et aucun de ces appels n'apparaît dans `reseau.jsonl`.
+Constaté lors des essais de mise au point du banc : avec ces réglages, le filtre de la cage n'a reçu que des demandes vers `pypi.org` et `files.pythonhosted.org` (installation de paquets Python par le modèle), aucune demande refusée au démarrage ni en cours d'essai, aucune vers `pi.dev`. Le relevé se lit dans `traces/reseau.jsonl` du dossier de résultats de l'essai. Les appels au modèle vers `127.0.0.1:4100` ne passent pas par le filtre : la cage pose `NO_PROXY=127.0.0.1,localhost` et aucun de ces appels n'apparaît dans `reseau.jsonl`.
 
 ## 6. Où est la clé, et où elle n'est pas
 
 | Emplacement | Clé présente | Détail |
 |---|---|---|
-| `.env` (racine du dépôt) | clé du fournisseur (`OPENROUTER_API_KEY` ou `PORTAIL_CLE`) | jamais visible dans la cage, jamais lue par le harnais |
+| `.env` (racine du dépôt) | clé du portail (`PORTAIL_CLE`) | jamais visible dans la cage, jamais lue par le harnais |
 | `banc-essai/traces/secrets/cle-<essai>.env` | clé virtuelle de l'essai (`BANC_CLE_MODELE=...`) | créée par `banc-essai/traces/cles.py`, supprimée du relais dès la sortie du harnais |
 | `/run/banc/cle.env` dans la cage | copie de la clé de l'essai | lecture seule, chargée dans l'environnement par `interieur.sh` |
 | environnement du processus Pi | `BANC_CLE_MODELE` | hérité par les commandes que Pi exécute : une commande `env` du modèle peut l'afficher dans la trace |
 | `models.json` | non | contient le texte `$BANC_CLE_MODELE`, pas la valeur |
 | `settings.json`, `auth.json` | non | `auth.json` reste vide (`{}`) |
-| `banc-essai/resultats/<essai>/` | non | en fin d'essai, `banc-essai/cage/masquer.py` remplace toute chaîne de la forme `sk-` suivie de 20 caractères ou plus par `sk-***` dans les fichiers texte des résultats |
+| `banc-essai/resultats/<essai>/`, `banc-essai/resultats-goldset/<essai>/` | non | en fin d'essai, `banc-essai/cage/masquer.py` remplace toute chaîne de la forme `sk-` suivie de 20 caractères ou plus par `sk-***` dans les fichiers texte des résultats |
 
-La clé de l'essai n'ouvre que le modèle `BANC_MODELE`, avec un plafond de dépense (`BANC_BUDGET_ESSAI`, 2 $), et cesse de fonctionner à la fin de l'essai ([`banc-essai/traces/README.md`](../../../banc-essai/traces/README.md)).
+La clé de l'essai n'ouvre que le modèle `BANC_MODELE`, avec un plafond de dépense (`BANC_BUDGET_ESSAI` de `modele.env`, 40 par défaut : 40 millions de jetons avec les prix conventionnels de 1), et cesse de fonctionner à la fin de l'essai ([`banc-essai/traces/README.md`](../../../banc-essai/traces/README.md)).

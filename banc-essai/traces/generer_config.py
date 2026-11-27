@@ -2,13 +2,11 @@
 
     python3 banc-essai/traces/generer_config.py        (appelé par demarrer.sh)
 
-Fournisseur « openrouter » : modèle openrouter/<BANC_MODELE_FOURNISSEUR>, fournisseur imposé sans
-repli (BANC_OPENROUTER_ORDRE), coût facturé demandé dans la réponse. Fournisseur « portail » : tout
-point d'accès compatible OpenAI, appelé en mode générique (openai/<modèle>, api_base) ; adresse et
-clé lues dans l'environnement du conteneur (BANC_FOURNISSEUR_URL, BANC_FOURNISSEUR_CLE, écrits par
-demarrer.sh depuis .env). Aucune clé n'est écrite dans config.yaml. Bibliothèque standard seulement.
+Le portail compatible OpenAI est appelé en mode générique (openai/<BANC_MODELE_FOURNISSEUR>,
+api_base) ; adresse et clé lues dans l'environnement du conteneur (BANC_FOURNISSEUR_URL,
+BANC_FOURNISSEUR_CLE, écrits par demarrer.sh depuis .env). Aucune clé n'est écrite dans config.yaml.
+Bibliothèque standard seulement.
 """
-import json
 import re
 import sys
 from pathlib import Path
@@ -30,10 +28,8 @@ def lire_modele(chemin=MODELE_ENV):
 
 def verifier(v):
     err = []
-    if v.get("BANC_FOURNISSEUR") not in ("openrouter", "portail"):
-        err.append("BANC_FOURNISSEUR : « openrouter » ou « portail »")
     if not v.get("BANC_MODELE_FOURNISSEUR"):
-        err.append("BANC_MODELE_FOURNISSEUR vide")
+        err.append("BANC_MODELE_FOURNISSEUR à remplir (nom du modèle chez le portail)")
     if not re.fullmatch(r"[A-Za-z0-9._-]+", v.get("BANC_MODELE", "")):
         err.append("BANC_MODELE : lettres, chiffres, points et tirets seulement")
     for cle in ("BANC_CONTEXTE", "BANC_SORTIE_MAX"):
@@ -53,27 +49,15 @@ def config(v):
     """Texte YAML de la configuration (écrit à la main : pas de dépendance)."""
     # Notation avec point décimal : sans lui, le YAML de LiteLLM lirait « 5e-08 » comme du texte.
     par_jeton = lambda cle: f"{float(v[cle]) / 1e6:.4e}"
-    p = []
-    if v["BANC_FOURNISSEUR"] == "openrouter":
-        p.append(f"      model: openrouter/{v['BANC_MODELE_FOURNISSEUR']}")
-        p.append("      api_key: os.environ/BANC_FOURNISSEUR_CLE")
-        p.append("      extra_body:")
-        if v.get("BANC_OPENROUTER_ORDRE"):
-            p.append("        provider:")
-            p.append(f"          order: {json.dumps([v['BANC_OPENROUTER_ORDRE']])}")
-            p.append("          allow_fallbacks: false")
-        p.append("        usage:")
-        p.append("          include: true")
-    else:
-        p.append(f"      model: openai/{v['BANC_MODELE_FOURNISSEUR']}")
-        p.append("      api_base: os.environ/BANC_FOURNISSEUR_URL")
-        p.append("      api_key: os.environ/BANC_FOURNISSEUR_CLE")
+    p = [f"      model: openai/{v['BANC_MODELE_FOURNISSEUR']}",
+         "      api_base: os.environ/BANC_FOURNISSEUR_URL",
+         "      api_key: os.environ/BANC_FOURNISSEUR_CLE"]
     p.append(f"      input_cost_per_token: {par_jeton('BANC_PRIX_ENTREE')}")
     p.append(f"      output_cost_per_token: {par_jeton('BANC_PRIX_SORTIE')}")
     p.append(f"      cache_read_input_token_cost: {par_jeton('BANC_PRIX_CACHE')}")
     return "\n".join([
         "# Écrit par banc-essai/traces/generer_config.py depuis banc-essai/modele.env : ne pas modifier à la main.",
-        f"# Fournisseur : {v['BANC_FOURNISSEUR']} ; modèle exposé aux harnais : {v['BANC_MODELE']}.",
+        f"# Portail compatible OpenAI ; modèle exposé aux harnais : {v['BANC_MODELE']}.",
         "# Prix (dollars par jeton) donnés au relais : sans eux, LiteLLM ne calcule aucun coût et le",
         "# plafond par clé ne bloque rien.",
         "model_list:",
@@ -92,7 +76,7 @@ def config(v):
         "  proxy_batch_write_at: 1",
         "",
         "# Un seul déploiement : pas de mise en pause après une erreur (le harnais reçoit le vrai 429,",
-        "# mesuré par le protocole), pas de nouvelle tentative cachée par le relais.",
+        "# relevé dans le rapport d'essai), pas de nouvelle tentative cachée par le relais.",
         "router_settings:",
         "  disable_cooldowns: true",
         "  num_retries: 0",
@@ -106,4 +90,4 @@ if __name__ == "__main__":
     if err:
         sys.exit("banc-essai/modele.env : " + " ; ".join(err))
     (ICI / "config.yaml").write_text(config(v))
-    print(f"config.yaml écrit : fournisseur {v['BANC_FOURNISSEUR']}, modèle {v['BANC_MODELE']}")
+    print(f"config.yaml écrit : modèle {v['BANC_MODELE']} (portail : {v['BANC_MODELE_FOURNISSEUR']})")

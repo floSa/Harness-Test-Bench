@@ -103,7 +103,7 @@ def essai(res, essai, nom, recette, tache, debut, fin, duree, code, espace, gard
          "jetons_cache": sum(a.get("jetons_cache") or 0 for a in appels),
          "jetons_sortie": sum(a["jetons_sortie"] or 0 for a in appels),
          "cout_usd": round(cout, 6),
-         "cout_openrouter_usd": round(sum(a.get("cout_openrouter") or 0 for a in appels), 6),
+         "cout_fournisseur_usd": round(sum(a.get("cout_fournisseur") or 0 for a in appels), 6),
          "depense_cle_usd": dep,
          "ecart_depense_journal_usd": round(dep - cout, 6) if isinstance(dep, (int, float)) else None,
          "depense_cle_relance_usd": json.loads(depense_relance or "null"),

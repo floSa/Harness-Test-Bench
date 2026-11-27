@@ -4,7 +4,7 @@ Retour : [page d'entrée de Pi](../README.md). Pages voisines : [installation](i
 
 ## 1. Principe
 
-Pi enchaîne des tours : il envoie au modèle l'invite système, l'historique et la liste des outils ; le modèle répond par du texte et des appels d'outils ; Pi exécute les outils, ajoute leurs résultats à l'historique et relance le modèle, jusqu'à une réponse sans appel d'outil ([how-pi-works.md v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/how-pi-works.md), consulté le 27/11/2026). Sur le banc, un tour de Pi correspond à un appel au modèle : 11 tours et 11 appels en flux dans `pi-jouet-1`, 99 et 99 dans `c1-04-pi-avec-aide` (section 3).
+Pi enchaîne des tours : il envoie au modèle l'invite système, l'historique et la liste des outils ; le modèle répond par du texte et des appels d'outils ; Pi exécute les outils, ajoute leurs résultats à l'historique et relance le modèle, jusqu'à une réponse sans appel d'outil ([how-pi-works.md v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/how-pi-works.md), consulté le 27/11/2026). Sur le banc, un tour de Pi correspond à un appel au modèle (section 3).
 
 Le projet revendique un cœur minimal : « Pi ships with powerful defaults but skips features like sub-agents and plan mode » ; ce qui manque s'ajoute par des extensions, des compétences (skills) ou des paquets ([README de Pi v1.5.2](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/README.md), consulté le 27/11/2026).
 
@@ -19,15 +19,15 @@ Capacités de Pi 1.5.2 d'après sa documentation officielle. Les pages citées s
 | Sous-agents | non intégré | absent par choix, à construire par extension | non | [README](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/README.md) |
 | Liste de tâches | non intégrée | aucun outil de liste de tâches parmi les outils intégrés | non | [cli.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/cli.md), section Tools |
 | Outils intégrés | oui | actifs par défaut : `read` (fichiers texte et images), `bash`, `edit`, `write` ; disponibles : `grep`, `find`, `ls`, `powershell` ; extensions intégrées inactives par défaut : `codemode` (script JavaScript qui appelle les autres outils), `tool_search` | les quatre outils par défaut | [cli.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/cli.md), [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
-| Compaction du contexte | oui | automatique quand le contexte dépasse la fenêtre moins 16 384 jetons, en gardant les 20 000 derniers jetons ; manuelle par `/compact` ; une tentative de résumé puis de reprise après un dépassement signalé par le fournisseur | réglages par défaut ; jamais déclenchée (section 3) | [compaction.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/compaction.md), [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
+| Compaction du contexte | oui | automatique quand le contexte dépasse la fenêtre moins 16 384 jetons, en gardant les 20 000 derniers jetons ; manuelle par `/compact` ; une tentative de résumé puis de reprise après un dépassement signalé par le fournisseur | réglages par défaut ; jamais déclenchée lors des essais de mise au point (section 3) | [compaction.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/compaction.md), [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
 | Approbation des actions | non | aucune demande avant un appel d'outil | sans objet | [security.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/security.md) |
 | Bac à sable intégré | non | isolement à fournir par un conteneur, une machine virtuelle ou un bac à sable | cage bubblewrap du banc | [security.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/security.md) |
 | Confiance de projet | oui | les ressources `.pi/` d'un dossier de travail ne se chargent qu'après accord ; en mode JSON, sans accord enregistré, elles sont ignorées (défaut `ask`) | ignorées | [security.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/security.md) |
 | Fichiers de contexte | oui | `AGENTS.md`, `AGENTS.override.md`, `CLAUDE.md` du dossier de travail, de ses parents et du dossier de l'agent, chargés sans condition de confiance | aucun dans les recettes | [configuration.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/configuration.md) |
 | Fournisseur compatible OpenAI personnalisé | oui | `models.json` : adresse, API (`openai-completions`, etc.), clé lue dans une variable, contexte, vision, prix | fournisseur `banc` | [models-configuration.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/models-configuration.md) |
-| Lecture d'images | oui | `read` lit les images ; envoi au modèle si `input` contient `image` ; redimensionnement à 2000 × 2000 pixels au plus par défaut | oui (`BANC_VISION=1`) | [cli.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/cli.md), [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
+| Lecture d'images | oui | `read` lit les images ; envoi au modèle si `input` contient `image` ; redimensionnement à 2000 × 2000 pixels au plus par défaut | selon `BANC_VISION` (`0` par défaut dans `modele.env`) | [cli.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/cli.md), [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
 | Niveaux de réflexion | oui | `off` à `max`, pour un modèle déclaré `reasoning` | `off` : modèle non déclaré `reasoning` | [models-configuration.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/models-configuration.md), [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
-| Nouvelles tentatives | oui | après une erreur passagère, 3 tentatives au plus, délai exponentiel à partir de 2 s | réglages par défaut ; non observé (aucun échec d'un appel de Pi) | [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
+| Nouvelles tentatives | oui | après une erreur passagère, 3 tentatives au plus, délai exponentiel à partir de 2 s | réglages par défaut ; non observé lors des essais de mise au point (section 3) | [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
 | Sessions | oui | fichiers JSONL en arbre, reprise (`--continue`, `--resume`), branches, export HTML, session éphémère (`--no-session`) | enregistrée dans le dossier personnel de la cage | [sessions.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/sessions.md) |
 | Suivi du coût | oui | coût de chaque réponse calculé avec les prix de `models.json` | prix de `modele.env` | [models-configuration.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/models-configuration.md) |
 | Serveurs MCP | oui | extension intégrée `builtin:mcp`, serveurs déclarés dans `mcp.json` | aucun serveur déclaré | [mcp.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/mcp.md) |
@@ -36,50 +36,21 @@ Capacités de Pi 1.5.2 d'après sa documentation officielle. Les pages citées s
 | Mandataire HTTP | oui | `HTTP_PROXY`, `HTTPS_PROXY`, réglage `httpProxy` | mandataire de la cage, contourné pour `127.0.0.1` | [environment-variables.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/environment-variables.md), [settings.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/settings.md) |
 | Recherche sur Internet | non intégrée | aucun outil intégré de recherche ou de lecture de pages | non | [cli.md](https://github.com/earendil-works/pi/blob/v1.5.2/packages/coding-agent/docs/cli.md), section Tools |
 
-## 3. Constats sur le banc
+## 3. Comportements constatés lors des essais de mise au point du banc
 
-Essais réels de Pi 1.5.2, modèle `deepseek-v4.1-flash` (OpenRouter, `deepseek/deepseek-v4.1-flash-1017`) par le relais du banc. Sources : `rapport.md` et `essai.json` de chaque essai, `traces/appels.jsonl` (répartition des appels), `harnais/stdout.log` (outils et tours).
+Constats faits avec Pi 1.5.2 derrière le relais du banc, sur la recette `jouet` et sur une tâche d'extraction dans des PDF. Ils décrivent le comportement du harnais, pas une performance : les chiffres d'un essai dépendent du modèle servi par le portail.
 
-| Critère | [`pi-jouet-1`](../../../banc-essai/resultats/pi-jouet-1/rapport.md) | [`c1-04-pi-avec-aide`](../../../banc-essai/resultats/c1-04-pi-avec-aide/rapport.md) |
+| Point | Constat | Conséquence pour un essai |
 |---|---|---|
-| Date | 19/11/2026 | 20/11/2026 |
-| Recette | `jouet` | `avec-aide` (campagne 1) |
-| Score final (soumission déclarée) | 100 % (10 tests cachés sur 10) | 100 % |
-| Score de validation annoncé par Pi | 100 % | 100 % |
-| Taux d'invention | | 0 % |
-| Score sur le style de mise en page jamais vu | | 100 % |
-| Relance du workflow (10 documents neufs) | | 99,3 %, 10 JSON sur 10, 8,47 s et 0,000738 $ par document |
-| Soumissions acceptées | 1 | 1 |
-| Durée | 23,2 s | 1 615,3 s (27 min) |
-| Code de retour, garde-fou atteint | 0, non | 0, non |
-| Appels au modèle (total de la clé) | 11 | 365 |
-| dont appels de Pi (en flux, 4 outils déclarés) | 11 | 99, dont 82 avec image, aucun échec |
-| dont appels sans flux ni outil (déduits : code écrit par Pi, exécuté pendant l'essai) | 0 | 266, dont 259 avec image et 10 échecs HTTP 500 |
-| Appels refusés pour quota (429) | 0 | 0 |
-| Plus grand contexte envoyé par Pi | 7 043 jetons | 167 499 jetons |
-| Compactions | 0 | 0 (aucune entrée `compaction` dans la session) |
-| Tours de Pi | 11 | 99 |
-| Outils appelés | `bash` 9, `read` 5, `edit` 1 | `bash` 77, `read` 21 |
-| Jetons envoyés (dont lus dans le cache) | 53 756 (46 336) | 12 676 135 (10 874 752) |
-| Jetons produits | 2 584 | 503 684 |
-| Temps dans le modèle | 21,2 s | 1 578,3 s |
-| Coût total (relais) | 0,001285 $ | 0,273799 $ |
-| dont appels de Pi | 0,0013 $ | 0,0741 $ |
-| Pic de mémoire | 0,16 Go | 1,25 Go |
-| Pic de disque | 7 Ko | 554 Mo |
-| Téléchargements (PyPI seulement) | 1,96 Mo | 118 Mo |
-| Demandes réseau refusées | 0 | 0 |
-| Trace `stdout.log` | 344 Ko | 72 Mo avant compression (journal), 51,7 Mo en gzip |
-| Code livré | | `workflow.py`, 532 lignes ([`code/INDEX.md`](../../../banc-essai/resultats/c1-04-pi-avec-aide/code/INDEX.md)) |
-
-Lecture des chiffres :
-
-- Répartition des appels : la trace de `c1-04-pi-avec-aide` compte 99 tours de Pi, autant que d'appels en flux avec 4 outils déclarés dans `traces/appels.jsonl`. Les 266 autres appels, sans flux ni outil, ne viennent donc pas de Pi mais d'un programme lancé dans la cage avec la clé de l'essai, vraisemblablement le `workflow.py` écrit par Pi pendant ses essais. Les 10 échecs HTTP 500 notés au journal (« 10 échecs du fournisseur absorbés ») sont tous parmi ces appels.
-- Contexte : Pi n'a jamais dépassé 167 499 jetons envoyés, loin de la fenêtre déclarée (1 000 000) ; la compaction n'a donc jamais servi. Son comportement avec un portail à fenêtre plus petite reste à observer.
-- Réseau : aucune demande vers `pi.dev` ni vers un autre site que PyPI ; les deux demandes de chaque essai sont des installations de paquets Python ([configuration](configuration.md), section 5).
-- Taille de la trace : chaque morceau de réponse en flux est un événement `message_update` (8 684 sur 9 657 lignes dans `c1-04-pi-avec-aide`) ; une trace de 72 Mo a conduit à ajouter la compression des traces de plus de 20 Mo au lanceur ([`documentations/journal.md`](../../../documentations/journal.md), essai 4 de la campagne 1).
-
-Comparaison avec les autres harnais sur la même recette : [`documentations/journal.md`](../../../documentations/journal.md), campagne 1 (19 au 20/11/2026).
+| Tours et appels | un tour de Pi correspond à un appel au modèle, en flux, avec 4 outils déclarés : autant de `turn_end` dans la trace que d'appels de ce type dans `traces/appels.jsonl` | le nombre de tours se lit dans la trace ([lancement](lancement.md), section 5) |
+| Appels qui ne viennent pas de Pi | sur la tâche d'extraction, la majorité des appels de la clé étaient sans flux ni outil : ils venaient du programme écrit par Pi et exécuté dans la cage avec la clé de l'essai (`BANC_CLE_MODELE` est héritée par les commandes), et les seuls échecs HTTP 500 du fournisseur se trouvaient parmi eux | ces appels comptent dans le plafond de la clé (`BANC_BUDGET_ESSAI`) ; distinguer les deux familles dans `traces/appels.jsonl` (flux et nombre d'outils) avant d'attribuer un coût ou un échec à Pi |
+| Images | avec un modèle à vision et `BANC_VISION=1`, l'outil `read` a transmis au modèle les images de pages lues | avec `BANC_VISION=0` (défaut de `modele.env`), le modèle ne reçoit que du texte ; le comportement de Pi dans ce cas pendant un essai n'a pas été observé |
+| Compaction | jamais déclenchée : aucune entrée `compaction` dans les sessions ; la fenêtre déclarée était alors bien plus grande que le plus grand contexte envoyé | avec `BANC_CONTEXTE=128000`, le seuil tombe à 111 616 jetons et peut être atteint sur un essai `goldset` long ; à vérifier dans la session (`grep -c '"type":"compaction"'` sur le fichier de session) |
+| Nouvelles tentatives | aucun appel de Pi en échec, donc aucune nouvelle tentative de Pi observée | réglages par défaut (3 tentatives) non éprouvés |
+| Réseau | aucune demande refusée par le filtre de la cage, au démarrage comme en cours d'essai ; aucune demande vers `pi.dev` ; seules demandes : installations de paquets Python (`pypi.org`, `files.pythonhosted.org`) | les réglages hors ligne de [configuration](configuration.md), section 5, suffisent ; rien à ouvrir pour Pi dans le filtre |
+| Niveau de réflexion | `off` dans toutes les sessions (`thinking_level_change`) | voir les limites (section 5) |
+| Taille de la trace | chaque morceau de réponse en flux est un événement `message_update`, soit la grande majorité des lignes ; la trace d'un essai long a dépassé plusieurs dizaines de Mo | le lanceur compresse en gzip toute trace de plus de 20 Mo (`banc-essai/cage/compresser.py`) |
+| Sortie d'erreur | `stderr.log` réduit à la ligne de `configurer.sh` | une ligne de plus dans `stderr.log` signale un diagnostic de Pi ou de la cage |
 
 ## 4. Problèmes connus et dépannage
 
@@ -96,12 +67,12 @@ Comparaison avec les autres harnais sur la même recette : [`documentations/jour
 | `No models available` | `BANC_CLE_MODELE` absente : Pi ignore un fournisseur sans clé (vérifié avec `--list-models` le 27/11/2026) | lancer avec `--cle` (le lanceur le fait) ; vérifier que `banc-essai/traces/secrets/cle-<essai>.env` a été créé |
 | `lancer.sh` : `LiteLLM du banc arrêté` | relais non démarré | `banc-essai/traces/demarrer.sh` |
 | Appels en échec 401 dans `traces/appels.jsonl` | clé de l'essai supprimée (essai arrêté, ou programme lancé après la fin de l'essai) | relancer l'essai ; une clé supprimée ne se réutilise pas |
-| Appels refusés, modèle non permis à la clé | `BANC_MODELE` changé sans redémarrer le relais | `banc-essai/traces/demarrer.sh` ([`modele-et-fournisseur.md`](../../../banc-essai/documentation/modele-et-fournisseur.md), section 6) |
+| Appels refusés, modèle non permis à la clé | `BANC_MODELE` changé sans redémarrer le relais | `banc-essai/traces/demarrer.sh` ([`modele-et-fournisseur.md`](../../../banc-essai/documentation/modele-et-fournisseur.md)) |
 | Appels avec image en échec | modèle sans vision déclaré avec `BANC_VISION=1` | `BANC_VISION=0` dans `banc-essai/modele.env` |
-| Requêtes refusées pour longueur chez le portail | `BANC_CONTEXTE` plus grand que la fenêtre réelle du modèle : la compaction se déclenche trop tard | mettre la vraie fenêtre dans `BANC_CONTEXTE` (non observé sur le banc) |
-| Refus lié à la sortie maximale | `BANC_SORTIE_MAX` au-delà de la limite du portail | baisser `BANC_SORTIE_MAX` (non vérifié sur le banc) |
+| Requêtes refusées pour longueur chez le portail | `BANC_CONTEXTE` plus grand que la fenêtre réelle du modèle : la compaction se déclenche trop tard | mettre la vraie fenêtre dans `BANC_CONTEXTE` (non observé lors des essais de mise au point) |
+| Refus lié à la sortie maximale | `BANC_SORTIE_MAX` au-delà de la limite du portail | baisser `BANC_SORTIE_MAX` (non vérifié lors des essais de mise au point) |
 | Essai arrêté, code 124, `cage : garde-fou de durée atteint` dans `stderr.log` | durée au-delà de `--duree` (7 200 s par défaut) | relancer avec une durée plus longue si la tâche le justifie |
-| `stdout.log` absent, `stdout.log.gz` présent | trace de plus de 20 Mo compressée par `compresser.py` | `zcat banc-essai/resultats/<essai>/harnais/stdout.log.gz \| head` |
+| `stdout.log` absent, `stdout.log.gz` présent | trace de plus de 20 Mo compressée par `compresser.py` | `zcat banc-essai/resultats/<essai>/harnais/stdout.log.gz \| head` (`resultats-goldset` pour un essai `goldset`) |
 | Trace qui ne grossit plus (`suivi.py`) | commande longue lancée par Pi, ou attente du modèle | regarder le dernier `tool_execution_start` de la trace ; arrêter proprement si l'essai est bloqué ([lancement](lancement.md), section 6) |
 
 ## 5. Limites
@@ -115,4 +86,5 @@ Comparaison avec les autres harnais sur la même recette : [`documentations/jour
 | Version figée en retard | 1.5.2 figée, 1.6.1 publiée au 27/11/2026 | registre npm |
 | Dépendances non figées dans git | deux installations peuvent différer par une dépendance indirecte | [installation](installation.md), section 2 |
 | Linux x86-64 seulement | `installer-node.sh` ne télécharge que `linux-x64` | `harnais/commun/installer-node.sh` |
-| Recettes essayées | `jouet` et `avec-aide` seulement ; `sans-aide`, `dossiers` et `goldset` sans essai terminé au 27/11/2026 | `banc-essai/resultats/` |
+| Recette `goldset` non éprouvée | aucun essai de Pi terminé sur le goldset au 27/11/2026 ; faire d'abord l'essai `jouet` sur le poste | [lancement](lancement.md), section 1 |
+| Compaction non éprouvée | jamais déclenchée lors des essais de mise au point ; avec une fenêtre de 128 000 jetons, elle peut l'être sur un essai long | section 3 |

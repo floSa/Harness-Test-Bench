@@ -1,4 +1,0 @@
-{"heure": "2026-11-19T23:07:14+01:00", "evenement": "demande", "hote": "pypi.org", "port": "443", "accepte": true, "requete": "CONNECT pypi.org:443 HTTP/1.1", "quota_atteint": false}
-{"heure": "2026-11-19T23:07:14+01:00", "evenement": "demande", "hote": "files.pythonhosted.org", "port": "443", "accepte": true, "requete": "CONNECT files.pythonhosted.org:443 HTTP/1.1", "quota_atteint": false}
-{"heure": "2026-11-19T23:07:14+01:00", "evenement": "fin", "hote": "pypi.org", "octets_recus": 104956, "octets_envoyes": 2350}
-{"heure": "2026-11-19T23:07:14+01:00", "evenement": "fin", "hote": "files.pythonhosted.org", "octets_recus": 1850494, "octets_envoyes": 3311}

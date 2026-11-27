@@ -29,10 +29,10 @@ PATH="$PWD/harnais/cline/installe/node/bin:$PATH" CLINE_NO_AUTO_UPDATE=1 \
 ```
 
 ```bash
-banc-essai/cage/lancer.sh cline jouet      # essai de mise au point : environ 30 s, environ 0,002 $
+banc-essai/cage/lancer.sh cline jouet      # tâche courte : vérifie le branchement harnais-relais-modèle
 ```
 
-Le rapport de l'essai est écrit dans `banc-essai/resultats/<essai>/rapport.md`.
+Le rapport de l'essai est écrit dans `banc-essai/resultats/<essai>/rapport.md` (recette `jouet`) ou `banc-essai/resultats-goldset/<essai>/rapport.md` (recette `goldset`, voir [lancement](documentation/lancement.md)).
 
 ## Documentation détaillée
 
@@ -40,11 +40,11 @@ Le rapport de l'essai est écrit dans `banc-essai/resultats/<essai>/rapport.md`.
 |---|---|
 | [Installation](documentation/installation.md) | prérequis, étapes de `installer.sh`, hôtes réseau à autoriser, mandataire et certificat d'entreprise, vérification, mise à jour de la version figée, désinstallation |
 | [Configuration](documentation/configuration.md) | ce qu'écrit `cline auth` (fichier réel commenté), variables lues, lien avec `banc-essai/modele.env`, autonomie (`-y`), télémétrie et mise à jour automatique, emplacement de la clé, fenêtre de contexte |
-| [Lancement](documentation/lancement.md) | lancer un essai et ses recettes, ce qui se passe dans la cage, sorties et format de la trace NDJSON, suivi, arrêt, essai à la main |
-| [Fonctionnement](documentation/fonctionnement.md) | capacités de Cline (sources citées), constats chiffrés des essais du banc, dépannage, limites |
+| [Lancement](documentation/lancement.md) | lancer un essai (recettes `jouet` et `goldset`), ce qui se passe dans la cage, sorties et format de la trace NDJSON, suivi, arrêt, essai à la main |
+| [Fonctionnement](documentation/fonctionnement.md) | capacités de Cline (sources citées), comportements constatés lors des essais de mise au point du banc, dépannage, limites |
 
 ## Voir aussi
 
 - [Vue d'ensemble des harnais](../README.md)
-- [Documentation du banc](../../banc-essai/documentation/) : modèle et fournisseur, lancer un essai, goldset
+- [Documentation du banc](../../banc-essai/documentation/) : modèle servi par le portail compatible OpenAI, lancer un essai, goldset
 - [Cage](../../banc-essai/cage/README.md) : ce que voit un harnais, réseau, ressources

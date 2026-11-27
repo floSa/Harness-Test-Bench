@@ -13,7 +13,7 @@ Toutes les commandes se lancent depuis la racine du dépôt. Aucune ne demande d
 | Téléchargement | curl (archive Node et liste d'empreintes) | `curl --version` |
 | Vérification d'empreinte | `sha256sum` (coreutils) | `sha256sum --version` |
 | Décompression | tar avec xz | `tar --version`, `xz --version` |
-| Node et npm | aucun à installer : `installer.sh` installe sa propre copie de Node.js 26.13.1 (avec npm 11.20.0, relevé dans un journal de npm) ; le `npm` éventuellement présent sur le poste n'est pas utilisé. Sous WSL, le `npm` trouvé dans le `PATH` peut être celui de Windows (constat du journal, 19/11/2026) : raison de cette copie propre | |
+| Node et npm | aucun à installer : `installer.sh` installe sa propre copie de Node.js 26.13.1 (avec npm 11.20.0, relevé dans un journal de npm) ; le `npm` éventuellement présent sur le poste n'est pas utilisé. Sous WSL, le `npm` trouvé dans le `PATH` peut être celui de Windows (constaté lors des essais de mise au point du banc) : raison de cette copie propre | |
 | Disque | 230 Mo pour Node, 415 Mo pour le paquet npm (dont 155 Mo pour le binaire Linux), plus l'archive Node le temps de l'installation | `df -h harnais/` |
 | Pour lancer un essai | prérequis du banc : bubblewrap, systemd de l'utilisateur, uv, Docker, relais démarré | [lancer-un-essai.md](../../../banc-essai/documentation/lancer-un-essai.md), section 1 |
 
@@ -77,15 +77,15 @@ Effet de `--ignore-scripts` : le script `postinstall.mjs` du paquet n'est pas ex
 | Installation | `registry.npmjs.org` | 443 | description des paquets et 325 archives (tous les champs `resolved` de `package-lock.json` pointent vers cet hôte) |
 | Utilisation hors cage (facultatif) | `registry.npmjs.org` | 443 | mise à jour automatique : à chaque commande, Cline lance `npm update --global cline --tag latest` (vu dans un journal de npm) ; à couper, voir [configuration](configuration.md#5-autonomie-télémétrie-mise-à-jour-automatique-et-réseau) |
 | Utilisation hors cage (facultatif) | `data.cline.bot` | 443 | télémétrie et indicateurs de fonctionnalités (hôte associé au client PostHog dans le binaire) ; à couper, même page |
-| Utilisation | le relais du banc, `127.0.0.1:4100` | | le modèle ; jamais le portail ni OpenRouter directement |
+| Utilisation | le relais du banc, `127.0.0.1:4100` | | le modèle ; jamais le portail directement |
 
-Dans la cage, `registry.npmjs.org` et `data.cline.bot` sont refusés par le filtre, sans effet sur l'essai (`banc-essai/resultats/cline-jouet-1/traces/reseau.jsonl`, champ `hotes_refuses` de `essai.json`).
+Dans la cage, `registry.npmjs.org` et `data.cline.bot` sont refusés par le filtre dès le démarrage, sans effet sur l'essai (constaté lors des essais de mise au point du banc ; visible dans `traces/reseau.jsonl` et dans le champ `hotes_refuses` de `essai.json` de chaque essai).
 
 Un miroir interne du registre npm peut remplacer `registry.npmjs.org` par le réglage `registry` de npm (variable `npm_config_registry`) ([npm config](https://docs.npmjs.com/cli/v11/using-npm/config), consulté le 27/11/2026). L'adresse de `nodejs.org` est écrite en dur dans `installer-node.sh` : un miroir de Node demanderait de modifier ce script.
 
 ## 5. Derrière un mandataire et un certificat d'entreprise
 
-`installer.sh` ne lit pas `BANC_MANDATAIRE` ni `BANC_CERTIFICAT` du `.env` (ces réglages servent au relais et au filtre de la cage : [modele-et-fournisseur.md](../../../banc-essai/documentation/modele-et-fournisseur.md), section 4). Il hérite des variables du shell qui le lance. Les variables respectées par chaque outil, d'après leur documentation :
+`installer.sh` ne lit pas `BANC_MANDATAIRE` ni `BANC_CERTIFICAT` du `.env` (ces réglages servent au relais et au filtre de la cage : [modele-et-fournisseur.md](../../../banc-essai/documentation/modele-et-fournisseur.md), section « Mandataire et certificat d'entreprise »). Il hérite des variables du shell qui le lance. Les variables respectées par chaque outil, d'après leur documentation :
 
 | Outil | Mandataire | Autorité de certification interne | Source |
 |---|---|---|---|
@@ -104,7 +104,7 @@ CURL_CA_BUNDLE=/chemin/ac-entreprise.pem npm_config_cafile=/chemin/ac-entreprise
 
 Non vérifié sur le banc (aucun mandataire d'entreprise disponible). Le fichier donné à `CURL_CA_BUNDLE` et à `cafile` doit contenir aussi les autorités publiques si le mandataire n'inspecte pas tout le trafic ; le fichier du système (`/etc/ssl/certs/ca-certificates.crt` sur Ubuntu) les contient déjà si l'administrateur y a ajouté l'autorité interne. Si l'autorité interne est dans le magasin du système, curl la trouve sans réglage.
 
-À l'exécution, le lanceur de Cline écrit dans `$HOME/.cline/cli-node-extra-ca-certs.pem` les autorités du système, plus celles de `NODE_EXTRA_CA_CERTS` si la variable est définie, et fait pointer la variable du binaire vers ce fichier. Vérifié sur le poste :
+À l'exécution, le lanceur de Cline écrit dans `$HOME/.cline/cli-node-extra-ca-certs.pem` les autorités du système, plus celles de `NODE_EXTRA_CA_CERTS` si la variable est définie, et fait pointer la variable du binaire vers ce fichier. Vérification (le nombre d'autorités dépend du poste) :
 
 ```bash
 HOME=$(mktemp -d) CLINE_NO_AUTO_UPDATE=1 CLINE_DEBUG=1 PATH="$PWD/harnais/cline/installe/node/bin:$PATH" \
@@ -112,7 +112,7 @@ HOME=$(mktemp -d) CLINE_NO_AUTO_UPDATE=1 CLINE_DEBUG=1 PATH="$PWD/harnais/cline/
 ```
 
 ```text
-[cline] Trust: 360 OS + 0 user CAs (unchanged) -> <HOME>/.cline/cli-node-extra-ca-certs.pem
+[cline] Trust: <n> OS + 0 user CAs (unchanged) -> <HOME>/.cline/cli-node-extra-ca-certs.pem
 3.0.74
 ```
 
@@ -127,7 +127,7 @@ CLINE_NO_AUTO_UPDATE=1 harnais/cline/installe/cline/node_modules/cline/bin/cline
 grep '"version"' harnais/cline/installe/cline/node_modules/@cline/cli-linux-x64/package.json # attendu : "3.0.74"
 ```
 
-`CLINE_NO_AUTO_UPDATE=1` évite la tentative de mise à jour par npm à chaque commande (section 4). Les commandes `--version`, `--help`, `auth --help` n'appellent pas le modèle. Éviter `cline history` et la plupart des sous-commandes pour un simple contrôle : `cline history` a démarré un service d'arrière-plan (« hub », port `127.0.0.1:25463` par défaut) qui survit à la commande ; il s'arrête par `cline hub stop` avec le même `HOME` (constaté le 27/11/2026 avec un dossier personnel temporaire).
+`CLINE_NO_AUTO_UPDATE=1` évite la tentative de mise à jour par npm à chaque commande (section 4). Les commandes `--version`, `--help`, `auth --help` n'appellent pas le modèle. Éviter `cline history` et la plupart des sous-commandes pour un simple contrôle : `cline history` a démarré un service d'arrière-plan (« hub », port `127.0.0.1:25463` par défaut) qui survit à la commande ; il s'arrête par `cline hub stop` avec le même `HOME` (constaté lors des essais de mise au point du banc, avec un dossier personnel temporaire).
 
 Vérification de bout en bout : l'essai jouet (`banc-essai/cage/lancer.sh cline jouet`, voir [lancement](lancement.md)).
 
@@ -137,7 +137,7 @@ Vérification de bout en bout : l'essai jouet (`banc-essai/cage/lancer.sh cline 
 2. Remplacer `VERSION=3.0.74` dans `harnais/cline/installer.sh` et le contenu de `harnais/cline/version` (`cline <version>`).
 3. Lancer `harnais/cline/installer.sh` : la version lue dans `package.json` ne correspond plus, l'ancien dossier `installe/` est supprimé et tout est réinstallé (Node compris).
 4. Vérifier (section 6), puis relancer l'essai jouet. Contrôler que `cline auth -p openai-compatible … -b …` et les options `--json -y` existent toujours (`cline --help`, `cline auth --help`), et que la trace garde la forme décrite dans [lancement](lancement.md#4-format-de-la-trace).
-5. Noter le changement dans `documentations/journal.md`.
+5. Décrire le changement de version et le résultat de l'essai jouet dans le message de commit.
 
 Pour changer la version de Node : `VERSION` dans `harnais/commun/installer-node.sh` (partagé avec Pi). `installer.sh` de Cline ne contrôle que la présence de `installe/node/bin/node`, pas sa version : supprimer `harnais/cline/installe/` pour forcer la réinstallation.
 

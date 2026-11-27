@@ -9,7 +9,7 @@ gptme est un agent en ligne de commande écrit en Python : il donne à un modèl
 | Forme | paquet PyPI `gptme`, sans extension facultative, dans un environnement virtuel sur le Python du système (`/usr/bin/python3`, 3.11.5 au moins) |
 | Dépôt officiel | <https://github.com/gptme/gptme> ; documentation <https://gptme.org/docs/> |
 | Lancement sur le banc | `gptme --non-interactive --output-format json --tool-format tool` (dans [`lancer.sh`](lancer.sh)) |
-| Essais réels | tâche jouet 100 % (48 s, 0,0022 $) ; extraction sans aide 100 % au test caché, 99,3 % à la relance (35 min, 0,30 $) |
+| Essais de mise au point du banc | tâche jouet et tâche d'extraction de données de rapports PDF menées au bout sans intervention, fin déclarée par l'outil `complete` ; recette `goldset` non essayée ([fonctionnement.md](documentation/fonctionnement.md), section 2) |
 
 | Fichier du dossier | Rôle |
 |---|---|
@@ -27,10 +27,10 @@ Depuis la racine du dépôt, relais du modèle démarré (`banc-essai/traces/dem
 ```bash
 harnais/gptme/installer.sh
 harnais/gptme/installe/bin/python -c 'import importlib.metadata as m; print(m.version("gptme"))'
-banc-essai/cage/lancer.sh gptme jouet --essai jouet-gptme
+banc-essai/cage/lancer.sh gptme jouet --essai test-gptme
 ```
 
-La deuxième commande doit afficher `0.37.0`. Le rapport de l'essai est ensuite dans `banc-essai/resultats/jouet-gptme/rapport.md`.
+La deuxième commande doit afficher `0.37.0`. Le rapport de l'essai est ensuite dans `banc-essai/resultats/test-gptme/rapport.md` (dossier créé par le lanceur).
 
 ## Documentation détaillée
 
@@ -39,6 +39,6 @@ La deuxième commande doit afficher `0.37.0`. Le rapport de l'essai est ensuite 
 | [documentation/installation.md](documentation/installation.md) | prérequis, étapes de `installer.sh`, hôtes réseau à autoriser, mandataire et certificat d'entreprise, vérification, mise à jour, désinstallation |
 | [documentation/configuration.md](documentation/configuration.md) | fichier écrit par `configurer.sh`, variables lues, changement de modèle ou de portail, autonomie, télémétrie, emplacement de la clé, pistes pour déclarer contexte et prix |
 | [documentation/lancement.md](documentation/lancement.md) | lancer un essai, rôle de `lancer.sh` dans la cage, sorties et format de la trace, suivi, arrêt, essai à la main |
-| [documentation/fonctionnement.md](documentation/fonctionnement.md) | capacités du harnais, constats chiffrés des essais, problèmes connus et dépannage, limites |
+| [documentation/fonctionnement.md](documentation/fonctionnement.md) | capacités du harnais, constats des essais de mise au point, problèmes connus et dépannage, limites |
 
-Vue d'ensemble des cinq harnais et contrat commun avec le banc : [../README.md](../README.md). Documentation du banc (modèle et fournisseur, goldset, lancement, sécurité) : [../../banc-essai/documentation/](../../banc-essai/documentation/README.md).
+Vue d'ensemble des cinq harnais et contrat commun avec le banc : [../README.md](../README.md). Documentation du banc (modèle et portail, goldset, lancement, sécurité) : [../../banc-essai/documentation/](../../banc-essai/documentation/README.md).

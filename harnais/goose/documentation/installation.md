@@ -15,7 +15,7 @@ Toutes les commandes s'exécutent depuis la racine du dépôt.
 | Autres bibliothèques | `libstdc++.so.6` (au moins `GLIBCXX_3.4.25`), `libgcc_s.so.1`, `libm`, `libdl`, `libpthread` | `ldd harnais/goose/installe/goose`, relevé le 27/11/2026 |
 | Droits | aucun droit administrateur ; rien n'est écrit hors de `harnais/goose/installe/` | en-tête de [`installer.sh`](../installer.sh) |
 | Disque | 64 Mo pour l'archive pendant l'installation, 204 Mo pour le binaire | taille annoncée par GitHub (`content-length`) et `du -h`, relevées le 27/11/2026 |
-| Poste de référence | WSL2, Ubuntu 24.04, glibc 2.39 : installation et essais réussis | [`documentations/journal.md`](../../../documentations/journal.md), entrée du 19/11/2026 (lot 4, Goose) |
+| Système vérifié | WSL2, Ubuntu 24.04, glibc 2.39 : installation et essais réussis | constaté lors des essais de mise au point du banc |
 
 ### Outils
 
@@ -44,7 +44,7 @@ harnais/goose/installer.sh
 | 5 | télécharge l'archive officielle | `curl -fsSL` depuis `https://github.com/aaif-goose/goose/releases/download/v1.60.1/goose-x86_64-unknown-linux-gnu.tar.gz` |
 | 6 | vérifie l'empreinte SHA-256 | `sha256sum -c --quiet` : arrêt du script (code non nul) si l'archive diffère |
 | 7 | extrait puis supprime l'archive | `tar -xzf` dans `installe/`, puis `rm` de l'archive |
-| 8 | place le binaire | si `installe/goose` n'existe pas, le premier fichier nommé `goose` trouvé dans `installe/` y est déplacé (pour la 1.60.1, l'archive contient `./goose` : [journal](../../../documentations/journal.md), entrée du 20/11/2026 « Livrable : kit de test sécurisé », où ce chemin a été corrigé) |
+| 8 | place le binaire | si `installe/goose` n'existe pas, le premier fichier nommé `goose` trouvé dans `installe/` y est déplacé (pour la 1.60.1, l'archive contient `./goose` à sa racine) |
 | 9 | affiche la version installée | `1.60.1 installé dans harnais/goose/installe/` |
 
 L'empreinte figée dans le script est identique à celle que GitHub publie pour cette archive (champ `digest` de l'API des versions : `sha256:0327b1857f8030343f59b77503e0455629bbf472c2901cb94b88389d6278635a`, relevé le 27/11/2026).
@@ -71,7 +71,7 @@ Sur un poste d'entreprise, ces deux hôtes sont à autoriser dans le mandataire 
 | Hôte | Rôle | Sur le banc |
 |---|---|---|
 | `127.0.0.1:4100` | relais LiteLLM du banc (appels au modèle) | seul accès utile ; voir [configuration](configuration.md) |
-| `models.dev` | catalogue de modèles que Goose tente de rafraîchir au démarrage (journal de Goose : `failed to refresh remote model catalog … https://models.dev/api.json`) | refusé par la cage, sans effet sur l'essai (`banc-essai/resultats/goose-jouet-1/essai.json`, champ `hotes_refuses`) |
+| `models.dev` | catalogue de modèles que Goose tente de rafraîchir au démarrage (journal de Goose : `failed to refresh remote model catalog … https://models.dev/api.json`) | refusé par la cage, sans effet sur l'essai (constaté lors des essais de mise au point du banc : champ `hotes_refuses` de `essai.json`) |
 
 Ces accès à l'exécution sont détaillés dans [fonctionnement](fonctionnement.md).
 
@@ -99,7 +99,7 @@ La vérification des certificats n'est jamais désactivée (pas d'option `-k`) :
 
 Pour Goose lui-même (hors du banc, ou pour un usage direct d'un portail en HTTPS), la documentation officielle indique que Goose lit `HTTP_PROXY`, `HTTPS_PROXY` (prioritaire sur `HTTP_PROXY`) et `NO_PROXY` ([variables d'environnement, section « HTTP Proxy »](https://goose-docs.ai/docs/guides/environment-variables) ; [problèmes connus, « Corporate Proxy or Firewall Issues »](https://goose-docs.ai/docs/troubleshooting/known-issues), consultés le 27/11/2026). Pour les certificats, la documentation ne dit rien ; le binaire 1.60.1 contient la bibliothèque `rustls-platform-verifier` et la chaîne `SSL_CERT_FILE`, et cette bibliothèque s'appuie sous Linux sur `rustls-native-certs`, qui lit d'abord `SSL_CERT_FILE` puis le magasin d'autorités du système ([rustls-platform-verifier](https://github.com/rustls/rustls-platform-verifier), [rustls-native-certs](https://github.com/rustls/rustls-native-certs), consultés le 27/11/2026). Prise en compte de `SSL_CERT_FILE` par Goose : non vérifié sur le banc.
 
-Dans la cage, ces réglages sont inutiles pour le modèle : Goose y parle en HTTP simple au relais `127.0.0.1:4100`, que `NO_PROXY=127.0.0.1,localhost` exclut du mandataire filtrant ([`banc-essai/cage/cage.sh`](../../../banc-essai/cage/cage.sh)). C'est le relais, hors de la cage, qui joint le portail.
+Dans la cage, ces réglages sont inutiles pour le modèle : Goose y parle en HTTP simple au relais `127.0.0.1:4100`, que `NO_PROXY=127.0.0.1,localhost` exclut du mandataire filtrant ([`banc-essai/cage/cage.sh`](../../../banc-essai/cage/cage.sh)). C'est le relais, hors de la cage, qui joint le portail compatible OpenAI (`PORTAIL_URL` du `.env`), en passant par `BANC_MANDATAIRE` et `BANC_CERTIFICAT` s'ils sont renseignés.
 
 ## 5. Vérifier l'installation
 
@@ -145,7 +145,7 @@ banc-essai/cage/lancer.sh goose jouet
 
 La commande intégrée `goose update` (mise à jour vers la dernière version stable, [documentation](https://goose-docs.ai/docs/guides/updating-goose), consultée le 27/11/2026) n'est pas à utiliser sur le banc : elle ne passe pas par l'empreinte figée et ne met pas à jour `version`.
 
-Une nouvelle version peut changer la configuration lue, les extensions activées par défaut ou le format de la trace : refaire la tâche jouet et relire [fonctionnement](fonctionnement.md) avant toute campagne.
+Une nouvelle version peut changer la configuration lue, les extensions activées par défaut ou le format de la trace : refaire la tâche jouet et relire [fonctionnement](fonctionnement.md) avant toute série d'essais sur le goldset.
 
 ## 7. Désinstaller
 

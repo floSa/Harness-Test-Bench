@@ -1,7 +1,7 @@
 """Journal du banc : une ligne JSON par appel au modèle (succès ou échec), sans aucune clé.
 
 Champs : heure de début et de fin, durée, clé virtuelle (alias = essai), modèle, fournisseur, statut,
-jetons (dont jetons lus dans le cache), coût calculé par le relais et coût facturé par OpenRouter,
+jetons (dont jetons lus dans le cache), coût calculé par le relais et coût facturé par le fournisseur s'il le renvoie (champ usage.cost),
 nombre de messages, présence et nombre d'images, type d'erreur (429 compris).
 """
 import datetime
@@ -67,7 +67,7 @@ class Journal(CustomLogger):
                 "jetons_entree": slo.get("prompt_tokens"), "jetons_sortie": slo.get("completion_tokens"),
                 "jetons_cache": _champ(response_obj, "usage", "prompt_tokens_details", "cached_tokens"),
                 "cout": slo.get("response_cost") if slo else kwargs.get("response_cost"),
-                "cout_openrouter": _champ(response_obj, "usage", "cost"),
+                "cout_fournisseur": _champ(response_obj, "usage", "cost"),
                 "fournisseur": _champ(response_obj, "provider"),
                 "messages": len(messages), "images": _images(messages),
                 "flux": bool(kwargs.get("stream")), "outils": len(kwargs.get("tools") or []),

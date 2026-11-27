@@ -24,11 +24,8 @@ banc-essai/cage/lancer.sh goose <recette> [--essai NOM] [--duree SECONDES] [--me
 
 | Recette | Tâche | Jeu noté pendant l'essai | Relance du workflow | Dossier des résultats |
 |---|---|---|---|---|
-| `jouet` | petite tâche de programmation avec tests cachés | tests cachés de `banc-essai/evaluation/taches/jouet` | non | `banc-essai/resultats/` |
-| `sans-aide` | extraction dans les rapports d'intervention | `banc-essai/corpus/test-cache` | oui | `banc-essai/resultats/` |
-| `avec-aide` | même tâche, avec l'ontologie des champs | `banc-essai/corpus/test-cache` | oui | `banc-essai/resultats/` |
-| `dossiers` | tâche 2, dossiers d'équipement | `banc-essai/corpus/dossiers/test-cache` | oui | `banc-essai/resultats/` |
-| `goldset` | extraction dans le goldset importé (`$BANC_GOLDSET`, défaut `banc-essai/corpus/goldset`) | `test-cache` du goldset | oui, sur `relance` du goldset | `banc-essai/resultats-goldset/` (hors git) |
+| `jouet` | petite tâche de programmation avec tests cachés (mise au point) | tests cachés de `banc-essai/evaluation/taches/jouet` | non | `banc-essai/resultats/<essai>/` (dossier créé par le lanceur) |
+| `goldset` | extraction dans le goldset de PDF de l'équipe, importé (`$BANC_GOLDSET`, défaut `banc-essai/corpus/goldset`) | `test-cache` du goldset | oui, sur `relance` du goldset | `banc-essai/resultats-goldset/<essai>/` (hors git) |
 
 | Option | Défaut | Effet |
 |---|---|---|
@@ -40,11 +37,11 @@ Exemples :
 
 ```bash
 banc-essai/cage/lancer.sh goose jouet
-banc-essai/cage/lancer.sh goose avec-aide --essai c1-02-goose-avec-aide
+banc-essai/cage/lancer.sh goose goldset --essai goose-goldset-01
 BANC_GOLDSET=/chemin/du/goldset banc-essai/cage/lancer.sh goose goldset
 ```
 
-Le lanceur affiche une ligne `essai <nom> : harnais goose, recette <recette>, espace <dossier>`, puis rend la main à la fin de l'essai (de 22 s pour la tâche jouet à plus d'une heure pour la tâche 2 : voir [fonctionnement](fonctionnement.md)). Pour un essai long, le lancer dans une session qui survit à la fermeture du terminal (`tmux`, `screen` ou `nohup … &`).
+Le lanceur affiche une ligne `essai <nom> : harnais goose, recette <recette>, espace <dossier>`, puis rend la main à la fin de l'essai (moins d'une minute pour la tâche jouet ; une extraction dans des PDF peut dépasser une heure : voir [fonctionnement](fonctionnement.md)). Pour un essai long, le lancer dans une session qui survit à la fermeture du terminal (`tmux`, `screen`, ou `setsid nohup … &` comme dans [`banc-essai/documentation/lancer-un-essai.md`](../../../banc-essai/documentation/lancer-un-essai.md), section 2).
 
 ## 3. Ce que fait le lanceur du banc
 
@@ -68,9 +65,10 @@ Le dossier `harnais/goose/` est monté en lecture seule sur `/opt/harnais` ; la 
 | 1 | `"$ICI/configurer.sh" >&2` | écrit `/home/banc/.config/goose/config.yaml` ([configuration](configuration.md)) ; message dans `stderr.log` |
 | 2 | `export GOOSE_DISABLE_KEYRING=1 GOOSE_TELEMETRY_ENABLED=false GOOSE_DISABLE_SESSION_NAMING=true GOOSE_MODE=auto` | réglages forcés par l'environnement |
 | 3 | `export OPENAI_API_KEY="${BANC_CLE_MODELE:?}"` | clé de l'essai ; arrêt si elle manque |
-| 4 | `goose run --with-builtin developer -n essai --output-format stream-json -t "$*"` | exécution sans interaction |
-| 5 | `goose session export -n essai --format json -o "$HOME/goose-session.json"` | export de la session, même après un échec de l'étape 4 ; une erreur d'export est ignorée |
-| 6 | `exit "$code"` | code de retour de `goose run`, recopié dans `essai.json` (`code_retour`) |
+| 4 | `export GOOSE_CONTEXT_LIMIT="$BANC_CONTEXTE"`, seulement si `BANC_CONTEXTE` est inférieur à 128 000 | fenêtre de contexte déclarée à Goose ([configuration, section 7](configuration.md#7-fenêtre-de-contexte)) |
+| 5 | `goose run --with-builtin developer -n essai --output-format stream-json -t "$*"` | exécution sans interaction |
+| 6 | `goose session export -n essai --format json -o "$HOME/goose-session.json"` | export de la session, même après un échec de l'étape 5 ; une erreur d'export est ignorée |
+| 7 | `exit "$code"` | code de retour de `goose run`, recopié dans `essai.json` (`code_retour`) |
 
 Options de `goose run` utilisées (texte de `goose run --help`, version 1.60.1) :
 
@@ -109,11 +107,11 @@ Options disponibles mais non utilisées : `--no-session` (aucune session enregis
 | `maison/.config/goose/config.yaml` | configuration écrite par `configurer.sh` |
 | `maison/.local/share/goose/sessions/sessions.db` | base SQLite des sessions ([journalisation](https://goose-docs.ai/docs/guides/logs), consulté le 27/11/2026) |
 | `maison/.local/state/goose/logs/cli/<date>/<horodatage>.log` | journal de Goose en JSON (avertissements, compactions) |
-| `maison/.local/state/goose/logs/llm_request.<n>.jsonl` | dix fichiers de requêtes au modèle (relevés dans l'essai `c2-02`) |
+| `maison/.local/state/goose/logs/llm_request.<n>.jsonl` | fichiers de requêtes au modèle (dix dans un essai long) |
 
-Constats relevés le 27/11/2026 dans `~/banc-espaces/goose-jouet-1/`, `c1-02-goose-avec-aide/` et `c2-02-goose-dossiers/`. L'export `goose-session.json` et les journaux de Goose ne sont pas recopiés dans les résultats ; ils disparaissent avec l'espace de l'essai.
+Emplacements constatés lors des essais de mise au point du banc. L'export `goose-session.json` et les journaux de Goose ne sont pas recopiés dans les résultats ; ils disparaissent avec l'espace de l'essai.
 
-Pour un essai `goldset`, ces fichiers (trace, session, requêtes) contiennent le texte des documents de l'entreprise : ne jamais les copier dans le dépôt ni les transmettre.
+Pour un essai `goldset`, ces fichiers (trace, session, requêtes) contiennent le texte des PDF de l'équipe : ne jamais les copier dans le dépôt ni les transmettre.
 
 ## 6. Format de la trace (`stream-json`)
 
@@ -132,22 +130,12 @@ Pour un essai `goldset`, ces fichiers (trace, session, requêtes) contiennent le
 | `toolResponse` | résultat (rôle `user`) : `id`, `toolResult.value.content` (texte, image) |
 | `systemNotification` | message de Goose, par exemple la compaction du contexte |
 
-Comptes relevés le 27/11/2026 :
-
-| Critère | `goose-jouet-1` | `c1-02-goose-avec-aide` |
-|---|---|---|
-| Lignes | 496 | 9 363 |
-| Lignes non JSON (bandeau) | 4 | 4 |
-| Fragments `thinking` | 389 | 8 995 |
-| Fragments `text` | 88 | 177 |
-| Appels d'outils | 7 | 95 (`shell` 93, `write` 1, `read_image` 1) |
-| Notifications | 0 | 3 (compaction) |
-| Ligne `complete` | 1 | 1 |
+Constaté lors des essais de mise au point du banc : la trace compte toujours quatre lignes de bandeau et une seule ligne `complete` ; les fragments `thinking` en forment l'essentiel ; les notifications n'apparaissent qu'en cas de compaction ; l'outil `shell` domine largement les appels d'outils.
 
 Les réponses arrivent en flux : un même message occupe de nombreuses lignes (un fragment par ligne). Pour compter les appels d'outils en ignorant le bandeau :
 
 ```bash
-python3 - banc-essai/resultats/goose-jouet-1/harnais/stdout.log <<'EOF'
+python3 - banc-essai/resultats/<essai>/harnais/stdout.log <<'EOF'
 import collections, json, sys
 outils = collections.Counter()
 for ligne in open(sys.argv[1]):
@@ -181,11 +169,11 @@ Repères pour Goose : la trace grossit en continu tant que le modèle répond (f
 
 ## 8. Arrêter un essai proprement
 
-Le garde-fou arrête la cage seul au bout de `--duree` secondes (7200 par défaut : `timeout --kill-after=30`, [`banc-essai/cage/cage.sh`](../../../banc-essai/cage/cage.sh)). Pour arrêter plus tôt :
+Le garde-fou arrête la cage seul au bout de `--duree` secondes (7200 par défaut : `timeout --kill-after=30`, [`banc-essai/cage/cage.sh`](../../../banc-essai/cage/cage.sh)). Pour arrêter plus tôt, la méthode du banc est décrite dans [`banc-essai/documentation/lancer-un-essai.md`, section 5](../../../banc-essai/documentation/lancer-un-essai.md#5-arrêter-un-essai-proprement) : arrêter la cage (le processus `timeout` qui en est le parent), pas le lanceur, pour que celui-ci supprime la clé, collecte les résultats et produise un rapport partiel. Rien n'est propre à Goose dans cette procédure.
 
 ### Arborescence des processus
 
-D'après les scripts, et vérifié sur un essai en cours le 27/11/2026 (`ps`, `systemctl --user list-units`) :
+D'après les scripts, et vérifié sur un essai en cours (`ps`, `systemctl --user list-units`) :
 
 ```text
 banc-essai/cage/lancer.sh          (terminal de l'utilisateur)
@@ -196,22 +184,18 @@ banc-essai/cage/lancer.sh          (terminal de l'utilisateur)
                 └── interieur.sh → /opt/harnais/lancer.sh → goose run → commandes lancées par Goose
 ```
 
-### Méthode conseillée (non éprouvée sur le banc)
-
-Arrêter l'unité systemd de la cage : tous ses processus (Goose et ce qu'il a lancé) sont arrêtés, `cage.sh` se termine, et le lanceur du banc poursuit normalement (dépense relevée, clé supprimée, `essai.json`, rapport).
+Variante non éprouvée sur le banc, déduite de `cage.sh` (cage lancée par `systemd-run --user --scope`) : arrêter l'unité systemd de la cage, ce qui arrête tous ses processus (Goose et ce qu'il a lancé).
 
 ```bash
 systemctl --user list-units --type=scope 'banc-cage-*' --no-pager   # la description contient ~/banc-espaces/<essai>/
 systemctl --user stop banc-cage-banc-cage-XXXXXX.scope               # nom relevé à la ligne précédente
 ```
 
-Méthode déduite de [`banc-essai/cage/cage.sh`](../../../banc-essai/cage/cage.sh) (cage lancée par `systemd-run --user --scope`) ; non essayée sur un essai réel.
-
 ### À éviter
 
-Ctrl+C dans le terminal du lanceur, ou l'arrêt du seul `lancer.sh`, ne suffit pas, d'après la lecture des scripts (non vérifié par un essai) : `cage.sh` est une tâche de fond d'un script non interactif, qui ignore Ctrl+C ; `timeout` et `bwrap --new-session` sont dans leur propre groupe et leur propre session, que le terminal n'atteint pas. Le lanceur s'arrête alors et supprime la clé de l'essai (fonction `fin_de_script`), mais Goose continue dans la cage, ses appels au modèle échouent, et rien n'est collecté.
+Ctrl+C dans le terminal du lanceur, ou l'arrêt du seul `lancer.sh`, ne suffit pas : `cage.sh` est une tâche de fond d'un script non interactif, qui ignore Ctrl+C ; `timeout` et `bwrap --new-session` sont dans leur propre groupe et leur propre session, que le terminal n'atteint pas. Le lanceur s'arrête alors et supprime la clé de l'essai (fonction `fin_de_script`), mais Goose continue dans la cage, ses appels au modèle échouent, et rien n'est collecté.
 
-Constat sur l'essai `c2-02-goose-dossiers` interrompu le 24/11/2026 (arrêt noté à 8 h 45 dans le [journal](../../../documentations/journal.md)) : la trace de Goose s'arrête à 8 h 41, mais les relevés écrits par les boucles du lanceur et de `cage.sh` (`traces/gpu.txt` et `traces/memoire.json`, qui ne tournent que tant que ces scripts vivent) ont été mis à jour jusqu'à 8 h 51 (dates de modification relevées le 27/11/2026 dans `~/banc-espaces/c2-02-goose-dossiers/resultats-partiels/`, hors dépôt). Ces processus étaient donc encore actifs plusieurs minutes après l'arrêt annoncé.
+Constaté lors des essais de mise au point du banc : après l'arrêt du seul lanceur, la trace de Goose s'est arrêtée, mais les relevés écrits par les boucles du lanceur et de `cage.sh` (`traces/gpu.txt` et `traces/memoire.json`, qui ne tournent que tant que ces scripts vivent) ont continué d'être mis à jour pendant plusieurs minutes : les processus de la cage survivaient à l'arrêt.
 
 ### Vérifier qu'il ne reste rien
 
@@ -220,9 +204,10 @@ systemctl --user list-units --type=scope 'banc-cage-*' --no-pager
 ps -eo pid,etime,cmd | grep -E '[g]oose run|[b]wrap --die-with-parent|[c]age/cage.sh'
 ```
 
-S'il reste un processus, l'arrêter par son numéro (`kill <pid>`, puis `kill -9 <pid>` s'il ne s'arrête pas), jamais par `pkill -f` ni `killall`, qui pourraient toucher d'autres processus de la machine. Si le lanceur a été arrêté avant la fin, supprimer la clé de l'essai :
+S'il reste un processus, l'arrêter par son numéro (`kill <pid>`, puis `kill -9 <pid>` s'il ne s'arrête pas), jamais par `pkill -f` ni `killall`, qui pourraient toucher d'autres processus de la machine. Si le lanceur a été arrêté avant la fin, vérifier qu'aucune clé ne reste et supprimer celle de l'essai :
 
 ```bash
+ls banc-essai/traces/secrets/ | grep '^cle-'
 python3 banc-essai/traces/cles.py --supprimer <essai> <essai>-relance
 ```
 

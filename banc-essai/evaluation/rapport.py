@@ -8,7 +8,7 @@ Lit `<essai>/evaluation/soumissions.jsonl`, `fin.json`, `<essai>/essai.json` et,
 `<essai>/rapport.md` (scores agrégés seulement, aucun détail par document du test caché).
 
 Sans déclaration de fin (harnais arrêté, garde-fou atteint), la dernière soumission acceptée tient
-lieu de soumission finale et le rapport l'indique ; aucune relance n'a lieu (protocole, section 7).
+lieu de soumission finale et le rapport l'indique ; aucune relance n'a lieu.
 """
 import argparse
 import hashlib
@@ -85,9 +85,6 @@ def construire(essai):
         "relance": relance,
         "construction": construction,
     }
-    if tache == "dossiers" and note:
-        r["taux_invention"] = note["invention"]["taux"]
-        r["dossiers_parfaits"] = f"{note['dossiers_parfaits']} sur {note['dossiers']}"
     if tache == "goldset" and note:
         r["taux_invention"] = note["invention"]["taux"]
         r["taux_omission"] = note["omission"]["taux"]
@@ -125,14 +122,9 @@ def markdown(r):
         lignes += [("Documents entièrement justes", r.get("documents_parfaits", "")),
                    ("Taux d'invention (valeur donnée où null est attendu)", pc(r.get("taux_invention"))),
                    ("Taux d'omission (null donné où une valeur est attendue)", pc(r.get("taux_omission")))]
-    if r["tache"] == "dossiers":
-        lignes += [("Dossiers entièrement justes", r.get("dossiers_parfaits", "")),
-                   ("Taux d'invention", pc(r.get("taux_invention")))]
     if r["relance"]:
         rl = r["relance"]
         lignes += [("Relance : score", pc(rl["note"]["score"])),
-                   ("Relance : dossiers entièrement justes", f"{rl['note']['dossiers_parfaits']} sur "
-                    f"{rl['note']['dossiers']}" if "dossiers_parfaits" in rl["note"] else ""),
                    ("Relance : documents entièrement justes", f"{rl['note']['documents_parfaits']} sur "
                     f"{rl['note']['documents']}" if "documents_parfaits" in rl["note"] else ""),
                    ("Relance : JSON produits", f"{rl['json_produits']} sur {rl['documents']}"),
@@ -158,7 +150,7 @@ def markdown(r):
             ("Dont jetons lus dans le cache", c.get("jetons_cache", "")),
             ("Jetons de sortie", c["jetons_sortie"]), ("Temps dans le modèle", f"{c['temps_modele_s']} s"),
             ("Coût calculé par le relais", f"{c.get('cout_usd', '')} $"),
-            ("Coût facturé par OpenRouter (0 avec un portail)", f"{c.get('cout_openrouter_usd', '')} $"),
+            ("Coût facturé par le fournisseur (s'il le renvoie)", f"{c.get('cout_fournisseur_usd', '')} $"),
             ("Dépense de la clé (LiteLLM)", f"{c.get('depense_cle_usd', '')} $"),
             ("Demandes réseau (mandataire PyPI)", c["demandes_reseau"]),
             ("Demandes réseau refusées", c["demandes_reseau_refusees"])]] + [""]
@@ -178,18 +170,6 @@ def markdown(r):
             d = note["par"].get(g, {})
             L += [f"### {titre}", "", f"| {titre} | Champs | Justes | Score |", "|---|---|---|---|"]
             L += [f"| {k} | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in d.items()] + [""]
-    if r["tache"] == "dossiers" and note:
-        L += ["## Détail de la soumission finale", "", "| Mesure | Valeur |", "|---|---|",
-              f"| Précision par champ | {pc(note['precision'])} |", f"| Rappel par champ | {pc(note['rappel'])} |",
-              f"| Interventions oubliées | {note['interventions']['oubliees']} sur "
-              f"{note['interventions']['attendues']} |",
-              f"| Dossiers dans le bon ordre | {note['ordre_juste']} sur {note['dossiers']} |"]
-        L += [f"| Pièges inclus à tort : {k} | {v['inclus_a_tort']} sur {v['presents']} |"
-              for k, v in note["pieges"].items()]
-        L += [f"| Rectificatifs : {k} | {v} |" for k, v in note["rectificatifs"].items()] + [""]
-        L += ["| Clé | Champs | Justes | Score |", "|---|---|---|---|"]
-        L += [f"| {k} | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in note["par"]["cle"].items()]
-        L += [""]
     if r["tache"] == "goldset" and note:
         L += ["## Détail de la soumission finale", "", "| Champ | Documents | Crédit | Score |", "|---|---|---|---|"]
         L += [f"| `{k}` | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in note["par"]["cle"].items()]

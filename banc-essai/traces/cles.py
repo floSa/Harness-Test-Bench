@@ -1,4 +1,4 @@
-"""Clé virtuelle par essai sur le LiteLLM du banc (protocole, section 5 : plafond par clé).
+"""Clé virtuelle par essai sur le LiteLLM du banc (plafond par clé : BANC_BUDGET_ESSAI).
 
     python3 banc-essai/traces/cles.py <alias> [<alias> ...]             crée
     python3 banc-essai/traces/cles.py --supprimer <alias> [<alias> ...]  supprime

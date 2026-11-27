@@ -22,17 +22,15 @@ banc-essai/cage/lancer.sh <harnais> <recette> [--essai NOM] [--duree SECONDES] [
 
 | Paramètre | Valeurs | Défaut |
 |---|---|---|
-| `<harnais>` | `opencode`, `pi`, `gptme`, `goose`, `cline` (dossiers de `harnais/`), ou `sonde` (preuves de la cage), `factice` (vérification du lanceur) | |
-| `<recette>` | `jouet`, `sans-aide`, `avec-aide`, `dossiers`, `goldset` | |
+| `<harnais>` | `opencode`, `pi`, `gptme`, `goose`, `cline` (dossiers de `harnais/`), ou `sonde` (preuves de la cage) | |
+| `<recette>` | `jouet`, `goldset` | |
 | `--essai` | nom du dossier de résultats | `<harnais>-<recette>-<date>` |
 | `--duree` | garde-fou de durée, en secondes | 7200 |
 | `--message` | premier message donné au harnais | « Suis les consignes de consignes.md. » |
 
 | Recette | Tâche | Jeu noté par l'API | Jeu de relance |
 |---|---|---|---|
-| `jouet` | petit paquet Python de calcul sur des relevés de dosage, noté par des tests cachés (mise au point d'un harnais, quelques centimes) | tests cachés | aucun |
-| `sans-aide`, `avec-aide` | extraction dans 50 rapports d'intervention fictifs | `banc-essai/corpus/test-cache/` | `banc-essai/corpus/relance/` |
-| `dossiers` | recoupement de pièces par équipement | `banc-essai/corpus/dossiers/test-cache/` | `banc-essai/corpus/dossiers/relance/` |
+| `jouet` | petit paquet Python de calcul sur des relevés de dosage, noté par des tests cachés (mise au point d'un harnais, quelques minutes) | tests cachés | aucun |
 | `goldset` | extraction dans le goldset importé ([goldset.md](goldset.md)) | `<goldset>/test-cache/` | `<goldset>/relance/` |
 
 Un essai long se lance détaché du terminal, pour survivre à sa fermeture :
@@ -72,7 +70,7 @@ pgrep -af "timeout --kill-after=30"
 kill <PID affiché pour l'essai>
 ```
 
-Le lanceur reprend la main, supprime la clé et produit un rapport partiel. Constat du journal (24/11/2026) : arrêter seulement le lanceur laisse vivre les processus de la cage, qui tournent dans leur propre session ; c'est pourquoi on arrête `timeout`, parent de la cage. Après un arrêt, vérifier qu'aucune clé ne reste :
+Le lanceur reprend la main, supprime la clé et produit un rapport partiel. Arrêter seulement le lanceur laisse vivre les processus de la cage, qui tournent dans leur propre session (constaté pendant la mise au point du banc) ; c'est pourquoi on arrête `timeout`, parent de la cage. Après un arrêt, vérifier qu'aucune clé ne reste :
 
 ```bash
 ls banc-essai/traces/secrets/ | grep '^cle-'
@@ -81,7 +79,7 @@ python3 banc-essai/traces/cles.py --supprimer <essai> <essai>-relance
 
 ## 6. Lire les résultats
 
-Dossier : `banc-essai/resultats/<essai>/`, ou `banc-essai/resultats-goldset/<essai>/` pour la recette `goldset` (hors git).
+Dossier : `banc-essai/resultats-goldset/<essai>/` pour la recette `goldset` (hors git), `banc-essai/resultats/<essai>/` pour la tâche jouet et la sonde.
 
 | Fichier | Contenu |
 |---|---|
@@ -104,4 +102,4 @@ Dossier : `banc-essai/resultats/<essai>/`, ou `banc-essai/resultats-goldset/<ess
 | Taux d'invention, d'omission | valeurs inventées là où rien n'était attendu, valeurs manquées |
 | Appels, jetons, coût, durée | coût de construction ; coût par document de la relance : coût d'exploitation |
 
-Index de tous les essais : `banc-essai/resultats/README.md` (ou `banc-essai/resultats-goldset/README.md`).
+Index des essais : `banc-essai/resultats-goldset/README.md` (et `banc-essai/resultats/README.md` pour la tâche jouet), régénéré à la fin de chaque essai.

@@ -69,14 +69,14 @@ Ce sont les deux seuls hôtes à autoriser sur un poste d'entreprise pour instal
 
 ### 4.2 Pendant un essai (pour mémoire)
 
-Ces demandes partent de la cage et passent par son filtre réseau ; elles sont journalisées dans `banc-essai/resultats/<essai>/traces/reseau.jsonl`.
+Ces demandes partent de la cage et passent par son filtre réseau ; elles sont journalisées dans `traces/reseau.jsonl` du dossier de résultats de l'essai (`banc-essai/resultats/<essai>/`, ou `banc-essai/resultats-goldset/<essai>/` pour la recette `goldset`). Comportements constatés lors des essais de mise au point du banc.
 
-| Hôte | Origine | Décision du filtre de la cage | Preuve |
+| Hôte | Origine | Décision du filtre de la cage | Constat |
 |---|---|---|---|
-| `models.opencode.ai` | catalogue des modèles chargé par OpenCode au démarrage | refusé, sans effet sur l'essai | `banc-essai/resultats/opencode-jouet-3/traces/reseau.jsonl` ; message `Failed to fetch models.dev` dans `harnais/stderr.log` |
+| `models.opencode.ai` | catalogue des modèles chargé par OpenCode au démarrage | refusé, sans effet sur l'essai | demande refusée à chaque démarrage ; message `Failed to fetch models.dev` dans `harnais/stderr.log` |
 | `registry.npmjs.org` | installation en arrière-plan du paquet `@opencode-ai/plugin` dans le dossier de configuration | refusé, sans effet | idem ; message `background dependency install failed` |
-| `github.com`, `release-assets.githubusercontent.com` | téléchargement de ripgrep 15.1.0 (moteur des outils `glob` et `grep` d'OpenCode) dans `~/.cache/opencode/bin`, au premier usage de ces outils dans l'essai (le dossier personnel est neuf à chaque essai) | accepté (2,3 Mo) | `opencode-jouet-3/harnais/stderr.log` (`downloading ripgrep` juste après le premier appel à `glob`) et `essai.json` (`telechargement_par_hote_octets`) ; absent des essais `c1-01` et `c2-01`, où l'agent n'a utilisé que `bash` et `read` |
-| `pypi.org`, `files.pythonhosted.org` | paquets Python installés par le code que l'agent écrit (pas par OpenCode lui-même) | accepté | `opencode-jouet-3/traces/reseau.jsonl` |
+| `github.com`, `release-assets.githubusercontent.com` | téléchargement de ripgrep 15.1.0 (moteur des outils `glob` et `grep` d'OpenCode) dans `~/.cache/opencode/bin`, au premier usage de ces outils dans l'essai (le dossier personnel est neuf à chaque essai) | accepté (quelques mégaoctets) | message `downloading ripgrep` dans `harnais/stderr.log` juste après le premier appel à `glob` ou `grep` ; volume dans `essai.json` (`telechargement_par_hote_octets`) ; aucun téléchargement quand l'agent n'utilise que `bash` et `read` |
+| `pypi.org`, `files.pythonhosted.org` | paquets Python installés par le code que l'agent écrit (pas par OpenCode lui-même) | accepté | `traces/reseau.jsonl` |
 
 Sur un poste d'entreprise, les téléchargements acceptés par la cage sortent par le mandataire de l'entreprise si `BANC_MANDATAIRE` est défini dans `.env` (voir [modele-et-fournisseur.md](../../../banc-essai/documentation/modele-et-fournisseur.md), section 4). GitHub doit alors être autorisé par ce mandataire, sinon ripgrep ne peut pas être téléchargé : comportement des outils `grep` et `glob` d'OpenCode dans ce cas non vérifié sur le banc.
 
@@ -88,7 +88,7 @@ curl lit le mandataire dans l'environnement ; la vérification de l'empreinte ga
 
 | Besoin | Variable | Source |
 |---|---|---|
-| Mandataire HTTPS | `HTTPS_PROXY` ou `https_proxy` (« the lower case version has precedence ») | [page de manuel de curl](https://curl.se/docs/manpage.html), section ENVIRONMENT, consulté le 27/11/2026 (texte identique dans `man curl`, curl 8.5.0 du poste de développement) |
+| Mandataire HTTPS | `HTTPS_PROXY` ou `https_proxy` (« the lower case version has precedence ») | [page de manuel de curl](https://curl.se/docs/manpage.html), section ENVIRONMENT, consulté le 27/11/2026 (texte identique dans `man curl`) |
 | Mandataire avec identifiant | `HTTPS_PROXY=http://identifiant:mot-de-passe@hote:port` | idem |
 | Autorité de certification interne | `CURL_CA_BUNDLE=/chemin/ac.pem` (« used as the --cacert value ») ; sinon l'autorité doit être dans le magasin du système | idem |
 
@@ -125,7 +125,7 @@ Contrôle de la configuration sans réseau ni appel au modèle (dossier personne
 
 ```bash
 T=$(mktemp -d)
-BANC_MODELE_URL=http://127.0.0.1:4100 BANC_MODELE=essai harnais/opencode/configurer.sh "$T/.config/opencode"
+BANC_MODELE_URL=http://127.0.0.1:4100 BANC_MODELE=modele-banc harnais/opencode/configurer.sh "$T/.config/opencode"
 env -i HOME="$T" PATH=/usr/bin:/bin BANC_CLE_MODELE=factice \
   bwrap --dev-bind / / --unshare-net --die-with-parent harnais/opencode/installe/opencode debug config
 rm -rf "$T"
@@ -145,7 +145,7 @@ rm -rf "$T"
 | 6. Vérifier la configuration | `debug config` comme en section 6 : la version 2 a changé la syntaxe (`providers`, `update`, `permissions` dans la documentation en ligne [opencode.ai/docs/config](https://opencode.ai/docs/config/), consulté le 27/11/2026) ; `configurer.sh` devra peut-être être réécrit |
 | 7. Essai de contrôle | `banc-essai/cage/lancer.sh opencode jouet` |
 
-Les essais déjà faits gardent leur version dans `essai.json` (`version_harnais`). Passer à une autre version change le harnais comparé : à consigner dans `documentations/journal.md`.
+Les essais déjà faits gardent leur version dans `essai.json` (`version_harnais`). Passer à une autre version change le harnais comparé : deux essais de versions différentes ne se comparent pas sans le signaler.
 
 ## 8. Désinstaller
 

@@ -10,13 +10,13 @@ Commandes depuis la racine du dépôt. Prérequis du banc (bubblewrap, relais d�
 banc-essai/cage/lancer.sh opencode <recette> [--essai NOM] [--duree SECONDES] [--message "..."]
 ```
 
-| Recette | Tâche | Durée et coût relevés avec OpenCode | Preuve |
-|---|---|---|---|
-| `jouet` | correction d'un petit paquet Python, notée par des cas cachés ; sert à vérifier une installation | 20 à 30 s, 11 à 12 appels, 0,0012 à 0,0013 $ | `banc-essai/resultats/opencode-jouet-{1,2,3}/essai.json` |
-| `sans-aide` | extraction de 15 valeurs dans des rapports d'intervention en PDF, consignes sans indication de méthode | 24 min, 286 appels, 0,31 $ | `banc-essai/resultats/c1-01-opencode-sans-aide/essai.json` |
-| `avec-aide` | même tâche, consignes avec indications de méthode | | aucun essai d'OpenCode |
-| `dossiers` | recoupement de pièces par équipement (rapports jumeaux, annulés, rectifiés) | 62 min, 691 appels, 0,87 $ | `banc-essai/resultats/c2-01-opencode-dossiers/essai.json` |
-| `goldset` | extraction dans le goldset importé ; résultats dans `banc-essai/resultats-goldset/` (hors git) | | aucun essai d'OpenCode ; préparation : [goldset.md](../../../banc-essai/documentation/goldset.md) |
+| Critère | `jouet` | `goldset` |
+|---|---|---|
+| Tâche | correction d'un petit paquet Python, notée par des cas cachés | extraction dans le goldset de PDF importé |
+| Usage | vérifier une installation ou une configuration (essai court) | essai réel sur les documents de l'équipe |
+| Dossier des résultats | `banc-essai/resultats/<essai>/` (créé par le lanceur) | `banc-essai/resultats-goldset/<essai>/` (hors git) |
+| Préparation | aucune | import et validation du goldset : [goldset.md](../../../banc-essai/documentation/goldset.md) |
+| Essai d'OpenCode | fait lors de la mise au point du banc | non fait |
 
 | Option | Effet | Défaut |
 |---|---|---|
@@ -27,7 +27,7 @@ banc-essai/cage/lancer.sh opencode <recette> [--essai NOM] [--duree SECONDES] [-
 Un essai long se lance détaché du terminal ([lancer-un-essai.md](../../../banc-essai/documentation/lancer-un-essai.md), section 2) :
 
 ```bash
-setsid nohup banc-essai/cage/lancer.sh opencode dossiers --essai essai-01 > ~/banc-espaces/essai-01.log 2>&1 < /dev/null &
+setsid nohup banc-essai/cage/lancer.sh opencode goldset --essai essai-01 > ~/banc-espaces/essai-01.log 2>&1 < /dev/null &
 ```
 
 ## 2. Ce qui se passe
@@ -81,11 +81,11 @@ Une ligne JSON par événement. Champs communs : `type`, `timestamp` (millisecon
 
 | `type` | Contenu de `part` | Exemple relevé |
 |---|---|---|
-| `step_start` | début d'un tour du modèle | 11 dans `opencode-jouet-3` |
+| `step_start` | début d'un tour du modèle | une ligne par tour |
 | `tool_use` | `tool` (nom de l'outil), `callID`, `state.status`, `state.input`, `state.output`, `state.time.start`, `state.time.end` | `"tool":"glob"`, `"input":{"pattern":"**/consignes.md"}` |
 | `step_finish` | `reason` (`tool-calls`, ou fin), `tokens` (`input`, `output`, `reasoning`, `cache.read`, `cache.write`), `cost` (toujours 0 sur le banc : prix non déclarés) | |
-| `text` | `text` : réponse finale de l'agent | « Bug corrigé : `FACTEURS_ML["µl"]` valait `1000.0` au lieu de `0.001` … » |
-| `error` | `error.name`, `error.data.message`, `error.data.isRetryable`, `error.data.metadata.url` | `APIError`, `Cannot connect to API: ECONNRESET` (`manuel-opencode-jouet`) |
+| `text` | `text` : réponse finale de l'agent | résumé du travail fait (par exemple, pour la recette `jouet`, la correction apportée) |
+| `error` | `error.name`, `error.data.message`, `error.data.isRetryable`, `error.data.metadata.url` | `APIError`, `Cannot connect to API: ECONNRESET` (relais injoignable) |
 
 Compter les outils utilisés :
 
@@ -97,10 +97,10 @@ for l in open(sys.argv[1]):
     try: e = json.loads(l)
     except ValueError: continue
     if e.get("type") == "tool_use": c[e["part"]["tool"]] += 1
-print(dict(c))' banc-essai/resultats/opencode-jouet-3/harnais/stdout.log
+print(dict(c))' banc-essai/resultats/<essai>/harnais/stdout.log
 ```
 
-Résultat : `{'glob': 1, 'read': 4, 'bash': 6, 'edit': 1}`.
+Résultat : un dictionnaire qui associe à chaque outil son nombre d'appels.
 
 ### 4.2 `harnais/stderr.log`
 
@@ -119,7 +119,7 @@ Première ligne : `configuration écrite : /home/banc/.config/opencode/opencode.
 
 ### 4.3 Sessions exportées
 
-`opencode export <id>` écrit un objet `{"info": …, "messages": […]}`. `info` donne l'agent (`build`), le modèle (`providerID: banc`), la version, les jetons cumulés et les permissions effectives ; chaque message a son `info` (rôle, jetons, raison de fin) et ses `parts` (texte, appels d'outils avec entrée et sortie complètes). Exemple : `~/banc-espaces/c1-01-opencode-sans-aide/maison/opencode-sessions/ses_e0a0e9139ffeueffAzFzUVtP7e.json`, 85 messages. L'option `--sanitize` (« redact sensitive transcript and file data », `opencode export --help`) n'est pas utilisée par `lancer.sh`.
+`opencode export <id>` écrit un objet `{"info": …, "messages": […]}`. `info` donne l'agent (`build`), le modèle (`providerID: banc`), la version, les jetons cumulés et les permissions effectives ; chaque message a son `info` (rôle, jetons, raison de fin) et ses `parts` (texte, appels d'outils avec entrée et sortie complètes). Emplacement : `~/banc-espaces/<essai>/maison/opencode-sessions/<id>.json`. L'option `--sanitize` (« redact sensitive transcript and file data », `opencode export --help`) n'est pas utilisée par `lancer.sh`.
 
 ## 5. Suivre un essai en cours
 
@@ -170,7 +170,7 @@ python3 banc-essai/traces/cles.py --depense essai-main
 python3 banc-essai/traces/cles.py --supprimer essai-main
 ```
 
-L'entrée standard doit rester fermée (`< /dev/null`) : sinon `opencode run` attend la fin de l'entrée et ne fait rien (essai bloqué 17 min, `documentations/journal.md`, entrée du 19/11/2026).
+L'entrée standard doit rester fermée (`< /dev/null`) : sinon `opencode run` attend la fin de l'entrée et ne fait rien (constaté lors des essais de mise au point du banc : essai bloqué sans aucun appel au modèle jusqu'à son arrêt).
 
 ### 7.2 Hors de la cage (déconseillé)
 

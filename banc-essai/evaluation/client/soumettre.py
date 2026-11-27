@@ -4,9 +4,7 @@ Adresse : variable d'environnement BANC_API (par défaut http://127.0.0.1:8765).
 
     python3 soumettre.py etat
     python3 soumettre.py documents DOSSIER        télécharge les PDF du test caché dans DOSSIER
-                                                 (dossiers : un sous-dossier par dossier)
     python3 soumettre.py soumettre DOSSIER        extraction, goldset : un fichier <id>.json par document
-                                                 dossiers : un fichier <dossier>.json par dossier
                                                  jouet : le dossier du paquet Python
     python3 soumettre.py fin --soumission N [--score-validation X] [--commande "..."]
 """
@@ -55,18 +53,6 @@ def main():
         return afficher(*appel("GET", "/etat"))
     if o.cmd == "documents":
         d = Path(o.dossier)
-        _, etat = appel("GET", "/etat")
-        if etat["tache"] == "dossiers":
-            code, r = appel("GET", "/dossiers")
-            if code != 200:
-                return afficher(code, r)
-            for i, pieces in r["dossiers"].items():
-                (d / i).mkdir(parents=True, exist_ok=True)
-                for p in pieces:
-                    _, pdf = appel("GET", f"/dossiers/{i}/{p}", brut=True)
-                    (d / i / p).write_bytes(pdf)
-            print(f"{len(r['dossiers'])} dossiers écrits dans {d}")
-            return 0
         code, r = appel("GET", "/documents")
         if code != 200:
             return afficher(code, r)
@@ -79,7 +65,7 @@ def main():
     if o.cmd == "soumettre":
         d = Path(o.dossier)
         _, etat = appel("GET", "/etat")
-        if etat["tache"] in ("extraction", "dossiers", "goldset"):
+        if etat["tache"] in ("extraction", "goldset"):
             reponses = {}
             for f in sorted(d.glob("*.json")):
                 try:

@@ -3,18 +3,18 @@
 #
 #   banc-essai/cage/lancer.sh <harnais> <recette> [--essai NOM] [--duree S] [--message "..."]
 #
-# <harnais> : dossier harnais/<harnais>/ (lot 4), ou « sonde » (banc-essai/cage/sonde/, preuves
-# du lot 3), ou « factice » (banc-essai/cage/factice/, vérification du lanceur sur l'extraction). Le harnais est lancé dans la cage par /opt/harnais/lancer.sh "<message>".
-# <recette> : sans-aide, avec-aide, dossiers, goldset ou jouet. goldset : jeu importé par
+# <harnais> : dossier harnais/<harnais>/, ou « sonde » (banc-essai/cage/sonde/, preuves de la cage).
+# Le harnais est lancé dans la cage par /opt/harnais/lancer.sh "<message>".
+# <recette> : goldset ou jouet. goldset : jeu importé par
 # banc-essai/corpus/importer_goldset.py, dans $BANC_GOLDSET (banc-essai/corpus/goldset par défaut),
 # avec un schéma validé et des consignes générées (banc-essai/corpus/consignes_goldset.py).
 #
 # Étapes : espace de travail neuf (hors du dépôt, dans $BANC_ESPACES, ~/banc-espaces par défaut),
-# clé virtuelle propre à l'essai (alias = nom de l'essai, plafond de 2 $, dépense relevée puis clé
+# clé virtuelle propre à l'essai (alias = nom de l'essai, plafond BANC_BUDGET_ESSAI, dépense relevée puis clé
 # supprimée dès la sortie du harnais), API de soumission vérifiée, cage, puis collecte dans
 # banc-essai/resultats/<essai>/ (goldset : banc-essai/resultats-goldset/<essai>/, hors git) : essai.json, harnais/ (sorties), traces/appels.jsonl (appels au
 # modèle de la clé de l'essai), traces/reseau.jsonl (demandes au mandataire PyPI),
-# evaluation/ (journaux de l'API). Ensuite, pour l'extraction, relance du workflow déclaré sur le
+# evaluation/ (journaux de l'API). Ensuite, pour le goldset, relance du workflow déclaré sur le
 # jeu « relance », dans la cage, sans le harnais (relance/, clé <essai>-relance) ; enfin le
 # rapport d'essai (rapport.json, rapport.md).
 set -euo pipefail
@@ -33,14 +33,13 @@ while [ $# -gt 0 ]; do
     *) echo "option inconnue : $1" >&2; exit 2 ;;
   esac
 done
-case "$RECETTE" in sans-aide|avec-aide) TACHE=extraction JEU="$RACINE/banc-essai/corpus/test-cache" ;;
-  dossiers) TACHE=dossiers JEU="$RACINE/banc-essai/corpus/dossiers/test-cache" ;;
+case "$RECETTE" in
   goldset) TACHE=goldset GOLDSET=$(realpath -m "${BANC_GOLDSET:-$RACINE/banc-essai/corpus/goldset}") JEU="$GOLDSET/test-cache"
     python3 -c 'import json,sys; sys.exit(0 if json.load(open(sys.argv[1])).get("valide") else 1)' "$GOLDSET/schema.json" 2>/dev/null \
       || { echo "goldset : $GOLDSET/schema.json absent ou non validé (banc-essai/documentation/goldset.md)" >&2; exit 1; }
     [ -f "$GOLDSET/recette/consignes.md" ] || { echo "goldset : consignes absentes (banc-essai/corpus/consignes_goldset.py)" >&2; exit 1; } ;;
   jouet) TACHE=jouet JEU="$EVAL/taches/jouet" ;; *) echo "recette inconnue : $RECETTE" >&2; exit 2 ;; esac
-case "$NOM" in sonde|factice) HARNAIS="$CAGE/$NOM" ;; *) HARNAIS="$RACINE/harnais/$NOM" ;; esac
+case "$NOM" in sonde) HARNAIS="$CAGE/$NOM" ;; *) HARNAIS="$RACINE/harnais/$NOM" ;; esac
 [ -x "$HARNAIS/lancer.sh" ] || { echo "$HARNAIS/lancer.sh introuvable" >&2; exit 1; }
 
 # Essais sur un goldset de l'entreprise : résultats hors git (les traces recopient le texte des documents).
@@ -49,7 +48,7 @@ DOSSIER_RES="$RACINE/banc-essai/resultats"
 RES="$DOSSIER_RES/$ESSAI"
 ESPACES="${BANC_ESPACES:-$HOME/banc-espaces}"
 ESPACE="$ESPACES/$ESSAI/travail" MAISON="$ESPACES/$ESSAI/maison" TMP_ESSAI="$ESPACES/$ESSAI/tmp"
-# Cadre de ressources (protocole, section 5), annoncé dans les consignes.
+# Cadre de ressources, annoncé dans les consignes.
 MEMOIRE=16G DISQUE_MAX=$((30 * 1000 * 1000 * 1000)) TELECHARGEMENT_MAX=$((10 * 1000 * 1000 * 1000))
 
 # Un seul essai à la fois sur la machine : verrou tenu jusqu'à la fin du script.
@@ -122,7 +121,7 @@ DEPENSE=$(python3 "$TRACES/cles.py" --depense "$ESSAI")
 python3 "$TRACES/cles.py" --supprimer "$ESSAI" >/dev/null || echo "clé $ESSAI non supprimée" >&2
 
 # Relance du workflow déclaré (extraction), avec une clé neuve. Sans déclaration de fin : pas de
-# relance (protocole, section 7).
+# relance.
 DEPENSE_RELANCE=null
 if [ "$TACHE" != jouet ] && [ -f "$RES/evaluation/fin.json" ]; then
   python3 "$TRACES/cles.py" "$ESSAI-relance" >/dev/null
