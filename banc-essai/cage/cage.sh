@@ -20,7 +20,8 @@
 #     pic relevé dans --memoire-pic ;
 #   - --sans-reseau : aucun relais (tests cachés de la tâche jouet) ;
 #   - --lecture : montage supplémentaire en lecture seule ;
-#   - --gpu : carte graphique visible (WSL : /dev/dxg et bibliothèques /usr/lib/wsl) ;
+#   - --gpu : carte graphique visible (WSL : /dev/dxg et bibliothèques /usr/lib/wsl ; Linux natif :
+#     /dev/nvidia*) ;
 #   - garde-fou de durée (--duree, 7200 s par défaut).
 set -euo pipefail
 ICI="$(cd "$(dirname "$0")" && pwd)"
@@ -111,6 +112,10 @@ ARGS+=("${LECTURES[@]}")
 if [ "$GPU" = 1 ] && [ -e /dev/dxg ]; then
   ARGS+=(--dev-bind /dev/dxg /dev/dxg --ro-bind /usr/lib/wsl /usr/lib/wsl
     --setenv LD_LIBRARY_PATH /usr/lib/wsl/lib)
+elif [ "$GPU" = 1 ]; then
+  # Linux natif avec pilote NVIDIA : périphériques /dev/nvidia* (bibliothèques dans /usr, déjà visible).
+  # Non vérifié sur le banc (poste de mise au point sous WSL).
+  for d in /dev/nvidia*; do [ -e "$d" ] && ARGS+=(--dev-bind "$d" "$d"); done
 fi
 ARGS+=(--remount-ro /)   # racine de la cage en lecture seule : seuls les montages ci-dessus sont inscriptibles
 

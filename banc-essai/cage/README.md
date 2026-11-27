@@ -22,7 +22,7 @@ Exécution d'un harnais (ou de code qu'il a écrit) dans bubblewrap 0.9.0, sans 
 | Ressource | Cadre d'un essai (`lancer.sh`) | Option de `cage.sh` |
 |---|---|---|
 | Mémoire vive | 16 Go, processus fautif arrêté au-delà (unité systemd de l'utilisateur, `OOMPolicy=continue`) ; pic relevé toutes les 2 s | `--memoire 16G` (défaut), `--memoire-pic FICHIER` |
-| Carte graphique | visible (WSL : `/dev/dxg`, `/usr/lib/wsl` en lecture seule) ; 8 Go annoncés, non plafonnables ; pic relevé par `lancer.sh` | `--gpu` |
+| Carte graphique | visible (WSL : `/dev/dxg`, `/usr/lib/wsl` en lecture seule ; Linux natif : `/dev/nvidia*`, non vérifié sur le banc) ; mémoire non plafonnable ; pic relevé par `lancer.sh` | `--gpu` |
 | Disque | 30 Go (espace, dossier personnel, `/tmp`), relevé toutes les 30 s, essai arrêté au-delà | `--tmp DIR` |
 | Téléchargements | 10 Go | `--telechargement OCTETS` |
 | Essais simultanés | un seul (verrou `~/banc-espaces/.verrou`) | |
