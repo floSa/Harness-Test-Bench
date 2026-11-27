@@ -17,7 +17,7 @@ Chaque dossier contient le même jeu de fichiers, et une documentation détaill�
 |---|---|
 | `README.md` | page d'entrée : ce qu'est le harnais, installer, vérifier, lancer en trois commandes |
 | `version` | version figée, relevée dans chaque essai |
-| `installer.sh` | installation dans `installe/` (hors git), version figée, empreinte ou intégrité vérifiée |
+| `installer.sh` | installation dans `installe/` (hors git), version figée ; empreinte SHA-256 (binaires) ou intégrité npm vérifiée ; gptme : paquet PyPI sans empreinte figée |
 | `configurer.sh` | écrit la configuration du harnais à partir des variables données par la cage |
 | `lancer.sh` | lance le harnais sans interaction, dans la cage ; sa sortie standard est la trace de la session |
 | `documentation/installation.md` | prérequis, étapes, sources réseau, mandataire et certificat d'entreprise, mise à jour |
