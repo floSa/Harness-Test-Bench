@@ -28,5 +28,6 @@ Page régénérée à la fin de chaque essai (`banc-essai/evaluation/index_resul
 | [c1-03-gptme-sans-aide](c1-03-gptme-sans-aide/rapport.md) | essai de campagne | 2026-11-20 00:33 | gptme | sans-aide | 100,0 % | 99,3 % | 2111 s | 588 | 0,2987 $ |
 | [c1-04-pi-avec-aide](c1-04-pi-avec-aide/rapport.md) | essai de campagne | 2026-11-20 01:10 | pi | avec-aide | 100,0 % | 99,3 % | 1615 s | 365 | 0,2738 $ |
 | [c2-01-opencode-dossiers](c2-01-opencode-dossiers/rapport.md) | essai de campagne | 2026-11-24 06:18 | opencode | dossiers | 99,4 % | 99,4 % | 3721 s | 691 | 0,8676 $ |
+| [piag-sonde-portail](piag-sonde-portail/rapport.md) | tâche jouet (mise au point) | 2026-11-27 09:40 | sonde | jouet |  |  | 6 s | 2 | 0,0000 $ |
 
 Score final : part des champs justes sur le test caché (tâche jouet : part des cas cachés réussis). Score de relance : même mesure, workflow relancé sans le harnais sur 10 documents neufs.

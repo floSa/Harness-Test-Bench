@@ -1,4 +1,4 @@
-"""Clé virtuelle par essai sur le LiteLLM du banc (protocole, section 5 : plafond de 2 $ par clé).
+"""Clé virtuelle par essai sur le LiteLLM du banc (protocole, section 5 : plafond par clé).
 
     python3 banc-essai/traces/cles.py <alias> [<alias> ...]             crée
     python3 banc-essai/traces/cles.py --supprimer <alias> [<alias> ...]  supprime
@@ -6,7 +6,8 @@
 
 L'alias est le nom de l'essai (ou <essai>-relance) : chaque essai a son propre plafond.
 Écrit secrets/cle-<alias>.env (BANC_CLE_MODELE=...), jamais affichée. Une clé existante est
-gardée. La suppression retire la clé du LiteLLM et son fichier. Bibliothèque standard seulement.
+gardée. La suppression retire la clé du LiteLLM et son fichier. Modèle permis et plafond en dollars :
+BANC_MODELE et BANC_BUDGET_ESSAI de banc-essai/modele.env. Bibliothèque standard seulement.
 """
 import json
 import os
@@ -17,8 +18,20 @@ from pathlib import Path
 
 ICI = Path(__file__).resolve().parent
 URL = "http://127.0.0.1:4100"
-BUDGET = 2.0
-MODELES = ["deepseek-v4.1-flash"]
+
+
+def _modele():
+    v = {}
+    for ligne in (ICI.parent / "modele.env").read_text().splitlines():
+        ligne = ligne.strip()
+        if ligne and not ligne.startswith("#") and "=" in ligne:
+            cle, valeur = ligne.split("=", 1)
+            v[cle.strip()] = valeur.strip().strip('"').strip("'")
+    return v
+
+
+BUDGET = float(_modele().get("BANC_BUDGET_ESSAI", "2"))
+MODELES = [_modele()["BANC_MODELE"]]
 # Routes permises à une clé d'essai : appels au modèle seulement (ni transfert direct vers un
 # fournisseur, ni gestion des clés).
 ROUTES = ["/v1/chat/completions", "/chat/completions", "/v1/responses", "/responses", "/v1/models", "/models"]

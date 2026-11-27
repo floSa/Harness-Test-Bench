@@ -12,12 +12,14 @@ mkdir -p "$DOSSIER"
 python3 - "$DOSSIER" <<'PY'
 import json, os, sys
 d, url, modele = sys.argv[1], os.environ["BANC_MODELE_URL"].rstrip("/") + "/v1", os.environ["BANC_MODELE"]
+e = os.environ.get   # capacités et prix : banc-essai/modele.env, transmis par la cage
 models = {"providers": {"banc": {
     "baseUrl": url, "api": "openai-completions", "apiKey": "$BANC_CLE_MODELE",
-    "models": [{"id": modele, "name": modele, "input": ["text", "image"], "contextWindow": 1000000,
-                "maxTokens": 32768,
-                # prix du fournisseur (dollars par million de jetons), relevés le 19/11/2026
-                "cost": {"input": 0.05, "output": 0.30, "cacheRead": 0.003, "cacheWrite": 0}}]}}}
+    "models": [{"id": modele, "name": modele, "input": ["text", "image"] if e("BANC_VISION", "1") == "1" else ["text"],
+                "contextWindow": int(e("BANC_CONTEXTE", "1000000")), "maxTokens": int(e("BANC_SORTIE_MAX", "32768")),
+                # prix déclarés dans banc-essai/modele.env (dollars par million de jetons)
+                "cost": {"input": float(e("BANC_PRIX_ENTREE", "0.05")), "output": float(e("BANC_PRIX_SORTIE", "0.30")),
+                         "cacheRead": float(e("BANC_PRIX_CACHE", "0.003")), "cacheWrite": 0}}]}}}
 settings = {"defaultProvider": "banc", "defaultModel": modele, "enableInstallTelemetry": False,
             "enableAnalytics": False}
 json.dump(models, open(f"{d}/models.json", "w"), indent=2)

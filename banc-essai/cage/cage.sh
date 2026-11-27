@@ -71,7 +71,10 @@ trap nettoyer EXIT
 
 if [ "$RESEAU" = 1 ]; then
   python3 "$ICI/relais.py" exterieur "$PARTAGE/s/modele" 127.0.0.1:4100 & PIDS+=($!)
-  python3 "$ICI/relais.py" filtre "$PARTAGE/s/pypi" "$JOURNAL_RESEAU" "$DOMAINES" "$QUOTA" & PIDS+=($!)
+  # Mandataire sortant de l'entreprise (BANC_MANDATAIRE dans .env, facultatif) : le filtre de la cage
+  # ouvre ses tunnels par lui.
+  MANDATAIRE=$(grep -m1 '^BANC_MANDATAIRE=' "$ICI/../../.env" 2>/dev/null | cut -d= -f2- || true)
+  BANC_MANDATAIRE="$MANDATAIRE" python3 "$ICI/relais.py" filtre "$PARTAGE/s/pypi" "$JOURNAL_RESEAU" "$DOMAINES" "$QUOTA" & PIDS+=($!)
   if [ "$API" = 1 ]; then
     python3 "$ICI/relais.py" exterieur "$PARTAGE/s/api" 127.0.0.1:8765 & PIDS+=($!)
   fi
@@ -90,9 +93,15 @@ ARGS=(--die-with-parent --new-session --unshare-all --unshare-user --disable-use
   --setenv HTTPS_PROXY http://127.0.0.1:3128 --setenv HTTP_PROXY http://127.0.0.1:3128
   --setenv https_proxy http://127.0.0.1:3128 --setenv http_proxy http://127.0.0.1:3128
   --setenv NO_PROXY 127.0.0.1,localhost --setenv no_proxy 127.0.0.1,localhost
-  --setenv BANC_MODELE_URL http://127.0.0.1:4100 --setenv BANC_MODELE deepseek-v4.1-flash
+  --setenv BANC_MODELE_URL http://127.0.0.1:4100
   --setenv BANC_API http://127.0.0.1:8765 --setenv BANC_API_ACTIVE "$API"
   --chdir /travail)
+# Modèle servi par le relais (banc-essai/modele.env) : nom, capacités et prix, lus par les
+# configurer.sh des harnais. Aucune clé dans ce fichier.
+while IFS='=' read -r cle valeur; do
+  case "$cle" in BANC_MODELE|BANC_CONTEXTE|BANC_SORTIE_MAX|BANC_VISION|BANC_PRIX_ENTREE|BANC_PRIX_CACHE|BANC_PRIX_SORTIE)
+    valeur=${valeur%\"}; valeur=${valeur#\"}; ARGS+=(--setenv "$cle" "$valeur") ;; esac
+done < <(grep -E '^BANC_[A-Z_]+=' "$ICI/../modele.env")
 [ -n "$TERM" ] && ARGS+=(--setenv TERM "$TERM")
 [ -x "$HOME/.local/bin/uv" ] && ARGS+=(--ro-bind "$HOME/.local/bin/uv" /opt/outils/uv)
 [ -n "$HARNAIS" ] && ARGS+=(--ro-bind "$HARNAIS" /opt/harnais)

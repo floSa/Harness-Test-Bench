@@ -107,8 +107,9 @@ noter("API de soumission /etat", "réussi", f"{etat} ({det})", etat == "réussi"
 # 5. Modèle par le LiteLLM du banc -------------------------------------------------------------------
 cle = os.environ.get("BANC_CLE_MODELE")
 noter("clé virtuelle du harnais présente dans l'environnement", "oui", "oui" if cle else "non", bool(cle))
-noter("clé OpenRouter absente de l'environnement", "absente",
-      "présente" if "OPENROUTER_API_KEY" in os.environ else "absente", "OPENROUTER_API_KEY" not in os.environ)
+for nom in ("OPENROUTER_API_KEY", "PORTAIL_CLE", "BANC_FOURNISSEUR_CLE"):
+    noter(f"clé du fournisseur ({nom}) absente de l'environnement", "absente",
+          "présente" if nom in os.environ else "absente", nom not in os.environ)
 
 # Petite image PNG (16 x 16, carré rouge), fabriquée ici, pour vérifier que le journal repère les images.
 def png_rouge(n=16):
@@ -132,13 +133,14 @@ def appel(messages):
 
 etat, det = tenter(lambda: appel([{"role": "user", "content": "Réponds seulement : OK"}]))
 noter("appel texte au modèle", "réussi", f"{etat} ({det})", etat == "réussi")
-etat, det = tenter(lambda: appel([{"role": "user", "content": [
-    {"type": "text", "text": "Quelle est la couleur de ce carré ? Un mot."},
-    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{PNG}"}}]}]))
-noter("appel avec image au modèle", "réussi", f"{etat} ({det})", etat == "réussi")
+if os.environ.get("BANC_VISION", "1") == "1":   # modèle sans vision (banc-essai/modele.env) : pas d'essai
+    etat, det = tenter(lambda: appel([{"role": "user", "content": [
+        {"type": "text", "text": "Quelle est la couleur de ce carré ? Un mot."},
+        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{PNG}"}}]}]))
+    noter("appel avec image au modèle", "réussi", f"{etat} ({det})", etat == "réussi")
 faux = urllib.request.Request(
     os.environ["BANC_MODELE_URL"] + "/v1/chat/completions", method="POST",
-    data=json.dumps({"model": "deepseek-v4.1-flash", "messages": [{"role": "user", "content": "x"}]}).encode(),
+    data=json.dumps({"model": os.environ.get("BANC_MODELE", "deepseek-v4.1-flash"), "messages": [{"role": "user", "content": "x"}]}).encode(),
     headers={"Authorization": "Bearer sk-fausse", "Content-Type": "application/json"})
 etat, det = tenter(lambda: urllib.request.urlopen(faux, timeout=30).status)
 noter("appel au modèle avec une fausse clé", "refusé", f"{etat} ({det})", etat == "refusé")

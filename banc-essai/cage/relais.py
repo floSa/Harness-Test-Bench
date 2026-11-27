@@ -13,9 +13,12 @@ Le filtre journalise chaque demande (heure, domaine, port, accepté ou refusé) 
 fermé (octets reçus et envoyés).
 """
 import asyncio
+import base64
 import datetime
 import json
+import os
 import sys
+import urllib.parse
 
 
 async def pomper(lecteur, ecrivain):
@@ -79,9 +82,11 @@ def autorise(hote, motifs):
 
 def filtre(socket, journal, domaines, quota="0"):
     """Mandataire CONNECT : domaines autorisés, port 443, volume total plafonné (quota en octets,
-    0 = sans plafond). Chaque demande est journalisée ; chaque tunnel aussi à sa fermeture, avec les
+    0 = sans plafond), par le mandataire de l'entreprise si BANC_MANDATAIRE est défini. Chaque demande est journalisée ; chaque tunnel aussi à sa fermeture, avec les
     octets reçus et envoyés. Quota atteint : tunnels ouverts coupés, nouvelles demandes refusées."""
     motifs = {d.strip().lower() for d in domaines.split(",") if d.strip()}
+    # Poste d'entreprise : tunnels ouverts par le mandataire sortant (http://[id:mdp@]hote:port).
+    amont = urllib.parse.urlsplit(os.environ["BANC_MANDATAIRE"]) if os.environ.get("BANC_MANDATAIRE") else None
     plafond = int(quota)
     total = {"octets": 0, "depasse": False}
     tunnels = set()
@@ -137,8 +142,8 @@ def filtre(socket, journal, domaines, quota="0"):
             if not accepte:
                 return await repondre(e, b"403 Forbidden")
             try:
-                l2, e2 = await asyncio.open_connection(hote, int(port))
-            except OSError:
+                l2, e2 = await ouvrir(hote, int(port))
+            except (OSError, ConnectionError, asyncio.TimeoutError):
                 return await repondre(e, b"502 Bad Gateway")
             e.write(b"HTTP/1.1 200 Connection established\r\n\r\n")
             await e.drain()
@@ -152,6 +157,26 @@ def filtre(socket, journal, domaines, quota="0"):
             tunnels.discard(e)
             tunnels.discard(e2)
             noter(evenement="fin", hote=hote, octets_recus=compte["recus"], octets_envoyes=compte["envoyes"])
+
+    async def ouvrir(hote, port):
+        """Connexion directe, ou tunnel par le mandataire de l'entreprise (BANC_MANDATAIRE)."""
+        if not amont:
+            return await asyncio.open_connection(hote, port)
+        l2, e2 = await asyncio.open_connection(amont.hostname, amont.port or 8080)
+        auth = b""
+        if amont.username:
+            jeton = base64.b64encode(f"{urllib.parse.unquote(amont.username)}:"
+                                     f"{urllib.parse.unquote(amont.password or '')}".encode())
+            auth = b"Proxy-Authorization: Basic " + jeton + b"\r\n"
+        e2.write(f"CONNECT {hote}:{port} HTTP/1.1\r\nHost: {hote}:{port}\r\n".encode() + auth + b"\r\n")
+        await e2.drain()
+        statut = await asyncio.wait_for(l2.readline(), 30)
+        while (await asyncio.wait_for(l2.readline(), 30)) not in (b"\r\n", b"\n", b""):
+            pass
+        if b" 200" not in statut:
+            e2.close()
+            raise ConnectionError(f"mandataire de l'entreprise : {statut[:80]!r}")
+        return l2, e2
 
     async def repondre(e, statut):
         e.write(b"HTTP/1.1 " + statut + b"\r\nContent-Length: 0\r\nConnection: close\r\n\r\n")

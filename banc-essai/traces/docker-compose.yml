@@ -1,4 +1,5 @@
-# LiteLLM du banc : relais vers OpenRouter, une clé virtuelle par essai, journal de chaque appel.
+# LiteLLM du banc : relais vers le fournisseur du modèle (OpenRouter ou portail compatible OpenAI,
+# choisi dans banc-essai/modele.env), une clé virtuelle par essai, journal de chaque appel.
 # Lancement : banc-essai/traces/demarrer.sh (jamais LLM-Service, jamais les conteneurs rag-* et llm-*).
 name: harness-litellm
 
@@ -24,9 +25,10 @@ services:
     image: ghcr.io/berriai/litellm:v1.106.4
     container_name: harness-litellm
     command: ["--config", "/app/config.yaml", "--port", "4000"]
-    # Seule la clé OpenRouter entre dans le conteneur, sous un nom propre au banc
-    # (secrets/fournisseur.env, écrit par demarrer.sh) : les routes de transfert direct de LiteLLM
-    # (/openrouter/..., /gemini/...) ne trouvent aucune clé de fournisseur à utiliser.
+    # Seule la clé du fournisseur entre dans le conteneur, sous un nom propre au banc
+    # (secrets/fournisseur.env, écrit par demarrer.sh, avec l'adresse du portail, le mandataire et
+    # le certificat éventuels) : les routes de transfert direct de LiteLLM (/openrouter/...,
+    # /gemini/...) ne trouvent aucune clé de fournisseur à utiliser.
     env_file:
       - ./secrets/base.env
       - ./secrets/maitre.env
@@ -37,6 +39,7 @@ services:
       - ./config.yaml:/app/config.yaml:ro
       - ./journal_appels.py:/app/journal_appels.py:ro
       - ./journaux:/journaux
+      - ./certificats:/certificats:ro   # certificat de l'entreprise (BANC_CERTIFICAT), vide sinon
     ports:
       - "127.0.0.1:4100:4000"
     depends_on:
