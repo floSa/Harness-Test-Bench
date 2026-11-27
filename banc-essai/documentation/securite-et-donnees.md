@@ -28,6 +28,7 @@ Le dépôt est public. Sur le poste d'entreprise, tout ce qui touche au goldset 
 | Démonstration | `banc-essai/corpus/demo/` | non |
 | Résultats des essais goldset (les traces recopient le texte des documents) | `banc-essai/resultats-goldset/` | non |
 | Secrets | `.env`, `banc-essai/traces/secrets/`, `banc-essai/traces/certificats/` | non |
+| Espace de travail et dossier personnel de chaque essai (copies des documents, code et sessions du harnais) | `~/banc-espaces/<essai>/`, hors du dépôt | non ; à effacer à la fin de la campagne si les documents ne doivent pas rester sur le poste |
 
 Garde-fous git, installés une fois par clone :
 

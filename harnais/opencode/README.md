@@ -1,16 +1,49 @@
 # OpenCode
 
+OpenCode est un agent de code en ligne de commande : il reçoit une consigne, appelle un modèle d'IA, lit et modifie des fichiers et lance des commandes jusqu'à ce que la tâche soit faite. Sur le banc, il tourne sans interaction (`opencode run`), dans la cage, et n'atteint le modèle que par le relais LiteLLM du banc.
+
 | Élément | Valeur |
 |---|---|
-| Version | 1.19.6 (`version`), binaire officiel `opencode-linux-x64.tar.gz` de github.com/anomalyco/opencode, empreinte SHA-256 vérifiée |
-| Installation | `harnais/opencode/installer.sh` : binaire dans `installe/` (hors git) |
-| Configuration | `configurer.sh` : écrit `$HOME/.config/opencode/opencode.json` (fournisseur compatible OpenAI = LiteLLM du banc, clé lue dans `BANC_CLE_MODELE`, éditions et commandes permises, accès web du harnais refusé, mise à jour et partage coupés) |
-| Lancement | `lancer.sh "<message>"` (dans la cage) : `opencode run --format json --print-logs --auto` ; sortie standard = événements JSON de la session, sortie d'erreur = journaux ; sessions exportées dans `$HOME/opencode-sessions/` |
+| Version figée | 1.19.6 (`version`, `installer.sh`) ; dernière version publiée au 27/11/2026 : 2.4.2, du 26/11/2026 (non utilisée) |
+| Licence | MIT ([dépôt officiel](https://github.com/anomalyco/opencode), champ `license` de l'API GitHub, consulté le 27/11/2026) |
+| Forme | binaire autonome pour Linux x86-64 (archive officielle `opencode-linux-x64.tar.gz`, empreinte SHA-256 vérifiée), aucun Node ni npm à installer |
+| Dépôt officiel | <https://github.com/anomalyco/opencode> |
+| Documentation de la version figée | <https://github.com/anomalyco/opencode/tree/v1.19.6/packages/web/src/content/docs> (le site opencode.ai décrit la version 2, dont la syntaxe de configuration diffère) |
+| `installer.sh` | télécharge et vérifie le binaire dans `installe/` (hors git) |
+| `configurer.sh` | écrit `opencode.json` (fournisseur = relais du banc, permissions, partage et mise à jour coupés) |
+| `lancer.sh` | lancé dans la cage : configuration, `opencode run`, export des sessions |
+| `version` | texte relevé dans `essai.json` (`version_harnais`) |
+| `installe/` | binaire installé (216 Mo), ignoré par git |
 
-Constats (essais du 19/11/2026) :
+## En trois commandes
 
-| Constat | Détail |
+Depuis la racine du dépôt, relais du banc démarré (`banc-essai/traces/demarrer.sh`) :
+
+```bash
+harnais/opencode/installer.sh
+```
+
+```bash
+harnais/opencode/installe/opencode --version     # attendu : 1.19.6
+```
+
+```bash
+banc-essai/cage/lancer.sh opencode jouet         # essai de mise au point : 20 à 30 s, environ 0,001 $
+```
+
+Le rapport de l'essai est écrit dans `banc-essai/resultats/<essai>/rapport.md`.
+
+## Documentation détaillée
+
+| Page | Contenu |
 |---|---|
-| Syntaxe de configuration | la version 1.19.6 lit la syntaxe « provider », « npm », « options » ; elle ignore la syntaxe « providers » de la documentation en ligne (vérifié avec `opencode debug config`) |
-| Réseau au démarrage | catalogue `models.opencode.ai` et paquet `@opencode-ai/plugin` sur `registry.npmjs.org` : refusés par la cage, sans effet sur l'essai |
-| Entrée standard | `opencode run` attend la fin de l'entrée standard si elle reste ouverte : le lanceur du banc la ferme (`< /dev/null`) |
+| [Installation](documentation/installation.md) | prérequis, étapes de `installer.sh`, hôtes réseau à autoriser, mandataire et certificat d'entreprise, mise à jour de la version figée, désinstallation |
+| [Configuration](documentation/configuration.md) | fichier écrit par `configurer.sh` (exemple réel commenté), variables lues, lien avec `banc-essai/modele.env`, permissions, réseau, emplacement de la clé |
+| [Lancement](documentation/lancement.md) | lancer un essai et ses recettes, ce qui se passe dans la cage, sorties et format de la trace, suivi, arrêt, essai à la main |
+| [Fonctionnement](documentation/fonctionnement.md) | capacités d'OpenCode (sources citées), constats chiffrés des essais du banc, dépannage, limites |
+
+## Voir aussi
+
+- [Vue d'ensemble des harnais](../README.md)
+- [Documentation du banc](../../banc-essai/documentation/) : modèle et fournisseur, lancer un essai, goldset
+- [Cage](../../banc-essai/cage/README.md) : ce que voit un harnais, réseau, ressources
