@@ -30,6 +30,7 @@ Chaque dossier contient le même jeu de fichiers, et une documentation détaill�
 Depuis la racine du dépôt, relais du modèle démarré (`banc-essai/traces/demarrer.sh`) :
 
 ```bash
+. outils/env-mandataire.sh          # poste d'entreprise : mandataire et certificat de .env
 harnais/<harnais>/installer.sh
 banc-essai/cage/lancer.sh <harnais> jouet --essai jouet-<harnais>
 cat banc-essai/resultats/jouet-<harnais>/rapport.md

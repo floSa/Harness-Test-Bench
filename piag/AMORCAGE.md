@@ -93,7 +93,14 @@ Lis d'abord, dans cet ordre : `README.md`, `banc-essai/README.md`, `banc-essai/d
 
 Ordre conseillé : `pi`, `opencode`, `goose`, `gptme`, `cline`. Pour chacun :
 
-1. `harnais/<harnais>/installer.sh` (sources réseau listées dans `documentation/installation.md` : régler le mandataire et le certificat pour npm, Node, curl ou pip comme indiqué) ;
+1. installation, dans un terminal où le mandataire et le certificat de `.env` sont chargés (les scripts d'installation ne lisent pas `.env` eux-mêmes) :
+
+   ```bash
+   . outils/env-mandataire.sh
+   harnais/<harnais>/installer.sh
+   ```
+
+   Hôtes réseau à autoriser : `documentation/installation.md` du harnais ;
 2. vérifier la version installée (commande donnée dans le README du harnais) ;
 3. tâche jouet dans la cage : `banc-essai/cage/lancer.sh <harnais> jouet --essai jouet-<harnais>` ;
 4. lire `banc-essai/resultats/jouet-<harnais>/rapport.md`.
