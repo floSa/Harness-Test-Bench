@@ -88,6 +88,10 @@ def construire(essai):
     if tache == "dossiers" and note:
         r["taux_invention"] = note["invention"]["taux"]
         r["dossiers_parfaits"] = f"{note['dossiers_parfaits']} sur {note['dossiers']}"
+    if tache == "goldset" and note:
+        r["taux_invention"] = note["invention"]["taux"]
+        r["taux_omission"] = note["omission"]["taux"]
+        r["documents_parfaits"] = f"{note['documents_parfaits']} sur {note['documents']}"
     if tache == "extraction" and note:
         r["taux_invention"] = note["invention"]["taux"]
         r["score_style_inedit"] = note["par"].get("style", {}).get(STYLE_INEDIT, {}).get("score")
@@ -117,6 +121,10 @@ def markdown(r):
     if r["tache"] == "extraction":
         lignes += [("Taux d'invention", pc(r.get("taux_invention"))),
                    ("Score sur le style jamais vu", pc(r.get("score_style_inedit")))]
+    if r["tache"] == "goldset":
+        lignes += [("Documents entièrement justes", r.get("documents_parfaits", "")),
+                   ("Taux d'invention (valeur donnée où null est attendu)", pc(r.get("taux_invention"))),
+                   ("Taux d'omission (null donné où une valeur est attendue)", pc(r.get("taux_omission")))]
     if r["tache"] == "dossiers":
         lignes += [("Dossiers entièrement justes", r.get("dossiers_parfaits", "")),
                    ("Taux d'invention", pc(r.get("taux_invention")))]
@@ -125,6 +133,8 @@ def markdown(r):
         lignes += [("Relance : score", pc(rl["note"]["score"])),
                    ("Relance : dossiers entièrement justes", f"{rl['note']['dossiers_parfaits']} sur "
                     f"{rl['note']['dossiers']}" if "dossiers_parfaits" in rl["note"] else ""),
+                   ("Relance : documents entièrement justes", f"{rl['note']['documents_parfaits']} sur "
+                    f"{rl['note']['documents']}" if "documents_parfaits" in rl["note"] else ""),
                    ("Relance : JSON produits", f"{rl['json_produits']} sur {rl['documents']}"),
                    ("Relance : durée par document", f"{rl['duree_par_document_s']} s"),
                    ("Relance : appels au modèle", rl.get("appels_modele", "")),
@@ -148,7 +158,7 @@ def markdown(r):
             ("Dont jetons lus dans le cache", c.get("jetons_cache", "")),
             ("Jetons de sortie", c["jetons_sortie"]), ("Temps dans le modèle", f"{c['temps_modele_s']} s"),
             ("Coût calculé par le relais", f"{c.get('cout_usd', '')} $"),
-            ("Coût facturé par OpenRouter", f"{c.get('cout_openrouter_usd', '')} $"),
+            ("Coût facturé par OpenRouter (0 avec un portail)", f"{c.get('cout_openrouter_usd', '')} $"),
             ("Dépense de la clé (LiteLLM)", f"{c.get('depense_cle_usd', '')} $"),
             ("Demandes réseau (mandataire PyPI)", c["demandes_reseau"]),
             ("Demandes réseau refusées", c["demandes_reseau_refusees"])]] + [""]
@@ -179,6 +189,10 @@ def markdown(r):
         L += [f"| Rectificatifs : {k} | {v} |" for k, v in note["rectificatifs"].items()] + [""]
         L += ["| Clé | Champs | Justes | Score |", "|---|---|---|---|"]
         L += [f"| {k} | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in note["par"]["cle"].items()]
+        L += [""]
+    if r["tache"] == "goldset" and note:
+        L += ["## Détail de la soumission finale", "", "| Champ | Documents | Crédit | Score |", "|---|---|---|---|"]
+        L += [f"| `{k}` | {v['n']} | {v['justes']} | {pc(v['score'])} |" for k, v in note["par"]["cle"].items()]
         L += [""]
     if r["tache"] == "jouet" and note:
         L += ["## Tests cachés de la soumission finale", "", "| Mesure | Valeur |", "|---|---|",

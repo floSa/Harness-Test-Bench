@@ -5,7 +5,7 @@ Adresse : variable d'environnement BANC_API (par défaut http://127.0.0.1:8765).
     python3 soumettre.py etat
     python3 soumettre.py documents DOSSIER        télécharge les PDF du test caché dans DOSSIER
                                                  (dossiers : un sous-dossier par dossier)
-    python3 soumettre.py soumettre DOSSIER        extraction : un fichier <id>.json par document
+    python3 soumettre.py soumettre DOSSIER        extraction, goldset : un fichier <id>.json par document
                                                  dossiers : un fichier <dossier>.json par dossier
                                                  jouet : le dossier du paquet Python
     python3 soumettre.py fin --soumission N [--score-validation X] [--commande "..."]
@@ -79,7 +79,7 @@ def main():
     if o.cmd == "soumettre":
         d = Path(o.dossier)
         _, etat = appel("GET", "/etat")
-        if etat["tache"] in ("extraction", "dossiers"):
+        if etat["tache"] in ("extraction", "dossiers", "goldset"):
             reponses = {}
             for f in sorted(d.glob("*.json")):
                 try:

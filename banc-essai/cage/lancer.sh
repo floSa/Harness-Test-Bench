@@ -5,7 +5,9 @@
 #
 # <harnais> : dossier harnais/<harnais>/ (lot 4), ou « sonde » (banc-essai/cage/sonde/, preuves
 # du lot 3), ou « factice » (banc-essai/cage/factice/, vérification du lanceur sur l'extraction). Le harnais est lancé dans la cage par /opt/harnais/lancer.sh "<message>".
-# <recette> : sans-aide, avec-aide, dossiers ou jouet.
+# <recette> : sans-aide, avec-aide, dossiers, goldset ou jouet. goldset : jeu importé par
+# banc-essai/corpus/importer_goldset.py, dans $BANC_GOLDSET (banc-essai/corpus/goldset par défaut),
+# avec un schéma validé et des consignes générées (banc-essai/corpus/consignes_goldset.py).
 #
 # Étapes : espace de travail neuf (hors du dépôt, dans $BANC_ESPACES, ~/banc-espaces par défaut),
 # clé virtuelle propre à l'essai (alias = nom de l'essai, plafond de 2 $, dépense relevée puis clé
@@ -20,8 +22,8 @@ RACINE="$(cd "$(dirname "$0")/../.." && pwd)"
 CAGE="$RACINE/banc-essai/cage"
 EVAL="$RACINE/banc-essai/evaluation"
 TRACES="$RACINE/banc-essai/traces"
-[ $# -ge 2 ] || { sed -n '2,15p' "$0" >&2; exit 2; }
-NOM=$1 RECETTE=$2; shift 2
+[ $# -ge 2 ] || { sed -n '2,17p' "$0" >&2; exit 2; }
+NOM=$1 RECETTE=$2 GOLDSET=; shift 2
 ESSAI="$NOM-$RECETTE-$(date +%Y%m%d-%H%M%S)" DUREE=7200 MESSAGE="Suis les consignes de consignes.md."
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -33,6 +35,10 @@ while [ $# -gt 0 ]; do
 done
 case "$RECETTE" in sans-aide|avec-aide) TACHE=extraction JEU="$RACINE/banc-essai/corpus/test-cache" ;;
   dossiers) TACHE=dossiers JEU="$RACINE/banc-essai/corpus/dossiers/test-cache" ;;
+  goldset) TACHE=goldset GOLDSET=$(realpath -m "${BANC_GOLDSET:-$RACINE/banc-essai/corpus/goldset}") JEU="$GOLDSET/test-cache"
+    python3 -c 'import json,sys; sys.exit(0 if json.load(open(sys.argv[1])).get("valide") else 1)' "$GOLDSET/schema.json" 2>/dev/null \
+      || { echo "goldset : $GOLDSET/schema.json absent ou non validé (banc-essai/documentation/goldset.md)" >&2; exit 1; }
+    [ -f "$GOLDSET/recette/consignes.md" ] || { echo "goldset : consignes absentes (banc-essai/corpus/consignes_goldset.py)" >&2; exit 1; } ;;
   jouet) TACHE=jouet JEU="$EVAL/taches/jouet" ;; *) echo "recette inconnue : $RECETTE" >&2; exit 2 ;; esac
 case "$NOM" in sonde|factice) HARNAIS="$CAGE/$NOM" ;; *) HARNAIS="$RACINE/harnais/$NOM" ;; esac
 [ -x "$HARNAIS/lancer.sh" ] || { echo "$HARNAIS/lancer.sh introuvable" >&2; exit 1; }
@@ -63,7 +69,8 @@ python3 "$TRACES/cles.py" "$ESSAI" >/dev/null
 CLE="$TRACES/secrets/cle-$ESSAI.env"
 
 # Espace neuf et API de l'essai (port 8765 libre sur toute adresse, API vérifiée avant de lancer).
-uv run -q --project "$EVAL" python "$EVAL/preparer.py" --recette "$RECETTE" --destination "$ESPACE" >/dev/null
+uv run -q --project "$EVAL" python "$EVAL/preparer.py" --recette "$RECETTE" --destination "$ESPACE" \
+  ${GOLDSET:+--goldset "$GOLDSET"} >/dev/null
 if [ -n "$(ss -ltnH 'sport = :8765')" ]; then echo "port 8765 déjà pris" >&2; exit 1; fi
 uv run -q --project "$EVAL" python "$EVAL/api.py" --tache "$TACHE" --jeu "$JEU" --sortie "$RES/evaluation" \
   > "$RES/evaluation-api.log" 2>&1 9>&- &
@@ -117,7 +124,8 @@ DEPENSE_RELANCE=null
 if [ "$TACHE" != jouet ] && [ -f "$RES/evaluation/fin.json" ]; then
   python3 "$TRACES/cles.py" "$ESSAI-relance" >/dev/null
   uv run -q --project "$EVAL" python "$EVAL/relancer.py" --espace "$ESPACE" --essai "$RES" \
-    --cle "$TRACES/secrets/cle-$ESSAI-relance.env" --maison "$MAISON" --tache "$TACHE" || true
+    --cle "$TRACES/secrets/cle-$ESSAI-relance.env" --maison "$MAISON" --tache "$TACHE" \
+    ${GOLDSET:+--jeu "$GOLDSET/relance"} || true
   sleep 10
   DEPENSE_RELANCE=$(python3 "$TRACES/cles.py" --depense "$ESSAI-relance")
   python3 "$TRACES/cles.py" --supprimer "$ESSAI-relance" >/dev/null || echo "clé $ESSAI-relance non supprimée" >&2

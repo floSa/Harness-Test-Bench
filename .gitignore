@@ -28,3 +28,7 @@ harnais/*/installe/
 harnais/_outils/
 banc-essai/traces/config.yaml
 banc-essai/traces/certificats/
+# Goldset de l'entreprise (source et import) et démonstration : jamais versionnés
+/goldset/
+banc-essai/corpus/goldset/
+banc-essai/corpus/demo/
