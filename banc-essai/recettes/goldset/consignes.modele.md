@@ -52,7 +52,7 @@ Une commande unique, lancée depuis ce dossier, qui prend un dossier de PDF et u
 <commande> {entree} {sortie}
 ```
 
-Après la déclaration de fin, elle est relancée telle quelle sur des documents neufs, sans le harnais : même dossier, mêmes paquets déjà installés, même accès au réseau (modèle et PyPI), mais avec une autre clé du modèle. Elle ne doit dépendre d'aucun fichier hors de ce dossier, à part les paquets installés. Elle écrit dans `{sortie}` des fichiers JSON ordinaires (ni lien symbolique, ni fichier spécial : ils sont ignorés).
+Après la déclaration de fin, elle est relancée telle quelle, sans le harnais, sur les documents du test caché : même dossier, mêmes paquets déjà installés, même accès au réseau (modèle et PyPI), mais avec une autre clé du modèle. Elle ne doit dépendre d'aucun fichier hors de ce dossier, à part les paquets installés. Elle écrit dans `{sortie}` des fichiers JSON ordinaires (ni lien symbolique, ni fichier spécial : ils sont ignorés).
 
 ## Accès au modèle
 

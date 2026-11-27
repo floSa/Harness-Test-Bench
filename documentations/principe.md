@@ -28,15 +28,15 @@ sequenceDiagram
 
 | Jeu du goldset | Rôle | Vu par le harnais |
 |---|---|---|
-| `train` | apprendre et se vérifier : PDF et réponses attendues | oui |
-| `val` | test caché : le harnais y soumet ses réponses et ne reçoit qu'un score global | PDF seulement |
-| `test` | relance du workflow livré, après la fin de l'essai | jamais |
+| `train` | construire le workflow : PDF et réponses attendues | oui |
+| `val` | valider le workflow : PDF et réponses attendues | oui |
+| `test` | test caché : le harnais y soumet ses réponses et ne reçoit qu'un score global ; après la fin de l'essai, le workflow livré y est relancé sans le harnais | PDF seulement, jamais les réponses |
 
 ## Ce que disent les mesures
 
 | Mesure | Ce qu'elle dit |
 |---|---|
-| Score de relance | qualité du workflow livré sur des documents jamais vus : la mesure principale |
+| Score de relance | qualité du workflow livré, exécuté seul, sur les documents de test : la mesure principale |
 | Documents entièrement justes | part des documents sans aucune erreur : plus sévère que le score par champ, et souvent plus discriminante |
 | Score final au test caché | qualité de la soumission retenue par le harnais |
 | Écart entre score annoncé et score réel | lucidité du harnais sur la qualité de son propre travail |

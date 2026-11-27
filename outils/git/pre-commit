@@ -12,7 +12,7 @@ while IFS= read -r -d '' f; do
   case "$f" in
     goldset/*|banc-essai/corpus/goldset/*|banc-essai/corpus/demo/*|banc-essai/resultats-goldset/*)
       refus+=("$f : données du goldset") ; continue ;;
-    .env|*/.env|banc-essai/traces/secrets/*|banc-essai/traces/certificats/*|.poste-entreprise)
+    .env|*/.env|banc-essai/traces/secrets/*|banc-essai/traces/certificats/*|.poste-entreprise|piag/identite.local)
       refus+=("$f : secret ou réglage local") ; continue ;;
   esac
   case "$f" in

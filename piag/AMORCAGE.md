@@ -1,149 +1,187 @@
-# Consigne d'amorçage : brancher le banc des harnais sur un poste d'entreprise
+# Consigne d'amorçage : mettre en place le banc des harnais sur un poste d'entreprise
 
-Ce fichier est le prompt à donner à un agent de code (par exemple : « Lis piag/AMORCAGE.md et exécute-le niveau par niveau. ») sur le poste d'entreprise, dans le clone de la branche `PIAG`. Il décrit sept niveaux. Chaque niveau a une condition de fin vérifiable : ne passer au suivant que lorsqu'elle est remplie, et noter le résultat dans `piag/journal-poste.md` (hors git).
+Ce fichier est le prompt à donner à un agent de code sur le poste, dans le clone de la branche `PIAG` (par exemple : « Lis piag/AMORCAGE.md et exécute-le niveau par niveau, en t'arrêtant à chaque décision réservée. »).
 
-## Rôle et but
+## Mission
 
-Tu es l'agent chargé d'installer et de faire tourner ce banc d'essai sur ce poste. Le banc compare des harnais d'agents (OpenCode, Pi, gptme, Goose, Cline) sur l'extraction d'informations dans des PDF. Ici :
+Mettre en place le banc et **prouver que toute la base est solide et fonctionne**. La mission ne comprend **aucun essai** de harnais sur le goldset et aucune comparaison : elle s'arrête quand tout est prêt à lancer un essai, et vérifié.
 
-- le modèle est servi par un **portail compatible OpenAI** (une adresse et une clé) ;
-- les documents sont un **goldset** de l'équipe : `goldset/` à la racine du dépôt, avec `split/train`, `split/val`, `split/test` (PDF) et `split/train_ground_truth.json`, `split/val_ground_truth.json`, `split/test_ground_truth.json` (pour chaque PDF, les valeurs à extraire), plus `goldset/ground_truth.json` (tous les documents) ;
-- le but final : un tableau qui compare les harnais sur ce goldset.
+Concrètement :
 
-Lis d'abord, dans cet ordre : `README.md`, `banc-essai/README.md`, `banc-essai/documentation/README.md`. Chaque niveau ci-dessous renvoie à la page détaillée à lire avant d'agir.
+1. le poste a tout ce qu'il faut (WSL, Docker, bubblewrap, systemd, accès réseau) ;
+2. le modèle **Gemini 3.7 Flash** du portail compatible OpenAI (portail IAG) répond, avec les fonctions dont les harnais ont besoin ;
+3. le goldset `goldset/` (à la racine du dépôt) est lu dans `goldset/split/` et ses données sont rangées aux bons endroits : `train` et `val` donnés aux harnais avec leurs réponses, `test` servi par l'API de test sans ses réponses ;
+4. l'API de test répond et note correctement ;
+5. chaque harnais est installé et se branche bien sur le portail (un message, une réponse : pas de tâche) ;
+6. un bilan `piag/etat-du-poste.md` dit, point par point, ce qui est OK ou KO, avec sa preuve.
+
+Lire d'abord, dans cet ordre : `README.md`, `banc-essai/README.md`, `banc-essai/documentation/README.md`. Chaque niveau ci-dessous renvoie à la page détaillée à lire avant d'agir. Chaque niveau a une condition de fin vérifiable : ne passer au suivant que lorsqu'elle est remplie.
 
 ## Règles permanentes (non négociables)
 
-1. **Rien ne quitte ce poste vers GitHub.** Ne jamais pousser. Ne jamais utiliser `git commit --no-verify`. Les données du goldset, les résultats des essais goldset et `.env` ne sont jamais versionnés. Les commits locaux sont permis (ils restent sur le poste).
-2. **Ne jamais afficher une clé** (ni dans un message, ni dans un fichier de compte rendu, ni dans une commande visible). Les clés ne vivent que dans `.env` (`chmod 600`).
-3. **Ne jamais modifier le goldset** (`goldset/`). Si sa forme n'est pas reconnue, adapter le code de l'importateur, pas les données.
-4. **Ne jamais désactiver la vérification des certificats** (pas de `SSL_VERIFY=False`, pas de `--insecure`, pas de `verify=False`) : utiliser le certificat de l'entreprise (`BANC_CERTIFICAT`).
-5. Interdits : `sudo` sans accord explicite de l'utilisateur, `pkill -f`, `killall`, ouvrir un port ailleurs que sur `127.0.0.1`, `docker ... prune`, toucher à d'autres conteneurs que `harness-litellm` et `harness-litellm-db`.
-6. Rien de mémoire : chaque affirmation repose sur une commande lancée ou un fichier lu. Ce qui n'a pas pu être vérifié est écrit « non vérifié ».
-7. Une seule décision est réservée à l'utilisateur à chaque fois qu'elle se présente : la lui poser, une question à la fois, avec ta recommandation. Les décisions réservées sont listées dans chaque niveau.
-8. Python : `uv` et Python 3.12.
+1. **Rien ne quitte ce poste vers GitHub.** Ne jamais pousser. Ne jamais utiliser `git commit --no-verify`. Le goldset, son import, les résultats et `.env` ne sont jamais versionnés.
+2. **Commits locaux** : un par étape, en français, préfixé par le périmètre, avec l'identité de `piag/identite.local` (niveau 0) et la ligne `Co-authored-by: <COAUTEUR>` à la fin de chaque message de commit.
+3. **Ne jamais afficher une clé** (ni dans un message, ni dans un fichier de compte rendu, ni dans une commande visible). La clé du portail ne vit que dans `.env` (`chmod 600`) : l'utilisateur l'y écrit lui-même ; ne jamais la lui demander en clair.
+4. **Ne jamais modifier le goldset** (`goldset/`). Si sa forme n'est pas reconnue, adapter le code de l'importateur, pas les données.
+5. **Ne jamais désactiver la vérification des certificats** (pas de `SSL_VERIFY=False`, `--insecure`, `verify=False`) : utiliser le certificat de l'entreprise (`BANC_CERTIFICAT`).
+6. **Pas d'essai** : ne lancer `banc-essai/cage/lancer.sh <harnais> goldset` à aucun moment. Seuls sont permis : la sonde de la cage, et le test de connexion des harnais (`harnais/verifier-connexion.sh`).
+7. Interdits : `sudo` sans accord explicite de l'utilisateur, `pkill -f`, `killall`, ouvrir un port ailleurs que sur `127.0.0.1`, `docker ... prune`, toucher à d'autres conteneurs que `harness-litellm` et `harness-litellm-db`.
+8. Rien de mémoire : chaque affirmation repose sur une commande lancée ou un fichier lu ; ce qui n'a pas pu être vérifié est écrit « non vérifié ».
+9. Les décisions réservées à l'utilisateur lui sont posées une à la fois, avec une recommandation.
+10. Python : `uv` et Python 3.12.
 
-## Niveau 0. Diagnostic du poste
+## Niveau 0. Identité, garde-fous, diagnostic du poste
 
-À lire : `banc-essai/documentation/lancer-un-essai.md` (section 1), `banc-essai/documentation/securite-et-donnees.md`.
+À lire : `banc-essai/documentation/securite-et-donnees.md`, `banc-essai/documentation/lancer-un-essai.md` (section 1).
 
-1. Installer les garde-fous, en mode poste d'entreprise, avant toute autre chose :
+1. Garde-fous, avant toute autre chose :
 
    ```bash
    outils/installer-garde-fous.sh --poste-entreprise
-   git config core.hooksPath
+   git config core.hooksPath        # doit afficher outils/git
    ```
 
-2. Relever, sans rien installer, et écrire dans `piag/diagnostic.md` (tableau : élément, commande, résultat, OK ou KO, correction proposée) :
+2. Identité git : l'utilisateur copie `piag/identite.exemple` en `piag/identite.local` et le remplit. Puis :
 
-   | Élément | Commande |
-   |---|---|
-   | système | `cat /etc/os-release`, `uname -r` (Linux natif ou WSL) |
-   | bubblewrap | `bwrap --version` ; essai : `bwrap --ro-bind /usr /usr --symlink usr/bin /bin --unshare-all true && echo ok` |
-   | espaces de noms utilisateur | `cat /proc/sys/kernel/unprivileged_userns_clone 2>/dev/null` ; sous Ubuntu 24.04, profil AppArmor de bwrap |
-   | systemd de l'utilisateur | `systemd-run --user --scope true && echo ok` |
-   | Docker et Compose | `docker version`, `docker compose version`, `docker run --rm hello-world` |
-   | uv, Python 3.12 | `uv --version`, `uv python find 3.12` |
-   | outils | `curl --version`, `git --version`, `ss -V`, `flock --version` |
-   | carte graphique | `nvidia-smi` (facultatif) |
-   | mandataire | `env \| grep -i _proxy` (noms seulement), configuration du poste |
-   | certificat d'entreprise | présence d'une autorité interne dans `/etc/ssl/certs/` ou fichier fourni par l'utilisateur |
-   | accès réseau | `curl -sI https://pypi.org`, `https://github.com`, `https://registry.npmjs.org`, `https://nodejs.org`, `https://ghcr.io` (par le mandataire s'il existe) |
-   | place disque | `df -h ~` (prévoir 40 Go) |
+   ```bash
+   git check-ignore piag/identite.local && . piag/identite.local
+   git config user.name "$GIT_UTILISATEUR" && git config user.email "$GIT_EMAIL"
+   ```
 
-3. Pour chaque KO : proposer la correction ; si elle demande des droits d'administration (paquet système, profil AppArmor, groupe docker), la décrire à l'utilisateur et attendre.
+   Vérifier `git config user.name` et `git config user.email`, et garder `COAUTEUR` pour la ligne `Co-authored-by` des commits.
+3. Diagnostic, sans rien installer, écrit dans `piag/etat-du-poste.md` (tableau : élément, commande, résultat, OK ou KO, correction proposée) :
 
-**Décision réservée :** toute installation système.
-**Fin du niveau 0 :** `piag/diagnostic.md` complet, tous les éléments indispensables (bubblewrap, systemd utilisateur, Docker, uv, accès à PyPI et GitHub) à OK.
+   | Élément | Commande | Attendu |
+   |---|---|---|
+   | système | `cat /etc/os-release`, `uname -r` | Ubuntu sous WSL2 (noyau `microsoft-standard-WSL2`) |
+   | systemd dans WSL | `systemctl --user is-system-running`, `systemd-run --user --scope true` | réussite ; sinon `[boot] systemd=true` dans `/etc/wsl.conf`, puis `wsl --shutdown` depuis Windows |
+   | mémoire de WSL | `free -g` | au moins 20 Go ; sinon `memory=` dans `%UserProfile%\.wslconfig` côté Windows |
+   | disque | `df -h ~` | au moins 40 Go libres |
+   | bubblewrap et cage | `bwrap --version` ; `E=$(mktemp -d) M=$(mktemp -d); banc-essai/cage/cage.sh --espace $E --maison $M --memoire 2G --duree 30 --sans-reseau -- bash -c 'echo ok; ls /home'` | `ok` puis `banc` (la cage démarre, plafond de mémoire compris, et ne voit pas les dossiers personnels) ; sinon profil AppArmor de bwrap (Ubuntu 24.04) ou systemd |
+   | Docker et Compose | `docker version`, `docker compose version` | client et serveur répondent |
+   | images du relais | `docker pull ghcr.io/berriai/litellm:v1.106.4`, `docker pull postgres:17.7-alpine` | téléchargées (sinon : mandataire du démon Docker) |
+   | uv, Python 3.12 | `uv --version`, `uv python find 3.12` | trouvés (sinon `uv python install 3.12`) |
+   | outils | `curl --version`, `git --version`, `ss -V`, `flock --version`, `python3 --version` | présents |
+   | mandataire et certificat | `env \| grep -i _proxy` (noms seulement) ; autorité interne dans `/etc/ssl/certs/` | relevés, à reporter au niveau 1 |
+   | sites d'installation | `curl -sI` sur `https://pypi.org`, `https://github.com`, `https://registry.npmjs.org`, `https://nodejs.org`, `https://ghcr.io` (après `. outils/env-mandataire.sh` s'il y a un mandataire) | réponse HTTP de chacun ; liste des sites bloqués à faire ouvrir |
 
-## Niveau 1. Portail du modèle
+4. Pour chaque KO : décrire la correction à l'utilisateur ; celles qui demandent des droits d'administration ou un réglage Windows sont à sa main.
+
+**Décision réservée :** toute installation système ou tout réglage Windows.
+**Fin du niveau 0 :** garde-fous et identité en place ; diagnostic complet ; tous les éléments indispensables (systemd, bubblewrap, Docker et images, uv, PyPI et GitHub joignables) à OK.
+
+## Niveau 1. Portail IAG et modèle Gemini 3.7 Flash
 
 À lire : `banc-essai/documentation/modele-et-fournisseur.md` en entier.
 
-1. Demander à l'utilisateur, s'il ne les a pas donnés : l'adresse du portail, le nom du modèle à utiliser, le mandataire et le certificat éventuels. La clé, il l'écrit lui-même dans `.env` : ne jamais la demander en clair dans la conversation.
-2. `cp .env.exemple .env && chmod 600 .env`, puis l'utilisateur remplit `PORTAIL_URL`, `PORTAIL_CLE`, et si besoin `BANC_MANDATAIRE`, `BANC_CERTIFICAT`.
-3. `python3 banc-essai/traces/verifier_portail.py --modele <nom du modèle>` : lire chaque ligne (la première vérification affiche les modèles du portail si le nom est faux). Les vérifications indispensables doivent toutes réussir (outils et flux compris : sans eux, aucun harnais ne peut travailler).
-4. Remplir `banc-essai/modele.env` : `BANC_MODELE_FOURNISSEUR` (nom exact du modèle), `BANC_VISION` (résultat de la vérification d'image), `BANC_CONTEXTE` et `BANC_SORTIE_MAX` (annoncés par le portail ou sa documentation, sinon demander à l'utilisateur), et des prix : ceux du portail s'il en a, sinon des prix conventionnels (section 5 de la page) avec un `BANC_BUDGET_ESSAI` qui laisse un essai aller au bout (repère : un essai de construction consomme couramment de 10 à 30 millions de jetons d'entrée, en grande partie relus dans le cache ; plafond livré : 40 millions).
-5. `banc-essai/traces/demarrer.sh`, puis la sonde :
+1. `cp .env.exemple .env && chmod 600 .env` ; l'utilisateur y écrit `PORTAIL_URL` (adresse de base, avec le `/v1` final) et `PORTAIL_CLE`, et si besoin `BANC_MANDATAIRE` et `BANC_CERTIFICAT` (relevés au niveau 0).
+2. Vérification directe du portail, avec le modèle Gemini 3.7 Flash. Son nom exact chez le portail n'est pas connu d'avance : la première vérification affiche la liste des modèles du portail ; y repérer celui de Gemini 3.7 Flash et relancer avec ce nom.
 
    ```bash
+   python3 banc-essai/traces/verifier_portail.py --modele gemini-3.7-flash
+   ```
+
+   Les vérifications indispensables (liste des modèles, appel simple, appel avec outil, flux, flux avec outil, jetons comptés) doivent toutes réussir : sans outils ni flux, aucun harnais ne peut travailler. Si l'une échoue, le rapporter tel quel à l'utilisateur, sans contournement.
+3. Remplir `banc-essai/modele.env` : `BANC_MODELE_FOURNISSEUR` (nom exact), `BANC_VISION` (résultat de la vérification d'image), `BANC_CONTEXTE` et `BANC_SORTIE_MAX` (valeurs annoncées par le portail ou sa documentation ; sinon demander à l'utilisateur), prix (ceux du portail s'il en a, sinon garder les prix conventionnels de 1) et `BANC_BUDGET_ESSAI` (40 millions de jetons par défaut).
+4. Quota du portail : demander à l'utilisateur les limites connues (appels par minute, jetons par jour) et les noter dans le bilan ; relancer `verifier_portail.py` deux fois de suite et relever toute réponse 429.
+5. Relais et sonde de la cage :
+
+   ```bash
+   banc-essai/traces/demarrer.sh
    banc-essai/cage/lancer.sh sonde jouet --essai sonde-portail
    grep bilan banc-essai/resultats/sonde-portail/harnais/stdout.log
    ```
 
-**Décisions réservées :** modèle choisi, prix conventionnels et plafond par essai.
-**Fin du niveau 1 :** vérificateur sans KO indispensable ; sonde « 42/42 vérifications conformes » (ou 41/41 si le modèle n'a pas de vision) ; le rapport de la sonde ne contient aucune clé.
+**Décisions réservées :** confirmation du modèle retenu ; prix et plafond par essai.
+**Fin du niveau 1 :** vérificateur sans KO indispensable ; sonde « 42/42 vérifications conformes » (41/41 si le modèle n'a pas de vision) ; aucune clé dans les résultats de la sonde.
 
-## Niveau 2. Banc sans harnais
+## Niveau 2. Tests automatiques du banc
 
-1. Tests automatiques : `uv run --project banc-essai/evaluation pytest` : tous réussis.
-2. Démonstration du goldset (données publiques) :
+```bash
+uv run --project banc-essai/evaluation pytest
+```
+
+**Fin du niveau 2 :** tous les tests réussis.
+
+## Niveau 3. Données du goldset
+
+À lire : `banc-essai/documentation/goldset.md` en entier.
+
+1. Vérifier que `goldset/` est à la racine, avec `split/train`, `split/val`, `split/test` et les trois `split/*_ground_truth.json`, et qu'il est ignoré par git :
 
    ```bash
-   python3 banc-essai/corpus/goldset_demo.py
-   python3 banc-essai/corpus/consignes_goldset.py --goldset banc-essai/corpus/demo/import
+   ls goldset goldset/split
+   git check-ignore goldset/split && echo ignoré
    ```
 
-**Fin du niveau 2 :** tests réussis ; import de démonstration conforme (`banc-essai/corpus/demo/import/rapport-import.md`, contrôle de la notation « oui » sur les trois jeux).
+2. Importer (répartition par défaut : `train` et `val` vers le jeu fourni aux harnais, `test` vers le test caché de l'API et vers la relance) :
 
-## Niveau 3. Harnais, un par un
+   ```bash
+   python3 banc-essai/corpus/importer_goldset.py
+   ```
 
-À lire : `harnais/README.md`, puis pour chaque harnais `harnais/<harnais>/README.md` et son dossier `documentation/` (installation, configuration, lancement, fonctionnement).
+   Puis lire `banc-essai/corpus/goldset/rapport-import.md` en entier : documents écartés, doublons, écarts avec `ground_truth.json`, types de chaque champ, échecs de conversion.
+3. Si l'import s'arrête sur une forme non reconnue : adapter `banc-essai/corpus/importer_goldset.py` (section 7 de la page), ajouter un cas de test qui reproduit cette forme dans `banc-essai/evaluation/tests/test_goldset.py`, relancer les tests, puis l'import.
+4. Présenter à l'utilisateur, champ par champ, le schéma proposé (`banc-essai/corpus/goldset/schema.json`) : type, tolérance des nombres, ordre jour et mois des dates, valeurs des listes fermées, une description par champ, et la description générale des documents. Signaler les identifiants faits de chiffres (à garder en texte), les champs toujours `null`, les types mélangés.
+5. Après accord : `"valide": true`, relancer l'import (code de sortie 0 attendu), générer les consignes, les faire relire :
 
-Ordre conseillé : `pi`, `opencode`, `goose`, `gptme`, `cline`. Pour chacun :
+   ```bash
+   python3 banc-essai/corpus/importer_goldset.py
+   python3 banc-essai/corpus/consignes_goldset.py
+   ```
 
-1. installation, dans un terminal où le mandataire et le certificat de `.env` sont chargés (les scripts d'installation ne lisent pas `.env` eux-mêmes) :
+**Décisions réservées :** chaque règle de notation du schéma ; les consignes données aux harnais.
+**Fin du niveau 3 :** rapport d'import sans constat bloquant ni échec de conversion ; contrôle de la notation « oui » sur les trois jeux ; schéma validé ; consignes générées et relues ; `git status --short` ne montre aucun fichier du goldset.
+
+## Niveau 4. API de test
+
+```bash
+uv run --project banc-essai/evaluation python banc-essai/evaluation/verifier_api.py
+```
+
+Dix vérifications : schéma validé ; état de l'API ; liste des documents de test ; PDF servis identiques ; réponses du test jamais servies ; espace d'un harnais sans aucun PDF du test ; soumission mal formée refusée sans être décomptée ; réponses attendues notées 100 % ; réponses altérées sous 100 % ; jeu de relance.
+
+**Fin du niveau 4 :** « 10/10 vérifications conformes ».
+
+## Niveau 5. Harnais : installation et branchement au portail
+
+À lire : `harnais/README.md`, puis pour chaque harnais `harnais/<harnais>/README.md` et `harnais/<harnais>/documentation/installation.md`.
+
+Pour chaque harnais (`pi`, `opencode`, `goose`, `gptme`, `cline`) :
+
+1. installation, dans un terminal où le mandataire et le certificat de `.env` sont chargés :
 
    ```bash
    . outils/env-mandataire.sh
    harnais/<harnais>/installer.sh
    ```
 
-   Hôtes réseau à autoriser : `documentation/installation.md` du harnais ;
-2. vérifier la version installée (commande donnée dans le README du harnais) ;
-3. tâche jouet dans la cage : `banc-essai/cage/lancer.sh <harnais> jouet --essai jouet-<harnais>` ;
-4. lire `banc-essai/resultats/jouet-<harnais>/rapport.md`.
-
-Un harnais qui échoue après deux corrections raisonnables est mis de côté, avec la cause dans le journal : il ne bloque pas les autres.
-
-**Fin du niveau 3 :** pour chaque harnais retenu, tâche jouet réussie dans la cage, avec trace complète et appels visibles dans `traces/appels.jsonl`.
-
-## Niveau 4. Goldset de l'équipe
-
-À lire : `banc-essai/documentation/goldset.md` en entier.
-
-1. Vérifier que `goldset/` est à la racine et ignoré : `git check-ignore goldset/split && echo ignoré`.
-2. Importer : `python3 banc-essai/corpus/importer_goldset.py`, puis lire `banc-essai/corpus/goldset/rapport-import.md` en entier.
-3. Si l'import s'arrête sur une forme non reconnue : adapter `importer_goldset.py` (section 7 de la page), ajouter un cas de test qui reproduit cette forme dans `banc-essai/evaluation/tests/test_goldset.py`, relancer les tests, puis l'import.
-4. Présenter à l'utilisateur, champ par champ, le schéma proposé (`banc-essai/corpus/goldset/schema.json`) : type, tolérance, ordre jour/mois, valeurs des listes fermées, et une description par champ ; plus la description générale des documents. Signaler en particulier les identifiants faits de chiffres (à garder en texte), les champs toujours `null`, les types mélangés et les écarts avec `ground_truth.json`.
-5. Après accord : `"valide": true`, relancer l'import (code de sortie 0 attendu), puis `python3 banc-essai/corpus/consignes_goldset.py`, et faire relire `banc-essai/corpus/goldset/recette/consignes.md` par l'utilisateur.
-
-**Décisions réservées :** chaque règle de notation du schéma, la répartition des jeux si l'utilisateur en veut une autre (par défaut train fourni, val test caché, test relance).
-**Fin du niveau 4 :** rapport d'import sans constat bloquant ni échec de conversion ; contrôle de la notation « oui » sur les trois jeux ; schéma validé ; consignes générées et relues.
-
-## Niveau 5. Premier essai complet
-
-1. Un seul harnais (celui qui a le mieux réussi la tâche jouet), détaché du terminal :
+2. version installée (commande donnée dans le README du harnais) ;
+3. branchement au portail, dans la cage : un seul message (« Réponds seulement : OK »), aucune tâche :
 
    ```bash
-   setsid nohup banc-essai/cage/lancer.sh <harnais> goldset --essai g01-<harnais> > ~/banc-espaces/g01.log 2>&1 < /dev/null &
-   python3 banc-essai/cage/suivi.py g01-<harnais>
+   harnais/verifier-connexion.sh <harnais>
    ```
 
-2. Suivre toutes les 10 minutes ; arrêt propre si besoin (section 5 de `lancer-un-essai.md`).
-3. Lire `banc-essai/resultats-goldset/g01-<harnais>/rapport.md` : score final, documents entièrement justes, relance, coût.
-4. Contrôler que rien n'est versionnable : `git status --short` ne doit montrer aucun fichier du goldset ni des résultats goldset.
+   Conforme : au moins un appel au modèle, aucun en échec, code de retour 0. La ligne affiche aussi les sites refusés au démarrage (sans effet sur le banc, à noter).
 
-**Fin du niveau 5 :** rapport complet avec relance ; aucune clé restante (`ls banc-essai/traces/secrets/ | grep '^cle-'` vide) ; `git status` propre de toute donnée.
+Un harnais qui échoue après deux corrections raisonnables est noté KO avec sa cause : il ne bloque pas les autres.
 
-## Niveau 6. Campagne et comparaison
+**Fin du niveau 5 :** chaque harnais installé, avec sa version, et « OK » au test de connexion (ou KO expliqué).
 
-1. Chaque harnais retenu, une fois, sur le goldset, un essai à la fois (`g01-<harnais>`, `g02-<harnais>`...). Si le budget le permet, une deuxième passe pour mesurer la variabilité.
-2. Tableau comparatif dans `piag/comparaison.md` (hors git, il cite des résultats internes) : harnais en colonnes, critères en lignes : score de relance, documents entièrement justes à la relance, score final au test caché, écart entre score annoncé et score réel, taux d'invention et d'omission, coût et durée de construction, coût et durée par document à la relance, incidents.
-3. Lecture : la relance (workflow seul, sur des documents jamais vus) est la mesure principale ; un écart de quelques points entre deux harnais sur une seule passe n'est pas une différence établie.
+## Niveau 6. Bilan
 
-**Fin du niveau 6 :** tableau comparatif complet, chaque chiffre renvoyant au rapport d'essai d'où il vient.
+Compléter `piag/etat-du-poste.md` (hors git) :
 
-## Compte rendu
+| Section | Contenu |
+|---|---|
+| Poste | diagnostic du niveau 0, corrections faites |
+| Portail | modèle retenu (nom exact), vérifications réussies, vision, contexte, quota relevé |
+| Relais et cage | bilan de la sonde |
+| Données | nombre de documents par jeu (fourni, test caché, relance), constats de l'import, schéma validé |
+| API de test | bilan de `verifier_api.py` |
+| Harnais | tableau : harnais en colonnes ; version, installation, connexion au portail, sites refusés en lignes |
+| Reste à faire | points KO, décisions en attente |
+| Prêt pour un essai | commande d'un essai, à ne pas lancer : `banc-essai/cage/lancer.sh <harnais> goldset --essai <nom>` |
 
-À la fin de chaque niveau, ajouter à `piag/journal-poste.md` : date, ce qui a été fait, résultats vérifiés (chiffres), problèmes et corrections, décisions prises par l'utilisateur, reste à faire. Une modification du code du banc fait l'objet d'un commit local (jamais poussé), en français, préfixé par le périmètre.
+**Fin de la mission :** bilan complet, chaque ligne avec sa preuve (commande et résultat) ; aucune clé restante (`ls banc-essai/traces/secrets/ | grep '^cle-'` vide) ; `git status --short` propre de toute donnée ; commits locaux faits, rien de poussé.

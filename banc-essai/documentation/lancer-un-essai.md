@@ -96,7 +96,7 @@ Dossier : `banc-essai/resultats-goldset/<essai>/` pour la recette `goldset` (hor
 | Mesure | Ce qu'elle dit |
 |---|---|
 | Score final | qualité sur le test caché de la soumission retenue par le harnais |
-| Score de relance | qualité du workflow livré sur des documents jamais vus : la mesure qui compte le plus |
+| Score de relance | qualité du workflow livré, exécuté seul, sur les documents de test : la mesure qui compte le plus |
 | Documents entièrement justes | part des documents sans aucune erreur : plus sévère que le score par champ |
 | Écart annoncé moins test | lucidité du harnais sur la qualité de son travail |
 | Taux d'invention, d'omission | valeurs inventées là où rien n'était attendu, valeurs manquées |

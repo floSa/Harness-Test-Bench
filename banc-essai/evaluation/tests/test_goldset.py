@@ -81,7 +81,9 @@ def test_import_formes(tmp_path, forme):
     src = goldset(tmp_path, forme)
     dest = tmp_path / "import"
     r = ig.importer(src, dest, verifier_git=False)
-    assert r["documents"] == {"fourni": 4, "test-cache": 4, "relance": 4}
+    assert r["documents"] == {"fourni": 8, "test-cache": 4, "relance": 4}   # train + val au harnais
+    ids_test = sorted(p.name for p in (dest / "test-cache").iterdir() if p.suffix == ".pdf")
+    assert ids_test == sorted(p.name for p in (dest / "relance").iterdir() if p.suffix == ".pdf")
     assert r["controle_ok"] and r["echecs_conversion"] == 0
     s = json.loads((dest / "schema.json").read_text())
     types = {k: v["type"] for k, v in s["champs"].items()}
@@ -127,6 +129,14 @@ def test_import_controles(tmp_path):
     texte = (tmp_path / "import" / "rapport-import.md").read_text()
     assert "PDF sans vérité, écarté : val_9.pdf" in texte and "vérité sans PDF, écartée : copie.pdf" in texte
     assert r["documents"]["test-cache"] == 4
+
+
+def test_import_autre_repartition(tmp_path):
+    src = goldset(tmp_path)
+    r = ig.importer(src, tmp_path / "import", "train=fourni,val=test-cache,test=relance", verifier_git=False)
+    assert r["documents"] == {"fourni": 4, "test-cache": 4, "relance": 4} and r["controle_ok"]
+    with pytest.raises(ig.ImportArrete, match="répartition"):
+        ig.importer(src, tmp_path / "import2", "train=fourni,val=fourni,test=relance", verifier_git=False)
 
 
 def test_import_forme_inconnue(tmp_path):
@@ -184,3 +194,12 @@ def test_relance_goldset(jeu_goldset, tmp_path):
                           jeu=jeu_goldset / "relance", duree_max=120, tache="goldset")
     assert r["json_produits"] == 4 and r["erreurs_format"] == []
     assert r["note"]["documents_parfaits"] == 1 and 0 < r["note"]["score"] < 1
+
+
+def test_verifier_api(jeu_goldset):
+    import consignes_goldset
+    import verifier_api
+    consignes_goldset.generer(jeu_goldset)
+    ok, res = verifier_api.verifier(jeu_goldset)
+    assert ok, [r for r in res if not r[1]]
+    assert len(res) == 10

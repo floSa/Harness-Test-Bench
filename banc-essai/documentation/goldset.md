@@ -36,11 +36,11 @@ Les valeurs peuvent être imbriquées (`{"client": {"nom": ..., "ville": ...}}`)
 
 | Jeu du goldset | Jeu du banc | Rôle | Visible par le harnais |
 |---|---|---|---|
-| `train` | `fourni` | PDF et réponses donnés au harnais pour construire et valider son workflow | oui |
-| `val` | `test-cache` | test caché, noté par l'API de soumission (5 soumissions) | PDF seulement, réponses jamais |
-| `test` | `relance` | le workflow livré y est relancé sans le harnais, après la fin de l'essai : note de référence | jamais pendant l'essai |
+| `train` | `fourni` | PDF et réponses donnés au harnais pour construire son workflow | oui |
+| `val` | `fourni` | PDF et réponses donnés au harnais, pour valider son workflow | oui |
+| `test` | `test-cache`, puis `relance` | test caché, noté par l'API de soumission (5 soumissions) ; après la fin de l'essai, le workflow livré y est relancé sans le harnais : note de référence | PDF seulement, réponses jamais |
 
-Autre répartition possible : option `--repartition` de l'importateur (par exemple `train=fourni,test=test-cache,val=relance`).
+`relance/` est alors une copie de `test-cache/` : la relance juge le workflow seul sur des documents dont le harnais n'a vu que le score global. Autre répartition possible : option `--repartition` de l'importateur, par exemple `train=fourni,val=test-cache,test=relance` (relance sur un jeu jamais vu, au prix d'un jeu fourni plus petit).
 
 ## 3. Importer
 

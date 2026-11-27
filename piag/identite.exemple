@@ -1,0 +1,11 @@
+# Identité git sur le poste d'entreprise. Copier en piag/identite.local (jamais versionné : .gitignore
+# et garde-fou de commit), remplir, puis l'agent de code l'applique (piag/AMORCAGE.md, niveau 0) :
+#   git config user.name "$GIT_UTILISATEUR" ; git config user.email "$GIT_EMAIL"
+#   et, dans chaque message de commit, la ligne : Co-authored-by: $COAUTEUR
+#
+# GIT_UTILISATEUR : identifiant du compte qui commite sur le poste
+# GIT_EMAIL       : adresse associée à ce compte
+# COAUTEUR        : co-auteur de chaque commit, sous la forme « Nom <adresse> »
+GIT_UTILISATEUR=
+GIT_EMAIL=
+COAUTEUR=

@@ -27,7 +27,7 @@ Le dépôt est public. Sur le poste d'entreprise, tout ce qui touche au goldset 
 | Goldset importé (PDF, réponses, schéma, consignes) | `banc-essai/corpus/goldset/` | non |
 | Démonstration | `banc-essai/corpus/demo/` | non |
 | Résultats des essais goldset (les traces recopient le texte des documents) | `banc-essai/resultats-goldset/` | non |
-| Secrets | `.env`, `banc-essai/traces/secrets/`, `banc-essai/traces/certificats/` | non |
+| Secrets et identité | `.env`, `banc-essai/traces/secrets/`, `banc-essai/traces/certificats/`, `piag/identite.local` | non |
 | Espace de travail et dossier personnel de chaque essai (copies des documents, code et sessions du harnais) | `~/banc-espaces/<essai>/`, hors du dépôt | non ; à effacer à la fin de la campagne si les documents ne doivent pas rester sur le poste |
 
 Garde-fous git, installés une fois par clone :
@@ -38,7 +38,7 @@ outils/installer-garde-fous.sh --poste-entreprise
 
 | Garde-fou | Refuse | Fichier |
 |---|---|---|
-| avant un commit | goldset, import, démonstration, résultats goldset, `.env`, secrets et certificats du relais, PDF hors du corpus public, fichier de plus de 20 Mo | [`outils/git/pre-commit`](../../outils/git/pre-commit) |
+| avant un commit | goldset, import, démonstration, résultats goldset, `.env`, secrets et certificats du relais, `piag/identite.local`, PDF hors du corpus de démonstration, fichier de plus de 20 Mo | [`outils/git/pre-commit`](../../outils/git/pre-commit) |
 | avant un push | tout push, dès que `.poste-entreprise` existe à la racine (créé par l'option `--poste-entreprise`) | [`outils/git/pre-push`](../../outils/git/pre-push) |
 
 Vérifié dans un dépôt jetable : commit propre accepté ; `.env`, fichier du goldset, résultat goldset et PDF hors corpus refusés ; PDF du corpus de démonstration accepté ; push accepté sans `.poste-entreprise`, refusé avec.

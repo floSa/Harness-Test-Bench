@@ -38,3 +38,7 @@ banc-essai/resultats-goldset/
 piag/journal-poste.md
 piag/diagnostic.md
 piag/comparaison.md
+piag/identite.local
+# Résultats des essais de vérification (tâche jouet, sonde, connexions) : locaux au poste
+banc-essai/resultats/
+piag/etat-du-poste.md

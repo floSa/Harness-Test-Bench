@@ -25,18 +25,17 @@ Chaque dossier contient le même jeu de fichiers, et une documentation détaill�
 | `documentation/lancement.md` | essai dans la cage, sorties, trace, suivi, arrêt |
 | `documentation/fonctionnement.md` | capacités, constats sur le banc, dépannage |
 
-## Installer et essayer un harnais
+## Installer un harnais et vérifier son branchement
 
 Depuis la racine du dépôt, relais du modèle démarré (`banc-essai/traces/demarrer.sh`) :
 
 ```bash
 . outils/env-mandataire.sh          # poste d'entreprise : mandataire et certificat de .env
 harnais/<harnais>/installer.sh
-banc-essai/cage/lancer.sh <harnais> jouet --essai jouet-<harnais>
-cat banc-essai/resultats/jouet-<harnais>/rapport.md
+harnais/verifier-connexion.sh <harnais>
 ```
 
-La tâche jouet (quelques minutes) prouve que le harnais tourne dans la cage, joint le modèle, soumet et déclare sa fin.
+`verifier-connexion.sh` lance le harnais dans la cage avec un seul message (« Réponds seulement : OK »), sans tâche, puis lit le journal du relais : conforme si au moins un appel au modèle a réussi, sans échec. Pour aller plus loin, la tâche jouet (`banc-essai/cage/lancer.sh <harnais> jouet`, quelques minutes) fait travailler le harnais de bout en bout : soumission, déclaration de fin.
 
 ## Contrat entre un harnais et le banc
 

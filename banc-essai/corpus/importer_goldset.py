@@ -1,7 +1,7 @@
 """Importe un goldset (PDF et réponses attendues) dans le format du banc, après vérification.
 
     python3 banc-essai/corpus/importer_goldset.py [--source goldset] [--destination banc-essai/corpus/goldset]
-        [--repartition train=fourni,val=test-cache,test=relance] [--schema-neuf]
+        [--repartition train=fourni,val=fourni,test=test-cache] [--schema-neuf]
 
 Source attendue (racine du dépôt, jamais versionnée) :
 
@@ -52,7 +52,9 @@ sys.path.insert(0, str(ICI.parent / "evaluation"))
 import notation_goldset as ng  # noqa: E402
 
 JEUX_SOURCE = ["train", "val", "test"]
-REPARTITION = "train=fourni,val=test-cache,test=relance"
+# train et val donnés au harnais (avec leurs réponses), test interrogé par l'API ; sans jeu « relance »
+# désigné, le workflow livré est relancé sur le test (dont le harnais n'a jamais vu les réponses).
+REPARTITION = "train=fourni,val=fourni,test=test-cache"
 CLES_NOM = ["file_name", "filename", "file", "fichier", "nom_fichier", "document", "doc", "pdf", "name", "nom",
             "id", "path", "chemin", "source"]
 ENVELOPPES = ["fields", "champs", "ground_truth", "groundtruth", "labels", "annotations", "values", "valeurs",
@@ -377,7 +379,7 @@ def identifiants(docs):
 
 def ecrire(docs, schema, destination, repartition):
     conversions = defaultdict(lambda: [0, 0, []])   # chemin : [convertis, échecs, exemples d'échec]
-    for jeu_banc in set(repartition.values()):
+    for jeu_banc in ("fourni", "test-cache", "relance"):
         d = destination / jeu_banc
         if d.exists():
             shutil.rmtree(d)
@@ -402,6 +404,9 @@ def ecrire(docs, schema, destination, repartition):
                 json.dumps(ng.deplier(sortie), ensure_ascii=False, indent=2) + "\n")
             correspondance[doc["id"]] = {"jeu_source": j, "jeu_banc": repartition[j], "fichier": doc["pdf"].name,
                                          "entree_verite": doc["nom_verite"], "sha256": doc["empreinte"]}
+    if "relance" not in repartition.values():   # relance sur le test caché
+        shutil.rmtree(destination / "relance")
+        shutil.copytree(destination / "test-cache", destination / "relance")
     (destination / "correspondance.json").write_text(json.dumps(dict(sorted(correspondance.items())),
                                                                 ensure_ascii=False, indent=2) + "\n")
     return conversions
@@ -433,7 +438,7 @@ def alterer(r, schema):
 def controler(destination, repartition, schema):
     lignes = []
     tout_ok = True
-    for jeu_banc in sorted(set(repartition.values())):
+    for jeu_banc in ("fourni", "test-cache", "relance"):
         ids = sorted(p.stem for p in (destination / jeu_banc).glob("doc-*.pdf"))
         att = {i: json.loads((destination / jeu_banc / "reponses" / f"{i}.json").read_text()) for i in ids}
         err = ng.valider(att, ids, schema)
@@ -457,6 +462,9 @@ def rapport(destination, source, jeux, docs, constats, stats, n, schema, notes, 
          "|---|---|---|---|---|---|"]
     for j, x in jeux.items():
         L.append(f"| {j} | {repartition[j]} | {len(x['pdfs'])} | {len(x['verite'])} | {len(docs[j])} | {x['forme']} |")
+    if "relance" not in repartition.values():
+        L += ["", "Relance du workflow livré : sur les documents du test caché (`relance/` = copie de `test-cache/`), "
+              "dont le harnais ne voit jamais les réponses."]
     L += ["", "## Constats", ""]
     noms = {"bloquant": "Bloquant (import arrêté)", "attention": "À examiner", "ecartes": "Documents écartés",
             "info": "Information"}
@@ -512,9 +520,10 @@ def ignore_par_git(chemin):
 def importer(source, destination, repartition=REPARTITION, schema_neuf=False, verifier_git=True):
     source, destination = Path(source).resolve(), Path(destination).resolve()
     rep = dict(x.split("=", 1) for x in repartition.split(","))
-    if sorted(rep) != sorted(JEUX_SOURCE) or len(set(rep.values())) != 3 \
-            or not set(rep.values()) <= {"fourni", "test-cache", "relance"}:
-        raise ImportArrete("répartition : train, val et test vers fourni, test-cache et relance, chacun une fois")
+    if sorted(rep) != sorted(JEUX_SOURCE) or not set(rep.values()) <= {"fourni", "test-cache", "relance"} \
+            or not {"fourni", "test-cache"} <= set(rep.values()):
+        raise ImportArrete("répartition : train, val et test vers fourni, test-cache ou relance ; fourni et "
+                           "test-cache reçoivent chacun au moins un jeu (sans relance désignée : relance sur le test caché)")
     if verifier_git and not ignore_par_git(destination / "x"):
         raise ImportArrete(f"{destination} n'est pas ignoré par git : données de l'entreprise jamais versionnées")
     jeux, globale, _ = lire_source(source)
@@ -541,7 +550,8 @@ def importer(source, destination, repartition=REPARTITION, schema_neuf=False, ve
     conversions = ecrire(docs, schema, destination, rep)
     controle = controler(destination, rep, schema)
     rapport(destination, source, jeux, docs, constats, stats, n, schema, notes, origine, conversions, controle, rep)
-    return {"documents": {rep[j]: len(docs[j]) for j in docs}, "schema": origine, "controle_ok": controle[1],
+    compte = {j: len(list((destination / j).glob("doc-*.pdf"))) for j in ("fourni", "test-cache", "relance")}
+    return {"documents": compte, "schema": origine, "controle_ok": controle[1],
             "constats": {k: len(v) for k, v in constats.items()},
             "echecs_conversion": sum(c[1] for c in conversions.values())}
 

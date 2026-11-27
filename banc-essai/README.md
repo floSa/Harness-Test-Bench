@@ -16,7 +16,7 @@ flowchart LR
         E --> H
         H -->|"5 soumissions"| A
         H -->|"clé de l'essai"| R["Relais LiteLLM<br/>127.0.0.1:4100"]
-        L --> RL["Relance du workflow<br/>sur des documents neufs"]
+        L --> RL["Relance du workflow<br/>sur les documents de test"]
         L --> RP["Rapport d'essai"]
     end
     R --> F["Portail compatible OpenAI"]
@@ -24,13 +24,13 @@ flowchart LR
 
 1. Le lanceur prépare un espace neuf (consignes, documents fournis avec leurs réponses), crée une clé du modèle propre à l'essai et démarre l'API de soumission.
 2. Le harnais, dans la cage, construit un workflow d'extraction, le soumet au plus 5 fois sur un test caché, puis déclare sa fin avec la commande de son workflow.
-3. Le lanceur supprime la clé, relance ce workflow sans le harnais sur des documents jamais vus, collecte les traces et écrit le rapport.
+3. Le lanceur supprime la clé, relance ce workflow sans le harnais sur les documents de test (dont le harnais n'a jamais vu les réponses), collecte les traces et écrit le rapport.
 
 | Jeu du goldset | Rôle dans un essai |
 |---|---|
 | `train` | jeu fourni au harnais, avec les réponses |
-| `val` | test caché, noté par l'API |
-| `test` | relance du workflow livré : note de référence |
+| `val` | jeu fourni au harnais, avec les réponses (pour valider son workflow) |
+| `test` | test caché, noté par l'API ; puis relance du workflow livré : note de référence |
 
 ## Contenu
 
@@ -64,6 +64,8 @@ banc-essai/cage/lancer.sh sonde jouet                 # prouver la cage (42 vér
 banc-essai/cage/lancer.sh <harnais> jouet             # premier essai d'un harnais
 python3 banc-essai/corpus/importer_goldset.py         # importer un goldset
 python3 banc-essai/corpus/consignes_goldset.py        # consignes du goldset (schéma validé)
+uv run --project banc-essai/evaluation python banc-essai/evaluation/verifier_api.py   # API de test (10 vérifications)
+harnais/verifier-connexion.sh <harnais>               # branchement d'un harnais au portail
 banc-essai/cage/lancer.sh <harnais> goldset           # essai sur le goldset
 python3 banc-essai/cage/suivi.py <essai>              # suivre un essai
 uv run --project banc-essai/evaluation pytest         # tests automatiques du banc
