@@ -34,3 +34,7 @@ banc-essai/corpus/goldset/
 banc-essai/corpus/demo/
 banc-essai/resultats-goldset/
 .poste-entreprise
+# Comptes rendus de l agent sur le poste d entreprise : jamais versionnés
+piag/journal-poste.md
+piag/diagnostic.md
+piag/comparaison.md
