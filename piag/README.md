@@ -4,7 +4,7 @@ Branche `PIAG` : le banc des harnais, préparé pour un poste d'entreprise sous 
 
 | Fichier | Rôle |
 |---|---|
-| [AMORCAGE.md](AMORCAGE.md) | consigne à donner à un agent de code sur le poste : mise en place et vérifications, sans aucun essai (diagnostic du poste, portail, tests, données du goldset, API de test, branchement de chaque harnais, bilan) |
+| [AMORCAGE.md](AMORCAGE.md) | consigne à donner à un agent de code sur le poste : mise en place et vérifications, sans aucun essai (diagnostic du poste, portail, tests, données du goldset, API de test, branchement de chaque harnais, documentation mise à jour pour ce poste, bilan) |
 | [identite.exemple](identite.exemple) | modèle de `identite.local` : identité git du poste (utilisateur, adresse, co-auteur des commits) |
 | `identite.local`, `etat-du-poste.md` | remplis sur le poste, jamais versionnés |
 

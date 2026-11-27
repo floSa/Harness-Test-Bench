@@ -13,7 +13,8 @@ Concrètement :
 3. le goldset `goldset/` (à la racine du dépôt) est lu dans `goldset/split/` et ses données sont rangées aux bons endroits : `train` et `val` donnés aux harnais avec leurs réponses, `test` servi par l'API de test sans ses réponses ;
 4. l'API de test répond et note correctement ;
 5. chaque harnais est installé et se branche bien sur le portail (un message, une réponse : pas de tâche) ;
-6. un bilan `piag/etat-du-poste.md` dit, point par point, ce qui est OK ou KO, avec sa preuve.
+6. la documentation est mise à jour avec tout ce qui a été appris sur ce poste, pour que chaque personne puisse reprendre un harnais, le lancer, le tester et le faire évoluer seule ;
+7. un bilan `piag/etat-du-poste.md` dit, point par point, ce qui est OK ou KO, avec sa preuve.
 
 Lire d'abord, dans cet ordre : `README.md`, `banc-essai/README.md`, `banc-essai/documentation/README.md`. Chaque niveau ci-dessous renvoie à la page détaillée à lire avant d'agir. Chaque niveau a une condition de fin vérifiable : ne passer au suivant que lorsqu'elle est remplie.
 
@@ -29,6 +30,7 @@ Lire d'abord, dans cet ordre : `README.md`, `banc-essai/README.md`, `banc-essai/
 8. Rien de mémoire : chaque affirmation repose sur une commande lancée ou un fichier lu ; ce qui n'a pas pu être vérifié est écrit « non vérifié ».
 9. Les décisions réservées à l'utilisateur lui sont posées une à la fois, avec une recommandation.
 10. Python : `uv` et Python 3.12.
+11. **Documentation tenue à jour au fil de l'eau** : tout réglage, contournement, valeur du portail, adaptation de code ou comportement d'un harnais découvert sur ce poste est reporté dans la page qui en parle (niveau 6), sans jamais y écrire de clé ni recopier le contenu d'un document du goldset.
 
 ## Niveau 0. Identité, garde-fous, diagnostic du poste
 
@@ -169,7 +171,24 @@ Un harnais qui échoue après deux corrections raisonnables est noté KO avec sa
 
 **Fin du niveau 5 :** chaque harnais installé, avec sa version, et « OK » au test de connexion (ou KO expliqué).
 
-## Niveau 6. Bilan
+## Niveau 6. Documentation à jour
+
+But : une personne qui reprend un harnais n'a besoin que de sa documentation pour l'installer sur ce poste, le lancer sur le goldset, lire ses résultats, modifier sa configuration et revérifier qu'il fonctionne.
+
+| Page | À reporter |
+|---|---|
+| `banc-essai/documentation/modele-et-fournisseur.md` | section « Portail de ce poste » : nom exact du modèle, contexte, sortie maximale, vision, quota relevé, mandataire et certificat nécessaires (sans clé), résultats du vérificateur et de la sonde, problèmes rencontrés et corrections |
+| `banc-essai/documentation/goldset.md` | section « Goldset de ce poste » : forme réelle des fichiers de vérité, adaptations faites à l'importateur (et test ajouté), nombre de documents par jeu, décisions de l'utilisateur sur le schéma (types, tolérances, dates, listes fermées) |
+| `harnais/<harnais>/documentation/installation.md` | réglages nécessaires sur ce poste (mandataire, certificat, sites à ouvrir), version installée, problèmes et corrections |
+| `harnais/<harnais>/documentation/fonctionnement.md` | résultat du test de connexion, sites refusés au démarrage, comportements observés, problèmes connus avec ce portail |
+| `harnais/<harnais>/README.md` | section « Prise en main sur ce poste » : vérifier le branchement (`harnais/verifier-connexion.sh <harnais>`), lancer un essai jouet puis un essai goldset (commandes complètes), où lire les résultats (`banc-essai/resultats-goldset/<essai>/rapport.md`), où modifier la configuration (`configurer.sh`, `lancer.sh`) et comment revérifier après une modification |
+| `piag/README.md` | état du poste en une phrase et renvoi au bilan |
+
+Contrôles après mise à jour : liens relatifs de toutes les pages valides ; aucune clé ni adresse de mandataire avec mot de passe ; aucun extrait de document du goldset ; un commit local par page ou groupe de pages, avec la ligne `Co-authored-by`.
+
+**Fin du niveau 6 :** chaque page du tableau mise à jour, pour chaque harnais.
+
+## Niveau 7. Bilan
 
 Compléter `piag/etat-du-poste.md` (hors git) :
 
