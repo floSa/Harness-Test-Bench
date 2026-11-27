@@ -261,3 +261,10 @@
 - Branchements : API (`--tache goldset`), `preparer.py` (recette `goldset`, dossier `--goldset` ou `BANC_GOLDSET`), `relancer.py`, client `soumettre.py`, rapport d'essai, `cage/lancer.sh <harnais> goldset` (refus si schéma non validé ou consignes absentes).
 - `banc-essai/corpus/goldset_demo.py` : goldset de démonstration tiré des 35 rapports publics (15, 10, 10), sous des formes hétérogènes (équipement imbriqué, dates JJ/MM/AAAA, tolérance en texte à virgule, vérité en liste d'objets) ; import vérifié : 35 réponses converties identiques aux réponses d'origine, PDF identiques, contrôle de notation conforme sur les trois jeux.
 - Vérifié : 43 tests réussis (10 nouveaux : règles de notation, format, trois formes de vérité, schéma validé, contrôles d'import, forme inconnue, API, relance dans la cage).
+
+## 2026-11-27 — Branche PIAG : protection des données de l'entreprise
+
+- Résultats des essais goldset écrits dans `banc-essai/resultats-goldset/` (hors git, avec leur propre index) : la trace d'un harnais recopie le texte des documents qu'il lit.
+- Garde-fous git (`outils/git/`, installés par `outils/installer-garde-fous.sh`, `core.hooksPath`) : avant un commit, refus du goldset (source, import, démonstration), des résultats goldset, de `.env` et des secrets du relais, de tout PDF hors du corpus public, de tout fichier de plus de 20 Mo ; avant un push, refus total si `.poste-entreprise` existe (option `--poste-entreprise` de l'installateur).
+- Vérifié dans un dépôt jetable : commit propre accepté ; commit de `.env`, d'un fichier du goldset, d'un résultat goldset et d'un PDF hors corpus refusé avec la liste des fichiers ; PDF du corpus public accepté ; push accepté sans `.poste-entreprise`, refusé avec.
+- `.gitignore` : `/goldset/`, `banc-essai/corpus/goldset/`, `banc-essai/corpus/demo/`, `banc-essai/resultats-goldset/`, `.poste-entreprise`, `banc-essai/traces/config.yaml` (généré), `banc-essai/traces/certificats/`.

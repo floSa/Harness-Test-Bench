@@ -12,7 +12,7 @@
 # Étapes : espace de travail neuf (hors du dépôt, dans $BANC_ESPACES, ~/banc-espaces par défaut),
 # clé virtuelle propre à l'essai (alias = nom de l'essai, plafond de 2 $, dépense relevée puis clé
 # supprimée dès la sortie du harnais), API de soumission vérifiée, cage, puis collecte dans
-# banc-essai/resultats/<essai>/ : essai.json, harnais/ (sorties), traces/appels.jsonl (appels au
+# banc-essai/resultats/<essai>/ (goldset : banc-essai/resultats-goldset/<essai>/, hors git) : essai.json, harnais/ (sorties), traces/appels.jsonl (appels au
 # modèle de la clé de l'essai), traces/reseau.jsonl (demandes au mandataire PyPI),
 # evaluation/ (journaux de l'API). Ensuite, pour l'extraction, relance du workflow déclaré sur le
 # jeu « relance », dans la cage, sans le harnais (relance/, clé <essai>-relance) ; enfin le
@@ -43,7 +43,10 @@ case "$RECETTE" in sans-aide|avec-aide) TACHE=extraction JEU="$RACINE/banc-essai
 case "$NOM" in sonde|factice) HARNAIS="$CAGE/$NOM" ;; *) HARNAIS="$RACINE/harnais/$NOM" ;; esac
 [ -x "$HARNAIS/lancer.sh" ] || { echo "$HARNAIS/lancer.sh introuvable" >&2; exit 1; }
 
-RES="$RACINE/banc-essai/resultats/$ESSAI"
+# Essais sur un goldset de l'entreprise : résultats hors git (les traces recopient le texte des documents).
+DOSSIER_RES="$RACINE/banc-essai/resultats"
+[ "$TACHE" = goldset ] && DOSSIER_RES="$RACINE/banc-essai/resultats-goldset"
+RES="$DOSSIER_RES/$ESSAI"
 ESPACES="${BANC_ESPACES:-$HOME/banc-espaces}"
 ESPACE="$ESPACES/$ESSAI/travail" MAISON="$ESPACES/$ESSAI/maison" TMP_ESSAI="$ESPACES/$ESSAI/tmp"
 # Cadre de ressources (protocole, section 5), annoncé dans les consignes.
@@ -143,5 +146,5 @@ python3 "$CAGE/archiver_code.py" "$ESPACE" "$RES" >/dev/null || true
 python3 "$CAGE/masquer.py" "$RES" >/dev/null || true
 uv run -q --project "$EVAL" python "$EVAL/rapport.py" --essai "$RES" >/dev/null || true
 python3 "$CAGE/compresser.py" "$RES" >/dev/null || true   # traces de plus de 20 Mo en gzip (limite GitHub)
-uv run -q --project "$EVAL" python "$EVAL/index_resultats.py" >/dev/null || true
+uv run -q --project "$EVAL" python "$EVAL/index_resultats.py" --dossier "$DOSSIER_RES" >/dev/null || true
 exit "$CODE"

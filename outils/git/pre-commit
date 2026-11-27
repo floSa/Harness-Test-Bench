@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Garde-fou avant chaque commit (installé par outils/installer-garde-fous.sh) : refuse tout fichier
+# qui pourrait contenir des données de l'entreprise ou un secret.
+#   - goldset (source, import, démonstration) et résultats des essais goldset ;
+#   - .env et secrets du relais ;
+#   - PDF hors des dossiers du corpus public ;
+#   - fichier de plus de 20 Mo.
+# Contournement impossible sans --no-verify, que la consigne d'amorçage interdit.
+set -euo pipefail
+refus=()
+while IFS= read -r -d '' f; do
+  case "$f" in
+    goldset/*|banc-essai/corpus/goldset/*|banc-essai/corpus/demo/*|banc-essai/resultats-goldset/*)
+      refus+=("$f : données du goldset") ; continue ;;
+    .env|*/.env|banc-essai/traces/secrets/*|banc-essai/traces/certificats/*|.poste-entreprise)
+      refus+=("$f : secret ou réglage local") ; continue ;;
+  esac
+  case "$f" in
+    *.pdf|*.PDF)
+      case "$f" in
+        banc-essai/corpus/fourni/*|banc-essai/corpus/exemples/*|banc-essai/corpus/dossiers/fourni/*) ;;
+        *) refus+=("$f : PDF hors du corpus public") ;;
+      esac ;;
+  esac
+  if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt $((20 * 1024 * 1024)) ]; then
+    refus+=("$f : plus de 20 Mo")
+  fi
+done < <(git diff --cached --name-only --diff-filter=ACMR -z)
+if [ ${#refus[@]} -gt 0 ]; then
+  echo "commit refusé par le garde-fou du banc (outils/git/pre-commit) :" >&2
+  printf '  - %s\n' "${refus[@]}" >&2
+  echo "retirer ces fichiers de l'index : git restore --staged <fichier>" >&2
+  exit 1
+fi

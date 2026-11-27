@@ -1,10 +1,14 @@
 """Index des résultats : banc-essai/resultats/README.md (affiché par GitHub à l'ouverture du dossier).
 
-    uv run --project banc-essai/evaluation python banc-essai/evaluation/index_resultats.py
+    uv run --project banc-essai/evaluation python banc-essai/evaluation/index_resultats.py [--dossier DOSSIER]
+
+DOSSIER : banc-essai/resultats (défaut) ou banc-essai/resultats-goldset (essais sur un goldset de
+l'entreprise, hors git).
 
 Une ligne par essai, à partir de essai.json, rapport.json et relance/resultat.json. Appelé à la fin
 de chaque essai par banc-essai/cage/lancer.sh.
 """
+import argparse
 import json
 from pathlib import Path
 
@@ -49,7 +53,10 @@ def ligne(d):
 
 
 def main():
-    dossiers = sorted((d for d in RESULTATS.iterdir() if d.is_dir()), key=lambda d: (lire(d / "essai.json") or {}).get("debut", ""))
+    a = argparse.ArgumentParser(description="Index des résultats")
+    a.add_argument("--dossier", default=str(RESULTATS))
+    resultats = Path(a.parse_args().dossier)
+    dossiers = sorted((d for d in resultats.iterdir() if d.is_dir()), key=lambda d: (lire(d / "essai.json") or {}).get("debut", ""))
     lignes = [ligne(d) for d in dossiers]
     L = ["# Résultats des essais", "",
          "Un dossier par essai. Dans chaque dossier : `rapport.md` (synthèse lisible), `essai.json` (mesures de "
@@ -63,9 +70,9 @@ def main():
         L.append(f"| [{x['essai']}]({x['essai']}/rapport.md) | {x['nature']} | {x['debut']} | {x['harnais']} | "
                  f"{x['recette']} | {x['score']} | {x['relance']} | {x['duree']} | {x['appels']} | {x['cout']} |")
     L += ["", "Score final : part des champs justes sur le test caché (tâche jouet : part des cas cachés réussis). "
-          "Score de relance : même mesure, workflow relancé sans le harnais sur 10 documents neufs.", ""]
-    (RESULTATS / "README.md").write_text("\n".join(L))
-    print(f"index écrit : {RESULTATS / 'README.md'} ({len(lignes)} essais)")
+          "Score de relance : même mesure, workflow relancé sans le harnais sur le jeu de relance (documents neufs).", ""]
+    (resultats / "README.md").write_text("\n".join(L))
+    print(f"index écrit : {resultats / 'README.md'} ({len(lignes)} essais)")
 
 
 if __name__ == "__main__":

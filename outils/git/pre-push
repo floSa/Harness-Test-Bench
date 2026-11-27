@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Garde-fou avant chaque push (installé par outils/installer-garde-fous.sh) : sur un poste
+# d'entreprise (fichier .poste-entreprise à la racine, hors git), aucun push n'est permis : le dépôt
+# est public et les essais y produisent des données internes.
+set -euo pipefail
+RACINE=$(git rev-parse --show-toplevel)
+if [ -e "$RACINE/.poste-entreprise" ]; then
+  echo "push refusé : poste d'entreprise (.poste-entreprise présent). Rien ne quitte ce poste vers GitHub." >&2
+  exit 1
+fi

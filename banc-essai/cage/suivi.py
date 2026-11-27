@@ -14,6 +14,8 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parents[2]
 essai = sys.argv[1]
 res = RACINE / "banc-essai/resultats" / essai
+if not res.exists():   # essai sur un goldset de l'entreprise : résultats hors git
+    res = RACINE / "banc-essai/resultats-goldset" / essai
 appels = []
 for l in open(RACINE / "banc-essai/traces/journaux/appels.jsonl"):
     if f'"cle": "{essai}"' in l:
