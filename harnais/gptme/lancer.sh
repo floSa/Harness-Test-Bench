@@ -14,7 +14,7 @@ export GPTME_TIKTOKEN_TIMEOUT=0 GPTME_NO_LOCAL_DISCOVERY=1
 # Fenêtre de contexte : gptme suppose 128 000 jetons pour un fournisseur personnalisé et compacte vers
 # 90 % de cette valeur. Un modèle plus petit (BANC_CONTEXTE, banc-essai/modele.env) est déclaré par
 # GPTME_CONTEXT_LENGTH (gptme/init.py), sinon gptme dépasserait la fenêtre avant de compacter. Au-delà
-# de 128 000, rien n'est changé : comportement identique aux essais de la campagne 1.
+# de 128 000, rien n'est changé (comportement par défaut de gptme).
 if [ "${BANC_CONTEXTE:-0}" -gt 0 ] && [ "${BANC_CONTEXTE}" -lt 128000 ]; then
   export GPTME_CONTEXT_LENGTH="$BANC_CONTEXTE"
 fi

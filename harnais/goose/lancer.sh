@@ -12,8 +12,8 @@ ICI="$(cd "$(dirname "$0")" && pwd)"
 "$ICI/configurer.sh" >&2
 export GOOSE_DISABLE_KEYRING=1 GOOSE_TELEMETRY_ENABLED=false GOOSE_DISABLE_SESSION_NAMING=true GOOSE_MODE=auto
 export OPENAI_API_KEY="${BANC_CLE_MODELE:?}"
-# Fenêtre de contexte : Goose suppose 128 000 jetons pour ce modèle inconnu (compaction vers 102 000,
-# traces de c1-02 et c2-02). Un modèle plus petit (BANC_CONTEXTE, banc-essai/modele.env) est déclaré
+# Fenêtre de contexte : Goose suppose 128 000 jetons pour un modèle inconnu (compaction vers 102 000,
+# constatée pendant la mise au point du banc). Un modèle plus petit (BANC_CONTEXTE, banc-essai/modele.env) est déclaré
 # par GOOSE_CONTEXT_LIMIT ; au-delà de 128 000, rien n'est changé (comportement des essais passés).
 if [ "${BANC_CONTEXTE:-0}" -gt 0 ] && [ "${BANC_CONTEXTE}" -lt 128000 ]; then
   export GOOSE_CONTEXT_LIMIT="$BANC_CONTEXTE"

@@ -33,7 +33,7 @@ def nature(nom, e):
             return texte
     if e and e.get("tache") == "jouet":
         return "tâche jouet (mise au point)"
-    return "essai de campagne"
+    return "essai"
 
 
 def ligne(d):
