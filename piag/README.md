@@ -10,10 +10,12 @@ Branche `PIAG` : le banc des harnais, préparé pour un poste d'entreprise où l
 ## Mise en route sur le poste
 
 ```bash
-git clone -b PIAG https://github.com/floSa/Harness-Test-Bench.git
+git clone --depth 1 --single-branch -b PIAG https://github.com/floSa/Harness-Test-Bench.git
 cd Harness-Test-Bench
 outils/installer-garde-fous.sh --poste-entreprise
 ```
+
+`--depth 1 --single-branch` : seul le dernier état de la branche est téléchargé, sans l'historique du dépôt.
 
 Puis copier le goldset dans `goldset/` à la racine (forme : [banc-essai/documentation/goldset.md](../banc-essai/documentation/goldset.md)) et donner à l'agent de code :
 
